@@ -1,0 +1,125 @@
+/*  wrapper is provided to make sure that this component can work properly in the layout used.
+    Wrapper should be used in the element containing the component
+*/
+.wrapper {
+  max-width: var(--page-wrapper-max-width);
+  margin-inline: auto;
+  padding-inline: var(--page-wrapper-padding-inline);
+}
+
+.fullWidthSplitGrid {
+  position: relative;
+  width: 100vw;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw;
+  margin-right: -50vw;
+  display: grid;
+
+ grid-template-columns:
+    minmax(var(--page-wrapper-padding-inline) 1fr)
+    minmax(0,calc(var(--page-wrapper-max-width) / 2))
+    minmax(0, calc(var(--page-wrapper-max-width) / 2))
+    minmax(var(--page-wrapper-padding-inline), 1fr);
+}
+
+
+/* remove the padding so images can take up the entire height */
+.fullWidthSplitGrid {
+  padding-block: 0;
+}
+
+/* match the section padding for the text blocks for
+consistency */
+.fullWidthSplitGrid > :not(img):not(figure) {
+  padding-block: var(--section-padding-block);
+  padding-inline: var(--page-wrapper-padding-inline);
+}
+
+@media screen and (min-width: 600px) {
+  .fullWidthSplitGrid {
+    /* outermost columns emulate the spacing from the .wrapper
+     while the two inner columns divide the rest of the space
+     into two equal parts */
+    display: grid;
+    grid-template-columns:
+      minmax(var(--page-wrapper-padding-inline), 1fr)
+      minmax(0, calc(var(--page-wrapper-max-width) / 2))
+      minmax(0, calc(var(--page-wrapper-max-width) / 2 ))
+      minmax(var(--page-wrapper-padding-inline), 1fr);
+
+    /* for positioning the pseudo-elements
+       to fill in the rest of the background*/
+    position: relative;
+  }
+
+  /* ensure the image fill up the entire space available */
+  .fullWidthSplitGrid > img,
+  .fullWidthSplitGrid > figure {
+    height:inherit;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* if the image is on the left, it covers the entire left half */
+  .fullWidthSplitGrid > img:first-child,
+  .fullWidthSplitGrid > figure:first-child
+  {
+    grid-column: 1 / 3;
+  }
+
+  /* if the image is on the right, it covers the entire right half */
+  .fullWidthSplitGrid > img:last-child,
+  .fullWidthSplitGrid > figure:last-child
+  {
+    grid-column: 3 / -1;
+  }
+
+  .fullWidthSplitGrid > img:only-child,
+  .fullWidthSplitGrid > figure:only-child
+  {
+    grid-column: 1 / -1;
+    max-height: 100%;
+  }
+
+  /* make sure text doesn't touch the edge of the viewport
+   and the content is vertically centered */
+  .fullWidthSplitGrid > :not(img):not(figure) {
+    display: grid;
+    align-content: center;
+    justify-items: start;
+  }
+
+  /* if the non-image is first, place it in the second column
+     (first column is empty to emulate the .wrapper) */
+  .fullWidthSplitGrid > :not(img):not(figure):first-child {
+    padding-left: 0;
+    grid-column: 2 / 3;
+  }
+
+  /* if the non-image is last, place it in the third column
+     (fourth column is empty to emulate the .wrapper) */
+  .fullWidthSplitGrid > :not(img):not(figure):last-child {
+    padding-right: 0;
+    grid-column: 3 / 4;
+  }
+
+  /* at large screens, ensure the background color
+     goes to the edge of the page */
+  .fullWidthSplitGrid > :not(img):not(figure)::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: inherit;
+  }
+
+  /* ensures the background color fills the entire left side */
+  .fullWidthSplitGrid > :not(img):not(figure):first-child::before {
+    grid-column: 1 / 2;
+  }
+
+  /* ensures the background color fills the entire right side */
+  .fullWidthSplitGrid > :not(img):not(figure):last-child::before {
+    grid-column: 4 / 5;
+  }
+}
