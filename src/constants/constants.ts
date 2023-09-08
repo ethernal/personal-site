@@ -3,6 +3,8 @@ import rehypeSlug from 'rehype-slug';
 import { remarkHeadingId } from 'remark-custom-heading-id';
 import remarkGfm from 'remark-gfm';
 
+export const SITE_PUBLISHED_YEAR_STRING = '2023';
+
 export const SITE_TITLE = 'sebee.dev';
 
 export const SITE_PATHS = {
@@ -29,9 +31,12 @@ export const LIGHT_COLORS = {
 
 	'--color-black': '#111',
 	'--color-white': '#ddd',
+	'--color-ruby': 'hsl(7 95% 38% / 1)',
+	'--brand-color': 'var(--color-ruby)',
 	'--primary-color': '#5E8E0A',
 	'--background-color': 'var(--color-white)',
 	'--text-color': 'var(--color-black)',
+	'--text-color-inverted': 'var(--color-white)',
 	'--decoration-color': 'var(--primary-color)',
 	'--page-content-width':
 		'calc(var(--page-wrapper-max-width) - var(--page-wrapper-padding-inline))',
@@ -43,9 +48,12 @@ export const DARK_COLORS = {
 
 	'--color-black': '#111',
 	'--color-white': '#ddd',
+	'--color-ruby': 'hsl(7 95% 38% / 1)',
+	'--brand-color': 'var(--color-ruby)',
 	'--primary-color': '#5E8E0A',
 	'--background-color': 'var(--color-black)',
 	'--text-color': 'var(--color-white)',
+	'--text-color-inverted': 'var(--color-black)',
 	'--decoration-color': 'var(--primary-color)',
 };
 

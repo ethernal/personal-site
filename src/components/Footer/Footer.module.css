@@ -13,12 +13,12 @@
   gap: 64px;
   width: 100%;
   max-width: var(--content-width);
-  padding: 0 var(--viewport-padding);
   padding-bottom: 48px;
 }
 
 .attribution {
   margin-top: 24px;
+  margin-bottom: 0;
   font-size: 0.875rem;
   color: var(--color-decorative-900);
   max-width: 18rem;
@@ -29,12 +29,17 @@
   text-decoration: none;
   font-weight: 700;
 }
+
 .attribution a:hover {
   text-decoration: revert;
   text-underline-offset: 0.125em;
   text-decoration-thickness: 1.5px;
   text-decoration-line: inherit;
   text-decoration-style: inherit;
+}
+
+div .attribution + .attribution {
+  margin-top: 0;
 }
 
 .linkHeading {

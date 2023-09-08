@@ -1,10 +1,13 @@
+import format from 'date-fns/format';
 import Link from 'next/link';
-import React, { CSSProperties } from 'react';
+import React from 'react';
 
 import Logo from '@/components/Logo';
-import { SOCIAL_X_HANDLE } from '@/constants/constants';
+import {
+	SITE_PUBLISHED_YEAR_STRING,
+	SOCIAL_X_HANDLE,
+} from '@/constants/constants';
 
-import DecorativeSwoops from './DecorativeSwoops';
 import styles from './Footer.module.css';
 
 type FooterProps = {
@@ -12,19 +15,19 @@ type FooterProps = {
 };
 
 function Footer({ className }: FooterProps) {
+	const currentYear = format(new Date(), 'yyyy');
 	return (
 		<div className={className}>
 			<div className={styles.content}>
 				<div>
-					<Logo mobileAlignment="center" />
-					{/*
-            NOTE: If you'd like to build your blog on top
-            of this code, the license requires that you leave
-            this paragraph untouched. Check out LICENSE.md
-            for more information.
-          */}
+					<Logo />
 					<p className={styles.attribution}>
-						Created by Sebastian Pieczyński. Inspired by {` `}
+						Created by <Link href="/">Sebastian Pieczyński</Link> &copy;{' '}
+						{SITE_PUBLISHED_YEAR_STRING === currentYear ? '' : '2023-'}
+						{currentYear}.{' '}
+					</p>
+					<p className={styles.attribution}>
+						Inspired by {` `}
 						<a href="https://www.joshwcomeau.com/">Josh W. Comeau</a>.
 					</p>
 				</div>
@@ -32,16 +35,13 @@ function Footer({ className }: FooterProps) {
 					<h2 className={styles.linkHeading}>Links</h2>
 					<ul className={styles.linkList}>
 						<li>
-							<Link href="/rss">RSS feed</Link>
+							<Link href="/terms">Terms of Use</Link>
 						</li>
 						<li>
-							<Link href="/todo">Terms of Use</Link>
+							<Link href="/privacy">Privacy Policy</Link>
 						</li>
 						<li>
-							<Link href="/todo">Privacy Policy</Link>
-						</li>
-						<li>
-							<a href={`https://twitter.com/${SOCIAL_X_HANDLE}`}>Twitter</a>
+							<a href={`https://twitter.com/${SOCIAL_X_HANDLE}`}>Twitter / X</a>
 						</li>
 					</ul>
 				</nav>

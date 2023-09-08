@@ -11,13 +11,15 @@
   --text-black: 'text-black';
   --color-black: '#222';
   --color-white: '#eee';
+  --color-ruby: hsl(7 95% 38% / 1)
   --text-white: var('--color-white');
   --background-black: var('--color-black');
   --background-white: var('--color-white');
-
+  --brand-color: var(--color-ruby);
 
   --background-color: var('--color-white');
   --text-color: var('--color-black');
+  --text-color-inverted: var('--color-white');
 
   /* transitions */
   --transition-default-time: 200ms;
