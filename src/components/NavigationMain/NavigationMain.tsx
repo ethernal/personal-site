@@ -9,13 +9,12 @@ import Logo from '../Logo/Logo';
 import styles from './NavigationMain.module.css';
 
 type NavigationMainProps = {
-	initialTheme?: ColorThemeType;
 	className?: string;
 	children?: ReactNode;
 };
 
 const NavigationMain: React.FC<NavigationMainProps> = (props) => {
-	const { className = '', initialTheme = 'light' } = props;
+	const { className = '' } = props;
 
 	const [menuOpen, setMenuOpen] = useState(false);
 
@@ -24,7 +23,7 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 	};
 
 	return (
-		<div className={`${styles.primaryHeader}`}>
+		<div className={`${className} ${styles.primaryHeader}`}>
 			<Logo className={`${styles.logo} order-first`} mobileAlignment="center" />
 
 			<button
@@ -36,7 +35,7 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 				<span className="sr-only">
 					{menuOpen === true ? 'close ' : 'open '}menu
 				</span>
-				{/* Hamburder Icon */}
+				{/* X is fixed so it stays in the same place when menu is open */}
 				{menuOpen === false ? <Menu /> : <X className="fixed" />}
 			</button>
 
@@ -67,7 +66,6 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					</li>
 					<li>
 						<ActionsMenu
-							initialTheme={initialTheme}
 							className={`flex gap-4 items-center flex-grow-0 flex-shrink-0`}
 							data-sm
 						/>

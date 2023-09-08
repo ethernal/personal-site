@@ -4,20 +4,18 @@ import { Moon, Sun } from 'react-feather';
 
 import VisuallyHidden from '@/components/VisuallyHidden';
 import { DARK_COLORS, LIGHT_COLORS } from '@/constants/constants';
-import ColorThemeType from '@/types/ColorThemeType';
+import { useThemeContext } from '@/context/theme/ThemeContext';
 
 type ActionsMenuProps = {
-	initialTheme?: ColorThemeType;
 	className?: CSSProperties | string;
 	delegated?: any;
 };
 
 const ActionsMenu: React.FC<ActionsMenuProps> = ({
-	initialTheme,
 	className = '',
 	...delegated
 }) => {
-	const [theme, setTheme] = useState(initialTheme ?? 'light');
+	const { theme, setTheme } = useThemeContext();
 
 	const handleThemeChange = () => {
 		const nextTheme = theme === 'light' ? 'dark' : 'light';
@@ -29,6 +27,7 @@ const ActionsMenu: React.FC<ActionsMenuProps> = ({
 
 		const colors = nextTheme === 'light' ? LIGHT_COLORS : DARK_COLORS;
 
+		/* populate root element with new CSS variables based on theme selected */
 		Object.entries(colors).forEach(([key, value]) => {
 			root.style.setProperty(key, value);
 		});
@@ -43,8 +42,6 @@ const ActionsMenu: React.FC<ActionsMenuProps> = ({
 						style={{
 							minWidth: '1.5rem',
 							flexShrink: 0,
-							// Optical alignment
-							// transform: 'translate(2px, -2px)',
 						}}
 					/>
 				) : (
@@ -53,8 +50,6 @@ const ActionsMenu: React.FC<ActionsMenuProps> = ({
 						style={{
 							minWidth: '1.5rem',
 							flexShrink: 0,
-							// Optical alignment
-							// transform: 'translate(2px, -2px)',
 						}}
 					/>
 				)}

@@ -8,10 +8,16 @@ type ThemeContext = {
 	setTheme: React.Dispatch<React.SetStateAction<ColorThemeType>>;
 };
 
-export const ThemeContext = createContext<ThemeContext | null>(null);
+type ThemeProps = {
+	initialTheme: ColorThemeType;
+	children: ReactNode;
+};
 
-function Theme({ children }: { children: ReactNode }) {
-	const [theme, setTheme] = useState<ColorThemeType>('light');
+
+const ThemeContext = createContext<ThemeContext | null>(null);
+
+function Theme({ initialTheme = 'light', children }: ThemeProps) {
+	const [theme, setTheme] = useState<ColorThemeType>(initialTheme);
 
 	return (
 		<ThemeContext.Provider value={{ theme, setTheme }}>
@@ -20,10 +26,10 @@ function Theme({ children }: { children: ReactNode }) {
 	);
 }
 
-export function useThemeContext() {
+export function useThemeContext(): ThemeContext {
 	const context = useContext(ThemeContext);
 
-	if (context === undefined) {
+	if (context === undefined || context === null) {
 		throw new Error('useThemeContext must be used within ThemeContextProvider');
 	}
 
