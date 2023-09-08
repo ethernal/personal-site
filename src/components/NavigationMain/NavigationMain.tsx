@@ -39,7 +39,10 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 				{menuOpen === false ? <Menu /> : <X className="fixed" />}
 			</button>
 
-			<nav id="primary-navigation-menu" className="flex justify-between">
+			<nav
+				id="primary-navigation-menu"
+				className="flex justify-between bg-background-color"
+			>
 				<ul
 					data-menu-open={menuOpen}
 					className={`${styles.primaryNavigation} flex`}

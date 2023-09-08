@@ -1,18 +1,18 @@
-import React from 'react';
 import Link from 'next/link';
+import React, { CSSProperties } from 'react';
 
 import { SITE_TITLE } from '@/constants/constants';
 import { cn } from '@/utils/utils';
 
 import styles from './Logo.module.css';
 
-function Logo({ mobileAlignment = 'left', className }) {
+type LogoProps = {
+	className?: CSSProperties | string;
+};
+
+function Logo({ className }: LogoProps) {
 	return (
-		<Link
-			href="/"
-			className={cn(className, styles.wrapper)}
-			data-mobile-alignment={mobileAlignment}
-		>
+		<Link href="/" className={cn(className, styles.wrapper)}>
 			{SITE_TITLE}
 		</Link>
 	);
