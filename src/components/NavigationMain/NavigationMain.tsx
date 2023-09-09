@@ -1,8 +1,7 @@
+import { motion } from 'framer-motion';
 import Link from 'next/link';
 import React, { ReactNode, useState } from 'react';
 import { Menu, X } from 'react-feather';
-
-import ColorThemeType from '@/types/ColorThemeType';
 
 import ActionsMenu from '../ActionsMenu/ActionsMenu';
 import Logo from '../Logo/Logo';
@@ -24,7 +23,7 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 
 	return (
 		<div className={`${className} ${styles.primaryHeader}`}>
-			<Logo className={`${styles.logo} order-first`} mobileAlignment="center" />
+			<Logo className={`${styles.logo} order-first`} />
 
 			<button
 				className={styles.mobileNavToggle}
@@ -36,14 +35,21 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					{menuOpen === true ? 'close ' : 'open '}menu
 				</span>
 				{/* X is fixed so it stays in the same place when menu is open */}
-				{menuOpen === false ? <Menu /> : <X className="fixed" />}
+				{menuOpen === false ? <Menu /> : <X className="fixed top-1" />}
 			</button>
 
 			<nav
 				id="primary-navigation-menu"
 				className="flex justify-between bg-background-color"
 			>
-				<ul
+				<motion.ul
+					initial={false}
+					animate={{ x: menuOpen === true ? '0%' : '100%' }}
+					transition={{
+						type: 'spring',
+						stiffness: 400,
+						damping: 30,
+					}}
 					data-menu-open={menuOpen}
 					className={`${styles.primaryNavigation} flex`}
 				>
@@ -73,7 +79,7 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 							data-sm
 						/>
 					</li>
-				</ul>
+				</motion.ul>
 			</nav>
 		</div>
 	);

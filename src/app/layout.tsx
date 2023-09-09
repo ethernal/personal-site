@@ -23,7 +23,7 @@ function RootLayout({ children }: { children: ReactNode }) {
 					data-color-theme={savedTheme}
 					style={savedTheme === 'light' ? LIGHT_TOKENS : DARK_TOKENS}
 				>
-					<body className="animation-disable">
+					<body>
 						<div className="wrapper">
 							<Header />
 							<main>{children}</main>
