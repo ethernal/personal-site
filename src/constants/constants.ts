@@ -19,36 +19,34 @@ export const SOCIAL_X_HANDLE = '@spieczynski';
 export const MDXOptions = {
 	mdxOptions: {
 		remarkPlugins: [remarkGfm, remarkHeadingId],
-		rehypePlugins: [],
-		// rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
+		rehypePlugins: [rehypeSlug, rehypeAutolinkHeadings],
 	},
 };
 
-export const LIGHT_COLORS = {
-	'--page-wrapper-max-width': '55rem',
-	'--viewport-padding': '2rem',
-	'--header-height': '5rem',
-
+export const COLOR_DEFINITIONS = {
 	'--color-black': '#111',
 	'--color-white': '#ddd',
 	'--color-ruby': 'hsl(7 95% 38% / 1)',
+};
+
+export const LAYOUT_VARIABLES = {
+	'--page-wrapper-max-width': '55rem',
+	'--viewport-padding': '2rem',
+	'--header-height': '5rem',
+	'--page-content-width':
+		'calc(var(--page-wrapper-max-width) - var(--page-wrapper-padding-inline))',
+};
+
+export const LIGHT_COLORS = {
 	'--brand-color': 'var(--color-ruby)',
 	'--primary-color': '#5E8E0A',
 	'--background-color': 'var(--color-white)',
 	'--text-color': 'var(--color-black)',
 	'--text-color-inverted': 'var(--color-white)',
 	'--decoration-color': 'var(--primary-color)',
-	'--page-content-width':
-		'calc(var(--page-wrapper-max-width) - var(--page-wrapper-padding-inline))',
 };
-export const DARK_COLORS = {
-	'--layout-wrapper-max-width': '55rem',
-	'--viewport-padding': '2rem',
-	'--header-height': '5rem',
 
-	'--color-black': '#111',
-	'--color-white': '#ddd',
-	'--color-ruby': 'hsl(7 95% 38% / 1)',
+export const DARK_COLORS = {
 	'--brand-color': 'var(--color-ruby)',
 	'--primary-color': '#5E8E0A',
 	'--background-color': 'var(--color-black)',
@@ -60,6 +58,16 @@ export const DARK_COLORS = {
 export const LIGHT_SHADOWS = {};
 export const DARK_SHADOWS = {};
 
-export const LIGHT_TOKENS = { ...LIGHT_COLORS, ...LIGHT_SHADOWS };
+export const LIGHT_TOKENS = {
+	...COLOR_DEFINITIONS,
+	...LAYOUT_VARIABLES,
+	...LIGHT_COLORS,
+	...LIGHT_SHADOWS,
+};
 
-export const DARK_TOKENS = { ...DARK_COLORS, ...DARK_SHADOWS };
+export const DARK_TOKENS = {
+	...COLOR_DEFINITIONS,
+	...LAYOUT_VARIABLES,
+	...DARK_COLORS,
+	...DARK_SHADOWS,
+};
