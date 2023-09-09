@@ -44,11 +44,19 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 			>
 				<motion.ul
 					initial={false}
-					animate={{ x: menuOpen === true ? '0%' : '100%' }}
+					animate={menuOpen === true ? 'open' : 'closed'}
 					transition={{
 						type: 'spring',
 						stiffness: 400,
-						damping: 30,
+						damping: 50,
+					}}
+					variants={{
+						open: {
+							translateX: '0%',
+						},
+						closed: {
+							translateX: '100%',
+						},
 					}}
 					data-menu-open={menuOpen}
 					className={`${styles.primaryNavigation} flex`}
