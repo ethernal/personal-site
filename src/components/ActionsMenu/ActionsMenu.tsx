@@ -34,28 +34,30 @@ const ActionsMenu: React.FC<ActionsMenuProps> = ({
 	};
 
 	return (
-		<div className={`${className}`} {...delegated}>
-			<button onClick={handleThemeChange}>
-				{theme === 'light' ? (
-					<Sun
-						size="1.5em"
-						style={{
-							minWidth: '1.5rem',
-							flexShrink: 0,
-						}}
-					/>
-				) : (
-					<Moon
-						size="1.5em"
-						style={{
-							minWidth: '1.5rem',
-							flexShrink: 0,
-						}}
-					/>
-				)}
-				<VisuallyHidden>Toggle dark / light mode</VisuallyHidden>
-			</button>
-		</div>
+		<button
+			onClick={handleThemeChange}
+			className={`${className}`}
+			{...delegated}
+		>
+			{theme === 'light' ? (
+				<Sun
+					size="1.5em"
+					style={{
+						minWidth: '1.5rem',
+						flexShrink: 0,
+					}}
+				/>
+			) : (
+				<Moon
+					size="1.5em"
+					style={{
+						minWidth: '1.5rem',
+						flexShrink: 0,
+					}}
+				/>
+			)}
+			<VisuallyHidden>Toggle dark / light mode</VisuallyHidden>
+		</button>
 	);
 };
 

@@ -144,8 +144,6 @@ html {
 body {
   min-height: 100vh;
   min-height: 100svh;
-  display: flex;
-  flex-direction: column;
   background: var(--background-color);
   border-bottom: 3px solid var(--color-decorative-600);
   transition: color var(--transition-default-time), background var(--transition-default-time); /* dark mode transition */
@@ -220,8 +218,6 @@ a:hover {
 button {
   padding: 0;
 }
-
-
 
 .wrapper {
   max-width: var(--page-wrapper-max-width);
