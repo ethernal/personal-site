@@ -31,12 +31,12 @@ async function AboutPage({ params, searchParams }) {
 
 	return (
 		// <article className={styles.wrapper}>
-		<article className={''}>
-			<header>
+		<article>
+			<header className="mx-auto max-w-[var(--page-wrapper-max-width)]">
 				<ArticleInfo publishedOn={publishedOn}>{title}</ArticleInfo>
 			</header>
 			{/* <div className={styles.page}> */}
-			<div className={''}>
+			<div className="wrapper">
 				<MDXRemote
 					source={pageFile.content}
 					components={components}

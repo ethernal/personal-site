@@ -23,6 +23,18 @@ const config: Config = {
 		// 	},
 		// },
 		extend: {
+			theme: {
+				aspectRatio: {
+					cinema: 21 / 9,
+					ultraWide: 21 / 9,
+					dualScreen: 32 / 9,
+					superUltraWide: 32 / 9,
+				},
+			},
+			screens: {
+				xxs: '240px',
+				xs: '480px',
+			},
 			colors: {
 				'primary-color': 'var(--primary-color)',
 				'secondary-color': 'var(--secondary-color)',

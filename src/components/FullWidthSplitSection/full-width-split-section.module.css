@@ -1,20 +1,8 @@
-/*  wrapper is provided to make sure that this component can work properly in the layout used.
-    Wrapper should be used in the element containing the component
-*/
-.wrapper {
-  max-width: var(--page-wrapper-max-width);
-  margin-inline: auto;
-  padding-inline: var(--page-wrapper-padding-inline);
-}
-
 .fullWidthSplitGrid {
   position: relative;
-  width: 100vw;
-  left: 50%;
-  right: 50%;
-  margin-left: -50vw;
-  margin-right: -50vw;
+  grid-column: 1/-1;
   display: grid;
+  padding-inline: 0;
 
  grid-template-columns:
     minmax(var(--page-wrapper-padding-inline) 1fr)

@@ -26,7 +26,7 @@
 
   /* Layout calculation */
   --header-height: 5rem;
-  --page-wrapper-max-width: 55rem;
+  --page-wrapper-max-width: 75ch;
   --page-wrapper-mobile-width: 35rem;
   --page-wrapper-padding-inline: 2rem;
   --section-padding-block:2rem;
@@ -52,9 +52,7 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   margin: 0;
-
 }
-
 
 img,
 picture,
@@ -220,18 +218,32 @@ button {
 }
 
 .wrapper {
-  max-width: var(--page-wrapper-max-width);
+  /* max-width: var(--page-wrapper-max-width);
   margin-inline: auto;
-  padding-inline: var(--page-wrapper-padding-inline);
+  padding-inline: var(--page-wrapper-padding-inline); */
+
+  display: grid;
+  grid-template-columns: 1fr min(var(--page-wrapper-max-width), 100%)  1fr;
 }
+
+.wrapper > * {
+  grid-column: 2;
+  padding-inline: var(--page-wrapper-padding-inline);
+  /* max-width: var(--page-wrapper-max-width); */
+}
+
+
 
 .full-width {
   width: 100vw;
+  width: 100dvw;
   position: relative;
   left: 50%;
   right: 50%;
   margin-left: -50vw;
+  margin-left: -50dvw;
   margin-right: -50vw;
+  margin-right: -50dvw;
   max-width:100%;
 }
 

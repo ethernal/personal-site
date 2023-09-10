@@ -24,10 +24,14 @@ function RootLayout({ children }: { children: ReactNode }) {
 					style={savedTheme === 'light' ? LIGHT_TOKENS : DARK_TOKENS}
 				>
 					<body>
-						<div className="wrapper">
-							<Header />
+						<div className="w-full">
+							{/*
+							max-width: var(--page-wrapper-max-width);
+  margin-inline: auto;
+							*/}
+							<Header className="max-w-[var(--page-wrapper-max-width)] mx-auto" />
 							<main>{children}</main>
-							<Footer />
+							<Footer className="wrapper" />
 						</div>
 					</body>
 				</html>
