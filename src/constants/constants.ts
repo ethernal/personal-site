@@ -1,3 +1,4 @@
+import { CSSProperties } from 'react';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeSlug from 'rehype-slug';
 import { remarkHeadingId } from 'remark-custom-heading-id';
@@ -58,14 +59,14 @@ export const DARK_COLORS = {
 export const LIGHT_SHADOWS = {};
 export const DARK_SHADOWS = {};
 
-export const LIGHT_TOKENS = {
+export const LIGHT_TOKENS: CSSProperties = {
 	...COLOR_DEFINITIONS,
 	...LAYOUT_VARIABLES,
 	...LIGHT_COLORS,
 	...LIGHT_SHADOWS,
 };
 
-export const DARK_TOKENS = {
+export const DARK_TOKENS: CSSProperties = {
 	...COLOR_DEFINITIONS,
 	...LAYOUT_VARIABLES,
 	...DARK_COLORS,
