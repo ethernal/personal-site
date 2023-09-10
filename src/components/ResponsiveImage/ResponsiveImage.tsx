@@ -73,7 +73,7 @@ function ResponsiveImage({
 				// for why next 3 lines are here see: https://github.com/vercel/next.js/discussions/18474#discussioncomment-5501724
 				width={width ?? 0}
 				height={height ?? 0}
-				sizes="100vw"
+				sizes="100dvw"
 				alt={alt}
 				style={{
 					objectFit: 'cover',
