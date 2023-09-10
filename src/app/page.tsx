@@ -14,7 +14,7 @@ async function Home() {
 	const posts = await getBlogPostList();
 
 	return (
-		<div>
+		<div className="wrapper max-w-[var('--page-wrapper-max-width')]">
 			<h1>Latest Articles</h1>
 
 			{posts.map((post) => {
