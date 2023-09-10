@@ -59,7 +59,7 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 						},
 					}}
 					data-menu-open={menuOpen}
-					className={`${styles.primaryNavigation} flex`}
+					className={`${styles.primaryNavigation} flex max-xxs:inset-0`}
 				>
 					<li>
 						<Link href={`/blog`} className="">
