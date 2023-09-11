@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 
 import styles from './ArticleInfo.module.css';
 
-function ArticleInfo({ publishedOn, children }) {
+type ArticleInfoProps = {
+	publishedOn: string;
+	children: ReactNode;
+};
+
+function ArticleInfo({ publishedOn, children }: ArticleInfoProps) {
 	return (
 		<div className={styles.wrapper}>
 			<h2 className={styles.pageTitle}>{children}</h2>

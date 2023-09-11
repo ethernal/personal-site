@@ -8,7 +8,7 @@ type ImageOptions =
 			variant: ImageVariant;
 			float: 'left' | 'right';
 			floatTextAroundImage: false;
-			showBorder: boolean;
+			showBorder?: boolean;
 	  }
 	| {
 			variant: ImageVariant;
@@ -101,7 +101,7 @@ function ResponsiveImage({
 						borderRadius:
 							floatTextAroundImage === true || showBorder === false
 								? '4px'
-								: null,
+								: 'inherit',
 					}}
 				>
 					{caption}

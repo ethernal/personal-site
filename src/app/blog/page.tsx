@@ -1,9 +1,8 @@
 import React from 'react';
 
 import BlogArticleCard from '@/components/BlogArticleCard';
-
-import { getBlogPostList } from '@/helpers/fs-helpers';
 import { SITE_TITLE } from '@/constants';
+import { getBlogPostList } from '@/helpers/fs-helpers';
 
 export const metadata = {
 	title: SITE_TITLE,
@@ -12,20 +11,20 @@ export const metadata = {
 };
 
 async function Home() {
-	const posts = await getBlogPostList();
+	const postsList = await getBlogPostList();
 
 	return (
 		<div className="wrapper max-w-[var('--page-wrapper-max-width')]">
 			<h1>Latest Articles</h1>
 
-			{posts.map((post) => {
+			{postsList.map((postFrontmatter) => {
 				return (
 					<BlogArticleCard
-						key={post.slug}
-						slug={post.slug}
-						title={post.title}
-						abstract={post.abstract}
-						publishedOn={post.publishedOn}
+						key={postFrontmatter.slug}
+						slug={postFrontmatter.slug}
+						title={postFrontmatter.title}
+						abstract={postFrontmatter.abstract}
+						publishedOn={postFrontmatter.publishedOn}
 					/>
 				);
 			})}

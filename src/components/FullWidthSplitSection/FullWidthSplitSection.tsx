@@ -29,14 +29,14 @@ function FullWidthSplitSection({
 
 	const usableNodes = validChildren.filter((child, index) => {
 		if (index >= 2) {
-			// console.warn(
-			// 	`Provided ${childrenCount} elements to FullWidthSplitSection component. This component accepts 1 or 2 elements. ` +
-			// 		`Child element of type "${child?.type}", with props: "${JSON.stringify(
-			// 			child?.props,
-			// 			undefined,
-			// 			' ',
-			// 		)}" ignored.`,
-			// );
+			console.warn(
+				`Provided ${childrenCount} elements to FullWidthSplitSection component. This component accepts 1 or 2 elements. ` +
+					`Child element of type "${child?.type}", with props: "${JSON.stringify(
+						child?.props,
+						undefined,
+						' ',
+					)}" ignored.`,
+			);
 		}
 		if (index < 2) return child;
 	});

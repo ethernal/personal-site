@@ -11,7 +11,7 @@ import { BlogPostFrontmatterType } from '@/types';
 export async function getBlogPostList(): Promise<BlogPostFrontmatterType[]> {
 	const fileNames = await readDirectory(SITE_PATHS.blogContentBasePath);
 
-	const blogPosts = [];
+	const blogPosts: Array<BlogPostFrontmatterType> = [];
 
 	for (let fileName of fileNames) {
 		const rawContent = await readFile(
@@ -28,7 +28,7 @@ export async function getBlogPostList(): Promise<BlogPostFrontmatterType[]> {
 
 	return blogPosts.sort((p1, p2) => (p1.publishedOn < p2.publishedOn ? 1 : -1));
 }
-export const loadBlogPost = cache(async (slug) => {
+export const loadBlogPost = cache(async (slug: string) => {
 	const rawContent = await readFile(
 		`${SITE_PATHS.blogContentBasePath}/${slug}.mdx`,
 	);
@@ -50,7 +50,7 @@ export const loadPageContent = cache(async (pageName: string) => {
 	return { frontmatter, content };
 });
 
-function readFile(localPath) {
+function readFile(localPath: string) {
 	return fs.readFile(path.join(process.cwd(), localPath));
 }
 

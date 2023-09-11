@@ -1,7 +1,14 @@
 import Link from 'next/link';
 import React from 'react';
 
-function BlogArticleCard({ slug, title, abstract, publishedOn }) {
+import BlogPostFrontmatterType from '@/types/BlogPostFrontmatterType';
+
+function BlogArticleCard({
+	slug,
+	title,
+	abstract,
+	publishedOn,
+}: BlogPostFrontmatterType) {
 	return (
 		<div>
 			<header>

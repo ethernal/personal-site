@@ -14,7 +14,6 @@ type NavigationMainProps = {
 
 const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 	const { className = '' } = props;
-
 	const [menuOpen, setMenuOpen] = useState(false);
 
 	const toggleMenu = () => {
