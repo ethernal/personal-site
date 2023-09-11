@@ -7,12 +7,14 @@ import { DARK_COLORS, LIGHT_COLORS } from '@/constants/constants';
 import { useThemeContext } from '@/context/theme/ThemeContext';
 
 type ActionsMenuProps = {
-	className?: CSSProperties | string;
+	className?: string;
+	classNameForIcons?: string;
 	delegated?: any;
 };
 
 const ActionsMenu: React.FC<ActionsMenuProps> = ({
 	className = '',
+	classNameForIcons = '',
 	...delegated
 }) => {
 	const { theme, setTheme } = useThemeContext();
@@ -34,11 +36,7 @@ const ActionsMenu: React.FC<ActionsMenuProps> = ({
 	};
 
 	return (
-		<button
-			onClick={handleThemeChange}
-			className={`${className}`}
-			{...delegated}
-		>
+		<button onClick={handleThemeChange} className={className} {...delegated}>
 			{theme === 'light' ? (
 				<Sun
 					size="1.5em"
@@ -46,6 +44,7 @@ const ActionsMenu: React.FC<ActionsMenuProps> = ({
 						minWidth: '1.5rem',
 						flexShrink: 0,
 					}}
+					className={classNameForIcons ?? ''}
 				/>
 			) : (
 				<Moon
@@ -54,6 +53,7 @@ const ActionsMenu: React.FC<ActionsMenuProps> = ({
 						minWidth: '1.5rem',
 						flexShrink: 0,
 					}}
+					className={classNameForIcons ?? ''}
 				/>
 			)}
 			<VisuallyHidden>Toggle dark / light mode</VisuallyHidden>
