@@ -1,12 +1,9 @@
+import { MDXRemote } from 'next-mdx-remote/rsc';
 import React from 'react';
 
 import BlogArticleHeader from '@/components/BlogArticleHeader';
-
+import { COMPONENT_MAP, MDXOptions, SITE_TITLE } from '@/constants';
 import { loadBlogPost } from '@/helpers/fs-helpers';
-
-import { MDXRemote } from 'next-mdx-remote/rsc';
-import { SITE_TITLE, MDXOptions } from '@/constants';
-import { COMPONENT_MAP } from '@/constants';
 
 export async function generateMetadata({ params }) {
 	const post = await loadBlogPost(params.postSlug);
@@ -21,7 +18,14 @@ export async function generateMetadata({ params }) {
 	};
 }
 
-async function BlogPost({ params }) {
+type BlogPostProps = {
+	params: {
+		postSlug: string;
+	};
+	searchParams: unknown;
+};
+
+async function BlogPost({ params }: BlogPostProps) {
 	const post = await loadBlogPost(params.postSlug);
 	const { title, publishedOn } = post.frontmatter;
 
