@@ -9,10 +9,10 @@ type ArticleInfoProps = {
 
 function ArticleInfo({ publishedOn, children }: ArticleInfoProps) {
 	return (
-		<div className={styles.wrapper}>
-			<h2 className={styles.pageTitle}>{children}</h2>
-			<ul className={styles.list}>
-				<li className={styles.listElement}>Published on: {publishedOn}</li>
+		<div className={`px-[var(--page-wrapper-padding-inline)]`}>
+			<h2 className={`mb-0`}>{children}</h2>
+			<ul className={`m-0 list-none`}>
+				<li className={`text-sm`}>Published on: {publishedOn}</li>
 			</ul>
 		</div>
 	);
