@@ -23,6 +23,10 @@ const config: Config = {
 		// 	},
 		// },
 		extend: {
+			spacing: {
+				'viewport-padding': 'var(--page-wrapper-padding)',
+				'content-width': 'var(--content-width)',
+			},
 			theme: {
 				aspectRatio: {
 					cinema: 21 / 9,
@@ -38,9 +42,11 @@ const config: Config = {
 			colors: {
 				'primary-color': 'var(--primary-color)',
 				'secondary-color': 'var(--secondary-color)',
-				'decoration-color': 'var(--decoration-color)',
+				decoration: 'var(--decoration-color)',
 				'background-color': 'var(--background-color)',
 				'text-color': 'var(--text-color)',
+				brand: 'var(--brand-color)',
+				'theme-white': 'var(--color-white)',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
