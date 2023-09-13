@@ -41,7 +41,7 @@ function Footer({ className }: FooterProps) {
 							</p>
 						</li>
 						<li className="mb-2">
-							<p className={'mt-0 mb-0 text-sm text-decoration font-light'}>
+							<p className={'mt-4 mb-0 text-xs text-decoration font-light'}>
 								Inspired by {` `}
 								<a
 									href="https://www.joshwcomeau.com/"
