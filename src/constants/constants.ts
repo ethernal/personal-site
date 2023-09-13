@@ -35,7 +35,7 @@ export const LAYOUT_VARIABLES = {
 	'--viewport-padding': '2rem',
 	'--header-height': '5rem',
 	'--page-content-width':
-		'calc(var(--page-wrapper-max-width) - var(--page-wrapper-padding-inline))',
+		'calc(var(--page-wrapper-max-width) - var(--page-wrapper-padding) - var(--page-wrapper-padding))',
 };
 
 export const LIGHT_COLORS = {
@@ -44,7 +44,7 @@ export const LIGHT_COLORS = {
 	'--background-color': 'var(--color-white)',
 	'--text-color': 'var(--color-black)',
 	'--text-color-inverted': 'var(--color-white)',
-	'--decoration-color': 'var(--primary-color)',
+	'--decoration': 'var(--primary-color)',
 };
 
 export const DARK_COLORS = {
@@ -53,7 +53,7 @@ export const DARK_COLORS = {
 	'--background-color': 'var(--color-black)',
 	'--text-color': 'var(--color-white)',
 	'--text-color-inverted': 'var(--color-black)',
-	'--decoration-color': 'var(--primary-color)',
+	'--decoration': 'var(--primary-color)',
 };
 
 export const LIGHT_SHADOWS = {};
