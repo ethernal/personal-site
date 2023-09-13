@@ -47,6 +47,8 @@ const config: Config = {
 				'text-color': 'var(--text-color)',
 				brand: 'var(--brand-color)',
 				'theme-white': 'var(--color-white)',
+				'theme-olive': 'hsla(95, 85%, 25%, 0.1)',
+				'theme-black': 'var(--color-black)',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

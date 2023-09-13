@@ -39,21 +39,23 @@ const ActionsMenu: React.FC<ActionsMenuProps> = ({
 		<button onClick={handleThemeChange} className={className} {...delegated}>
 			{theme === 'light' ? (
 				<Sun
-					size="1.5em"
+					size="24px"
 					style={{
 						minWidth: '1.5rem',
 						flexShrink: 0,
+						flexGrow: 0,
 					}}
 					className={classNameForIcons ?? ''}
 				/>
 			) : (
 				<Moon
-					size="1.5em"
+					size="24px"
 					style={{
 						minWidth: '1.5rem',
 						flexShrink: 0,
+						flexGrow: 0,
 					}}
-					className={classNameForIcons ?? ''}
+					className={classNameForIcons ?? 'shrink-0 flex-grow-0'}
 				/>
 			)}
 			<VisuallyHidden>Toggle dark / light mode</VisuallyHidden>

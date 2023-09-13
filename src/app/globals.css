@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  .force-translate-x-0 {
+    transform: translateX(0%) !important;
+  }
+}
+
 /* THEME VARIABLES */
 :root {
   --text-red:  'text-red-500';
