@@ -9,7 +9,7 @@ type ArticleInfoProps = {
 
 function ArticleInfo({ publishedOn, children }: ArticleInfoProps) {
 	return (
-		<div className={`px-[var(--page-wrapper-padding-inline)]`}>
+		<div className={`px-viewport-padding`}>
 			<h2 className={`mb-0`}>{children}</h2>
 			<ul className={`m-0 list-none`}>
 				<li className={`text-sm`}>Published on: {publishedOn}</li>
