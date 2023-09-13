@@ -1,7 +1,5 @@
-'use client';
-import React, { CSSProperties, useState } from 'react';
+import React, { CSSProperties } from 'react';
 
-import ColorThemeType from '@/types/ColorThemeType';
 import { cn } from '@/utils/utils';
 
 import NavigationMain from '../NavigationMain/NavigationMain';
