@@ -32,7 +32,7 @@ async function BlogPost({ params }: BlogPostProps) {
 	const components = COMPONENT_MAP;
 
 	return (
-		<article className="wrapper max-w-[var('--page-wrapper-max-width')]">
+		<article className="max-w-[var('--page-wrapper-max-width')] wrapper">
 			<BlogArticleHeader title={title} publishedOn={publishedOn} />
 			<div>
 				<MDXRemote

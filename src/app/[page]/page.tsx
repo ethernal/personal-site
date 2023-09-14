@@ -6,8 +6,6 @@ import { COMPONENT_MAP } from '@/constants/componentMap';
 import { MDXOptions, SITE_TITLE } from '@/constants/constants';
 import { loadPageContent } from '@/helpers/fs-helpers';
 
-import styles from './styles.module.css';
-
 export async function generateMetadata({ params, searchParams }) {
 	const pageName = params?.page;
 	const page = await loadPageContent(pageName);
@@ -32,7 +30,7 @@ async function AboutPage({ params, searchParams }) {
 	return (
 		// <article className={styles.wrapper}>
 		<article>
-			<header className="mx-auto max-w-[var(--page-wrapper-max-width)]">
+			<header className="mx-auto max-w-[var(--page-wrapper-max-width)] wrapper">
 				<ArticleInfo publishedOn={publishedOn}>{title}</ArticleInfo>
 			</header>
 			{/* <div className={styles.page}> */}
