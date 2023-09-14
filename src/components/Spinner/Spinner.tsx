@@ -1,14 +1,19 @@
 import React, { ComponentProps } from 'react';
 import { Loader } from 'react-feather';
 
-import styles from './Spinner.module.css';
-
 type SpinnerProps = ComponentProps<typeof Loader>;
 
 const Spinner = ({ color, size, ...delegated }: SpinnerProps) => {
 	return (
-		<div className={styles.wrapper}>
-			<Loader color={color} size={size} {...delegated} />
+		<div
+			className={`motion-safe:animate-spin-2s duration-1000 block w-min h-min opacity-60`}
+		>
+			<Loader
+				color={color}
+				size={size}
+				{...delegated}
+				className="block max-w-[revert]"
+			/>
 		</div>
 	);
 };

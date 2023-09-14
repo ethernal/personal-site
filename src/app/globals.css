@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  .force-translate-x-0 {
+    transform: translateX(0%) !important;
+  }
+}
+
 /* THEME VARIABLES */
 :root {
   --text-red:  'text-red-500';
@@ -28,7 +34,8 @@
   --header-height: 5rem;
   --page-wrapper-max-width: 75ch;
   --page-wrapper-mobile-width: 35rem;
-  --page-wrapper-padding-inline: 2rem;
+  --page-wrapper-padding: 2rem;
+  --page-wrapper-padding-inline: var(--page-wrapper-padding);
   --section-padding-block:2rem;
 
   --page-content-width: calc(var(--page-wrapper-max-width) - var(--page-wrapper-padding-inline));

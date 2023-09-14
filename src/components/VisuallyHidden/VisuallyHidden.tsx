@@ -1,8 +1,6 @@
 import clsx from 'clsx';
 import React, { ReactNode } from 'react';
 
-import styles from './VisuallyHidden.module.css';
-
 export type VisuallyHiddenProps = {
 	as?: keyof JSX.IntrinsicElements;
 	className?: string;
@@ -16,7 +14,13 @@ function VisuallyHidden({
 	...delegated
 }: VisuallyHiddenProps) {
 	return (
-		<Element className={clsx(styles.wrapper, className)} {...delegated}>
+		<Element
+			className={clsx(
+				className,
+				'absolute overflow-hidden [clip-path: circle(0%)] h-px w-px -m-px p-0 border-none',
+			)}
+			{...delegated}
+		>
 			{children}
 		</Element>
 	);
