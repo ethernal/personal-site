@@ -40,7 +40,11 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					{menuOpen === true ? 'close ' : 'open '}menu
 				</span>
 				{/* X is fixed so it stays in the same place when menu is open */}
-				{menuOpen === false ? <Menu /> : <X className="fixed top-1" />}
+				{menuOpen === false ? (
+					<Menu className="min-w-[24px] min-h-[24px]" />
+				) : (
+					<X className="fixed top-1" />
+				)}
 			</button>
 
 			{/* primary navigation */}
