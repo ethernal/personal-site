@@ -1,2 +1,5 @@
-export * from './Spinner';
-export { default } from './Spinner';
+import dynamic from 'next/dynamic';
+
+const Spinner = dynamic(() => import('@/components/Spinner/Spinner'));
+
+export default Spinner;

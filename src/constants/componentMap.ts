@@ -5,11 +5,13 @@ const {
 import Image from 'next/image';
 
 import FullWidthSplitSection from '@/components/FullWidthSplitSection';
-import ResponsiveImage from '@/components/ResponsiveImage/ResponsiveImage';
+import ResponsiveImage from '@/components/ResponsiveImage';
+import Spinner from '@/components/Spinner';
 
 export const COMPONENT_MAP = {
 	pre: CodeSnippet,
 	ResponsiveImage,
 	Image,
 	FullWidthSplitSection,
+	Spinner,
 };
