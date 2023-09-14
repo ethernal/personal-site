@@ -56,6 +56,10 @@ const config: Config = {
 					'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
 			},
 		},
+		animation: {
+			'spin-3s': 'spin 3s linear infinite',
+			'spin-2s': 'spin 2s linear infinite',
+		},
 	},
 	plugins: [],
 };
