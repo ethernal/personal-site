@@ -1,85 +1,521 @@
 'use client';
+import Image from 'next/image';
 import React from 'react';
 
 import { Card, CardBody, Tab, Tabs } from '@nextui-org/react';
 
+import TooltipMessage from '../TooltipMessage';
+
 function AboutMeToggleMessage() {
 	return (
 		<div className="flex w-full flex-col">
-			<Tabs aria-label="About me..">
+			<Tabs aria-label="About me.." defaultSelectedKey="recruiter">
 				<Tab key="friend" title="Friend">
-					<Card>
-						<CardBody>
-							I am a React Developer who loves to create applications that make
-							life easier and more enjoyable. I have worked for different
-							companies and clients, using various technologies and frameworks,
-							such as React, Typescript, PrismaJS, TailwindCSS, GraphQL, PHP,
-							MongoDB, PostgreSQL, MySQL, Java, Hyper SQL, Joomla, Wordpress,
-							CSS, NextJS, Symfony, ExpressJs, NodeJS, and more. I have also
-							been a technical lead, a manager assistant, and an IT professional
-							responsible for designing network in production halls and
-							supporting users. I have developed and maintained internal
-							applications such as , and ISO standards document management,
-							ticketing, machine maintenance, data analysis, data visualization.
-							My latest endeavor was creating this website using NextJS 13 and
-							React 18, and a training application that connects trainers and
-							trainees with personalized training plans. I am passionate about
-							learning new things and improving my skills.
+					<Card className="overflow-visible">
+						<CardBody className="overflow-visible">
+							<p className="text-sm">
+								I am a software developer who loves to create applications that
+								make life easier and more enjoyable. I have built commercial
+								projects and toys using various technologies and frameworks,
+								such as{' '}
+								<TooltipMessage position="top" content="React">
+									<Image
+										src="/logotypes/react-logo.svg"
+										width={100}
+										height={100}
+										alt=""
+										className="self-center object-cover"
+									/>
+									<p>
+										React is a library for creating fast and maintainable{' '}
+										<abbr title="User Interface">UI</abbr>.
+									</p>
+								</TooltipMessage>
+								,{' '}
+								<TooltipMessage position="top" content="Typescript">
+									<Image
+										src="/logotypes/typescript-logo.svg"
+										width={100}
+										height={100}
+										alt=""
+										className="self-center object-cover"
+									/>
+									<p>
+										Making Javascript code more reliable with strong typing
+										system.
+									</p>
+								</TooltipMessage>
+								,{' '}
+								<TooltipMessage position="top" content="PrismaJS">
+									<Image
+										src="/logotypes/prisma-logo.svg"
+										width={100}
+										height={100}
+										alt=""
+										className="self-center object-cover"
+									/>
+									<p>
+										Allows to connect to various databases and send and receive
+										data from it.
+									</p>
+								</TooltipMessage>
+								,{' '}
+								<TooltipMessage position="top" content="TailwindCSS">
+									<Image
+										src="/logotypes/tailwind-logo.svg"
+										width={100}
+										height={100}
+										alt=""
+										className="self-center object-cover"
+									/>
+									<p>
+										CSS utility framework that's eating the world but we do not
+										need to name classes ourselves anymore.
+									</p>
+								</TooltipMessage>
+								,{' '}
+								<TooltipMessage position="top" content="GraphQL">
+									<Image
+										src="/logotypes/graphql-logo.svg"
+										width={100}
+										height={100}
+										alt=""
+										className="self-center object-cover"
+									/>
+									<p>
+										Specification for retreiving <em>only needed</em> data from
+										the database via API calls.
+									</p>
+								</TooltipMessage>
+								,{' '}
+								<TooltipMessage position="top" content="PHP">
+									<Image
+										src="/logotypes/php-logo.svg"
+										width={100}
+										height={100}
+										alt=""
+										className="self-center object-cover"
+									/>
+									<p>
+										Originally an abbreviation of Personal Home Page, but it now
+										stands for the recursive initialism PHP: Hypertext
+										Preprocessor. Used to create generated websites before
+										Javascript was given that capability.
+									</p>
+								</TooltipMessage>
+								,{' '}
+								<TooltipMessage position="top" content="MongoDB">
+									<Image
+										src="/logotypes/mongodb-logo.svg"
+										width={100}
+										height={100}
+										alt=""
+										className="self-center object-cover"
+									/>
+									<p>
+										NoSQL database that uses JSON-like documents with optional
+										schemas. For me it was great when structure was unknown and
+										fairly simple. Nowadays it's fully fledged database with
+										multiple features.
+									</p>
+								</TooltipMessage>
+								,{' '}
+								<TooltipMessage position="top" content="PostgreSQL">
+									<Image
+										src="/logotypes/postgresql-logo.svg"
+										width={100}
+										height={100}
+										alt=""
+										className="self-center object-cover"
+									/>
+									<p>
+										Relational SQL database that uses JSON-like documents with
+										optional schemas. For me it was great when structure was
+										unknown and fairly simple. Nowadays it's fully fledged
+										database with multiple features.
+									</p>
+								</TooltipMessage>
+								,{' '}
+								<TooltipMessage position="top" content="MySQL">
+									<Image
+										src="/logotypes/mysql-logo.svg"
+										width={100}
+										height={100}
+										alt=""
+										className="self-center object-cover"
+									/>
+									<p>
+										Postgres, is a free and open-source relational database
+										management system (RDBMS) emphasizing extensibility and SQL
+										compliance. It's my default choice for the database when
+										developing applications.
+									</p>
+								</TooltipMessage>
+								,{' '}
+								<TooltipMessage position="top" content="Next.js">
+									<Image
+										src="/logotypes/nextjs-logo.svg"
+										width={100}
+										height={100}
+										alt=""
+										className="self-center object-cover"
+									/>
+									<p>
+										Next.js is a flexible React framework that this website uses
+										to display the text you are reading.
+									</p>
+								</TooltipMessage>
+								,{' '}
+								<TooltipMessage position="top" content="Symfony Framework">
+									<Image
+										src="/logotypes/symfony-logo.svg"
+										width={100}
+										height={100}
+										alt=""
+										className="self-center object-cover"
+									/>
+									<p>
+										Symfony is a set of reusable PHP components and a PHP
+										framework for web projects.
+									</p>
+								</TooltipMessage>
+								,{' '}
+								<TooltipMessage position="top" content="CSS">
+									<Image
+										src="/logotypes/css-logo.svg"
+										width={100}
+										height={100}
+										alt=""
+										className="self-center object-cover"
+									/>
+									<p>
+										CSS stands for Cascading Style Sheets and it is a language
+										used for describing how the elements of the website or
+										applications should look like. Tailwind is built on top of
+										CSS if that helps.
+									</p>
+								</TooltipMessage>
+								,{' '}
+								<TooltipMessage position="top" content="Wordpress">
+									<Image
+										src="/logotypes/wordpress-logo.svg"
+										width={100}
+										height={100}
+										alt=""
+										className="self-center object-cover"
+									/>
+									<p>
+										Wordpress is a Content Management System that allows to
+										create websites without technical knowledge. Powers huge
+										number of websites and shops.
+									</p>
+								</TooltipMessage>
+								, Hyper SQL, Joomla, ExpressJs, NodeJS, and more.
+							</p>
+							<p className="text-sm">
+								I have also been a technical lead, a manager assistant, and an
+								IT professional responsible for designing network in production
+								halls and supporting users. I have developed and maintained
+								internal applications such as , and ISO standards document
+								management, ticketing, machine maintenance, data analysis, data
+								visualization. My latest endeavor was creating this website
+								using NextJS 13 and React 18, and a training application that
+								connects trainers and trainees with personalized training plans.
+								I am passionate about learning new things and improving my
+								skills.
+							</p>
 						</CardBody>
 					</Card>
 				</Tab>
 				<Tab key="recruiter" title="Recruiter">
-					<Card>
-						<CardBody>
-							I am a <b>React Developer</b> Full Stack with over 10 years of
-							experience in IT, working for various companies and clients. I
-							worked with{' '}
-							<em>
-								React, Typescript, CSS, TailwindCSS, PrismaJS, GraphQL, PHP,
-								MongoDB, PostgreSQL, MySQL, Wordpress, NextJS, SymfonyPHP,
-								NodeJS
-							</em>
-							, and more.
-							<br />
-							In my last role I have acted as a technical lead in a small team
-							that was building a training application that connects trainees to
-							trainers and allows to create personalized training plans. I have
-							developed and maintained several applications that help users and
-							businesses with document management for ISO standards, ticketing,
-							machine maintenance, data analysis and visualization. I have also
-							built this website using NextJS 13 and React 18, and various
-							libraries. All content is powered by MDX.
+					<Card className="overflow-visible">
+						<CardBody className="overflow-visible">
+							<p className="text-small">
+								I am a <span className="font-semibold">React Developer</span>{' '}
+								and Full Stack with over 10 years of experience in IT, working
+								for various companies and clients. I worked with{' '}
+								<em>
+									{' '}
+									<TooltipMessage position="top" content="React">
+										<Image
+											src="/logotypes/react-logo.svg"
+											width={100}
+											height={100}
+											alt=""
+											className="self-center object-cover"
+										/>
+										<p>
+											React is a library for creating fast and maintainable{' '}
+											<abbr title="User Interface">UI</abbr>.
+										</p>
+									</TooltipMessage>
+									,{' '}
+									<TooltipMessage position="top" content="Typescript">
+										<Image
+											src="/logotypes/typescript-logo.svg"
+											width={100}
+											height={100}
+											alt=""
+											className="self-center object-cover"
+										/>
+										<p>
+											Making Javascript code more reliable with strong typing
+											system.
+										</p>
+									</TooltipMessage>
+									,{' '}
+									<TooltipMessage position="top" content="PrismaJS">
+										<Image
+											src="/logotypes/prisma-logo.svg"
+											width={100}
+											height={100}
+											alt=""
+											className="self-center object-cover"
+										/>
+										<p>
+											Allows to connect to various databases and send and
+											receive data from it.
+										</p>
+									</TooltipMessage>
+									,{' '}
+									<TooltipMessage position="top" content="TailwindCSS">
+										<Image
+											src="/logotypes/tailwind-logo.svg"
+											width={100}
+											height={100}
+											alt=""
+											className="self-center object-cover"
+										/>
+										<p>
+											CSS utility framework that's eating the world but we do
+											not need to name classes ourselves anymore.
+										</p>
+									</TooltipMessage>
+									,{' '}
+									<TooltipMessage position="top" content="GraphQL">
+										<Image
+											src="/logotypes/graphql-logo.svg"
+											width={100}
+											height={100}
+											alt=""
+											className="self-center object-cover"
+										/>
+										<p>
+											Specification for retreiving <em>only needed</em> data
+											from the database via API calls.
+										</p>
+									</TooltipMessage>
+									,{' '}
+									<TooltipMessage position="top" content="PHP">
+										<Image
+											src="/logotypes/php-logo.svg"
+											width={100}
+											height={100}
+											alt=""
+											className="self-center object-cover"
+										/>
+										<p>
+											Originally an abbreviation of Personal Home Page, but it
+											now stands for the recursive initialism PHP: Hypertext
+											Preprocessor. Used to create generated websites before
+											Javascript was given that capability.
+										</p>
+									</TooltipMessage>
+									,{' '}
+									<TooltipMessage position="top" content="MongoDB">
+										<Image
+											src="/logotypes/mongodb-logo.svg"
+											width={100}
+											height={100}
+											alt=""
+											className="self-center object-cover"
+										/>
+										<p>
+											NoSQL database that uses JSON-like documents with optional
+											schemas. For me it was great when structure was unknown
+											and fairly simple. Nowadays it's fully fledged database
+											with multiple features.
+										</p>
+									</TooltipMessage>
+									,{' '}
+									<TooltipMessage position="top" content="PostgreSQL">
+										<Image
+											src="/logotypes/postgresql-logo.svg"
+											width={100}
+											height={100}
+											alt=""
+											className="self-center object-cover"
+										/>
+										<p>
+											Relational SQL database that uses JSON-like documents with
+											optional schemas. For me it was great when structure was
+											unknown and fairly simple. Nowadays it's fully fledged
+											database with multiple features.
+										</p>
+									</TooltipMessage>
+									,{' '}
+									<TooltipMessage position="top" content="MySQL">
+										<Image
+											src="/logotypes/mysql-logo.svg"
+											width={100}
+											height={100}
+											alt=""
+											className="self-center object-cover"
+										/>
+										<p>
+											Postgres, is a free and open-source relational database
+											management system (RDBMS) emphasizing extensibility and
+											SQL compliance. It's my default choice for the database
+											when developing applications.
+										</p>
+									</TooltipMessage>
+									,{' '}
+									<TooltipMessage position="top" content="Next.js">
+										<Image
+											src="/logotypes/nextjs-logo.svg"
+											width={100}
+											height={100}
+											alt=""
+											className="self-center object-cover"
+										/>
+										<p>
+											Next.js is a flexible React framework that this website
+											uses to display the text you are reading.
+										</p>
+									</TooltipMessage>
+									,{' '}
+									<TooltipMessage position="top" content="Symfony Framework">
+										<Image
+											src="/logotypes/symfony-logo.svg"
+											width={100}
+											height={100}
+											alt=""
+											className="self-center object-cover"
+										/>
+										<p>
+											Symfony is a set of reusable PHP components and a PHP
+											framework for web projects.
+										</p>
+									</TooltipMessage>
+									,{' '}
+									<TooltipMessage position="top" content="CSS">
+										<Image
+											src="/logotypes/css-logo.svg"
+											width={100}
+											height={100}
+											alt=""
+											className="self-center object-cover"
+										/>
+										<p>
+											CSS stands for Cascading Style Sheets and it is a language
+											used for describing how the elements of the website or
+											applications should look like. Tailwind is built on top of
+											CSS if that helps.
+										</p>
+									</TooltipMessage>
+									,{' '}
+									<TooltipMessage position="top" content="Wordpress">
+										<Image
+											src="/logotypes/wordpress-logo.svg"
+											width={100}
+											height={100}
+											alt=""
+											className="self-center object-cover"
+										/>
+										<p>
+											Wordpress is a Content Management System that allows to
+											create websites without technical knowledge. Powers huge
+											number of websites and shops.
+										</p>
+									</TooltipMessage>
+								</em>{' '}
+								, and more.
+							</p>
+							<p className="text-sm">
+								In my last role I have acted as a technical lead in a small team
+								that was building a training application that connects trainees
+								to trainers and allows to create personalized training plans.
+							</p>
+							<p className="text-sm">
+								I have developed and maintained several applications that help
+								users and businesses with document management for ISO standards,
+								ticketing, machine maintenance, data analysis and visualization.
+								I have also built this website using NextJS 13 and React 18, and
+								various libraries. All content is powered by MDX.
+							</p>
 						</CardBody>
 					</Card>
 				</Tab>
 				<Tab key="tech" title="Technical">
-					<Card>
-						<CardBody>
-							I am a React Developer / Full Stack who is responsible for
-							project’s architecture, frontend and backend development and
-							deployment to AWS. I have worked with React, Typescript, PrismaJS,
-							TailwindCSS, and GraphQL as the core technologies for latest
-							applications. I have also worked with Figma for design (as a
-							consumer) and gathered requirements with the client during
-							meetings. I have led a small team of frontend and backend
-							developers and mentored a junior developer.
-							<br />
-							In my last role I have worked on a training application that
-							connects trainers and trainees with personalized training plans.
-							At the same company I was also responsible for frontend projects
-							for an international company from the cyber-security space.
-							Earlier I have worked with PHP and worked with MongoDB,
-							PostgreSQL, MySQL, Wordpress, CSS, NextJS, Symfony, NodeJS and
-							more. I have created and maintained various applications that
-							solve problems for users and businesses in different domains, such
-							as ISO standards document management, ticketing, machine
-							maintenance, data analysis.
-							<br />I have also helped design network infrastructure for
-							production halls and office areas and helped adopt new processes
-							in R&D and engineering departments.
-							<br />
-							The website you are browsing was built using latest NextJS 13 and
-							React 18.
+					<Card className="overflow-visible">
+						<CardBody className="overflow-visible">
+							<p className="text-sm">
+								I am a React Developer / Full Stack who is responsible for
+								project’s architecture, frontend and backend development and
+								deployment to AWS. I have worked with React, Typescript,
+								PrismaJS, TailwindCSS, and GraphQL as the core technologies for
+								latest applications. I have also worked with Figma for design
+								(as a consumer) and gathered requirements with the client during
+								meetings. I have been a technical lead in a{' '}
+								<TooltipMessage position="top" content="small team">
+									we were 3 developers me included and a UX/UI designer
+								</TooltipMessage>{' '}
+								of frontend and backend developers and mentored a junior
+								developer.
+							</p>
+							<p className="text-sm">
+								In my last role I have worked on a{' '}
+								<TooltipMessage position="top" content="training application">
+									Subject to NDA so I cannot reveal what is not already public
+									thus I am unable to present it as well at this point.
+								</TooltipMessage>{' '}
+								that connects trainers and trainees with personalized training
+								plans.
+							</p>
+							<p className="text-sm">
+								At the same company I was also responsible for frontend projects
+								for an international company from the cyber-security space.
+							</p>
+							<p className="text-sm">
+								Earlier I have worked with PHP and worked with MongoDB,
+								PostgreSQL, MySQL, Wordpress, CSS, NextJS, Symfony, NodeJS and
+								more. I have created and maintained various applications that
+								solve problems for users and businesses in various domains, such
+								as{' '}
+								<TooltipMessage
+									position="top"
+									content="ISO standards document management"
+								>
+									This was developed with Symfony (PHP framework) while working
+									at ifm ecolink. The application is still in use and operating.
+								</TooltipMessage>
+								,{' '}
+								<TooltipMessage
+									position="top"
+									content="ticketing and machine	maintenance"
+								>
+									It was also built in Symfony Framework. The application is
+									still in use and helping company keep machines operating. As
+									far as I know it saved hundreds of thousands of euros till
+									this day.
+								</TooltipMessage>
+								,{' '}
+								<TooltipMessage position="top" content="data analysis">
+									using NodeJS packaged into an executable file to run on
+									Windows to scan contents of log files (hundreds thousands of
+									lines long) and identify major errors in operations.
+								</TooltipMessage>
+								.
+							</p>
+							<p className="text-sm">
+								I have also helped design network infrastructure for production
+								halls and office areas and helped adopt new processes in R&D and
+								engineering departments.
+							</p>
+							<p className="text-sm">
+								The website you are browsing was built using latest NextJS 13
+								and React 18.
+							</p>
 						</CardBody>
 					</Card>
 				</Tab>

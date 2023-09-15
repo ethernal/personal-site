@@ -53,6 +53,7 @@ const config: Config = {
 				'theme-white': 'var(--color-white)',
 				'theme-olive': 'hsla(95, 85%, 25%, 0.1)',
 				'theme-black': 'var(--color-black)',
+				'theme-glass': 'var(--color-glass)',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

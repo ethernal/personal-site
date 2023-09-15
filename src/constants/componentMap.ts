@@ -8,6 +8,7 @@ import AboutMeToggleMessage from '@/components/AboutMeToggleMessage';
 import FullWidthSplitSection from '@/components/FullWidthSplitSection';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import Spinner from '@/components/Spinner';
+import TooltipMessage from '@/components/TooltipMessage';
 
 export const COMPONENT_MAP = {
 	pre: CodeSnippet,
@@ -16,4 +17,5 @@ export const COMPONENT_MAP = {
 	FullWidthSplitSection,
 	Spinner,
 	AboutMeToggleMessage,
+	TooltipMessage,
 };

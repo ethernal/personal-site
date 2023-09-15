@@ -28,6 +28,7 @@ export const COLOR_DEFINITIONS = {
 	'--color-black': '#111',
 	'--color-white': '#ddd',
 	'--color-ruby': 'hsl(7 95% 38% / 1)',
+	'--color-glass': 'hsl(0 100% 100% / 0.3)',
 };
 
 export const LAYOUT_VARIABLES = {
