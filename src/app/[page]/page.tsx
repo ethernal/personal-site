@@ -20,7 +20,7 @@ export async function generateMetadata({ params, searchParams }) {
 	};
 }
 
-async function AboutPage({ params, searchParams }) {
+async function SitePage({ params, searchParams }) {
 	const components = COMPONENT_MAP;
 	const pageName = params?.page;
 	const pageFile = await loadPageContent(pageName);
@@ -45,4 +45,4 @@ async function AboutPage({ params, searchParams }) {
 	);
 }
 
-export default AboutPage;
+export default SitePage;
