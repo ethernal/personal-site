@@ -23,6 +23,7 @@ function RootLayout({ children }: { children: ReactNode }) {
 					lang="en"
 					data-color-theme={savedTheme}
 					style={savedTheme === 'light' ? LIGHT_TOKENS : DARK_TOKENS}
+					className={savedTheme}
 				>
 					<body>
 						<NextUIThemeProvider>

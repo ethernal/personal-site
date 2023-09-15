@@ -26,6 +26,9 @@ const ActionsMenu: React.FC<ActionsMenuProps> = ({
 
 		const root = document.documentElement;
 		root.setAttribute('data-color-theme', nextTheme);
+		root.classList.remove('light');
+		root.classList.remove('dark');
+		root.classList.add(nextTheme);
 
 		const colors = nextTheme === 'light' ? LIGHT_COLORS : DARK_COLORS;
 
