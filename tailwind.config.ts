@@ -1,11 +1,15 @@
-import type { Config } from 'tailwindcss'
+import { nextui } from '@nextui-org/react';
+
+import type { Config } from 'tailwindcss';
 
 const config: Config = {
 	content: [
 		'./content/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
+		'./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}', // for nextui
 	],
+	darkMode: 'class',
 	theme: {
 		// colors: {
 		// 	green: {
@@ -49,6 +53,7 @@ const config: Config = {
 				'theme-white': 'var(--color-white)',
 				'theme-olive': 'hsla(95, 85%, 25%, 0.1)',
 				'theme-black': 'var(--color-black)',
+				'theme-glass': 'var(--color-glass)',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
@@ -61,6 +66,6 @@ const config: Config = {
 			'spin-2s': 'spin 2s linear infinite',
 		},
 	},
-	plugins: [],
+	plugins: [nextui()],
 };
-export default config
+export default config;

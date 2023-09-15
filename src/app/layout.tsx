@@ -7,6 +7,7 @@ import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import MotionPreferencesConfig from '@/components/MotionPreferencesConfig/MotionPreferencesConfig';
 import { DARK_TOKENS, LIGHT_TOKENS } from '@/constants/constants';
+import { NextUIThemeProvider } from '@/context/nextui/NextUIThemeProvider';
 import Theme from '@/context/theme/ThemeContext';
 import ColorThemeType from '@/types/ColorThemeType';
 
@@ -24,15 +25,17 @@ function RootLayout({ children }: { children: ReactNode }) {
 					style={savedTheme === 'light' ? LIGHT_TOKENS : DARK_TOKENS}
 				>
 					<body>
-						<div className="w-full">
-							{/*
+						<NextUIThemeProvider>
+							<div className="w-full">
+								{/*
 							max-width: var(--page-wrapper-max-width);
   margin-inline: auto;
 							*/}
-							<Header className="max-w-[var(--page-wrapper-max-width)] mx-auto" />
-							<main>{children}</main>
-							<Footer className="wrapper" />
-						</div>
+								<Header className="max-w-[var(--page-wrapper-max-width)] mx-auto" />
+								<main>{children}</main>
+								<Footer className="wrapper" />
+							</div>
+						</NextUIThemeProvider>
 					</body>
 				</html>
 			</Theme>
