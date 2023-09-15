@@ -2,6 +2,7 @@
 import Image from 'next/image';
 import React from 'react';
 
+import ResponsiveImage from '@/components/ResponsiveImage';
 import { Card, CardBody, Tab, Tabs } from '@nextui-org/react';
 
 import TooltipMessage from '../TooltipMessage';
@@ -338,13 +339,13 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage position="top" content="PostgreSQL">
+									<TooltipMessage content="PostgreSQL" initialOpen={true}>
 										<Image
 											src="/logotypes/postgresql-logo.svg"
 											width={100}
 											height={100}
 											alt=""
-											className="self-center object-cover"
+											className="object-contain"
 										/>
 										<p>
 											Relational SQL database that uses JSON-like documents with
@@ -428,7 +429,7 @@ function AboutMeToggleMessage() {
 											number of websites and shops.
 										</p>
 									</TooltipMessage>
-								</em>{' '}
+								</em>
 								, and more.
 							</p>
 							<p className="text-sm">

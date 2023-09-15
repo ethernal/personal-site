@@ -10,6 +10,7 @@
 		"nc": "new-component --lang ts"
 	},
 	"dependencies": {
+		"@floating-ui/react": "^0.25.4",
 		"@nextui-org/react": "^2.1.12",
 		"@types/node": "20.5.7",
 		"@types/react": "18.2.21",

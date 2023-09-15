@@ -1,61 +1,184 @@
 'use client';
-import React, { ReactNode } from 'react';
 
-import { useThemeContext } from '@/context/theme/ThemeContext';
-import { cn } from '@/utils/utils';
+import * as React from 'react';
 
-// import { Button, Popover, PopoverContent, PopoverTrigger, Tooltip } from '@nextui-org/react';
+import {
+	autoUpdate,
+	flip,
+	FloatingPortal,
+	offset,
+	shift,
+	useDismiss,
+	useFloating,
+	useFocus,
+	useHover,
+	useInteractions,
+	useMergeRefs,
+	useRole,
+} from '@floating-ui/react';
 
-type TooltipPosition = 'top' | 'bottom' | 'left' | 'right';
+import type { Placement } from '@floating-ui/react';
 
-type TooltipMessageProps = {
-	position: TooltipPosition;
-	content: string;
-	children: ReactNode;
+interface TooltipOptions {
+	initialOpen?: boolean;
+	placement?: Placement;
+	open?: boolean;
+	onOpenChange?: (open: boolean) => void;
+}
+
+export function useTooltip({
+	initialOpen = false,
+	placement = 'top',
+	open: controlledOpen,
+	onOpenChange: setControlledOpen,
+}: TooltipOptions = {}) {
+	const [uncontrolledOpen, setUncontrolledOpen] = React.useState(initialOpen);
+
+	const open = controlledOpen ?? uncontrolledOpen;
+	const setOpen = setControlledOpen ?? setUncontrolledOpen;
+
+	const data = useFloating({
+		placement,
+		open,
+		onOpenChange: setOpen,
+		whileElementsMounted: autoUpdate,
+		middleware: [
+			offset(5),
+			flip({
+				crossAxis: placement.includes('-'),
+				fallbackAxisSideDirection: 'start',
+				padding: 5,
+			}),
+			shift({ padding: 5 }),
+		],
+	});
+
+	const context = data.context;
+
+	const hover = useHover(context, {
+		move: false,
+		enabled: controlledOpen == null,
+	});
+	const focus = useFocus(context, {
+		enabled: controlledOpen == null,
+	});
+	const dismiss = useDismiss(context);
+	const role = useRole(context, { role: 'tooltip' });
+
+	const interactions = useInteractions([hover, focus, dismiss, role]);
+
+	return React.useMemo(
+		() => ({
+			open,
+			setOpen,
+			...interactions,
+			...data,
+		}),
+		[open, setOpen, interactions, data],
+	);
+}
+
+type ContextType = ReturnType<typeof useTooltip> | null;
+
+const TooltipContext = React.createContext<ContextType>(null);
+
+export const useTooltipContext = () => {
+	const context = React.useContext(TooltipContext);
+
+	if (context == null) {
+		throw new Error('Tooltip components must be wrapped in <Tooltip />');
+	}
+
+	return context;
 };
 
+export function Tooltip({
+	children,
+	...options
+}: { children: React.ReactNode } & TooltipOptions) {
+	// This can accept any props as options, e.g. `placement`,
+	// or other positioning options.
+	const tooltip = useTooltip(options);
+	return (
+		<TooltipContext.Provider value={tooltip}>
+			{children}
+		</TooltipContext.Provider>
+	);
+}
+
+export const TooltipTrigger = React.forwardRef<
+	HTMLElement,
+	React.HTMLProps<HTMLElement> & { asChild?: boolean }
+>(function TooltipTrigger({ children, asChild = false, ...props }, propRef) {
+	const context = useTooltipContext();
+	const childrenRef = (children as any).ref;
+	const ref = useMergeRefs([context.refs.setReference, propRef, childrenRef]);
+
+	// `asChild` allows the user to pass any element as the anchor
+	if (asChild && React.isValidElement(children)) {
+		return React.cloneElement(
+			children,
+			context.getReferenceProps({
+				ref,
+				...props,
+				...children.props,
+				'data-state': context.open ? 'open' : 'closed',
+			}),
+		);
+	}
+
+	return (
+		<span
+			ref={ref}
+			// The user can style the trigger based on the state
+			data-state={context.open ? 'open' : 'closed'}
+			{...context.getReferenceProps(props)}
+		>
+			{children}
+		</span>
+	);
+});
+
+export const TooltipContent = React.forwardRef<
+	HTMLDivElement,
+	React.HTMLProps<HTMLDivElement>
+>(function TooltipContent({ style, ...props }, propRef) {
+	const context = useTooltipContext();
+	const ref = useMergeRefs([context.refs.setFloating, propRef]);
+
+	if (!context.open) return null;
+
+	return (
+		<FloatingPortal>
+			<div
+				ref={ref}
+				style={{
+					...context.floatingStyles,
+					...style,
+				}}
+				{...context.getFloatingProps(props)}
+			/>
+		</FloatingPortal>
+	);
+});
+
+type TooltipMessageProps = {
+	content: string;
+	children: React.ReactNode;
+} & TooltipOptions;
+
 function TooltipMessage({
-	position = 'top',
 	content,
 	children,
 	...delegated
 }: TooltipMessageProps) {
-	const { theme } = useThemeContext();
-
 	return (
-		// <Tooltip showArrow={true} content={content} {...delegated}>
-		// 	{children}
-		// </Tooltip>
-
-		<span className="relative group cursor-help">
-			<span className="decoration-wavy underline decoration-theme-black/30">
-				{content}
-			</span>
-			<div
-				className={cn(
-					'absolute hidden z-10 invisible opacity-0 group-hover:block group-hover:visible group-hover:opacity-95 group-focus:block  group-focus:visible group-focus:opacity-95 rounded-md py-2 px-2 h-auto min-w-fit transition-opacity delay-200 ease-in-out border border-white bg-theme-glass backdrop-blur-md w-44 max-w-max shadow-lg',
-					{
-						'bg-gray-50 text-current': theme === 'light',
-						'bg-gray-900 text-white': theme === 'dark',
-					},
-					{
-						'bottom-full left-1/2 transform -translate-x-1/2 -translate-y-1':
-							position === 'top',
-						'top-full left-1/2 transform -translate-x-1/2 translate-y-1':
-							position === 'bottom',
-						'left-full top-1/2 transform translate-x-1 -translate-y-1/2':
-							position === 'right',
-						'right-full top-1/2 transform -translate-x-1 -translate-y-1/2':
-							position === 'left',
-					},
-				)}
-				role="tooltip"
-			>
-				<span className="flex flex-col gap-2 m-0 [&>p]:text-small [&>*]:m-0 [&>img]:rounded-sm [&>figure]:rounded-sm">
-					{children}
-				</span>
-			</div>
-		</span>
+		<Tooltip {...delegated}>
+			<TooltipTrigger>{content}</TooltipTrigger>
+			<TooltipContent className="flow-root max-w-[40vw] bg-white rounded-lg p-2 opacity-95  border-2 border-white backdrop-blur-md [&>p]:text-sm [&>p]:mb-0 [&>img]:pe-2 [&>img]:float-left shadow-lg dark:bg-theme-black dark:text-theme-white dark:border-theme-olive">
+				{children}
+			</TooltipContent>
+		</Tooltip>
 	);
 }
 
