@@ -19,7 +19,7 @@ function AboutMeToggleMessage() {
 								make life easier and more enjoyable. I have built commercial
 								projects and toys using various technologies and frameworks,
 								such as{' '}
-								<TooltipMessage position="top" content="React">
+								<TooltipMessage content="React">
 									<Image
 										src="/logotypes/react-logo.svg"
 										width={100}
@@ -33,7 +33,7 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage position="top" content="Typescript">
+								<TooltipMessage content="Typescript">
 									<Image
 										src="/logotypes/typescript-logo.svg"
 										width={100}
@@ -47,7 +47,7 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage position="top" content="PrismaJS">
+								<TooltipMessage content="PrismaJS">
 									<Image
 										src="/logotypes/prisma-logo.svg"
 										width={100}
@@ -61,7 +61,7 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage position="top" content="TailwindCSS">
+								<TooltipMessage content="TailwindCSS">
 									<Image
 										src="/logotypes/tailwind-logo.svg"
 										width={100}
@@ -75,7 +75,7 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage position="top" content="GraphQL">
+								<TooltipMessage content="GraphQL">
 									<Image
 										src="/logotypes/graphql-logo.svg"
 										width={100}
@@ -89,7 +89,7 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage position="top" content="PHP">
+								<TooltipMessage content="PHP">
 									<Image
 										src="/logotypes/php-logo.svg"
 										width={100}
@@ -105,7 +105,7 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage position="top" content="MongoDB">
+								<TooltipMessage content="MongoDB">
 									<Image
 										src="/logotypes/mongodb-logo.svg"
 										width={100}
@@ -121,7 +121,7 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage position="top" content="PostgreSQL">
+								<TooltipMessage content="PostgreSQL">
 									<Image
 										src="/logotypes/postgresql-logo.svg"
 										width={100}
@@ -137,7 +137,7 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage position="top" content="MySQL">
+								<TooltipMessage content="MySQL">
 									<Image
 										src="/logotypes/mysql-logo.svg"
 										width={100}
@@ -153,7 +153,7 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage position="top" content="Next.js">
+								<TooltipMessage content="Next.js">
 									<Image
 										src="/logotypes/nextjs-logo.svg"
 										width={100}
@@ -167,7 +167,7 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage position="top" content="Symfony Framework">
+								<TooltipMessage content="Symfony Framework">
 									<Image
 										src="/logotypes/symfony-logo.svg"
 										width={100}
@@ -181,7 +181,7 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage position="top" content="CSS">
+								<TooltipMessage content="CSS">
 									<Image
 										src="/logotypes/css-logo.svg"
 										width={100}
@@ -197,7 +197,7 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage position="top" content="Wordpress">
+								<TooltipMessage content="Wordpress">
 									<Image
 										src="/logotypes/wordpress-logo.svg"
 										width={100}
@@ -237,7 +237,7 @@ function AboutMeToggleMessage() {
 								for various companies and clients. I worked with{' '}
 								<em>
 									{' '}
-									<TooltipMessage position="top" content="React">
+									<TooltipMessage content="React">
 										<Image
 											src="/logotypes/react-logo.svg"
 											width={100}
@@ -251,7 +251,7 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage position="top" content="Typescript">
+									<TooltipMessage content="Typescript" initialOpen={true}>
 										<Image
 											src="/logotypes/typescript-logo.svg"
 											width={100}
@@ -265,7 +265,7 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage position="top" content="PrismaJS">
+									<TooltipMessage content="PrismaJS">
 										<Image
 											src="/logotypes/prisma-logo.svg"
 											width={100}
@@ -279,7 +279,7 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage position="top" content="TailwindCSS">
+									<TooltipMessage content="TailwindCSS">
 										<Image
 											src="/logotypes/tailwind-logo.svg"
 											width={100}
@@ -293,7 +293,7 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage position="top" content="GraphQL">
+									<TooltipMessage content="GraphQL">
 										<Image
 											src="/logotypes/graphql-logo.svg"
 											width={100}
@@ -307,7 +307,7 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage position="top" content="PHP">
+									<TooltipMessage content="PHP">
 										<Image
 											src="/logotypes/php-logo.svg"
 											width={100}
@@ -323,7 +323,7 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage position="top" content="MongoDB">
+									<TooltipMessage content="MongoDB">
 										<Image
 											src="/logotypes/mongodb-logo.svg"
 											width={100}
@@ -339,7 +339,7 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage content="PostgreSQL" initialOpen={true}>
+									<TooltipMessage content="PostgreSQL" initialOpen={false}>
 										<Image
 											src="/logotypes/postgresql-logo.svg"
 											width={100}
@@ -355,7 +355,7 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage position="top" content="MySQL">
+									<TooltipMessage content="MySQL">
 										<Image
 											src="/logotypes/mysql-logo.svg"
 											width={100}
@@ -371,7 +371,7 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage position="top" content="Next.js">
+									<TooltipMessage content="Next.js">
 										<Image
 											src="/logotypes/nextjs-logo.svg"
 											width={100}
@@ -385,7 +385,7 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage position="top" content="Symfony Framework">
+									<TooltipMessage content="Symfony Framework">
 										<Image
 											src="/logotypes/symfony-logo.svg"
 											width={100}
@@ -399,7 +399,7 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage position="top" content="CSS">
+									<TooltipMessage content="CSS">
 										<Image
 											src="/logotypes/css-logo.svg"
 											width={100}
@@ -415,7 +415,7 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage position="top" content="Wordpress">
+									<TooltipMessage content="Wordpress">
 										<Image
 											src="/logotypes/wordpress-logo.svg"
 											width={100}
@@ -458,7 +458,7 @@ function AboutMeToggleMessage() {
 								latest applications. I have also worked with Figma for design
 								(as a consumer) and gathered requirements with the client during
 								meetings. I have been a technical lead in a{' '}
-								<TooltipMessage position="top" content="small team">
+								<TooltipMessage content="small team">
 									we were 3 developers me included and a UX/UI designer
 								</TooltipMessage>{' '}
 								of frontend and backend developers and mentored a junior
@@ -466,7 +466,7 @@ function AboutMeToggleMessage() {
 							</p>
 							<p className="text-sm">
 								In my last role I have worked on a{' '}
-								<TooltipMessage position="top" content="training application">
+								<TooltipMessage content="training application">
 									Subject to NDA so I cannot reveal what is not already public
 									thus I am unable to present it as well at this point.
 								</TooltipMessage>{' '}
@@ -483,25 +483,19 @@ function AboutMeToggleMessage() {
 								more. I have created and maintained various applications that
 								solve problems for users and businesses in various domains, such
 								as{' '}
-								<TooltipMessage
-									position="top"
-									content="ISO standards document management"
-								>
+								<TooltipMessage content="ISO standards document management">
 									This was developed with Symfony (PHP framework) while working
 									at ifm ecolink. The application is still in use and operating.
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage
-									position="top"
-									content="ticketing and machine	maintenance"
-								>
+								<TooltipMessage content="ticketing and machine	maintenance">
 									It was also built in Symfony Framework. The application is
 									still in use and helping company keep machines operating. As
 									far as I know it saved hundreds of thousands of euros till
 									this day.
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage position="top" content="data analysis">
+								<TooltipMessage content="data analysis">
 									using NodeJS packaged into an executable file to run on
 									Windows to scan contents of log files (hundreds thousands of
 									lines long) and identify major errors in operations.
