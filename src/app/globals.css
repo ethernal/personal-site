@@ -245,10 +245,12 @@ p {
 p code {
   display: inline-block;
   font-size: 0.9em;
-  background: var(--color-inline-code-bg);
-  padding: 3px 6px;
+  background: var(--color-glass);
+  border: 0.5px solid var(--color-glass);
+  border-radius: 4px;
+  padding: 0 4px;
   margin: -0.25em -1px;
-  border-radius: 3px;
+  font-family: var(--font-family-mono);
 }
 
 a {
