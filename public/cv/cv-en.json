@@ -1,0 +1,496 @@
+{
+	"basics": {
+		"name": "Sebastian Pieczynski",
+		"label": "Software Developer",
+		"picture": "/image/profile/sebastian-profile-photo.png",
+		"email": "testament777@mail.com",
+		"phone": "(48) 668 248 360",
+		"website": "http://sebee.dev",
+		"summary": "Software Developer focused on delightful User Experience",
+		"location": {
+			"address": "Plebiscytowa 88",
+			"postalCode": "45-360",
+			"city": "Opole",
+			"countryCode": "PL",
+			"region": "opolskie"
+		},
+		"profiles": [
+			{
+				"network": "twitter",
+				"username": "@spieczynski"
+			},
+			{
+				"network": "linkedin",
+				"username": "ed3ee82f9630e99db32dec093b2ca07a0368002"
+			},
+			{
+				"network": "github",
+				"username": "ethernal"
+			},
+			{
+				"network": "linkedin",
+				"url": "https://www.linkedin.com/in/spieczynski/"
+			}
+		]
+	},
+	"work": [
+		{
+			"name": "MoreCode Sp. z o.o.",
+			"position": "React Developer",
+			"website": "http://morecode.ai",
+			"startDate": "2022-03-01",
+			"endDate": "2023-07-01",
+			"summary": "I was responsible for project’s architecture (database design, frameworks selection etc.) as well as building both frontend and backend with GraphQL. Application core technologies used are: React, Typescript, PrismaJS, TailwindCSS. Deployed to AWS used PostgreSQL as a database. Technical lead for frontend decisions within small team (3-4 members) as well as providing guidance for junior frontend developer. Requirements were gathered with the client and designs done with Figma.\\nFrontend projects for international company from cyber-security space.",
+			"location": "Remote, Poland",
+			"highlights": [
+				"Architected the application for personal trainings, designed database allowing any type and combination of exercises as well as normalized it for machine learning use."
+			],
+			"keywords": [
+				"API",
+				"Backend",
+				"Frontend",
+				"Javascript",
+				"Linux",
+				"MacOS",
+				"MDX",
+				"Next",
+				"Next.js",
+				"13",
+				"React",
+				"REST",
+				"TailwindCSS",
+				"Tailwind",
+				"Typescript"
+			]
+		},
+		{
+			"name": "ifm ecolink Sp. z o.o",
+			"position": "Senior IT Specialist",
+			"website": "http://ifm.com",
+			"endDate": "2022-03-01",
+			"startDate": "2012-06-19",
+			"summary": "Helping users and solving issues affecting both office employees as well as production area. Creating applications that help people complete their work efficiently as well as design ISO processes that assure reliable outcomes.",
+			"location": "Opole, Poland",
+			"highlights": ["React", "PHP", "MongoDB", "PostgreSQL", "MySQL"],
+			"keywords": ["React", "PHP", "MongoDB", "PostgreSQL", "MySQL"]
+		},
+		{
+			"name": "Opservice Sp. j.",
+			"position": "Java Developer",
+			"endDate": "2012-06-15",
+			"startDate": "2012-05-21",
+			"website": "",
+			"summary": ".",
+			"location": "Opole, Poland",
+			"highlights": ["Java", "CSS"],
+			"keywords": ["Java", "CSS"]
+		},
+		{
+			"name": "Koszalińska Agencja Rozwoju Regionalnego S.A.",
+			"position": "IT Specialist",
+			"endDate": "2012-05-21",
+			"startDate": "2010-04-01",
+			"website": "https://karrsa.eu",
+			"summary": "Helping users and solving issues affecting both office employees. Managing and creating company's website.",
+			"location": "Koszalin, Poland",
+			"highlights": ["PHP", "MySQL", "WordPress", "CSS"],
+			"keywords": ["PHP", "MySQL", "WordPress", "CSS"]
+		},
+		{
+			"name": "Freelance Web Developer",
+			"position": "Web Developer",
+			"endDate": "2011",
+			"startDate": "2009",
+			"website": "",
+			"summary": "Web development using Joomla and WordPress, customized plugins and solutions implementation.",
+			"location": "Koszalin, Poland",
+			"highlights": ["PHP", "MySQL", "WordPress", "CSS"],
+			"keywords": ["PHP", "MySQL", "WordPress", "CSS"]
+		}
+	],
+	"volunteer": [
+		{
+			"organization": "Ostoja Church",
+			"position": "Children's Ministry Co-Leader",
+			"website": "https://ostoja-opole.pl/",
+			"startDate": "2023-06-01",
+			"summary": "Managing and helping organize sunday school for children. Teacher for ages 4-10.",
+			"highlights": []
+		},
+		{
+			"organization": "Ostoja Church",
+			"position": "Sunday school teacher",
+			"website": "https://ostoja-opole.pl/",
+			"startDate": "2016-09-01",
+			"summary": "Teaching children about Bible's truths in simple language and helping them embrace the good values.",
+			"highlights": []
+		}
+	],
+	"education": [
+		{
+			"institution": "Technical University of Koszalin",
+			"area": "Computer Science",
+			"studyType": "Masters Degree",
+			"startDate": "2011-01-01",
+			"endDate": "2011-02-24",
+			"gpa": "4.48",
+			"courses": []
+		},
+		{
+			"institution": "Instituto Superior Téchnico",
+			"area": "Software Development",
+			"studyType": "Masters Degree",
+			"startDate": "2008-08-15",
+			"endDate": "2009-06-01",
+			"gpa": "4.0",
+			"courses": []
+		},
+		{
+			"institution": "Technical University of Koszalin",
+			"area": "Computer Science",
+			"studyType": "Engineer Degree",
+			"startDate": "2004-10-01",
+			"endDate": "2009-09-12",
+			"gpa": "5.0",
+			"courses": []
+		}
+	],
+	"awards": [
+		{
+			"title": "",
+			"date": "",
+			"awarder": "",
+			"summary": ""
+		}
+	],
+	"publications": [
+		{
+			"name": "Comparison analysis for websites based on HHS guidelines.",
+			"publisher": "National Conference for Students and Young Researchers",
+			"releaseDate": "2012-05-01",
+			"website": "https://www.hhs.gov/web/policies-and-standards/index.html",
+			"summary": "Article about quantitative methodology of comparing and ranking websites before Google Lighthouse or other automated testing tools were commonly used."
+		}
+	],
+	"skills": [
+		{
+			"name": "React",
+			"level": "Intermediate",
+			"value": 70,
+			"keywords": ["HTML", "CSS", "Javascript", "JSX", "Frontend", "Technical"]
+		},
+		{
+			"name": "CSS",
+			"level": "Advanced",
+			"value": 60,
+			"keywords": ["HTML", "CSS", "Javascript", "Frontend", "Technical"]
+		},
+		{
+			"name": "Typescript",
+			"level": "Advanced",
+			"value": 30,
+			"keywords": [
+				"HTML",
+				"CSS",
+				"Javascript",
+				"Frontend",
+				"Backend",
+				"Technical"
+			]
+		},
+		{
+			"name": "NodeJS",
+			"level": "Beginner",
+			"value": 20,
+			"keywords": ["HTML", "CSS", "Javascript", "Backend", "Technical"]
+		},
+		{
+			"name": "TailwindCSS",
+			"level": "Beginner",
+			"value": 29,
+			"keywords": ["HTML", "CSS", "JSON", "Technical"]
+		},
+		{
+			"name": "GraphQL",
+			"level": "Intermediate",
+			"value": 30,
+			"keywords": ["GraphQL", "API", "Backend", "Technical"]
+		},
+		{
+			"name": "Prisma.js",
+			"level": "Intermediate",
+			"value": 40,
+			"keywords": ["Javascript", "SQL", "JSON", "PostgreSQL", "Technical"]
+		}
+	],
+	"languages": [
+		{
+			"language": "Polish",
+			"value": 100,
+			"fluency": "Native speaker"
+		},
+		{
+			"language": "English",
+			"value": 90,
+			"fluency": "C2 - Fluent in technical language"
+		},
+		{
+			"language": "Japanese",
+			"value": 5,
+			"fluency": "Beginner"
+		}
+	],
+	"references": [],
+	"projects": [
+		{
+			"name": "Personal Website",
+			"startDate": "2022-09-04",
+			"description": "Personal website with articles powered by Next.js 13, React and MDX.",
+			"highlights": [
+				"Database schema is normalized and designed for any exercise regime that can be thought of, including variants happening during the exercise."
+			],
+			"keywords": [
+				"React",
+				"Frontend",
+				"TailwindCSS",
+				"Tailwind",
+				"MDX",
+				"Next",
+				"Next.js",
+				"13",
+				"Javascript",
+				"Typescript"
+			],
+			"url": "https://sebee.dev/"
+		},
+		{
+			"name": "Training Application",
+			"startDate": "2022-09-01",
+			"endDate": "2023-07-01",
+			"description": "Application that connects Trainers to Trainees and allows to create any type of training regime.",
+			"highlights": [
+				"Database schema is normalized and designed for any exercise regime that can be thought of, including variants happening during the exercise."
+			],
+			"keywords": [
+				"React",
+				"GraphQL",
+				"API",
+				"Frontend",
+				"Backend",
+				"TailwindCSS",
+				"Tailwind",
+				"PostgreSQL",
+				"Database Design",
+				"Architecture Design",
+				"Redwood",
+				"Typescript",
+				"Javascript",
+				"AWS"
+			],
+			"url": "https://morecode.ai/"
+		},
+		{
+			"name": "Various frontend projects for a company in the cybersecurity space",
+			"startDate": "2021-11-01",
+			"endDate": "2023-06-01",
+			"description": "Application that connects Trainers to Trainees and allows to create any type of training regime.",
+			"highlights": [
+				"Database schema is normalized and designed for any exercise regime that can be thought of, including any variations happening during the exercise."
+			],
+			"keywords": [
+				"Linux",
+				"MacOS",
+				"REST",
+				"API",
+				"Frontend",
+				"CSS",
+				"Typescript",
+				"Javascript",
+				"Git"
+			],
+			"url": "https://morecode.ai/"
+		},
+		{
+			"name": "Internal Document Management and Production Ticketing System",
+			"startDate": "2014",
+			"endDate": "2020",
+			"description": "Document management for ISO standardization documents. Allows for maintenance of ISO standards for the company by a single person department since 2015. Closely developed with the stakeholder.",
+			"highlights": [
+				"Project was considered to be implemented globally worldwide by the company, but since it was developed by a single person it was decided not to be deployed."
+			],
+			"url": "",
+			"keywords": [
+				"PHP",
+				"MySQL",
+				"CSS",
+				"Bootstrap",
+				"Doctrine",
+				"Symfony",
+				"Frontend",
+				"Backend",
+				"Monorepo",
+				"Git"
+			]
+		},
+		{
+			"name": "Internal Document Management and Production Ticketing System",
+			"startDate": "2015",
+			"endDate": "2020",
+			"description": "Ticketing system and machine park maintenance application – minimizes time to fix, improves production process. Generates thousands of euro savings monthly. Close development with management and maintenance employees.",
+			"highlights": [
+				"Project has saved thousands and possibly hundreds of thousands of euros to this day in operation costs. Another commercial project was rejected due to cost and it offered similar functionality."
+			],
+			"url": "",
+			"keywords": [
+				"PHP",
+				"MySQL",
+				"CSS",
+				"Bootstrap",
+				"Doctrine",
+				"Symfony",
+				"Frontend",
+				"Backend",
+				"Monorepo",
+				"Git"
+			]
+		},
+		{
+			"name": "Temperature monitoring and visualization",
+			"startDate": "2018",
+			"endDate": "2018",
+			"description": "Monitoring of areas temperature, humidity as well as gathering historical data for audits of manufacturing goods storage..",
+			"highlights": [
+				"Monitoring created for warehouse material safety and production approval. Thanks to MongoDB's aggregation framework preparing data for the server was counted in milliseconds instead of tens seconds."
+			],
+			"url": "",
+			"keywords": [
+				"Javascript",
+				"React",
+				"ChartJS",
+				"CSS",
+				"MongoDB",
+				"Frontend",
+				"Backend",
+				"NodeJS",
+				"Git"
+			]
+		},
+		{
+			"name": "Log file analyzer",
+			"startDate": "2017",
+			"endDate": "2017",
+			"description": "CLI application to analyze and filter data from multiple external reports generating single report with requested data.",
+			"highlights": [
+				"Project used streams of data and filtered based on user criteria since files were huge 10s of megabytes in multiple files. It was packaged into an executable that could be run without installing NodeJS."
+			],
+			"url": "",
+			"keywords": ["Javascript", "Windows", "NodeJS", "Git"]
+		}
+	],
+	"certificates": [
+		{
+			"name": "First Certificate in English",
+			"date": "2007",
+			"issuer": "Cambridge",
+			"url": "/certificate/fce.jpg"
+		}
+	],
+	"specific": {
+		"basics": {
+			"visaSponsorship": true,
+			"personalDescription": "This is a longer description of me, of my backstory, my backyard, my backfire, my backend, my frontend and my friends."
+		},
+		"dreamJob": {
+			"locations": [
+				{
+					"name": "Remote"
+				},
+				{
+					"name": "Opole, Poland"
+				}
+			],
+			"remoteFrequency": {
+				"frequency": "remote",
+				"daysPerWeek": 5
+			}
+		},
+		"currentJob": {
+			"issues": {
+				"z": true,
+				"boring_team": true
+			}
+		},
+		"education": {
+			"studiesLevel": "Masters Engineer Degree"
+		},
+		"work": {
+			"contractTypes": ["permanent", "part-time"],
+			"codingReason": "I love helping others and I do believe that writing quality software can improve people's lives.",
+			"searchState": "activelySearching",
+			"experienceYears": 13.5,
+			"codeExperienceYears": 6,
+			"otherExperienceYears": 7.5
+		},
+		"sound": {
+			"embedUrl": ""
+		},
+		"interestedBy": ""
+	},
+	"resumeCustomization": {
+		"imageHeader": {
+			"url": "https://cdn.filestackcontent.com/8I2wVnCRTFxypXRYLRsp",
+			"alt": "Resume Banner"
+		},
+		"cardsOrder": [
+			{
+				"type": "basics",
+				"variant": 4
+			},
+			{
+				"type": "skills",
+				"variant": 0
+			},
+			{
+				"type": "dreamjob",
+				"variant": 4
+			},
+			{
+				"type": "projects",
+				"variant": 4
+			},
+			{
+				"type": "experiences",
+				"variant": 4
+			},
+			{
+				"type": "studies",
+				"variant": 4
+			},
+			{
+				"type": "gifs",
+				"variant": 0
+			},
+			{
+				"type": "interestedBy",
+				"variant": 3
+			},
+			{
+				"type": "language",
+				"variant": 4
+			},
+			{
+				"type": "soundtrack",
+				"variant": 4
+			},
+			{
+				"type": "social",
+				"variant": 4
+			}
+		],
+		"fields": {
+			"work": {
+				"customDateFormat": "YYYY.mm"
+			}
+		}
+	}
+}
