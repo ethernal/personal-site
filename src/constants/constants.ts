@@ -25,10 +25,10 @@ export const MDXOptions = {
 };
 
 export const COLOR_DEFINITIONS = {
-	'--color-black': '#111',
-	'--color-white': '#ddd',
-	'--color-ruby': 'hsl(7 95% 38% / 1)',
-	'--color-glass': 'hsl(0 100% 100% / 0.3)',
+	'--color-theme-black': '#111',
+	'--color-theme-white': '#ddd',
+	'--color-theme-ruby': 'hsl(7 95% 38% / 1)',
+	'--color-theme-glass': 'hsl(0 100% 100% / 0.3)',
 };
 
 export const LAYOUT_VARIABLES = {
