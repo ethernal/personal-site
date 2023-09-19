@@ -35,7 +35,6 @@ type SocialNetworkListProps = {
 
 function SocialNetworkList(props: SocialNetworkListProps) {
 	const { socialProfiles } = props;
-	console.log('Social: ', socialProfiles);
 	return socialProfiles.map((profile: SocialProfile) => {
 		const Icon = networkIconMap[profile.network];
 
