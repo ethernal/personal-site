@@ -251,7 +251,7 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage content="Typescript" initialOpen={true}>
+									<TooltipMessage content="Typescript" initialOpen={false}>
 										<Image
 											src="/logotypes/typescript-logo.svg"
 											width={100}
