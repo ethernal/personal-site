@@ -1,17 +1,25 @@
 import Image from 'next/image';
 import React, { ComponentProps } from 'react';
 
+import { cn } from '@/utils/utils';
+
 type ImageVariant = 'float' | 'static';
 
 type ImageOptions =
 	| {
 			variant: ImageVariant;
 			float: 'left' | 'right';
+			floatTextAroundImage?: false;
+			showBorder?: boolean;
+	  }
+	| {
+			variant: 'float';
+			float: 'left' | 'right';
 			floatTextAroundImage: false;
 			showBorder?: boolean;
 	  }
 	| {
-			variant: ImageVariant;
+			variant: 'float';
 			float: 'left' | 'right';
 			floatTextAroundImage: true;
 	  }
@@ -23,13 +31,13 @@ type ImageOptions =
 
 type ResponsiveImageProps = {
 	src: string;
-	className: string;
-	caption: string;
+	className?: string;
+	caption?: string;
 	alt: string;
 	width?: number;
 	height?: number;
-	options?: ImageOptions;
-	delegated: ComponentProps<'img'>;
+	options?: Prettify<ImageOptions>;
+	delegated?: ComponentProps<'img'>;
 };
 
 function ResponsiveImage({
@@ -48,9 +56,9 @@ function ResponsiveImage({
 
 	if (options?.variant === 'float') {
 		float = options.float;
-		floatTextAroundImage = options.floatTextAroundImage;
+		floatTextAroundImage = options.floatTextAroundImage ?? false;
 	} else if (options?.variant === 'static' || options?.variant === undefined) {
-		showBorder = options?.showBorder;
+		showBorder = options?.showBorder ?? false;
 	}
 
 	const shapeOutside =
@@ -59,14 +67,18 @@ function ResponsiveImage({
 	return (
 		<figure
 			style={{
-				float: float,
-				width: 'inherit',
+				width: width ?? 'inherit',
+				maxWidth: width ?? 'inherit',
 				shapeOutside: shapeOutside,
-				padding: `0 ${float === 'left' ? '1rem' : '0'} 0  ${
-					float === 'right' ? '1rem' : '0'
-				}`,
 			}}
-			className={className}
+			className={cn(
+				{ 'float-right': float === 'right' },
+				{ 'float-left': float === 'left' },
+				{ shapeOutside: shapeOutside },
+				{ 'ps-4': float === 'left' },
+				{ 'pe-4': float === 'right' },
+				className,
+			)}
 		>
 			<Image
 				src={src}
@@ -82,13 +94,14 @@ function ResponsiveImage({
 					border:
 						floatTextAroundImage === true || showBorder === false
 							? 'none'
-							: '2px solid var(--color-gray-900)',
+							: '2px solid var(--color-theme-black)',
 					borderRadius:
 						floatTextAroundImage === true || showBorder === false
 							? 'none'
 							: '4px 4px 0 0',
 					width: width ?? 'inherit',
 					height: height ?? 'inherit',
+					maxWidth: width ?? 'inherit',
 				}}
 				{...delegated}
 			/>
@@ -102,7 +115,11 @@ function ResponsiveImage({
 							floatTextAroundImage === true || showBorder === false
 								? '4px'
 								: 'inherit',
+						wordBreak: 'break-word',
+						hyphenateCharacter: 'auto',
+						hyphens: 'auto',
 					}}
+					className="text-tiny"
 				>
 					{caption}
 				</figcaption>
