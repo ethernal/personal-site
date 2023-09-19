@@ -16,20 +16,16 @@
 		},
 		"profiles": [
 			{
+				"network": "github",
+				"username": "ethernal"
+			},
+			{
 				"network": "twitter",
 				"username": "@spieczynski"
 			},
 			{
 				"network": "linkedin",
-				"username": "ed3ee82f9630e99db32dec093b2ca07a0368002"
-			},
-			{
-				"network": "github",
-				"username": "ethernal"
-			},
-			{
-				"network": "linkedin",
-				"url": "https://www.linkedin.com/in/spieczynski/"
+				"username": "spieczynski"
 			}
 		]
 	},
