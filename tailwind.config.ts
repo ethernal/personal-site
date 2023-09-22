@@ -50,10 +50,10 @@ const config: Config = {
 				'background-color': 'var(--background-color)',
 				'text-color': 'var(--text-color)',
 				brand: 'var(--brand-color)',
-				'theme-white': 'var(--color-white)',
+				'theme-white': 'var(--color-theme-white)',
 				'theme-olive': 'hsla(95, 85%, 25%, 0.1)',
-				'theme-black': 'var(--color-black)',
-				'theme-glass': 'var(--color-glass)',
+				'theme-black': 'var(--color-theme-black)',
+				'theme-glass': 'var(--color-theme-glass)',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',

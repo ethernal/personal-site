@@ -108,7 +108,7 @@ function ResponsiveImage({
 			{caption !== (undefined && '' && null) ? (
 				<figcaption
 					style={{
-						backgroundColor: 'var(--color-gray-900)',
+						backgroundColor: 'var(--color-theme-black)',
 						padding: '0.2em',
 						color: 'var(--color-gray-100)',
 						borderRadius:

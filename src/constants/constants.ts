@@ -40,20 +40,20 @@ export const LAYOUT_VARIABLES = {
 };
 
 export const LIGHT_COLORS = {
-	'--brand-color': 'var(--color-ruby)',
+	'--brand-color': 'var(--color-theme-ruby)',
 	'--primary-color': '#5E8E0A',
-	'--background-color': 'var(--color-white)',
-	'--text-color': 'var(--color-black)',
-	'--text-color-inverted': 'var(--color-white)',
+	'--background-color': 'var(--color-theme-white)',
+	'--text-color': 'var(--color-theme-black)',
+	'--text-color-inverted': 'var(--color-theme-white)',
 	'--decoration': 'var(--primary-color)',
 };
 
 export const DARK_COLORS = {
-	'--brand-color': 'var(--color-ruby)',
+	'--brand-color': 'var(--color-theme-ruby)',
 	'--primary-color': '#5E8E0A',
-	'--background-color': 'var(--color-black)',
-	'--text-color': 'var(--color-white)',
-	'--text-color-inverted': 'var(--color-black)',
+	'--background-color': 'var(--color-theme-black)',
+	'--text-color': 'var(--color-theme-white)',
+	'--text-color-inverted': 'var(--color-theme-black)',
 	'--decoration': 'var(--primary-color)',
 };
 

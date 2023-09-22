@@ -60,17 +60,17 @@
   --text-blue: 'text-blue-500';
   --text-teal: 'text-teal-500';
   --text-black: 'text-black';
-  --color-black: '#222';
-  --color-white: '#eee';
-  --color-ruby: hsl(7 95% 38% / 1)
+  --color-theme-black: '#222';
+  --color-theme-white: '#eee';
+  --color-theme-ruby: hsl(7 95% 38% / 1)
   --text-white: var('--color-white');
-  --background-black: var('--color-black');
-  --background-white: var('--color-white');
-  --brand-color: var(--color-ruby);
+  --background-black: var('--color-theme-black');
+  --background-white: var('--color-theme-white');
+  --brand-color: var(--color-theme-ruby);
 
-  --background-color: var('--color-white');
-  --text-color: var('--color-black');
-  --text-color-inverted: var('--color-white');
+  --background-color: var('--color-theme-white');
+  --text-color: var('--color-theme-black');
+  --text-color-inverted: var('--color-theme-white');
 
   /* transitions */
   --transition-default-time: 200ms;
@@ -245,8 +245,8 @@ p {
 p code {
   display: inline-block;
   font-size: 0.9em;
-  background: var(--color-glass);
-  border: 0.5px solid var(--color-glass);
+  background: var(--color-theme-glass);
+  border: 0.5px solid var(--color-theme-glass);
   border-radius: 4px;
   padding: 0 4px;
   margin: -0.25em -1px;
