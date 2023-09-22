@@ -110,7 +110,7 @@ function ResponsiveImage({
 					style={{
 						backgroundColor: 'var(--color-theme-black)',
 						padding: '0.2em',
-						color: 'var(--color-gray-100)',
+						color: 'var(--color-theme-white)',
 						borderRadius:
 							floatTextAroundImage === true || showBorder === false
 								? '4px'
