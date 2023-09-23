@@ -70,8 +70,8 @@ function AboutMeToggleMessage() {
 										className="self-center object-cover"
 									/>
 									<p>
-										CSS utility framework that's eating the world but we do not
-										need to name classes ourselves anymore.
+										CSS utility framework that&apos;s eating the world but we do
+										not need to name classes ourselves anymore.
 									</p>
 								</TooltipMessage>
 								,{' '}
@@ -116,8 +116,8 @@ function AboutMeToggleMessage() {
 									<p>
 										NoSQL database that uses JSON-like documents with optional
 										schemas. For me it was great when structure was unknown and
-										fairly simple. Nowadays it's fully fledged database with
-										multiple features.
+										fairly simple. Nowadays it&apos;s fully fledged database
+										with multiple features.
 									</p>
 								</TooltipMessage>
 								,{' '}
@@ -132,7 +132,7 @@ function AboutMeToggleMessage() {
 									<p>
 										Relational SQL database that uses JSON-like documents with
 										optional schemas. For me it was great when structure was
-										unknown and fairly simple. Nowadays it's fully fledged
+										unknown and fairly simple. Nowadays it&apos;s fully fledged
 										database with multiple features.
 									</p>
 								</TooltipMessage>
@@ -148,8 +148,8 @@ function AboutMeToggleMessage() {
 									<p>
 										Postgres, is a free and open-source relational database
 										management system (RDBMS) emphasizing extensibility and SQL
-										compliance. It's my default choice for the database when
-										developing applications.
+										compliance. It&apos;s my default choice for the database
+										when developing applications.
 									</p>
 								</TooltipMessage>
 								,{' '}
@@ -217,8 +217,8 @@ function AboutMeToggleMessage() {
 								I have also been a technical lead, a manager assistant, and an
 								IT professional responsible for designing network in production
 								halls and supporting users. I have developed and maintained
-								internal applications such as , and ISO standards document
-								management, ticketing, machine maintenance, data analysis, data
+								internal applications such as ISO standards document management,
+								ticketing, machine maintenance, data analysis, data
 								visualization. My latest endeavor was creating this website
 								using NextJS 13 and React 18, and a training application that
 								connects trainers and trainees with personalized training plans.
@@ -288,8 +288,8 @@ function AboutMeToggleMessage() {
 											className="self-center object-cover"
 										/>
 										<p>
-											CSS utility framework that's eating the world but we do
-											not need to name classes ourselves anymore.
+											CSS utility framework that&apos;s eating the world but we
+											do not need to name classes ourselves anymore.
 										</p>
 									</TooltipMessage>
 									,{' '}
@@ -302,7 +302,7 @@ function AboutMeToggleMessage() {
 											className="self-center object-cover"
 										/>
 										<p>
-											Specification for retreiving <em>only needed</em> data
+											Specification for retrieving <em>only needed</em> data
 											from the database via API calls.
 										</p>
 									</TooltipMessage>
@@ -334,8 +334,8 @@ function AboutMeToggleMessage() {
 										<p>
 											NoSQL database that uses JSON-like documents with optional
 											schemas. For me it was great when structure was unknown
-											and fairly simple. Nowadays it's fully fledged database
-											with multiple features.
+											and fairly simple. Nowadays it&apos;s fully fledged
+											database with multiple features.
 										</p>
 									</TooltipMessage>
 									,{' '}
@@ -350,8 +350,8 @@ function AboutMeToggleMessage() {
 										<p>
 											Relational SQL database that uses JSON-like documents with
 											optional schemas. For me it was great when structure was
-											unknown and fairly simple. Nowadays it's fully fledged
-											database with multiple features.
+											unknown and fairly simple. Nowadays it&apos;s fully
+											fledged database with multiple features.
 										</p>
 									</TooltipMessage>
 									,{' '}
@@ -366,8 +366,8 @@ function AboutMeToggleMessage() {
 										<p>
 											Postgres, is a free and open-source relational database
 											management system (RDBMS) emphasizing extensibility and
-											SQL compliance. It's my default choice for the database
-											when developing applications.
+											SQL compliance. It&apos;s my default choice for the
+											database when developing applications.
 										</p>
 									</TooltipMessage>
 									,{' '}
