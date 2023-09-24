@@ -17,3 +17,19 @@ export function getValidChildren(children: React.ReactNode) {
 		React.isValidElement(child),
 	) as React.ReactElement[];
 }
+
+export function getDataAttributesFromJSONKeywords(
+	keywords: string[],
+	prefix = 'data-keyword',
+) {
+	let dataKeywords = {};
+	keywords?.forEach((keyword) => {
+		const attr = { [`${prefix}-${keyword.toLowerCase()}`]: keyword };
+		dataKeywords = {
+			...dataKeywords,
+			...attr,
+		};
+	});
+
+	return dataKeywords;
+}
