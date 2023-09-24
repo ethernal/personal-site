@@ -8,6 +8,8 @@ import {
 	RiTwitterXLine,
 } from 'react-icons/ri';
 
+import { SocialNetwork } from '@/types/CurriculumVitae';
+
 import { ProfileLink } from './ProfileLink';
 
 const networkIconMap = {
@@ -19,23 +21,13 @@ const networkIconMap = {
 	gitlab: RiGitlabLine,
 };
 
-type SocialProfile = {
-	network: string;
-	username: string;
-};
-
-type SocialProfiles = {
-	network: string;
-	username: string;
-}[];
-
 type SocialNetworkListProps = {
-	socialProfiles: Prettify<SocialProfiles>;
+	socialProfiles: SocialNetwork[];
 };
 
 function SocialNetworkList(props: SocialNetworkListProps) {
 	const { socialProfiles } = props;
-	return socialProfiles.map((profile: SocialProfile) => {
+	return socialProfiles.map((profile: SocialNetwork) => {
 		const Icon = networkIconMap[profile.network];
 
 		return (
