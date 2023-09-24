@@ -5,6 +5,7 @@ const {
 import Image from 'next/image';
 
 import AboutMeToggleMessage from '@/components/AboutMeToggleMessage';
+import CV from '@/components/CurriculumVitae';
 import FullWidthSplitSection from '@/components/FullWidthSplitSection';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import Spinner from '@/components/Spinner';
@@ -18,4 +19,5 @@ export const COMPONENT_MAP = {
 	Spinner,
 	AboutMeToggleMessage,
 	TooltipMessage,
+	CV,
 };

@@ -388,7 +388,7 @@
 			"name": "First Certificate in English",
 			"date": "2007",
 			"issuer": "Cambridge",
-			"url": "/certificate/fce.jpg"
+			"url": "/certificates/certificate-fce.png"
 		}
 	],
 	"specific": {
@@ -412,8 +412,8 @@
 		},
 		"currentJob": {
 			"issues": {
-				"z": true,
-				"boring_team": true
+				"z": false,
+				"boring_team": false
 			}
 		},
 		"education": {
