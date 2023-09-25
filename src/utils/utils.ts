@@ -24,7 +24,9 @@ export function getDataAttributesFromJSONKeywords(
 ) {
 	let dataKeywords = {};
 	keywords?.forEach((keyword) => {
-		const attr = { [`${prefix}-${keyword.toLowerCase()}`]: keyword };
+		const attr = {
+			[`${prefix}-${keyword.toLowerCase().replaceAll(' ', '-')}`]: keyword,
+		};
 		dataKeywords = {
 			...dataKeywords,
 			...attr,
