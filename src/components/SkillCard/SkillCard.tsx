@@ -1,11 +1,9 @@
 'use client';
-import * as React from 'react';
 
 import { Skill, SkillLevel } from '@/types/CurriculumVitae';
-import { cn } from '@/utils/utils';
-import {
-    Card, CardBody, CardFooter, CardHeader, CircularProgress, Divider
-} from '@nextui-org/react';
+import { CircularProgress, Divider } from '@nextui-org/react';
+
+import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
 
 type SkillCardProps = {
 	skill: Prettify<Skill>;
@@ -22,8 +20,8 @@ export const SkillHierarchy: Array<SkillLevel> = [
 function SkillCard({ skill, className = '' }: SkillCardProps) {
 	const { name, value, level, keywords } = skill;
 	return (
-		<Card className={cn('py-4 max-w-[15rem]', className)} isBlurred={true}>
-			<CardHeader className="pb-0 pt-2 px-4 flex-col items-start">
+		<CardUI className={className} isBlurred={true}>
+			<CardUIHeader>
 				<h4 className="font-bold text-large uppercase">{name}</h4>
 				<small className="text-default-500">
 					Next level:{' '}
@@ -37,10 +35,10 @@ function SkillCard({ skill, className = '' }: SkillCardProps) {
 						}
 					</span>
 				</small>
-			</CardHeader>
+			</CardUIHeader>
 			<Divider orientation="horizontal" />
 
-			<CardBody className="overflow-visible py-2 flex flex-row gap-4 items-center justify-center">
+			<CardUIBody>
 				<CircularProgress
 					aria-label="Learning..."
 					size="lg"
@@ -50,9 +48,9 @@ function SkillCard({ skill, className = '' }: SkillCardProps) {
 					className="max-w-md"
 				/>
 				<p className="m-0">{level}</p>
-			</CardBody>
+			</CardUIBody>
 			<Divider orientation="horizontal" />
-			<CardFooter className="">
+			<CardUIFooter>
 				<ul className="flex flex-row gap-2 flex-wrap bg-green-100 p-2 backdrop-blur-lg rounded-md">
 					{keywords?.map((keyword) => {
 						return (
@@ -65,8 +63,8 @@ function SkillCard({ skill, className = '' }: SkillCardProps) {
 						);
 					})}
 				</ul>
-			</CardFooter>
-		</Card>
+			</CardUIFooter>
+		</CardUI>
 	);
 }
 
