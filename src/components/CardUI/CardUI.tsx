@@ -29,7 +29,10 @@ function CardUI(
 ) {
 	return (
 		<Card
-			className={cn('py-4 max-w-[15rem]', className)}
+			className={cn(
+				'py-4 min-w-[clamp(8rem,15rem,min(20rem,100%))] max-w-full flex-1',
+				className,
+			)}
 			ref={ref}
 			{...delegated}
 		>
