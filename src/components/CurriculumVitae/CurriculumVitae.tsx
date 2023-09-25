@@ -1,5 +1,3 @@
-import React from 'react';
-
 import cv from '@/data/cv/cv-en.json';
 
 import EmploymentStatus from '../EmploymentStatus';
@@ -25,7 +23,7 @@ function CurriculumVitae({ className }: CurriculumVitaeProps) {
 			/>
 			<WorkHistory workHistory={cv.work} />
 			<EducationHistory education={cv.education} />
-			<SkillsList skills={cv.skills} />
+			<SkillsList skills={cv.skills} className="flex flex-wrap gap-4" />
 			<LanguagesList languages={cv.languages} />
 			<ProjectsList projects={cv.projects} />
 			<EmploymentStatus
