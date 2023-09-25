@@ -1,4 +1,6 @@
-﻿export interface CurriculumVitae {
+﻿export type SkillLevel = 'Beginner' | 'Intermediate' | 'Advanced' | 'Expert';
+
+export interface CurriculumVitae {
 	basics: PersonalInformation;
 	work?: Employment[] | null;
 	volunteer?: Volunteer[] | null;
@@ -86,12 +88,12 @@ export interface Publication {
 	summary: string;
 }
 
-export interface Skill {
+export type Skill = {
 	name: string;
-	level: string;
+	level: SkillLevel;
 	value: number;
 	keywords?: string[] | null;
-}
+};
 
 export interface Language {
 	language: string;
