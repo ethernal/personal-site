@@ -366,15 +366,16 @@ margin-top: 0;
 /* REEL - Horizontal Scroll List */
 
 .reel {
-  padding: 1rem;
+  --gap:1rem;
+  padding: var(--gap);
 
   display: grid;
-  gap: 1rem;
+  gap: var(--gap);
   grid-auto-flow: column;
-  grid-auto-columns: 45%;
+  grid-auto-columns: calc(45% - (var(--gap)/2));
   overflow-x: scroll;
   scroll-snap-type: x mandatory;
-  scroll-padding: 1rem;
+  scroll-padding: var(--gap);
 }
 
 .reel > * {
