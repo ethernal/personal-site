@@ -9,7 +9,7 @@ type LanguagesListProps = {
 
 function LanguagesList({ languages, className }: LanguagesListProps) {
 	return (
-		<section section-languages>
+		<section data-section-languages>
 			{languages.map((language) => {
 				return (
 					<article key={language.language}>
