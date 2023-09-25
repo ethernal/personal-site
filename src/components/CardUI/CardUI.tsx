@@ -8,83 +8,90 @@ type CardUIProps = {
 	children?: React.ReactNode;
 } & Prettify<React.ComponentProps<typeof Card>>;
 
-type CardHeaderProps = {
+type CardUIHeaderProps = {
 	className?: string;
 	children?: React.ReactNode;
 } & Prettify<React.ComponentProps<typeof CardHeader>>;
 
-type CardBodyProps = {
+type CardUIBodyProps = {
 	className?: string;
 	children?: React.ReactNode;
 } & Prettify<React.ComponentProps<typeof CardBody>>;
 
-type CardFooterProps = {
+type CardUIFooterProps = {
 	className?: string;
 	children?: React.ReactNode;
 } & Prettify<React.ComponentProps<typeof CardFooter>>;
 
-function CardUI(
-	{ className = '', children, ...delegated }: CardUIProps,
-	ref: React.RefObject<HTMLDivElement | null> | undefined,
-) {
-	return (
-		<Card
-			className={cn(
-				'py-4 min-w-[clamp(8rem,15rem,min(20rem,100%))] max-w-full flex-1',
-				className,
-			)}
-			ref={ref}
-			{...delegated}
-		>
-			{children}
-		</Card>
-	);
-}
+React.forwardRef<typeof Card, CardUIProps>(
+	React.memo(function CardUI(
+		{ className = '', children, ...delegated }: CardUIProps,
+		ref: React.RefObject<HTMLDivElement | null> | undefined,
+	) {
+		return (
+			<Card
+				className={cn(
+					'py-4 min-w-[clamp(8rem,15rem,min(20rem,100%))] max-w-full flex-1',
+					className,
+				)}
+				ref={ref}
+				{...delegated}
+			>
+				{children}
+			</Card>
+		);
+	}),
+);
 
-function CardUIHeader({
-	className = '',
-	children,
-	...delegated
-}: CardHeaderProps) {
-	return (
-		<CardHeader
-			className={cn('pb-0 pt-2 px-4 flex-col items-start', className)}
-			{...delegated}
-		>
-			{children}
-		</CardHeader>
-	);
-}
+const CardUIHeader = React.forwardRef<typeof CardHeader, CardUIHeaderProps>(
+	React.memo(function CardUIHeader(
+		{ className = '', children, ...delegated }: CardUIHeaderProps,
+		ref,
+	) {
+		return (
+			<CardHeader
+				ref={ref}
+				className={cn('pb-0 pt-2 px-4 flex-col items-start', className)}
+				{...delegated}
+			>
+				{children}
+			</CardHeader>
+		);
+	}),
+);
 
-function CardUIBody({ className = '', children, ...delegated }: CardBodyProps) {
-	return (
-		<CardBody
-			className={cn(
-				'overflow-visible py-2 flex flex-row gap-4 items-center justify-center',
-				className,
-			)}
-			{...delegated}
-		>
-			{children}
-		</CardBody>
-	);
-}
+const CardUIBody = React.forwardRef<typeof CardBody, CardUIBodyProps>(
+	React.memo(function CardUIBody(
+		{ className = '', children, ...delegated }: CardUIBodyProps,
+		ref,
+	) {
+		return (
+			<CardBody
+				ref={ref}
+				className={cn(
+					'overflow-visible py-2 flex flex-row gap-4 items-center justify-center',
+					className,
+				)}
+				{...delegated}
+			>
+				{children}
+			</CardBody>
+		);
+	}),
+);
 
-function CardUIFooter({
-	className = '',
-	children,
-	...delegated
-}: CardFooterProps) {
-	return (
-		<CardFooter className={cn(className)} {...delegated}>
-			{children}
-		</CardFooter>
-	);
-}
-
-CardUI.Header = CardUIHeader;
-CardUI.Body = CardUIBody;
-CardUI.Footer = CardUIFooter;
+const CardUIFooter = React.forwardRef<typeof CardFooter, CardUIFooterProps>(
+	React.memo(function CardUIFooter(
+		{ className = '', children, ...delegated }: CardUIFooterProps,
+		ref,
+	) {
+		return (
+			<CardFooter ref={ref} className={cn(className)} {...delegated}>
+				{children}
+			</CardFooter>
+		);
+	}),
+);
 
 export { CardUIHeader, CardUIBody, CardUIFooter };
 
