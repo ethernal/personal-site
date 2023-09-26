@@ -2,7 +2,7 @@
 
 export interface CurriculumVitae {
 	basics: PersonalInformation;
-	work?: Employment[] | null;
+	work?: Workplace[] | null;
 	volunteer?: Volunteer[] | null;
 	education?: EducationHistory[] | null;
 	awards?: Awards[] | null;
@@ -41,8 +41,9 @@ export type SocialNetwork = {
 	username: string;
 };
 
-export interface Employment {
+export interface Workplace {
 	name: string;
+	logo?: string;
 	position: string;
 	website: string;
 	startDate: string;
