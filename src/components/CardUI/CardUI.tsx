@@ -23,8 +23,8 @@ type CardUIFooterProps = {
 	children?: React.ReactNode;
 } & Prettify<React.ComponentProps<typeof CardFooter>>;
 
-React.forwardRef<typeof Card, CardUIProps>(
-	React.memo(function CardUI(
+const CardUI = React.memo(
+	React.forwardRef<typeof Card, CardUIProps>(function CardUI(
 		{ className = '', children, ...delegated }: CardUIProps,
 		ref: React.RefObject<HTMLDivElement | null> | undefined,
 	) {
@@ -43,8 +43,8 @@ React.forwardRef<typeof Card, CardUIProps>(
 	}),
 );
 
-const CardUIHeader = React.forwardRef<typeof CardHeader, CardUIHeaderProps>(
-	React.memo(function CardUIHeader(
+const CardUIHeader = React.memo(
+	React.forwardRef<typeof CardHeader, CardUIHeaderProps>(function CardUIHeader(
 		{ className = '', children, ...delegated }: CardUIHeaderProps,
 		ref,
 	) {
@@ -60,8 +60,8 @@ const CardUIHeader = React.forwardRef<typeof CardHeader, CardUIHeaderProps>(
 	}),
 );
 
-const CardUIBody = React.forwardRef<typeof CardBody, CardUIBodyProps>(
-	React.memo(function CardUIBody(
+const CardUIBody = React.memo(
+	React.forwardRef<typeof CardBody, CardUIBodyProps>(function CardUIBody(
 		{ className = '', children, ...delegated }: CardUIBodyProps,
 		ref,
 	) {
@@ -80,8 +80,8 @@ const CardUIBody = React.forwardRef<typeof CardBody, CardUIBodyProps>(
 	}),
 );
 
-const CardUIFooter = React.forwardRef<typeof CardFooter, CardUIFooterProps>(
-	React.memo(function CardUIFooter(
+const CardUIFooter = React.memo(
+	React.forwardRef<typeof CardFooter, CardUIFooterProps>(function CardUIFooter(
 		{ className = '', children, ...delegated }: CardUIFooterProps,
 		ref,
 	) {
@@ -95,4 +95,4 @@ const CardUIFooter = React.forwardRef<typeof CardFooter, CardUIFooterProps>(
 
 export { CardUIHeader, CardUIBody, CardUIFooter };
 
-export default React.forwardRef<HTMLDivElement, CardUIProps>(CardUI);
+export default CardUI;
