@@ -1,11 +1,7 @@
-import Link from 'next/link';
-import React from 'react';
-import { TbWorldWww } from 'react-icons/tb';
-
 import { Project } from '@/types/CurriculumVitae';
-import { getDataAttributesFromJSONKeywords } from '@/utils/utils';
+import { cn, getDataAttributesFromJSONKeywords } from '@/utils/utils';
 
-import HorizontalItem from '../HorizontalItem';
+import ProjectCard from '../ProjectCard';
 
 type ProjectsListProps = {
 	projects: Project[];
@@ -14,8 +10,8 @@ type ProjectsListProps = {
 
 function ProjectsList({ projects, className }: ProjectsListProps) {
 	return (
-		<section className={className}>
-			{projects?.map((skill: Project, projectIndex: number) => {
+		<section className={cn('grid grid-cols-1 md:grid-cols-2 gap-4', className)}>
+			{projects?.map((project: Project, projectIndex: number) => {
 				const {
 					name,
 					startDate,
@@ -24,7 +20,8 @@ function ProjectsList({ projects, className }: ProjectsListProps) {
 					highlights,
 					url,
 					keywords,
-				} = skill;
+					gallery,
+				} = project;
 
 				const dataKeywords = getDataAttributesFromJSONKeywords(keywords ?? []);
 
@@ -34,35 +31,12 @@ function ProjectsList({ projects, className }: ProjectsListProps) {
 						data-has-keywords={Object.keys(dataKeywords).length}
 						{...dataKeywords}
 					>
-						<ul>
-							<HorizontalItem as="li" className="items-baseline gap-4">
-								<h3 className="mb-0">{name}</h3>
-								<Link href={url} target="_blank" className="relative top-[2px]">
-									<TbWorldWww />
-								</Link>
-							</HorizontalItem>
-							<HorizontalItem as="li">
-								<p className="text-tiny">
-									<time dateTime="YYYY-MM-DD">{startDate}</time>
-									{endDate !== startDate && (
-										<>
-											{' '}
-											&ndash; <time dateTime="YYYY-MM-DD">{endDate}</time>
-										</>
-									)}
-								</p>
-							</HorizontalItem>
-							<li>{description}</li>
-							<li>{highlights}</li>
-
-							<ul className="text-tiny ms-4 mb-2">
-								{keywords?.map((keyword, index) => {
-									return (
-										<li key={`skill-${name}-keyword-${index}`}>{keyword}</li>
-									);
-								})}
-							</ul>
-						</ul>
+						<ProjectCard
+							project={project}
+							// className="[background:radial-gradient(circle,rgba(34,193,195,0.9612045501794468)_0%,_rgba(125,167,190,0.9471989479385504)_38%,_rgba(253,187,45,0.9163866230085784)_100%)]"
+							// className="[background:linear-gradient(0deg,_rgba(195,99,34,0.9612045501794468)_0%,_rgba(200,28,28,0.9359944661458334)_18%,_rgba(253,187,45,0.9163866230085784)_100%)]"
+							className="[background:radial-gradient(circle,rgba(238,174,202,1)_0%,_rgba(148,187,233,1)_100%)]"
+						/>
 					</article>
 				);
 			})}
