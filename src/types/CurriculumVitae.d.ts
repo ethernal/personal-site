@@ -4,7 +4,7 @@ export interface CurriculumVitae {
 	basics: PersonalInformation;
 	work?: Workplace[] | null;
 	volunteer?: Volunteer[] | null;
-	education?: EducationHistory[] | null;
+	education?: EducationInstitution[] | null;
 	awards?: Awards[] | null;
 	publications?: Publication[] | null;
 	skills?: Skill[] | null;
@@ -63,7 +63,7 @@ export interface Volunteer {
 	highlights?: null[] | null;
 }
 
-export interface EducationHistory {
+export interface EducationInstitution {
 	institution: string;
 	area: string;
 	studyType: string;
@@ -72,6 +72,7 @@ export interface EducationHistory {
 	gpa: string;
 	courses?: null[] | null;
 	level?: EducationLevel;
+	image?: string;
 }
 
 export interface Awards {

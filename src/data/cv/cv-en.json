@@ -88,7 +88,7 @@
 			"keywords": ["Java", "CSS"]
 		},
 		{
-			"name": "Koszalińska Agencja Rozwoju Regionalnego S.A.",
+			"name": "Koszalińska Agencja Rozwoju Regionalnego S. A.",
 			"position": "IT Specialist",
 			"endDate": "2012-05-21",
 			"startDate": "2010-04-01",
@@ -142,7 +142,8 @@
 			"startDate": "2011-01-01",
 			"endDate": "2011-02-24",
 			"gpa": "4.48",
-			"courses": []
+			"courses": [],
+			"image": "/image/education/tuk.jpg"
 		},
 		{
 			"institution": "Instituto Superior Téchnico",
@@ -151,16 +152,18 @@
 			"startDate": "2008-08-15",
 			"endDate": "2009-06-01",
 			"gpa": "4.0",
-			"courses": []
+			"courses": [],
+			"image": "/image/education/ist.jpg"
 		},
 		{
 			"institution": "Technical University of Koszalin",
 			"area": "Computer Science",
-			"studyType": "Engineer Degree",
+			"studyType": "Engineers Degree",
 			"startDate": "2004-10-01",
 			"endDate": "2009-09-12",
 			"gpa": "5.0",
-			"courses": []
+			"courses": [],
+			"image": "/image/education/tuk.jpg"
 		}
 	],
 	"awards": [

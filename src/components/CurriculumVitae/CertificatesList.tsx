@@ -1,8 +1,6 @@
-import React, { Fragment } from 'react';
-
 import { Certificate } from '@/types/CurriculumVitae';
 
-import ResponsiveImage from '../ResponsiveImage';
+import CertificateCard from '../CertificateCard';
 
 type CertificatesListProps = {
 	certificates: Certificate[];
@@ -15,17 +13,11 @@ function CertificatesList({ certificates, className }: CertificatesListProps) {
 			<ul>
 				{certificates.map((certificate: Certificate) => {
 					return (
-						<Fragment
+						<article
 							key={`certificate-${certificate.name}-${certificate.issuer}`}
 						>
-							<li>
-								{certificate.name} issued by {certificate.issuer} on{' '}
-								{certificate.date}
-							</li>
-							<li>
-								<ResponsiveImage src={certificate.url} alt={certificate.name} />
-							</li>
-						</Fragment>
+							<CertificateCard certificate={certificate} />
+						</article>
 					);
 				})}
 			</ul>

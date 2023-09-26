@@ -1,42 +1,22 @@
-import React from 'react';
-import { LuFocus } from 'react-icons/lu';
-import { PiStudent } from 'react-icons/pi';
-import { SiLevelsdotfyi } from 'react-icons/si';
+import { EducationInstitution } from '@/types/CurriculumVitae';
+import { cn } from '@/utils/utils';
 
-import { EducationHistory } from '@/types/CurriculumVitae';
-
-import HorizontalItem from '../HorizontalItem';
+import EducationCard from '../EducationCard';
 
 type EducationHistoryProps = {
-	education: EducationHistory[];
+	education: EducationInstitution[];
 	className?: string;
 };
 
 function EducationHistory({ education, className }: EducationHistoryProps) {
 	return (
-		<section className={className}>
-			{education.map((course: EducationHistory, index) => {
+		<section className={cn('grid grid-cols-1 md:grid-cols-3 gap-4', className)}>
+			{education.map((institution: EducationInstitution, index) => {
 				return (
 					<article
-						key={`institution-${index}-${course.institution}-${course.startDate}`}
+						key={`institution-${index}-${institution.institution}-${institution.startDate}`}
 					>
-						<ul>
-							<HorizontalItem as="li">
-								<PiStudent /> {course.institution}
-							</HorizontalItem>
-							<HorizontalItem as="li">
-								<LuFocus /> {course.area}
-							</HorizontalItem>
-							<HorizontalItem as="li">
-								<SiLevelsdotfyi /> {course.studyType}
-							</HorizontalItem>
-							<HorizontalItem as="li">
-								<p className="text-small">
-									<time dateTime="YYYY-MM-DD">{course.startDate}</time> &ndash;{' '}
-									<time dateTime="YYYY-MM-DD">{course.endDate}</time>
-								</p>
-							</HorizontalItem>
-						</ul>
+						<EducationCard education={institution} />
 					</article>
 				);
 			})}
