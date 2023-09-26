@@ -1,6 +1,9 @@
 import React from 'react';
 
 import { Language } from '@/types/CurriculumVitae';
+import { cn } from '@/utils/utils';
+
+import LanguageCard from '../LanguageCard';
 
 type LanguagesListProps = {
 	languages: Prettify<Language>[];
@@ -9,15 +12,11 @@ type LanguagesListProps = {
 
 function LanguagesList({ languages, className }: LanguagesListProps) {
 	return (
-		<section data-section-languages>
+		<section data-section-languages className={cn('auto-grid', className)}>
 			{languages.map((language) => {
 				return (
 					<article key={language.language}>
-						<ul>
-							<li>{language.language}</li>
-							<li>{language.value}</li>
-							<li>{language.fluency}</li>
-						</ul>
+						<LanguageCard language={language} />
 					</article>
 				);
 			})}
