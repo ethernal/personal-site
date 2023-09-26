@@ -360,7 +360,7 @@ margin-top: 0;
   display: grid;
   gap: 1rem;
   padding: 1rem;
-  grid-template-columns: repeat(auto-fit, min-max(min(10rem,100%), 1fr))
+  grid-template-columns: repeat(auto-fit, minmax(min(10rem,100%), 1fr))
 }
 
 /* REEL - Horizontal Scroll List */
