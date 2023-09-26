@@ -31,12 +31,7 @@ function ProjectsList({ projects, className }: ProjectsListProps) {
 						data-has-keywords={Object.keys(dataKeywords).length}
 						{...dataKeywords}
 					>
-						<ProjectCard
-							project={project}
-							// className="[background:radial-gradient(circle,rgba(34,193,195,0.9612045501794468)_0%,_rgba(125,167,190,0.9471989479385504)_38%,_rgba(253,187,45,0.9163866230085784)_100%)]"
-							// className="[background:linear-gradient(0deg,_rgba(195,99,34,0.9612045501794468)_0%,_rgba(200,28,28,0.9359944661458334)_18%,_rgba(253,187,45,0.9163866230085784)_100%)]"
-							className="[background:radial-gradient(circle,rgba(238,174,202,1)_0%,_rgba(148,187,233,1)_100%)]"
-						/>
+						<ProjectCard project={project} />
 					</article>
 				);
 			})}
