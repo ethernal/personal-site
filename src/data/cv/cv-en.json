@@ -228,7 +228,7 @@
 		{
 			"language": "English",
 			"value": 90,
-			"fluency": "C2 - Fluent in technical language"
+			"fluency": "Fluent Technical Language"
 		},
 		{
 			"language": "Japanese",
@@ -257,7 +257,11 @@
 				"Javascript",
 				"Typescript"
 			],
-			"url": "https://sebee.dev/"
+			"url": "https://sebee.dev/",
+			"gallery": [
+				{ "src": "/image/project/sebee.dev/1.jpg", "alt": "Image description" },
+				{ "src": "/image/project/sebee.dev/2.jpg", "alt": "Image description" }
+			]
 		},
 		{
 			"name": "Training Application",

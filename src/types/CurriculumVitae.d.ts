@@ -109,6 +109,7 @@ export interface Project {
 	highlights?: string[] | null;
 	keywords?: string[] | null;
 	url: string;
+	gallery?: Array<{ src: string; alt: string }>;
 }
 
 export interface Certificate {
