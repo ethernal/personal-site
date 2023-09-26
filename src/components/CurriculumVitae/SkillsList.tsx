@@ -12,15 +12,9 @@ type SkillsListProps = {
 
 function SkillsList({ skills, className }: SkillsListProps) {
 	return (
-		<section className={className}>
+		<section data-section-skills className={cn('auto-grid', className)}>
 			{skills.map((skill: Skill, skillIndex: number) => {
-				return (
-					<SkillCard
-						skill={skill}
-						key={skill.name + skillIndex}
-						className={cn('auto-grid', className)}
-					/>
-				);
+				return <SkillCard skill={skill} key={skill.name + skillIndex} />;
 			})}
 		</section>
 	);
