@@ -31,7 +31,7 @@ const CardUI = React.memo(
 		return (
 			<Card
 				className={cn(
-					'py-4 min-w-[clamp(8rem,15rem,min(20rem,100%))] max-w-full flex-1',
+					'py-4 min-w-[clamp(8rem,15rem,min(20rem,100%))] max-w-full flex-1 h-full',
 					className,
 				)}
 				ref={ref}
@@ -69,7 +69,7 @@ const CardUIBody = React.memo(
 			<CardBody
 				ref={ref}
 				className={cn(
-					'overflow-visible py-2 flex flex-row gap-4 items-center justify-center',
+					'overflow-visible py-2 flex flex-row gap-4 items-start justify-center',
 					className,
 				)}
 				{...delegated}
