@@ -32,6 +32,7 @@
 	"work": [
 		{
 			"name": "MoreCode Sp. z o.o.",
+			"logo": "/logotypes/logo-morecode.png",
 			"position": "React Developer",
 			"website": "http://morecode.ai",
 			"startDate": "2022-03-01",
@@ -48,26 +49,31 @@
 				"Javascript",
 				"Linux",
 				"MacOS",
-				"MDX",
-				"Next",
-				"Next.js",
-				"13",
 				"React",
 				"REST",
 				"TailwindCSS",
 				"Tailwind",
-				"Typescript"
+				"Typescript",
+				"Database Design"
 			]
 		},
 		{
 			"name": "ifm ecolink Sp. z o.o",
+			"logo": "/logotypes/logo-ifm.svg",
 			"position": "Senior IT Specialist",
 			"website": "http://ifm.com",
 			"endDate": "2022-03-01",
 			"startDate": "2012-06-19",
 			"summary": "Helping users and solving issues affecting both office employees as well as production area. Creating applications that help people complete their work efficiently as well as design ISO processes that assure reliable outcomes.",
 			"location": "Opole, Poland",
-			"highlights": ["React", "PHP", "MongoDB", "PostgreSQL", "MySQL"],
+			"highlights": [
+				"Saved thousands of euro yearly by creating web applications to automate processes.",
+				"Developed application to track and distribute ISO document.",
+				"Web app to manage and monitor tickets and machines in production.",
+				"Managed and planned budget for IT department.",
+				"Helped in designing security systems as well as network for production halls and new buildings.",
+				"As an only IT person on site helped people complete their tasks while company grew to more than 500 employees."
+			],
 			"keywords": ["React", "PHP", "MongoDB", "PostgreSQL", "MySQL"]
 		},
 		{
@@ -76,9 +82,9 @@
 			"endDate": "2012-06-15",
 			"startDate": "2012-05-21",
 			"website": "",
-			"summary": ".",
+			"summary": "Implemented gate payment integration for the website. Bugfixes in code for government clients.",
 			"location": "Opole, Poland",
-			"highlights": ["Java", "CSS"],
+			"highlights": [],
 			"keywords": ["Java", "CSS"]
 		},
 		{
@@ -87,9 +93,13 @@
 			"endDate": "2012-05-21",
 			"startDate": "2010-04-01",
 			"website": "https://karrsa.eu",
-			"summary": "Helping users and solving issues affecting both office employees. Managing and creating company's website.",
+			"summary": "Helping users and solving issues affecting both office employees. Managing and creating company's website using WordPress. Building custom plugins and implementing optimizations using modern (at the time) CSS features.",
 			"location": "Koszalin, Poland",
-			"highlights": ["PHP", "MySQL", "WordPress", "CSS"],
+			"highlights": [
+				"Improved performance by 1000% percent by identifying bottlenecks in current implementation.",
+				"Redesigned and implemented new website using WordPress and custom theme.",
+				"Built mesh-like infrastructure for multi-story building."
+			],
 			"keywords": ["PHP", "MySQL", "WordPress", "CSS"]
 		},
 		{
@@ -100,7 +110,7 @@
 			"website": "",
 			"summary": "Web development using Joomla and WordPress, customized plugins and solutions implementation.",
 			"location": "Koszalin, Poland",
-			"highlights": ["PHP", "MySQL", "WordPress", "CSS"],
+			"highlights": ["Built websites for clients using Joomla and WordPress"],
 			"keywords": ["PHP", "MySQL", "WordPress", "CSS"]
 		}
 	],
@@ -111,7 +121,9 @@
 			"website": "https://ostoja-opole.pl/",
 			"startDate": "2023-06-01",
 			"summary": "Managing and helping organize sunday school for children. Teacher for ages 4-10.",
-			"highlights": []
+			"highlights": [
+				"As leaders we have started by redoing all children rooms as well as organized all materials and planned the curriculum for new school year."
+			]
 		},
 		{
 			"organization": "Ostoja Church",
