@@ -43,7 +43,7 @@ function WorkplaceCard({ className, workplace }: WorkplaceCardProps) {
 						<Link
 							href={website}
 							target="_blank"
-							className="no-decoration no-underline hover:text-primary"
+							className="no-decoration no-underline hover:text-primary-color"
 						>
 							{website}
 						</Link>
