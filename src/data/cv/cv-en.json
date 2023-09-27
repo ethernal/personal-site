@@ -3,7 +3,7 @@
 		"name": "Sebastian Pieczynski",
 		"label": "Software Developer",
 		"picture": "/image/profile/sebastian-profile-photo.png",
-		"email": "testament777@mail.com",
+		"email": "s.pieczynski@mail.com",
 		"phone": "(48) 668 248 360",
 		"website": "http://sebee.dev",
 		"summary": "Software Developer focused on delightful User Experience",
@@ -37,7 +37,7 @@
 			"website": "http://morecode.ai",
 			"startDate": "2022-03-01",
 			"endDate": "2023-07-01",
-			"summary": "I was responsible for project’s architecture (database design, frameworks selection etc.) as well as building both frontend and backend with GraphQL. Application core technologies used are: React, Typescript, PrismaJS, TailwindCSS. Deployed to AWS used PostgreSQL as a database. Technical lead for frontend decisions within small team (3-4 members) as well as providing guidance for junior frontend developer. Requirements were gathered with the client and designs done with Figma.\\nFrontend projects for international company from cyber-security space.",
+			"summary": "I was responsible for project’s architecture (database design, frameworks selection etc.) as well as building both frontend and backend with GraphQL. Application core technologies used are: React, Typescript, PrismaJS, TailwindCSS. Deployed to AWS used PostgreSQL as a database. Technical lead for frontend decisions within small team (3-4 members) as well as providing guidance for junior frontend developer. Requirements were gathered with the client and designs done with Figma. Frontend projects for international company from cyber-security space.",
 			"location": "Remote, Poland",
 			"highlights": [
 				"Architected the application for personal trainings, designed database allowing any type and combination of exercises as well as normalized it for machine learning use."
@@ -405,7 +405,7 @@
 	"certificates": [
 		{
 			"name": "First Certificate in English",
-			"date": "2007",
+			"date": "2003-12",
 			"issuer": "Cambridge",
 			"url": "/certificates/certificate-fce.png"
 		}
@@ -418,15 +418,24 @@
 		"dreamJob": {
 			"locations": [
 				{
-					"name": "Remote"
+					"name": "remote"
 				},
 				{
 					"name": "Opole, Poland"
+				},
+				{
+					"name": "Hawaii, USA 😎"
 				}
 			],
 			"remoteFrequency": {
-				"frequency": "remote",
-				"daysPerWeek": 5
+				"noOffice": {
+					"frequency": "remote",
+					"daysPerWeek": 5
+				},
+				"hasOffice": {
+					"frequency": "in office",
+					"daysPerMonth": 4
+				}
 			}
 		},
 		"currentJob": {
@@ -444,6 +453,8 @@
 			"searchState": "activelySearching",
 			"experienceYears": 13.5,
 			"codeExperienceYears": 6,
+			"codeHobbyExperienceYears": 12,
+			"itExperienceYears": 12,
 			"otherExperienceYears": 7.5
 		},
 		"sound": {
