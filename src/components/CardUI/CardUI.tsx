@@ -72,7 +72,7 @@ const CardUIBody = React.memo(
 			<CardBody
 				ref={ref}
 				className={cn(
-					'overflow-visible py-2 flex flex-row gap-4 items-start justify-center',
+					'overflow-visible p-4 py-2 flex flex-row gap-4 items-start justify-center',
 					className,
 				)}
 				{...delegated}
