@@ -9,12 +9,12 @@ import TooltipMessage from '../TooltipMessage';
 
 function AboutMeToggleMessage() {
 	return (
-		<div className="flex w-full flex-col">
+		<div className="flex w-full flex-col mt-8">
 			<Tabs aria-label="About me.." defaultSelectedKey="recruiter">
 				<Tab key="friend" title="Friend">
 					<Card className="overflow-visible">
 						<CardBody className="overflow-visible">
-							<p className="text-sm">
+							<p className="text-base leading-6 tracking-wide">
 								I am a software developer who loves to create applications that
 								make life easier and more enjoyable. I have built commercial
 								projects and toys using various technologies and frameworks,
@@ -213,7 +213,7 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								, Hyper SQL, Joomla, ExpressJs, NodeJS, and more.
 							</p>
-							<p className="text-sm">
+							<p className="text-base leading-6 tracking-wide">
 								I have also been a technical lead, a manager assistant, and an
 								IT professional responsible for designing network in production
 								halls and supporting users. I have developed and maintained
@@ -231,7 +231,7 @@ function AboutMeToggleMessage() {
 				<Tab key="recruiter" title="Recruiter">
 					<Card className="overflow-visible">
 						<CardBody className="overflow-visible">
-							<p className="text-small">
+							<p className="text-base leading-6 tracking-wide">
 								I am a <span className="font-semibold">React Developer</span>{' '}
 								and Full Stack with over 10 years of experience in IT, working
 								for various companies and clients. I worked with{' '}
@@ -432,12 +432,12 @@ function AboutMeToggleMessage() {
 								</em>
 								, and more.
 							</p>
-							<p className="text-sm">
+							<p className="text-base leading-6 tracking-wide">
 								In my last role I have acted as a technical lead in a small team
 								that was building a training application that connects trainees
 								to trainers and allows to create personalized training plans.
 							</p>
-							<p className="text-sm">
+							<p className="text-base leading-6 tracking-wide">
 								I have developed and maintained several applications that help
 								users and businesses with document management for ISO standards,
 								ticketing, machine maintenance, data analysis and visualization.
@@ -450,7 +450,7 @@ function AboutMeToggleMessage() {
 				<Tab key="tech" title="Technical">
 					<Card className="overflow-visible">
 						<CardBody className="overflow-visible">
-							<p className="text-sm">
+							<p className="text-base leading-6 tracking-wide">
 								I am a React Developer / Full Stack who is responsible for
 								project’s architecture, frontend and backend development and
 								deployment to AWS. I have worked with React, Typescript,
@@ -464,7 +464,7 @@ function AboutMeToggleMessage() {
 								of frontend and backend developers and mentored a junior
 								developer.
 							</p>
-							<p className="text-sm">
+							<p className="text-base leading-6 tracking-wide">
 								In my last role I have worked on a{' '}
 								<TooltipMessage content="training application">
 									Subject to NDA so I cannot reveal what is not already public
@@ -473,11 +473,11 @@ function AboutMeToggleMessage() {
 								that connects trainers and trainees with personalized training
 								plans.
 							</p>
-							<p className="text-sm">
+							<p className="text-base leading-6 tracking-wide">
 								At the same company I was also responsible for frontend projects
 								for an international company from the cyber-security space.
 							</p>
-							<p className="text-sm">
+							<p className="text-base leading-6 tracking-wide">
 								Earlier I have worked with PHP and worked with MongoDB,
 								PostgreSQL, MySQL, Wordpress, CSS, NextJS, Symfony, NodeJS and
 								more. I have created and maintained various applications that
@@ -502,12 +502,12 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								.
 							</p>
-							<p className="text-sm">
+							<p className="text-base leading-6 tracking-wide">
 								I have also helped design network infrastructure for production
 								halls and office areas and helped adopt new processes in R&D and
 								engineering departments.
 							</p>
-							<p className="text-sm">
+							<p className="text-base leading-6 tracking-wide">
 								The website you are browsing was built using latest NextJS 13
 								and React 18.
 							</p>

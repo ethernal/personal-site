@@ -16,6 +16,7 @@ function PublicationsList({ publications, className }: PublicationsListProps) {
 				return (
 					<article
 						key={`publication-${publication.name}-${publication.releaseDate}`}
+						className="h-full"
 					>
 						<PublicationCard publication={publication} />
 					</article>

@@ -10,17 +10,16 @@ type CertificatesListProps = {
 function CertificatesList({ certificates, className }: CertificatesListProps) {
 	return (
 		<section className={className}>
-			<ul>
-				{certificates.map((certificate: Certificate) => {
-					return (
-						<article
-							key={`certificate-${certificate.name}-${certificate.issuer}`}
-						>
-							<CertificateCard certificate={certificate} />
-						</article>
-					);
-				})}
-			</ul>
+			{certificates.map((certificate: Certificate) => {
+				return (
+					<article
+						key={`certificate-${certificate.name}-${certificate.issuer}`}
+						className="h-full"
+					>
+						<CertificateCard certificate={certificate} />
+					</article>
+				);
+			})}
 		</section>
 	);
 }

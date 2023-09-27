@@ -18,7 +18,7 @@ function CertificateCard({
 
 	return (
 		<CardUI
-			className={cn('p-0 mb-4 min-h-[300px] max-w-min', className)}
+			className={cn('p-0 mb-4 min-h-[300px]', className)}
 			isBlurred={true}
 			isFooterBlurred={true}
 		>

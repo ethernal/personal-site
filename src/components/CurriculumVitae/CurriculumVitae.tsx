@@ -36,10 +36,11 @@ function CurriculumVitae({ className }: CurriculumVitaeProps) {
 				employmentStatus={cv.specific.work}
 				dreamJob={cv.specific.dreamJob}
 			/>
-			<h2>Certificates</h2>
-			<CertificatesList certificates={cv.certificates} />
-			<h2>Publications</h2>
-			<PublicationsList publications={cv.publications} />
+			<h2>Certificates & Publications</h2>
+			<section className="auto-grid">
+				<CertificatesList certificates={cv.certificates} className="h-full" />
+				<PublicationsList publications={cv.publications} />
+			</section>
 		</div>
 	);
 }
