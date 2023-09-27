@@ -31,10 +31,13 @@ function SocialNetworkList(props: SocialNetworkListProps) {
 		const Icon = networkIconMap[profile.network];
 
 		return (
-			<div key={profile.network} className="flex gap-2 items-center">
-				<Icon />
+			<div
+				key={profile.network}
+				className="flex gap-1 items-center flex-wrap group"
+			>
+				<Icon className="group-hover:text-primary-color" />
 				<ProfileLink
-					className="no-underline"
+					className="no-underline group-hover:text-primary-color"
 					network={profile.network}
 					username={profile.username ?? ''}
 				>
