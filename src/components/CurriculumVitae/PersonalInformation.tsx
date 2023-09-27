@@ -5,14 +5,14 @@ import { GrStatusInfo } from 'react-icons/gr';
 import { RiPhoneLine, RiUserLocationLine } from 'react-icons/ri';
 import { TbWorldWww } from 'react-icons/tb';
 
+import ResponsiveImage from '@/components//ResponsiveImage';
+import TooltipMessage from '@/components//TooltipMessage';
+import SocialNetworkList from '@/components/CurriculumVitae/SocialNetworkList';
+import HorizontalItem from '@/components/HorizontalItem';
 import countries from '@/data/country/countries.json';
 import { PersonalInformation } from '@/types/CurriculumVitae';
 
 import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
-import HorizontalItem from '../HorizontalItem';
-import ResponsiveImage from '../ResponsiveImage';
-import TooltipMessage from '../TooltipMessage';
-import SocialNetworkList from './SocialNetworkList';
 
 type PersonalInformationProps = {
 	className?: string;

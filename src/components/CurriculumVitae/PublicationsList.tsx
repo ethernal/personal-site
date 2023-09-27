@@ -1,8 +1,7 @@
 import React from 'react';
 
+import PublicationCard from '@/components/PublicationCard';
 import { Publication } from '@/types/CurriculumVitae';
-
-import PublicationCard from '../PublicationCard';
 
 type PublicationsListProps = {
 	publications: Publication[];

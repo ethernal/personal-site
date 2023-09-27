@@ -1,5 +1,5 @@
 import Cookie from 'js-cookie';
-import React, { CSSProperties, useState } from 'react';
+import React from 'react';
 import { Moon, Sun } from 'react-feather';
 
 import VisuallyHidden from '@/components/VisuallyHidden';

@@ -1,10 +1,10 @@
 'use client';
 
+import ResponsiveImage from '@/components/ResponsiveImage';
 import { Certificate } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
 
 import CardUI, { CardUIFooter, CardUIHeader } from '../CardUI';
-import ResponsiveImage from '../ResponsiveImage';
 
 type CertificateCardProps = {
 	certificate: Prettify<Certificate>;

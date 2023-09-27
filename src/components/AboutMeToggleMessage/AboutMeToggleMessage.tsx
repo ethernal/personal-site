@@ -1,11 +1,8 @@
 'use client';
-import Image from 'next/image';
-import React from 'react';
 
 import ResponsiveImage from '@/components/ResponsiveImage';
+import TooltipMessage from '@/components/TooltipMessage';
 import { Card, CardBody, Tab, Tabs } from '@nextui-org/react';
-
-import TooltipMessage from '../TooltipMessage';
 
 function AboutMeToggleMessage() {
 	return (

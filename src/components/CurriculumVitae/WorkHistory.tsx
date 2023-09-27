@@ -1,7 +1,6 @@
+import WorkplaceCard from '@/components/WorkplaceCard';
 import { Workplace } from '@/types/CurriculumVitae';
 import { cn, getDataAttributesFromJSONKeywords } from '@/utils/utils';
-
-import WorkplaceCard from '../WorkplaceCard';
 
 type WorkHistoryProps = {
 	className?: string;

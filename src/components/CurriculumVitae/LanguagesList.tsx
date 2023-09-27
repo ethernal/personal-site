@@ -1,9 +1,8 @@
 import React from 'react';
 
+import LanguageCard from '@/components/LanguageCard';
 import { Language } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
-
-import LanguageCard from '../LanguageCard';
 
 type LanguagesListProps = {
 	languages: Prettify<Language>[];

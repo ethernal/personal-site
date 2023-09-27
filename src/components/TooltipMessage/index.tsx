@@ -1,6 +1,6 @@
 import dynamic from 'next/dynamic';
 
-export * from './TooltipMessage';
+export * from '@/components/TooltipMessage';
 
 const TooltipMessage = dynamic(
 	() => import('@/components/TooltipMessage/TooltipMessage'),

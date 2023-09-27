@@ -1,10 +1,13 @@
 'use client';
 
+import CardUI, {
+	CardUIBody,
+	CardUIFooter,
+	CardUIHeader,
+} from '@/components/CardUI';
+import ResponsiveImage from '@/components/ResponsiveImage';
 import { Project } from '@/types/CurriculumVitae';
 import { Divider } from '@nextui-org/react';
-
-import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
-import ResponsiveImage from '../ResponsiveImage';
 
 type ProjectCardProps = {
 	project: Prettify<Project>;

@@ -1,6 +1,6 @@
 import React, { CSSProperties, ReactElement } from 'react';
 
-import styles from './full-width-split-section.module.css';
+import styles from '@/components/FullWidthSplitSection/full-width-split-section.module.css';
 
 /**
  * Gets only the valid children of a component,

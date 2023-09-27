@@ -1,6 +1,4 @@
-import React, { ReactNode } from 'react';
-
-import styles from './ArticleInfo.module.css';
+import { ReactNode } from 'react';
 
 type ArticleInfoProps = {
 	publishedOn: string;

@@ -1,10 +1,9 @@
 'use client';
 
+import CardUI, { CardUIFooter, CardUIHeader } from '@/components/CardUI';
+import ResponsiveImage from '@/components/ResponsiveImage';
 import { EducationInstitution } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
-
-import CardUI, { CardUIFooter, CardUIHeader } from '../CardUI';
-import ResponsiveImage from '../ResponsiveImage';
 
 type EducationCardProps = {
 	education: Prettify<EducationInstitution>;

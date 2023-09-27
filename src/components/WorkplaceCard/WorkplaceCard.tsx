@@ -2,11 +2,14 @@
 
 import Link from 'next/link';
 
+import CardUI, {
+	CardUIBody,
+	CardUIFooter,
+	CardUIHeader,
+} from '@/components/CardUI';
+import ResponsiveImage from '@/components/ResponsiveImage';
 import { Workplace } from '@/types/CurriculumVitae';
 import { Divider } from '@nextui-org/react';
-
-import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
-import ResponsiveImage from '../ResponsiveImage';
 
 type WorkplaceCardProps = {
 	workplace: Prettify<Workplace>;

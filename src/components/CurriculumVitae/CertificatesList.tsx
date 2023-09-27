@@ -1,6 +1,5 @@
+import CertificateCard from '@/components/CertificateCard';
 import { Certificate } from '@/types/CurriculumVitae';
-
-import CertificateCard from '../CertificateCard';
 
 type CertificatesListProps = {
 	certificates: Certificate[];

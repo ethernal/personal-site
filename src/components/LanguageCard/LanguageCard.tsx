@@ -1,10 +1,13 @@
 'use client';
 import * as React from 'react';
 
+import CardUI, {
+	CardUIBody,
+	CardUIFooter,
+	CardUIHeader,
+} from '@/components/CardUI';
 import { Language } from '@/types/CurriculumVitae';
 import { CircularProgress, Divider } from '@nextui-org/react';
-
-import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
 
 type LanguageCardProps = {
 	language: Prettify<Language>;

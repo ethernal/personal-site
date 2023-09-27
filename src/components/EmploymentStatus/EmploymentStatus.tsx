@@ -116,7 +116,7 @@ function EmploymentStatus({
 					<WorkExperienceCard
 						years={employmentStatus.otherExperienceYears}
 						header={<h3 className={'py-0'}>IT Experience</h3>}
-						label={`I've wore differnt hats during these ${employmentStatus.otherExperienceYears} years.`}
+						label={`I've wore different hats during these ${employmentStatus.otherExperienceYears} years.`}
 					/>
 				</article>
 

@@ -1,9 +1,8 @@
 import React from 'react';
 
+import SkillCard from '@/components/SkillCard';
 import { Skill } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
-
-import SkillCard from '../SkillCard';
 
 type SkillsListProps = {
 	skills: Prettify<Skill>[];

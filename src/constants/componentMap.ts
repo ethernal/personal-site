@@ -1,10 +1,7 @@
-const {
-	default: CodeSnippet,
-} = require('@/components/CodeSnippet/CodeSnippet');
-
 import Image from 'next/image';
 
 import AboutMeToggleMessage from '@/components/AboutMeToggleMessage';
+import { default as CodeSnippet } from '@/components/CodeSnippet/CodeSnippet';
 import CV from '@/components/CurriculumVitae';
 import FullWidthSplitSection from '@/components/FullWidthSplitSection';
 import ResponsiveImage from '@/components/ResponsiveImage';

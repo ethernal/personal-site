@@ -1,8 +1,8 @@
 import { Code } from 'bright';
 import React, { ComponentProps } from 'react';
 
-import styles from './CodeSnippet.module.css';
-import theme from './theme';
+import styles from '@/components/CodeSnippet/CodeSnippet.module.css';
+import theme from '@/components/CodeSnippet/theme';
 
 function CodeSnippet(props: ComponentProps<typeof Code>) {
 	return (

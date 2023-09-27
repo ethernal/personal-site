@@ -1,7 +1,6 @@
+import EducationCard from '@/components/EducationCard';
 import { EducationInstitution } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
-
-import EducationCard from '../EducationCard';
 
 type EducationHistoryProps = {
 	education: EducationInstitution[];

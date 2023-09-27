@@ -4,7 +4,6 @@ import Link from 'next/link';
 
 import { Publication } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
-import { Image } from '@nextui-org/react';
 
 import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
 

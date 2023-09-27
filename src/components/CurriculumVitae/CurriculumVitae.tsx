@@ -1,14 +1,13 @@
+import EmploymentStatus from '@/components//EmploymentStatus';
+import EducationHistory from '@/components/CurriculumVitae//EducationHistory';
+import LanguagesList from '@/components/CurriculumVitae//LanguagesList';
+import PersonalInformation from '@/components/CurriculumVitae//PersonalInformation';
+import ProjectsList from '@/components/CurriculumVitae//ProjectsList';
+import PublicationsList from '@/components/CurriculumVitae//PublicationsList';
+import SkillsList from '@/components/CurriculumVitae//SkillsList';
+import WorkHistory from '@/components/CurriculumVitae//WorkHistory';
+import CertificatesList from '@/components/CurriculumVitae/CertificatesList';
 import cv from '@/data/cv/cv-en.json';
-
-import EmploymentStatus from '../EmploymentStatus';
-import CertificatesList from './CertificatesList';
-import EducationHistory from './EducationHistory';
-import LanguagesList from './LanguagesList';
-import PersonalInformation from './PersonalInformation';
-import ProjectsList from './ProjectsList';
-import PublicationsList from './PublicationsList';
-import SkillsList from './SkillsList';
-import WorkHistory from './WorkHistory';
 
 type CurriculumVitaeProps = {
 	className?: string;

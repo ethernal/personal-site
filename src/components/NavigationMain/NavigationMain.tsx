@@ -4,8 +4,8 @@ import Link from 'next/link';
 import React, { ReactNode, useState } from 'react';
 import { Menu, X } from 'react-feather';
 
-import ActionsMenu from '../ActionsMenu/ActionsMenu';
-import Logo from '../Logo/Logo';
+import ActionsMenu from '@/components/ActionsMenu/ActionsMenu';
+import Logo from '@/components/Logo/Logo';
 
 type NavigationMainProps = {
 	className?: string;

@@ -1,8 +1,7 @@
 import React, { CSSProperties } from 'react';
 
+import NavigationMain from '@/components/NavigationMain/NavigationMain';
 import { cn } from '@/utils/utils';
-
-import NavigationMain from '../NavigationMain/NavigationMain';
 
 type HeaderProps = {
 	className?: CSSProperties | string;

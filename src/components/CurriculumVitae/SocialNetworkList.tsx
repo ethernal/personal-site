@@ -8,9 +8,8 @@ import {
 	RiTwitterXLine,
 } from 'react-icons/ri';
 
+import { ProfileLink } from '@/components/CurriculumVitae/ProfileLink';
 import { SocialNetwork } from '@/types/CurriculumVitae';
-
-import { ProfileLink } from './ProfileLink';
 
 const networkIconMap = {
 	twitter: RiTwitterXLine,
