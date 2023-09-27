@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Publication } from '@/types/CurriculumVitae';
 
+import PublicationCard from '../PublicationCard';
+
 type PublicationsListProps = {
 	publications: Publication[];
 	className?: string;
@@ -15,14 +17,7 @@ function PublicationsList({ publications, className }: PublicationsListProps) {
 					<article
 						key={`publication-${publication.name}-${publication.releaseDate}`}
 					>
-						<ul>
-							<li>
-								{publication.name} published by: {publication.publisher} on{' '}
-								{publication.releaseDate}
-							</li>
-							<li>{publication.summary}</li>
-							<li>{publication.website}</li>
-						</ul>
+						<PublicationCard publication={publication} />
 					</article>
 				);
 			})}
