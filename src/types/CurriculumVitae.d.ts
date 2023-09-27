@@ -146,8 +146,14 @@ export interface Location {
 }
 
 export type RemoteFrequency = {
-	frequency: string;
-	daysPerWeek: number;
+	noOffice: {
+		frequency: string;
+		daysPerWeek: number;
+	};
+	hasOffice: {
+		frequency: string;
+		daysPerMonth: number;
+	};
 };
 
 export interface CurrentJob {
@@ -169,6 +175,8 @@ export interface WorkExperienceAndAvailability {
 	searchState: string;
 	experienceYears: number;
 	codeExperienceYears: number;
+	codeHobbyExperienceYears: number;
+	itExperienceYears: number;
 	otherExperienceYears: number;
 }
 
