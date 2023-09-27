@@ -10,6 +10,13 @@ The CSS :has() operator is a functional pseudo-class that selects an element if 
 
 Here is an example of how to use the :has() operator in CSS:
 
+<Image
+	src="/laptop-open-with-code-editor.jpg"
+	width={540}
+	height={320}
+	alt="open laptop with code"
+/>
+
 ```css
 /* Selects an h1 heading with a paragraph element that immediately follows the h1 and applies the style to h1 */
 h1:has(+ p) {
@@ -17,17 +24,17 @@ h1:has(+ p) {
 }
 ```
 
-If the :has() pseudo-class itself is not supported in a browser, the entire selector block will fail unless :has() is in a forgiving selector list, such as in :is() and :where(). The :has() pseudo-class cannot be nested within another :has(). This is because many pseudo-elements exist conditionally based on the styling of their ancestors and allowing these to be queried by :has() can introduce cyclic querying. Pseudo-elements are also not valid selectors within :has() and pseudo-elements are not valid anchors for :has() 1.
+If the :has() pseudo-class itself is not supported in a browser, the entire selector block will fail unless :has() is in a forgiving selector list, such as in :is() and :where(). The :has() pseudo-class cannot be nested within another :has(). This is because many pseudo-elements exist conditionally based on the styling of their ancestors and allowing these to be queried by :has() can introduce cyclic querying. Pseudo-elements are also not valid selectors within :has() and pseudo-elements are not valid anchors for `:has()` 1.
 
 Here are some resources that provide more information about the CSS :has operator:
 
 Mozilla Developer Network (MDN) provides detailed information about the syntax, examples, and browser compatibility of the CSS :has operator 1.
-CSS-Tricks provides examples of how to use the CSS :has selector to select elements that contain elements that match the selector you pass into the :has() function 23.
+CSS-Tricks provides examples of how to use the CSS :has selector to select elements that contain elements that match the selector you pass into the `:has()` function 23.
 I hope this helps!
 
 ## Examples
 
-Styling a parent element based on the presence of a child element: You can use the :has() pseudo-class to style a parent element based on the presence of a child element. For example, you can select all <div> elements that contain an <h1> element and apply a background color to them:
+Styling a parent element based on the presence of a child element: You can use the :has() pseudo-class to style a parent element based on the presence of a child element. For example, you can select all `<div>` elements that contain an `<h1>` element and apply a background color to them:
 CSS
 
 ```css
@@ -36,7 +43,7 @@ div:has(h1) {
 }
 ```
 
-Styling an element based on the presence of a sibling element: You can use the :has() pseudo-class to style an element based on the presence of a sibling element. For example, you can select all <p> elements that immediately follow an <h1> element and apply a margin-bottom property to the <h1> element:
+Styling an element based on the presence of a sibling element: You can use the :has() pseudo-class to style an element based on the presence of a sibling element. For example, you can select all `<p>` elements that immediately follow an `<h1>` element and apply a margin-bottom property to the `<h1>` element:
 
 ```css
 h1:has(+ p) {
@@ -44,7 +51,7 @@ h1:has(+ p) {
 }
 ```
 
-Styling an element based on the presence of multiple child elements: You can use the :has() pseudo-class to style an element based on the presence of multiple child elements. For example, you can select all <div> elements that contain both an <h1> and a <p> element and apply a border to them:
+Styling an element based on the presence of multiple child elements: You can use the :has() pseudo-class to style an element based on the presence of multiple child elements. For example, you can select all `<div>` elements that contain both an `<h1>` and a `<p>` element and apply a border to them:
 CSS
 
 ```css
@@ -53,7 +60,7 @@ div:has(h1 + p) {
 }
 ```
 
-Styling an element based on the presence of a specific child element: You can use the :has() pseudo-class to style an element based on the presence of a specific child element. For example, you can select all <ul> elements that contain an <li> element with a class of “active” and apply a background color to them:
+Styling an element based on the presence of a specific child element: You can use the :has() pseudo-class to style an element based on the presence of a specific child element. For example, you can select all `<ul>` elements that contain an `<li>` element with a class of “active” and apply a background color to them:
 CSS
 
 ```css
