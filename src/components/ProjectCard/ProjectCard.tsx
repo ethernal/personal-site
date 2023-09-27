@@ -1,9 +1,10 @@
 'use client';
 
 import { Project } from '@/types/CurriculumVitae';
-import { Divider, Image } from '@nextui-org/react';
+import { Divider } from '@nextui-org/react';
 
 import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
+import ResponsiveImage from '../ResponsiveImage';
 
 type ProjectCardProps = {
 	project: Prettify<Project>;
@@ -34,8 +35,7 @@ function ProjectCard({ project, className = '' }: ProjectCardProps) {
 
 			<CardUIBody className={'relative p-0'}>
 				{gallery && gallery?.length > 0 ? (
-					<Image
-						removeWrapper
+					<ResponsiveImage
 						src={gallery && gallery?.length > 0 ? gallery[0]?.src : ''}
 						alt={
 							gallery && gallery?.length > 0 ? gallery[0]?.alt : 'missing image'

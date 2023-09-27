@@ -20,7 +20,7 @@ function AboutMeToggleMessage() {
 								projects and toys using various technologies and frameworks,
 								such as{' '}
 								<TooltipMessage content="React">
-									<Image
+									<ResponsiveImage
 										src="/logotypes/react-logo.svg"
 										width={100}
 										height={100}
@@ -34,7 +34,7 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								,{' '}
 								<TooltipMessage content="Typescript">
-									<Image
+									<ResponsiveImage
 										src="/logotypes/typescript-logo.svg"
 										width={100}
 										height={100}
@@ -48,7 +48,7 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								,{' '}
 								<TooltipMessage content="PrismaJS">
-									<Image
+									<ResponsiveImage
 										src="/logotypes/prisma-logo.svg"
 										width={100}
 										height={100}
@@ -62,7 +62,7 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								,{' '}
 								<TooltipMessage content="TailwindCSS">
-									<Image
+									<ResponsiveImage
 										src="/logotypes/tailwind-logo.svg"
 										width={100}
 										height={100}
@@ -76,7 +76,7 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								,{' '}
 								<TooltipMessage content="GraphQL">
-									<Image
+									<ResponsiveImage
 										src="/logotypes/graphql-logo.svg"
 										width={100}
 										height={100}
@@ -90,7 +90,7 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								,{' '}
 								<TooltipMessage content="PHP">
-									<Image
+									<ResponsiveImage
 										src="/logotypes/php-logo.svg"
 										width={100}
 										height={100}
@@ -106,7 +106,7 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								,{' '}
 								<TooltipMessage content="MongoDB">
-									<Image
+									<ResponsiveImage
 										src="/logotypes/mongodb-logo.svg"
 										width={100}
 										height={100}
@@ -122,7 +122,7 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								,{' '}
 								<TooltipMessage content="PostgreSQL">
-									<Image
+									<ResponsiveImage
 										src="/logotypes/postgresql-logo.svg"
 										width={100}
 										height={100}
@@ -138,7 +138,7 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								,{' '}
 								<TooltipMessage content="MySQL">
-									<Image
+									<ResponsiveImage
 										src="/logotypes/mysql-logo.svg"
 										width={100}
 										height={100}
@@ -154,7 +154,7 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								,{' '}
 								<TooltipMessage content="Next.js">
-									<Image
+									<ResponsiveImage
 										src="/logotypes/nextjs-logo.svg"
 										width={100}
 										height={100}
@@ -168,7 +168,7 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								,{' '}
 								<TooltipMessage content="Symfony Framework">
-									<Image
+									<ResponsiveImage
 										src="/logotypes/symfony-logo.svg"
 										width={100}
 										height={100}
@@ -182,7 +182,7 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								,{' '}
 								<TooltipMessage content="CSS">
-									<Image
+									<ResponsiveImage
 										src="/logotypes/css-logo.svg"
 										width={100}
 										height={100}
@@ -198,7 +198,7 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								,{' '}
 								<TooltipMessage content="Wordpress">
-									<Image
+									<ResponsiveImage
 										src="/logotypes/wordpress-logo.svg"
 										width={100}
 										height={100}
@@ -238,7 +238,7 @@ function AboutMeToggleMessage() {
 								<em>
 									{' '}
 									<TooltipMessage content="React">
-										<Image
+										<ResponsiveImage
 											src="/logotypes/react-logo.svg"
 											width={100}
 											height={100}
@@ -252,7 +252,7 @@ function AboutMeToggleMessage() {
 									</TooltipMessage>
 									,{' '}
 									<TooltipMessage content="Typescript" initialOpen={false}>
-										<Image
+										<ResponsiveImage
 											src="/logotypes/typescript-logo.svg"
 											width={100}
 											height={100}
@@ -266,7 +266,7 @@ function AboutMeToggleMessage() {
 									</TooltipMessage>
 									,{' '}
 									<TooltipMessage content="PrismaJS">
-										<Image
+										<ResponsiveImage
 											src="/logotypes/prisma-logo.svg"
 											width={100}
 											height={100}
@@ -280,7 +280,7 @@ function AboutMeToggleMessage() {
 									</TooltipMessage>
 									,{' '}
 									<TooltipMessage content="TailwindCSS">
-										<Image
+										<ResponsiveImage
 											src="/logotypes/tailwind-logo.svg"
 											width={100}
 											height={100}
@@ -294,7 +294,7 @@ function AboutMeToggleMessage() {
 									</TooltipMessage>
 									,{' '}
 									<TooltipMessage content="GraphQL">
-										<Image
+										<ResponsiveImage
 											src="/logotypes/graphql-logo.svg"
 											width={100}
 											height={100}
@@ -308,7 +308,7 @@ function AboutMeToggleMessage() {
 									</TooltipMessage>
 									,{' '}
 									<TooltipMessage content="PHP">
-										<Image
+										<ResponsiveImage
 											src="/logotypes/php-logo.svg"
 											width={100}
 											height={100}
@@ -324,7 +324,7 @@ function AboutMeToggleMessage() {
 									</TooltipMessage>
 									,{' '}
 									<TooltipMessage content="MongoDB">
-										<Image
+										<ResponsiveImage
 											src="/logotypes/mongodb-logo.svg"
 											width={100}
 											height={100}
@@ -340,7 +340,7 @@ function AboutMeToggleMessage() {
 									</TooltipMessage>
 									,{' '}
 									<TooltipMessage content="PostgreSQL" initialOpen={false}>
-										<Image
+										<ResponsiveImage
 											src="/logotypes/postgresql-logo.svg"
 											width={100}
 											height={100}
@@ -356,7 +356,7 @@ function AboutMeToggleMessage() {
 									</TooltipMessage>
 									,{' '}
 									<TooltipMessage content="MySQL">
-										<Image
+										<ResponsiveImage
 											src="/logotypes/mysql-logo.svg"
 											width={100}
 											height={100}
@@ -372,7 +372,7 @@ function AboutMeToggleMessage() {
 									</TooltipMessage>
 									,{' '}
 									<TooltipMessage content="Next.js">
-										<Image
+										<ResponsiveImage
 											src="/logotypes/nextjs-logo.svg"
 											width={100}
 											height={100}
@@ -386,7 +386,7 @@ function AboutMeToggleMessage() {
 									</TooltipMessage>
 									,{' '}
 									<TooltipMessage content="Symfony Framework">
-										<Image
+										<ResponsiveImage
 											src="/logotypes/symfony-logo.svg"
 											width={100}
 											height={100}
@@ -400,7 +400,7 @@ function AboutMeToggleMessage() {
 									</TooltipMessage>
 									,{' '}
 									<TooltipMessage content="CSS">
-										<Image
+										<ResponsiveImage
 											src="/logotypes/css-logo.svg"
 											width={100}
 											height={100}
@@ -416,7 +416,7 @@ function AboutMeToggleMessage() {
 									</TooltipMessage>
 									,{' '}
 									<TooltipMessage content="Wordpress">
-										<Image
+										<ResponsiveImage
 											src="/logotypes/wordpress-logo.svg"
 											width={100}
 											height={100}

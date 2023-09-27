@@ -1,5 +1,4 @@
 import { MDXRemote } from 'next-mdx-remote/rsc';
-import React from 'react';
 
 import ArticleInfo from '@/components/ArticleInfo';
 import { COMPONENT_MAP } from '@/constants/componentMap';
@@ -28,12 +27,10 @@ async function SitePage({ params, searchParams }) {
 	const { title, publishedOn } = pageFile.frontmatter;
 
 	return (
-		// <article className={styles.wrapper}>
 		<article>
 			<header className="mx-auto max-w-[var(--page-wrapper-max-width)] wrapper">
 				<ArticleInfo publishedOn={publishedOn}>{title}</ArticleInfo>
 			</header>
-			{/* <div className={styles.page}> */}
 			<div className="wrapper">
 				<MDXRemote
 					source={pageFile.content}

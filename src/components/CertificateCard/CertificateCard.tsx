@@ -2,9 +2,9 @@
 
 import { Certificate } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
-import { Image } from '@nextui-org/react';
 
 import CardUI, { CardUIFooter, CardUIHeader } from '../CardUI';
+import ResponsiveImage from '../ResponsiveImage';
 
 type CertificateCardProps = {
 	certificate: Prettify<Certificate>;
@@ -34,8 +34,7 @@ function CertificateCard({
 			</CardUIHeader>
 
 			{url && url?.length > 0 && (
-				<Image
-					removeWrapper
+				<ResponsiveImage
 					alt="Card background"
 					className="z-0 w-full h-full object-cover"
 					src={url}

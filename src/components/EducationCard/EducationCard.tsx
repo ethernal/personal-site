@@ -2,9 +2,9 @@
 
 import { EducationInstitution } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
-import { Image } from '@nextui-org/react';
 
 import CardUI, { CardUIFooter, CardUIHeader } from '../CardUI';
+import ResponsiveImage from '../ResponsiveImage';
 
 type EducationCardProps = {
 	education: Prettify<EducationInstitution>;
@@ -32,8 +32,7 @@ function EducationCard({ education, className = '' }: EducationCardProps) {
 			</CardUIHeader>
 
 			{image && image?.length > 0 && (
-				<Image
-					removeWrapper
+				<ResponsiveImage
 					alt="Card background"
 					className="z-0 w-full h-full object-cover"
 					src={image}

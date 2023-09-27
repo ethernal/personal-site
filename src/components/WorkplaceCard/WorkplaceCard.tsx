@@ -1,12 +1,12 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 
 import { Workplace } from '@/types/CurriculumVitae';
 import { Divider } from '@nextui-org/react';
 
 import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
+import ResponsiveImage from '../ResponsiveImage';
 
 type WorkplaceCardProps = {
 	workplace: Prettify<Workplace>;
@@ -31,7 +31,14 @@ function WorkplaceCard({ className, workplace }: WorkplaceCardProps) {
 			<CardUIHeader>
 				<span className="flex gap-2 items-start justify-between w-full">
 					<h4 className="font-bold text-large uppercase">{name}</h4>
-					{logo && <Image src={logo ?? ''} alt={name} width={40} height={40} />}
+					{logo && (
+						<ResponsiveImage
+							src={logo ?? ''}
+							alt={name}
+							width={40}
+							height={40}
+						/>
+					)}
 				</span>
 				<ul className="flex flex-row gap-2">
 					<li className="text-tiny">
