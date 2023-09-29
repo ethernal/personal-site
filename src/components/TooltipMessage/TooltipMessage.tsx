@@ -2,13 +2,23 @@
 
 import * as React from 'react';
 
+import { cn } from '@/utils/utils';
 import {
-    autoUpdate, flip, FloatingPortal, offset, shift, useDismiss, useFloating, useFocus, useHover,
-    useInteractions, useMergeRefs, useRole
+	autoUpdate,
+	flip,
+	FloatingPortal,
+	offset,
+	shift,
+	useDismiss,
+	useFloating,
+	useFocus,
+	useHover,
+	useInteractions,
+	useMergeRefs,
+	useRole,
 } from '@floating-ui/react';
 
 import type { Placement } from '@floating-ui/react';
-
 interface TooltipOptions {
 	initialOpen?: boolean;
 	placement?: Placement;
@@ -154,12 +164,14 @@ export const TooltipContent = React.forwardRef<
 
 type TooltipMessageProps = {
 	content: string;
+	className?: string;
 	children: React.ReactNode;
 } & TooltipOptions;
 
 function TooltipMessage({
 	content,
 	children,
+	className,
 	...delegated
 }: TooltipMessageProps) {
 	return (
@@ -167,7 +179,12 @@ function TooltipMessage({
 			<TooltipTrigger className="underline decoration-wavy decoration-theme-black dark:decoration-theme-glass">
 				{content}
 			</TooltipTrigger>
-			<TooltipContent className="flow-root max-w-[40vw] bg-white rounded-lg p-2 opacity-95  border-2 border-white backdrop-blur-md [&_p]:text-sm [&_p]:mb-0 [&_p]:align-middle [&>img]:pe-2 [&>img]:float-left shadow-lg dark:bg-theme-black dark:text-theme-white dark:border-theme-olive">
+			<TooltipContent
+				className={cn(
+					'flow-root max-w-[40vw] bg-white rounded-lg p-2 opacity-95  border-2 border-white backdrop-blur-md [&_p]:text-sm [&_p]:mb-0 [&_p]:align-middle [&>img]:pe-2 [&>img]:float-left shadow-lg dark:bg-theme-black dark:text-theme-white dark:border-theme-olive',
+					className,
+				)}
+			>
 				{children}
 			</TooltipContent>
 		</Tooltip>

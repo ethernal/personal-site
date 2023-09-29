@@ -16,13 +16,17 @@ function AboutMeToggleMessage() {
 								make life easier and more enjoyable. I have built commercial
 								projects and toys using various technologies and frameworks,
 								such as{' '}
-								<TooltipMessage content="React">
+								<TooltipMessage
+									content="React"
+									className="grid grid-cols-[100px_1fr] gap-4"
+									initialOpen={true}
+								>
 									<ResponsiveImage
 										src="/logotypes/react-logo.svg"
 										width={100}
 										height={100}
 										alt=""
-										className="self-center object-cover"
+										className="[&>img]:object-contain"
 									/>
 									<p>
 										React is a library for creating fast and maintainable{' '}
@@ -30,13 +34,16 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage content="Typescript">
+								<TooltipMessage
+									content="Typescript"
+									className="grid grid-cols-[100px_1fr] gap-4"
+								>
 									<ResponsiveImage
 										src="/logotypes/typescript-logo.svg"
 										width={100}
 										height={100}
 										alt=""
-										className="self-center object-cover"
+										className="[&>img]:object-contain"
 									/>
 									<p>
 										Making Javascript code more reliable with strong typing
@@ -44,13 +51,16 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage content="PrismaJS">
+								<TooltipMessage
+									className="grid grid-cols-[100px_1fr] gap-4"
+									content="PrismaJS"
+								>
 									<ResponsiveImage
 										src="/logotypes/prisma-logo.svg"
 										width={100}
 										height={100}
 										alt=""
-										className="self-center object-cover"
+										className="[&>img]:object-contain"
 									/>
 									<p>
 										Allows to connect to various databases and send and receive
@@ -58,13 +68,16 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage content="TailwindCSS">
+								<TooltipMessage
+									className="grid grid-cols-[100px_1fr] gap-4"
+									content="TailwindCSS"
+								>
 									<ResponsiveImage
 										src="/logotypes/tailwind-logo.svg"
 										width={100}
 										height={100}
 										alt=""
-										className="self-center object-cover"
+										className="[&>img]:object-contain"
 									/>
 									<p>
 										CSS utility framework that&apos;s eating the world but we do
@@ -72,13 +85,16 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage content="GraphQL">
+								<TooltipMessage
+									className="grid grid-cols-[100px_1fr] gap-4"
+									content="GraphQL"
+								>
 									<ResponsiveImage
 										src="/logotypes/graphql-logo.svg"
 										width={100}
 										height={100}
 										alt=""
-										className="self-center object-cover"
+										className="[&>img]:object-contain"
 									/>
 									<p>
 										Specification for retreiving <em>only needed</em> data from
@@ -86,13 +102,16 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage content="PHP">
+								<TooltipMessage
+									className="grid grid-cols-[100px_1fr] gap-4"
+									content="PHP"
+								>
 									<ResponsiveImage
 										src="/logotypes/php-logo.svg"
 										width={100}
 										height={100}
 										alt=""
-										className="self-center object-cover"
+										className="[&>img]:object-contain"
 									/>
 									<p>
 										Originally an abbreviation of Personal Home Page, but it now
@@ -102,13 +121,16 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage content="MongoDB">
+								<TooltipMessage
+									className="grid grid-cols-[100px_1fr] gap-4"
+									content="MongoDB"
+								>
 									<ResponsiveImage
 										src="/logotypes/mongodb-logo.svg"
 										width={100}
 										height={100}
 										alt=""
-										className="self-center object-cover"
+										className="[&>img]:object-contain"
 									/>
 									<p>
 										NoSQL database that uses JSON-like documents with optional
@@ -118,13 +140,16 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage content="PostgreSQL">
+								<TooltipMessage
+									className="grid grid-cols-[100px_1fr] gap-4"
+									content="PostgreSQL"
+								>
 									<ResponsiveImage
 										src="/logotypes/postgresql-logo.svg"
 										width={100}
 										height={100}
 										alt=""
-										className="self-center object-cover"
+										className="[&>img]:object-contain"
 									/>
 									<p>
 										Relational SQL database that uses JSON-like documents with
@@ -134,13 +159,16 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage content="MySQL">
+								<TooltipMessage
+									className="grid grid-cols-[100px_1fr] gap-4"
+									content="MySQL"
+								>
 									<ResponsiveImage
 										src="/logotypes/mysql-logo.svg"
 										width={100}
 										height={100}
 										alt=""
-										className="self-center object-cover"
+										className="[&>img]:object-contain"
 									/>
 									<p>
 										Postgres, is a free and open-source relational database
@@ -150,13 +178,16 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage content="Next.js">
+								<TooltipMessage
+									className="grid grid-cols-[100px_1fr] gap-4"
+									content="Next.js"
+								>
 									<ResponsiveImage
 										src="/logotypes/nextjs-logo.svg"
 										width={100}
 										height={100}
 										alt=""
-										className="self-center object-cover"
+										className="[&>img]:object-contain"
 									/>
 									<p>
 										Next.js is a flexible React framework that this website uses
@@ -164,13 +195,16 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage content="Symfony Framework">
+								<TooltipMessage
+									className="grid grid-cols-[100px_1fr] gap-4"
+									content="Symfony Framework"
+								>
 									<ResponsiveImage
 										src="/logotypes/symfony-logo.svg"
 										width={100}
 										height={100}
 										alt=""
-										className="self-center object-cover"
+										className="[&>img]:object-contain"
 									/>
 									<p>
 										Symfony is a set of reusable PHP components and a PHP
@@ -178,13 +212,16 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage content="CSS">
+								<TooltipMessage
+									className="grid grid-cols-[100px_1fr] gap-4"
+									content="CSS"
+								>
 									<ResponsiveImage
 										src="/logotypes/css-logo.svg"
 										width={100}
 										height={100}
 										alt=""
-										className="self-center object-cover"
+										className="[&>img]:object-contain"
 									/>
 									<p>
 										CSS stands for Cascading Style Sheets and it is a language
@@ -194,13 +231,16 @@ function AboutMeToggleMessage() {
 									</p>
 								</TooltipMessage>
 								,{' '}
-								<TooltipMessage content="Wordpress">
+								<TooltipMessage
+									className="grid grid-cols-[100px_1fr] gap-4"
+									content="Wordpress"
+								>
 									<ResponsiveImage
 										src="/logotypes/wordpress-logo.svg"
 										width={100}
 										height={100}
 										alt=""
-										className="self-center object-cover"
+										className="[&>img]:object-contain"
 									/>
 									<p>
 										Wordpress is a Content Management System that allows to
@@ -234,13 +274,16 @@ function AboutMeToggleMessage() {
 								for various companies and clients. I worked with{' '}
 								<em>
 									{' '}
-									<TooltipMessage content="React">
+									<TooltipMessage
+										className="grid grid-cols-[100px_1fr] gap-4"
+										content="React"
+									>
 										<ResponsiveImage
 											src="/logotypes/react-logo.svg"
 											width={100}
 											height={100}
 											alt=""
-											className="self-center object-cover"
+											className="[&>img]:object-contain"
 										/>
 										<p>
 											React is a library for creating fast and maintainable{' '}
@@ -248,13 +291,17 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage content="Typescript" initialOpen={false}>
+									<TooltipMessage
+										className="grid grid-cols-[100px_1fr] gap-4"
+										content="Typescript"
+										initialOpen={false}
+									>
 										<ResponsiveImage
 											src="/logotypes/typescript-logo.svg"
 											width={100}
 											height={100}
 											alt=""
-											className="self-center object-cover"
+											className="[&>img]:object-contain"
 										/>
 										<p>
 											Making Javascript code more reliable with strong typing
@@ -262,13 +309,16 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage content="PrismaJS">
+									<TooltipMessage
+										className="grid grid-cols-[100px_1fr] gap-4"
+										content="PrismaJS"
+									>
 										<ResponsiveImage
 											src="/logotypes/prisma-logo.svg"
 											width={100}
 											height={100}
 											alt=""
-											className="self-center object-cover"
+											className="[&>img]:object-contain"
 										/>
 										<p>
 											Allows to connect to various databases and send and
@@ -276,13 +326,16 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage content="TailwindCSS">
+									<TooltipMessage
+										className="grid grid-cols-[100px_1fr] gap-4"
+										content="TailwindCSS"
+									>
 										<ResponsiveImage
 											src="/logotypes/tailwind-logo.svg"
 											width={100}
 											height={100}
 											alt=""
-											className="self-center object-cover"
+											className="[&>img]:object-contain"
 										/>
 										<p>
 											CSS utility framework that&apos;s eating the world but we
@@ -290,13 +343,16 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage content="GraphQL">
+									<TooltipMessage
+										className="grid grid-cols-[100px_1fr] gap-4"
+										content="GraphQL"
+									>
 										<ResponsiveImage
 											src="/logotypes/graphql-logo.svg"
 											width={100}
 											height={100}
 											alt=""
-											className="self-center object-cover"
+											className="[&>img]:object-contain"
 										/>
 										<p>
 											Specification for retrieving <em>only needed</em> data
@@ -304,13 +360,16 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage content="PHP">
+									<TooltipMessage
+										className="grid grid-cols-[100px_1fr] gap-4"
+										content="PHP"
+									>
 										<ResponsiveImage
 											src="/logotypes/php-logo.svg"
 											width={100}
 											height={100}
 											alt=""
-											className="self-center object-cover"
+											className="[&>img]:object-contain"
 										/>
 										<p>
 											Originally an abbreviation of Personal Home Page, but it
@@ -320,13 +379,16 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage content="MongoDB">
+									<TooltipMessage
+										className="grid grid-cols-[100px_1fr] gap-4"
+										content="MongoDB"
+									>
 										<ResponsiveImage
 											src="/logotypes/mongodb-logo.svg"
 											width={100}
 											height={100}
 											alt=""
-											className="self-center object-cover"
+											className="[&>img]:object-contain"
 										/>
 										<p>
 											NoSQL database that uses JSON-like documents with optional
@@ -336,7 +398,11 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage content="PostgreSQL" initialOpen={false}>
+									<TooltipMessage
+										className="grid grid-cols-[100px_1fr] gap-4"
+										content="PostgreSQL"
+										initialOpen={false}
+									>
 										<ResponsiveImage
 											src="/logotypes/postgresql-logo.svg"
 											width={100}
@@ -352,13 +418,16 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage content="MySQL">
+									<TooltipMessage
+										className="grid grid-cols-[100px_1fr] gap-4"
+										content="MySQL"
+									>
 										<ResponsiveImage
 											src="/logotypes/mysql-logo.svg"
 											width={100}
 											height={100}
 											alt=""
-											className="self-center object-cover"
+											className="[&>img]:object-contain"
 										/>
 										<p>
 											Postgres, is a free and open-source relational database
@@ -368,13 +437,16 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage content="Next.js">
+									<TooltipMessage
+										className="grid grid-cols-[100px_1fr] gap-4"
+										content="Next.js"
+									>
 										<ResponsiveImage
 											src="/logotypes/nextjs-logo.svg"
 											width={100}
 											height={100}
 											alt=""
-											className="self-center object-cover"
+											className="[&>img]:object-contain"
 										/>
 										<p>
 											Next.js is a flexible React framework that this website
@@ -382,13 +454,16 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage content="Symfony Framework">
+									<TooltipMessage
+										className="grid grid-cols-[100px_1fr] gap-4"
+										content="Symfony Framework"
+									>
 										<ResponsiveImage
 											src="/logotypes/symfony-logo.svg"
 											width={100}
 											height={100}
 											alt=""
-											className="self-center object-cover"
+											className="[&>img]:object-contain"
 										/>
 										<p>
 											Symfony is a set of reusable PHP components and a PHP
@@ -396,13 +471,16 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage content="CSS">
+									<TooltipMessage
+										className="grid grid-cols-[100px_1fr] gap-4"
+										content="CSS"
+									>
 										<ResponsiveImage
 											src="/logotypes/css-logo.svg"
 											width={100}
 											height={100}
 											alt=""
-											className="self-center object-cover"
+											className="[&>img]:object-contain"
 										/>
 										<p>
 											CSS stands for Cascading Style Sheets and it is a language
@@ -412,13 +490,16 @@ function AboutMeToggleMessage() {
 										</p>
 									</TooltipMessage>
 									,{' '}
-									<TooltipMessage content="Wordpress">
+									<TooltipMessage
+										className="grid grid-cols-[100px_1fr] gap-4"
+										content="Wordpress"
+									>
 										<ResponsiveImage
 											src="/logotypes/wordpress-logo.svg"
 											width={100}
 											height={100}
 											alt=""
-											className="self-center object-cover"
+											className="[&>img]:object-contain"
 										/>
 										<p>
 											Wordpress is a Content Management System that allows to
