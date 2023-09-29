@@ -87,10 +87,8 @@ function ResponsiveImage({
 				height={height ?? 0}
 				sizes="100dvw"
 				alt={alt}
+				className={cn('object-cover m-0 p-0', className)}
 				style={{
-					objectFit: 'cover',
-					margin: 0,
-					padding: 0,
 					border:
 						floatTextAroundImage === true || showBorder === false
 							? 'none'
@@ -114,7 +112,9 @@ function ResponsiveImage({
 								: 'inherit',
 						hyphenateCharacter: 'auto',
 					}}
-					className="text-tiny break-words hyphens-auto text-theme-white tracking-[0.10rem] p-2 bg-theme-black"
+					className={cn(
+						'text-tiny break-words hyphens-auto text-theme-white tracking-[0.10rem] p-2 bg-theme-black',
+					)}
 				>
 					{caption}
 				</figcaption>
