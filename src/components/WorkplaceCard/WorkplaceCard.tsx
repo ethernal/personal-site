@@ -77,12 +77,12 @@ function WorkplaceCard({ className, workplace }: WorkplaceCardProps) {
 			</CardUIBody>
 			<Divider orientation="horizontal" />
 			<CardUIFooter>
-				<ul className="flex flex-row gap-2 flex-wrap bg-green-100 p-2 backdrop-blur-lg rounded-md">
+				<ul className="flex flex-row gap-2 flex-wrap bg-[#ccd3c8] dark:bg-[#141b10] p-2 backdrop-blur-lg rounded-md">
 					{keywords?.map((keyword) => {
 						return (
 							<li
 								key={keyword.toLowerCase().replaceAll(' ', '-')}
-								className="text-tiny uppercase"
+								className="text-tiny uppercase dark:text-theme-white"
 							>
 								{keyword}
 							</li>
