@@ -1,0 +1,93 @@
+---
+title: Dynamically adding multiple custom data attributes to jsx and html
+abstract: I will show you how to add multiple custom (`data-`) attributes kept in an array to JSX or HTML using React.
+publishedOn: '2023-09-23'
+---
+
+## Adding attributes to JSX
+
+This is simple and you will find hundred blog posts about it.
+
+```tsx
+<article
+	data-has-keywords
+>
+```
+
+This will create a HTML element:
+
+```html
+<article
+	data-has-keywords="true"
+>
+```
+
+To make it dynamic you could use derived values or state in React (or other frontened framework).
+
+
+```tsx
+<article
+	data-has-keywords={data.length}
+>
+```
+In case data array is empty:
+
+```html
+// data = [];
+<article
+	data-has-keywords="false"
+>
+```
+
+If it has any elements inside:
+
+```html
+// data = ["one","two"];
+// dataKeywords = {data-keyword-one:"one",data-keyword-two:"two"};
+<article
+	data-has-keywords={Object.keys(dataKeywords).length}
+>
+```
+
+## Multiple Dynamic Keys with Tagged Template Literals
+
+Now the real issue is what to do when you want to create custom keys with dynamic values and using tagged template literals for it.
+
+In my case I wanted to have `data-keyword-` for every skill in the CV so it could be highlighted with CSS without relying on JavaScript.
+
+As you can tell by using the page every skill has multiple keywords assigned to it ex.: "Javascript, Typescript, CSS" etc. and these keywords have the language name assigned after the keyword and it's display value.
+
+```html
+  <article data-keyword-javascript:"Javascript" data-keyword-typescript:"Typescript" data-keyword-frontend:"Frontend"
+  ...
+  >
+```
+
+## Coded solution
+
+```ts
+  let dataKeywords = {};
+	keywords?.forEach((keyword) => {
+		const attr = { [`data-keyword-${keyword.toLowerCase()}`]: keyword };
+		dataKeywords = {
+			...dataKeywords,
+			...attr,
+		};
+  });
+```
+
+And in JSX:
+
+```tsx
+<article
+	key={`skill-${name}-${skillIndex}`}
+	{...dataKeywords}
+>
+```
+
+The tricky part is to use `[]` array brackets when creating an object key with [tagged template literals](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Template_literals). If not used it will complain with error:
+
+```error
+Property assignment expected.
+```
+
