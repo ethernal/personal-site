@@ -28,7 +28,7 @@ function CurriculumVitae({ className }: CurriculumVitaeProps) {
 			<SkillsList skills={cv.skills} />
 			<h2>Languages</h2>
 			<LanguagesList languages={cv.languages} />
-			<h2>Projects Protfolio</h2>
+			<h2>Projects Portfolio</h2>
 			<ProjectsList projects={cv.projects} />
 			<h2>Dream Job</h2>
 			<EmploymentStatus
