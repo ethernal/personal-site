@@ -67,8 +67,8 @@ function ResponsiveImage({
 	return (
 		<figure
 			style={{
-				width: width ?? 'inherit',
-				maxWidth: width ?? 'inherit',
+				width: width ?? 'auto',
+				maxWidth: width ?? 'auto',
 				shapeOutside: shapeOutside,
 			}}
 			className={cn(

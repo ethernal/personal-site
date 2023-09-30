@@ -34,14 +34,7 @@ function WorkplaceCard({ className, workplace }: WorkplaceCardProps) {
 			<CardUIHeader>
 				<span className="flex gap-2 items-start justify-between w-full">
 					<h4 className="font-bold text-large uppercase">{name}</h4>
-					{logo && (
-						<ResponsiveImage
-							src={logo ?? ''}
-							alt={name}
-							width={40}
-							height={40}
-						/>
-					)}
+					{logo && <ResponsiveImage src={logo ?? ''} alt={name} height={40} />}
 				</span>
 				<ul className="flex flex-row gap-2">
 					<li className="text-tiny">
