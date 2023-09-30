@@ -29,7 +29,9 @@ async function SitePage({ params, searchParams }) {
 	return (
 		<article>
 			<header className="mx-auto max-w-[var(--page-wrapper-max-width)] wrapper">
-				<ArticleInfo publishedOn={publishedOn}>{title}</ArticleInfo>
+				<ArticleInfo publishedOn={new Date(publishedOn).toLocaleDateString()}>
+					{title}
+				</ArticleInfo>
 			</header>
 			<div className="wrapper">
 				<MDXRemote
