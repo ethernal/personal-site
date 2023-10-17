@@ -7,20 +7,13 @@ type CertificatesListProps = {
 };
 
 function CertificatesList({ certificates, className }: CertificatesListProps) {
-	return (
-		<section className={className}>
-			{certificates.map((certificate: Certificate) => {
-				return (
-					<article
-						key={`certificate-${certificate.name}-${certificate.issuer}`}
-						className="h-full"
-					>
-						<CertificateCard certificate={certificate} />
-					</article>
-				);
-			})}
-		</section>
-	);
+	return certificates.map((certificate: Certificate) => {
+		return (
+			<article key={`certificate-${certificate.name}-${certificate.issuer}`}>
+				<CertificateCard certificate={certificate} />
+			</article>
+		);
+	});
 }
 
 export default CertificatesList;

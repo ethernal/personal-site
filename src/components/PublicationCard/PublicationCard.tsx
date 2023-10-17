@@ -19,7 +19,10 @@ function PublicationCard({
 
 	return (
 		<CardUI
-			className={cn('p-0 mb-4 min-h-[300px] max-w-min', className)}
+			className={cn(
+				'p-0 mb-4 min-h-[300px] max-w-full dark:border dark:border-theme-white',
+				className,
+			)}
 			isBlurred={true}
 			isFooterBlurred={true}
 		>
@@ -33,7 +36,7 @@ function PublicationCard({
 					<li className="text-small font-semibold min-h-">{publisher}</li>
 				</ul>
 			</CardUIHeader>
-			<CardUIBody>{summary}</CardUIBody>
+			<CardUIBody className="text-justify text-lg">{summary}</CardUIBody>
 
 			<CardUIFooter className={'p-4 text-tiny rounded-none'}>
 				{website && website?.length > 0 && (
