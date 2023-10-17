@@ -40,6 +40,7 @@ function WorkExperienceCard({
 						showValueLabel={true}
 						valueLabel={years}
 						maxValue={maxYears}
+						color="success"
 						size="lg"
 					/>
 				</CardUIBody>
