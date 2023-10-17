@@ -8,6 +8,7 @@ import { Workplace } from '@/types/CurriculumVitae';
 import { Divider } from '@nextui-org/react';
 
 import FigureUI from '../FigureUI';
+import KeywordList from '../KeywordList';
 
 type WorkplaceCardProps = {
 	workplace: Prettify<Workplace>;
@@ -82,18 +83,7 @@ function WorkplaceCard({ className, workplace }: WorkplaceCardProps) {
 			</CardUIBody>
 			<Divider orientation="horizontal" />
 			<CardUIFooter>
-				<ul className="flex flex-row gap-2 flex-wrap bg-[#ccd3c8] dark:bg-[#141b10] p-2 backdrop-blur-lg rounded-md">
-					{keywords?.map((keyword) => {
-						return (
-							<li
-								key={keyword.toLowerCase().replaceAll(' ', '-')}
-								className="text-tiny uppercase dark:text-theme-white"
-							>
-								{keyword}
-							</li>
-						);
-					})}
-				</ul>
+				<KeywordList keywords={keywords ?? []} />
 			</CardUIFooter>
 		</CardUI>
 	);
