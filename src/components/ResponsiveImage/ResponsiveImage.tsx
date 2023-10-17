@@ -34,8 +34,8 @@ type ResponsiveImageProps = {
 	className?: string;
 	caption?: string;
 	alt: string;
-	width?: number;
-	height?: number;
+	width?: number | string;
+	height?: number | string;
 	options?: Prettify<ImageOptions>;
 	delegated?: ComponentProps<'img'>;
 };
@@ -67,9 +67,8 @@ function ResponsiveImage({
 	return (
 		<figure
 			style={{
-				width: width ?? 'auto',
-				maxWidth: width ?? 'auto',
-				shapeOutside: shapeOutside,
+				width: width ?? 'inherit',
+				height: height ?? 'inherit',
 			}}
 			className={cn(
 				{ 'float-right': float === 'right' },
@@ -77,6 +76,7 @@ function ResponsiveImage({
 				{ shapeOutside: shapeOutside },
 				{ 'ps-4': float === 'left' },
 				{ 'pe-4': float === 'right' },
+				{ 'max-w-[inherit]': typeof width === 'undefined' },
 				className,
 			)}
 		>

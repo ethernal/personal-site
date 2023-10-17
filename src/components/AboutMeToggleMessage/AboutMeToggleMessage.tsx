@@ -19,7 +19,7 @@ function AboutMeToggleMessage() {
 								<TooltipMessage
 									content="React"
 									className="grid grid-cols-[100px_1fr] gap-4"
-									initialOpen={true}
+									initialOpen={false}
 								>
 									<ResponsiveImage
 										src="/logotypes/react-logo.svg"
