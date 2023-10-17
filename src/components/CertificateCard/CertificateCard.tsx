@@ -18,7 +18,7 @@ function CertificateCard({
 
 	return (
 		<CardUI
-			className={cn('p-0 mb-4 min-h-[300px]', className)}
+			className={cn('p-0 mb-4 min-h-[300px] dark:text-slate-800', className)}
 			isBlurred={true}
 			isFooterBlurred={true}
 		>
@@ -36,7 +36,7 @@ function CertificateCard({
 			{url && url?.length > 0 && (
 				<ResponsiveImage
 					alt="Card background"
-					className="z-0 w-full h-full object-cover"
+					className="z-0 w-full object-cover"
 					src={url}
 				/>
 			)}

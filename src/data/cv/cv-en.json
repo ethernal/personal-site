@@ -180,7 +180,7 @@
 			"publisher": "National Conference for Students and Young Researchers",
 			"releaseDate": "2012-05-01",
 			"website": "https://www.hhs.gov/web/policies-and-standards/index.html",
-			"summary": "Article about quantitative methodology of comparing and ranking websites before Google Lighthouse or other automated testing tools were commonly used."
+			"summary": "Article about quantitative methodology of comparing and ranking websites before Google Lighthouse or other automated testing tools were commonly used. It was also used by Walery Susłow from Technical University of Koszalin to quantitatively rank and grade students' work. It allows to compare end products to selected set of metrics and at the same time gives full control over each metric importance. This allows to rank products/websites while limiting personal biases to minimum since metrics in turn are also quantitative."
 		}
 	],
 	"skills": [
@@ -404,10 +404,70 @@
 	],
 	"certificates": [
 		{
+			"name": "Joy of React",
+			"date": "2023-07-23",
+			"issuer": "Josh W. Comeau",
+			"url": "/certificates/react-joy-of-react-sebastian-pieczynski.png"
+		},
+		{
+			"name": "CSS for JS Developers",
+			"date": "2022-06-24",
+			"issuer": "Josh W. Comeau",
+			"url": "/certificates/css-css-for-js-devs-sebastian-pieczynski.png"
+		},
+		{
+			"name": "Epic React - React Hooks",
+			"date": "2020-10-20",
+			"issuer": "Kent C. Dodds",
+			"url": "/certificates/react-epic-react-certificate-react-hooks-sebastian-pieczynski.png"
+		},
+		{
+			"name": "Epic React - React Fundamentals",
+			"date": "2020-10-01",
+			"issuer": "Kent C. Dodds",
+			"url": "/certificates/react-epic-react-certificate-react-fundamentals-sebastian-pieczynski.png"
+		},
+		{
+			"name": "Beginner Javascript Course",
+			"date": "2019-11-29",
+			"issuer": "Wes Bos",
+			"url": "/certificates/javascript-beginner-javascript-sebastian-pieczynski.png"
+		},
+		{
+			"name": "Node.js Masterclass with Express & MongoDB",
+			"date": "2019-11-4",
+			"issuer": "Brad Traversy",
+			"url": "/certificates/nodejs-udemy-nodejs-api-express-mongodb-sebastian-pieczynski.jpg"
+		},
+		{
+			"name": "React Front to Back",
+			"date": "2019-09-09",
+			"issuer": "Brad Traversy",
+			"url": "/certificates/react-react-front-to-back-sebastian-pieczynski.jpg"
+		},
+		{
+			"name": "Advanced React and GraphQL",
+			"date": "2018-10-18",
+			"issuer": "Wes Bos",
+			"url": "/certificates/react-fullstack-react-advanced-graphql-sebastian-pieczynski.png"
+		},
+		{
+			"name": "ES6 for Everyone",
+			"date": "2017-11-15",
+			"issuer": "Wes Bos",
+			"url": "/certificates/javascript-es6-for-everyone-sebastian-pieczynski.png"
+		},
+		{
+			"name": "React for Beginners",
+			"date": "2017-11-15",
+			"issuer": "Wes Bos",
+			"url": "/certificates/react-react-for-beginners-sebastian-pieczynski.png"
+		},
+		{
 			"name": "First Certificate in English",
 			"date": "2003-12",
 			"issuer": "Cambridge",
-			"url": "/certificates/certificate-fce.png"
+			"url": "/certificates/language-certificate-fce.png"
 		}
 	],
 	"specific": {
