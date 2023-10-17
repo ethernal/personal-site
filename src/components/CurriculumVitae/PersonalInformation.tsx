@@ -1,4 +1,5 @@
 'use client';
+import Image from 'next/image';
 import { BsPersonCircle } from 'react-icons/bs';
 import { FiMail } from 'react-icons/fi';
 import { GrStatusInfo } from 'react-icons/gr';
@@ -13,6 +14,7 @@ import countries from '@/data/country/countries.json';
 import { PersonalInformation } from '@/types/CurriculumVitae';
 
 import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
+import FigureUI, { FigureCaptionUI } from '../FigureUI';
 
 type PersonalInformationProps = {
 	className?: string;
@@ -85,14 +87,20 @@ export default function PersonalInformation({
 								/>
 							</CardUIFooter>
 						</span>
-						<ResponsiveImage
-							src={personalInformation.picture}
-							alt={`Profile picture of ${personalInformation.name}`}
-							// options={{ float: 'right', variant: 'float', showBorder: true }}
-							width={150}
-							caption={personalInformation.summary}
-							className="p-0  grid-start-2 grid-end-3"
-						/>
+						<FigureUI
+							className="p-0  grid-start-2 grid-end-3 mr-4"
+							options={{ variant: 'float', float: 'right' }}
+						>
+							<Image
+								src={personalInformation.picture}
+								alt={`Profile picture of ${personalInformation.name}`}
+								width={150}
+								height={150}
+							/>
+							<FigureCaptionUI className="rounded-md">
+								{personalInformation.summary}
+							</FigureCaptionUI>
+						</FigureUI>
 					</CardUI>
 				</div>
 			</article>

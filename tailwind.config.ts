@@ -54,6 +54,9 @@ const config: Config = {
 				'theme-olive': 'hsla(95, 85%, 25%, 0.1)',
 				'theme-black': 'var(--color-theme-black)',
 				'theme-glass': 'var(--color-theme-glass)',
+				'theme-light-green': 'hsl(120 50% 95% / 1)',
+				'theme-dark-green': 'hsl(120 50% 5% / 1)',
+				'theme-dark-teal': 'hsl(180 40% 45% / 1)',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
