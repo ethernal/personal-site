@@ -1,15 +1,13 @@
 'use client';
 
+import Image from 'next/image';
 import Link from 'next/link';
 
-import CardUI, {
-	CardUIBody,
-	CardUIFooter,
-	CardUIHeader,
-} from '@/components/CardUI';
-import ResponsiveImage from '@/components/ResponsiveImage';
+import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '@/components/CardUI';
 import { Workplace } from '@/types/CurriculumVitae';
 import { Divider } from '@nextui-org/react';
+
+import FigureUI from '../FigureUI';
 
 type WorkplaceCardProps = {
 	workplace: Prettify<Workplace>;
@@ -32,9 +30,23 @@ function WorkplaceCard({ className, workplace }: WorkplaceCardProps) {
 	return (
 		<CardUI className={className} isBlurred={true}>
 			<CardUIHeader>
-				<span className="flex gap-2 items-start justify-between w-full">
+				<span className="flex gap-2 justify-between w-full items-center">
 					<h4 className="font-bold text-large uppercase">{name}</h4>
-					{logo && <ResponsiveImage src={logo ?? ''} alt={name} height={40} />}
+					{logo && (
+						<FigureUI
+							className="block h-10 w-[clamp(40px,1rem,100%)] max-w-40 justify-end"
+							// width={0}
+							// height={0}
+						>
+							<Image
+								src={logo ?? ''}
+								alt={name}
+								height={40}
+								width={150}
+								className="object-contain w-40 h-10 block"
+							/>
+						</FigureUI>
+					)}
 				</span>
 				<ul className="flex flex-row gap-2">
 					<li className="text-tiny">
