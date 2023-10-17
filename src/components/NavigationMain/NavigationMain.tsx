@@ -4,8 +4,8 @@ import Link from 'next/link';
 import React, { ReactNode, useState } from 'react';
 import { Menu, X } from 'react-feather';
 
-import ActionsMenu from '@/components/ActionsMenu/ActionsMenu';
 import Logo from '@/components/Logo/Logo';
+import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 
 type NavigationMainProps = {
 	className?: string;
@@ -92,7 +92,7 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 						</Link>
 					</li>
 					<li>
-						<ActionsMenu
+						<ThemeToggle
 							className={`flex gap-4 items-center flex-grow-0 flex-shrink-0`}
 							data-sm
 						/>
