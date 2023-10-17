@@ -6,13 +6,13 @@ import VisuallyHidden from '@/components/VisuallyHidden';
 import { DARK_COLORS, LIGHT_COLORS } from '@/constants/constants';
 import { useThemeContext } from '@/context/theme/ThemeContext';
 
-type ActionsMenuProps = {
+type ThemeToggleProps = {
 	className?: string;
 	classNameForIcons?: string;
 	delegated?: any;
 };
 
-const ActionsMenu: React.FC<ActionsMenuProps> = ({
+const ThemeToggle: React.FC<ThemeToggleProps> = ({
 	className = '',
 	classNameForIcons = '',
 	...delegated
@@ -66,4 +66,4 @@ const ActionsMenu: React.FC<ActionsMenuProps> = ({
 	);
 };
 
-export default ActionsMenu;
+export default ThemeToggle;
