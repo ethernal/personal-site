@@ -5,7 +5,7 @@ import {
 	DreamJob,
 	WorkExperienceAndAvailability,
 } from '@/types/CurriculumVitae';
-import { CircularProgress } from '@nextui-org/react';
+import { CircularProgress, Divider } from '@nextui-org/react';
 
 import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
 
@@ -68,10 +68,11 @@ function EmploymentStatus({
 							{employmentStatus.contractTypes?.join(', ')} work.
 						</p>
 					</CardUIHeader>
-					<CardUIBody>
+					<Divider />
+					<CardUIBody className={'pt-4 text-xl'}>
 						<blockquote className="flex flex-col gap-1">
 							{employmentStatus.codingReason}
-							<footer className="text-black/60">
+							<footer className="text-black/60 dark:text-white/60">
 								&mdash; Sebastian Pieczyński
 							</footer>
 						</blockquote>

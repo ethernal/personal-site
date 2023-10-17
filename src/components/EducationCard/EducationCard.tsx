@@ -23,10 +23,16 @@ function EducationCard({ education, className = '' }: EducationCardProps) {
 					'absolute z-10 top-1 flex-col items-start bg-white bg-[linear-gradient(180deg,_rgba(255,255,255,0.4)_0%,_rgba(255,255,255,0.2)_100%)] pb-4 backdrop-blur-[2px]'
 				}
 			>
-				<h4 className="font-bold text-large uppercase">{institution}</h4>
+				<h4 className="font-bold text-large uppercase dark:text-theme-black">
+					{institution}
+				</h4>
 				<ul>
-					<li className="text-small font-semibold min-h-">{area}</li>
-					<li className="text-small font-semibold">{studyType}</li>
+					<li className="text-small font-semibold dark:text-theme-black">
+						{area}
+					</li>
+					<li className="text-small font-semibold dark:text-theme-black">
+						{studyType}
+					</li>
 				</ul>
 			</CardUIHeader>
 

@@ -5,6 +5,7 @@ import Link from 'next/link';
 
 import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '@/components/CardUI';
 import { Workplace } from '@/types/CurriculumVitae';
+import { cn } from '@/utils/utils';
 import { Divider } from '@nextui-org/react';
 
 import FigureUI from '../FigureUI';
@@ -29,7 +30,10 @@ function WorkplaceCard({ className, workplace }: WorkplaceCardProps) {
 	} = workplace;
 
 	return (
-		<CardUI className={className} isBlurred={true}>
+		<CardUI
+			className={cn('dark:bg-theme-dark-gray', className)}
+			isBlurred={true}
+		>
 			<CardUIHeader>
 				<span className="flex gap-2 justify-between w-full items-center">
 					<h4 className="font-bold text-large uppercase">{name}</h4>

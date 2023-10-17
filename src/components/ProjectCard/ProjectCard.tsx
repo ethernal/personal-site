@@ -7,6 +7,7 @@ import CardUI, {
 } from '@/components/CardUI';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import { Project } from '@/types/CurriculumVitae';
+import { cn } from '@/utils/utils';
 import { Divider } from '@nextui-org/react';
 
 import KeywordList from '../KeywordList';
@@ -28,7 +29,11 @@ function ProjectCard({ project, className = '' }: ProjectCardProps) {
 		gallery,
 	} = project;
 	return (
-		<CardUI className={className} isBlurred={true} isFooterBlurred={true}>
+		<CardUI
+			className={cn('dark:bg-theme-dark-gray', className)}
+			isBlurred={true}
+			isFooterBlurred={true}
+		>
 			<CardUIHeader>
 				<h4 className="font-bold text-large uppercase">{name}</h4>
 				<p className="text-default-500 text-tiny">
@@ -56,7 +61,7 @@ function ProjectCard({ project, className = '' }: ProjectCardProps) {
 				</p>
 			</CardUIBody>
 			<Divider orientation="horizontal" />
-			<CardUIFooter className={'text-tiny rounded-none'}>
+			<CardUIFooter className={'text-tiny rounded-none max-w-[99%]'}>
 				<KeywordList keywords={keywords ?? []} />
 			</CardUIFooter>
 		</CardUI>

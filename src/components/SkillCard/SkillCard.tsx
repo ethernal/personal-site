@@ -6,6 +6,7 @@ import CardUI, {
 	CardUIHeader,
 } from '@/components/CardUI';
 import { Skill, SkillLevel } from '@/types/CurriculumVitae';
+import { cn } from '@/utils/utils';
 import { CircularProgress, Divider } from '@nextui-org/react';
 
 import KeywordList from '../KeywordList';
@@ -25,7 +26,10 @@ export const SkillHierarchy: Array<SkillLevel> = [
 function SkillCard({ skill, className = '' }: SkillCardProps) {
 	const { name, value, level, keywords } = skill;
 	return (
-		<CardUI className={className} isBlurred={true}>
+		<CardUI
+			className={cn('dark:bg-theme-dark-gray', className)}
+			isBlurred={true}
+		>
 			<CardUIHeader>
 				<h4 className="font-bold text-large uppercase">{name}</h4>
 				<small className="text-default-500">
@@ -57,18 +61,6 @@ function SkillCard({ skill, className = '' }: SkillCardProps) {
 			<Divider orientation="horizontal" />
 			<CardUIFooter>
 				<KeywordList keywords={keywords ?? []} />
-				{/* <ul className="flex flex-row gap-2 flex-wrap bg-green-100 p-2 backdrop-blur-lg rounded-md">
-					{keywords?.map((keyword) => {
-						return (
-							<li
-								key={keyword.toLowerCase().replaceAll(' ', '-')}
-								className="text-tiny uppercase"
-							>
-								{keyword}
-							</li>
-						);
-					})}
-				</ul> */}
 			</CardUIFooter>
 		</CardUI>
 	);

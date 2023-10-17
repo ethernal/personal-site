@@ -20,7 +20,7 @@ function PublicationCard({
 	return (
 		<CardUI
 			className={cn(
-				'p-0 mb-4 min-h-[300px] max-w-full dark:border dark:border-theme-white',
+				'p-0 mb-4 min-h-[300px] max-w-full dark:border dark:border-theme-white dark:bg-theme-dark-gray',
 				className,
 			)}
 			isBlurred={true}
