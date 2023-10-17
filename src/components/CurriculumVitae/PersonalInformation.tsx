@@ -32,7 +32,7 @@ export default function PersonalInformation({
 		<section className={className}>
 			<article data-section-basic data-section-visible="true">
 				<div>
-					<CardUI className="relative grid grid-cols-1  xs:grid-cols-[1fr_170px]">
+					<CardUI className="relative grid grid-cols-1 xs:grid-cols-[1fr_170px]">
 						<span className="grid-start-1 grid-end-2">
 							<CardUIHeader>
 								<ol>
@@ -40,7 +40,7 @@ export default function PersonalInformation({
 										<BsPersonCircle /> {personalInformation.name}
 									</HorizontalItem>
 									<HorizontalItem as="li">
-										<GrStatusInfo />
+										<GrStatusInfo className="dark:bg-theme-white" />
 										{personalInformation.label}
 									</HorizontalItem>
 									<HorizontalItem as="li">
