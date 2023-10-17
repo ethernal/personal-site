@@ -30,6 +30,7 @@ export const COLOR_DEFINITIONS = {
 	'--color-theme-white': '#fafffa',
 	'--color-theme-ruby': 'hsl(7 95% 38% / 1)',
 	'--color-theme-glass': 'hsl(0 100% 100% / 0.3)',
+	'--color-theme-dark-gray': '#18181b',
 };
 
 export const LAYOUT_VARIABLES = {
