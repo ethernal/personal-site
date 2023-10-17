@@ -2,7 +2,7 @@ import React from 'react';
 
 import BlogArticleCard from '@/components/BlogArticleCard';
 import { SITE_TITLE } from '@/constants';
-import { getBlogPostList } from '@/helpers/fs-helpers';
+import { getBlogPostsFrontmatter } from '@/helpers/fs-helpers';
 
 export const metadata = {
 	title: SITE_TITLE,
@@ -11,7 +11,7 @@ export const metadata = {
 };
 
 async function Home() {
-	const postsList = await getBlogPostList();
+	const postsList = await getBlogPostsFrontmatter();
 
 	return (
 		<div className="max-w-[var('--page-wrapper-max-width')] wrapper">
@@ -21,10 +21,18 @@ async function Home() {
 				return (
 					<BlogArticleCard
 						key={postFrontmatter.slug}
+						// extract all data from frontmatter
+						{...postFrontmatter}
+						// but be specific about what we want to use in the component
+						// this basically doubles the extraction but in case anyone uses
+						// frontmatter props without specifying them it will still work
 						slug={postFrontmatter.slug}
 						title={postFrontmatter.title}
 						abstract={postFrontmatter.abstract}
 						publishedOn={postFrontmatter.publishedOn}
+						image={postFrontmatter.image}
+						imageAlt={postFrontmatter.imageAlt}
+						imageCredits={postFrontmatter.imageCredits}
 					/>
 				);
 			})}
