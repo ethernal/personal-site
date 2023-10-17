@@ -52,7 +52,7 @@ const CardUIHeader = React.memo(
 			<CardHeader
 				ref={ref}
 				className={cn(
-					'pb-0 pt-2 px-4 flex-col items-start tracking-wide',
+					'pb-0 pt-0 pb-2 px-4 flex-col items-start tracking-wide',
 					className,
 				)}
 				{...delegated}
@@ -89,7 +89,11 @@ const CardUIFooter = React.memo(
 		ref,
 	) {
 		return (
-			<CardFooter ref={ref} className={cn(className)} {...delegated}>
+			<CardFooter
+				ref={ref}
+				className={cn('pb-0 pt-2 ', className)}
+				{...delegated}
+			>
 				{children}
 			</CardFooter>
 		);

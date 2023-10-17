@@ -22,11 +22,8 @@ function LanguageCard({ language, className = '' }: LanguageCardProps) {
 			className={cn('dark:bg-theme-dark-gray', className)}
 			isBlurred={true}
 		>
-			<CardUIHeader>
+			<CardUIHeader className={'items-center'}>
 				<h4 className="font-bold text-large uppercase">{languageName}</h4>
-				<small className="text-default-500">
-					Current level: <span className="capitalize">{fluency}</span>
-				</small>
 			</CardUIHeader>
 			<Divider orientation="horizontal" />
 
@@ -39,10 +36,14 @@ function LanguageCard({ language, className = '' }: LanguageCardProps) {
 					showValueLabel={true}
 					className="max-w-md"
 				/>
-				<p className="m-0">{value}</p>
+				{/* <p className="m-0">{value}</p> */}
 			</CardUIBody>
 			<Divider orientation="horizontal" />
-			<CardUIFooter></CardUIFooter>
+			<CardUIFooter className={'justify-center'}>
+				<small className="text-default-500">
+					Level: <span className="capitalize">{fluency}</span>
+				</small>
+			</CardUIFooter>
 		</CardUI>
 	);
 }
