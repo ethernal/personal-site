@@ -9,6 +9,8 @@ import ResponsiveImage from '@/components/ResponsiveImage';
 import { Project } from '@/types/CurriculumVitae';
 import { Divider } from '@nextui-org/react';
 
+import KeywordList from '../KeywordList';
+
 type ProjectCardProps = {
 	project: Prettify<Project>;
 	className?: string;
@@ -55,7 +57,7 @@ function ProjectCard({ project, className = '' }: ProjectCardProps) {
 			</CardUIBody>
 			<Divider orientation="horizontal" />
 			<CardUIFooter className={'text-tiny rounded-none'}>
-				{keywords?.join(', ')}
+				<KeywordList keywords={keywords ?? []} />
 			</CardUIFooter>
 		</CardUI>
 	);

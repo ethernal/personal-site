@@ -8,6 +8,8 @@ import CardUI, {
 import { Skill, SkillLevel } from '@/types/CurriculumVitae';
 import { CircularProgress, Divider } from '@nextui-org/react';
 
+import KeywordList from '../KeywordList';
+
 type SkillCardProps = {
 	skill: Prettify<Skill>;
 	className?: string;
@@ -54,7 +56,8 @@ function SkillCard({ skill, className = '' }: SkillCardProps) {
 			</CardUIBody>
 			<Divider orientation="horizontal" />
 			<CardUIFooter>
-				<ul className="flex flex-row gap-2 flex-wrap bg-green-100 p-2 backdrop-blur-lg rounded-md">
+				<KeywordList keywords={keywords ?? []} />
+				{/* <ul className="flex flex-row gap-2 flex-wrap bg-green-100 p-2 backdrop-blur-lg rounded-md">
 					{keywords?.map((keyword) => {
 						return (
 							<li
@@ -65,7 +68,7 @@ function SkillCard({ skill, className = '' }: SkillCardProps) {
 							</li>
 						);
 					})}
-				</ul>
+				</ul> */}
 			</CardUIFooter>
 		</CardUI>
 	);
