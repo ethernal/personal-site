@@ -14,28 +14,39 @@ async function Home() {
 	const postsList = await getBlogPostsFrontmatter();
 
 	return (
-		<div className="max-w-[var('--page-wrapper-max-width')] wrapper">
+		<div className="wrapper max-w-[var('--page-wrapper-max-width')]">
 			<h1>Latest Articles</h1>
 
-			{postsList.map((postFrontmatter) => {
-				return (
-					<BlogArticleCard
-						key={postFrontmatter.slug}
-						// extract all data from frontmatter
-						{...postFrontmatter}
-						// but be specific about what we want to use in the component
-						// this basically doubles the extraction but in case anyone uses
-						// frontmatter props without specifying them it will still work
-						slug={postFrontmatter.slug}
-						title={postFrontmatter.title}
-						abstract={postFrontmatter.abstract}
-						publishedOn={postFrontmatter.publishedOn}
-						image={postFrontmatter.image}
-						imageAlt={postFrontmatter.imageAlt}
-						imageCredits={postFrontmatter.imageCredits}
-					/>
-				);
-			})}
+			<section className="grid grid-cols-1 gap-5 my-5">
+				{postsList.map((postFrontmatter) => {
+					const {
+						slug,
+						title,
+						abstract,
+						publishedOn,
+						image,
+						imageAlt,
+						author,
+					} = postFrontmatter;
+					return (
+						<BlogArticleCard
+							key={slug}
+							slug={slug}
+							// extract all data from frontmatter
+							{...postFrontmatter}
+							// but be specific about what we want to use in the component
+							// this basically doubles the extraction but in case anyone uses
+							// frontmatter props without specifying them it will still work
+							title={title}
+							abstract={abstract}
+							publishedOn={publishedOn}
+							image={image}
+							imageAlt={imageAlt}
+							author={author ?? 'Sebastian Pieczyński'}
+						/>
+					);
+				})}
+			</section>
 		</div>
 	);
 }
