@@ -34,7 +34,7 @@ function BlogArticleCard({
 							{title}
 						</Link>
 					</h2>
-					<p className="text-lg line-clamp-6 my-0">
+					<p className="text-lg line-clamp-6 md:line-clamp-4 my-0">
 						<Link href={slug} className="no-underline">
 							{abstract}
 						</Link>
