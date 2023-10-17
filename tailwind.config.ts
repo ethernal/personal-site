@@ -57,6 +57,7 @@ const config: Config = {
 				'theme-light-green': 'hsl(120 50% 95% / 1)',
 				'theme-dark-green': 'hsl(120 50% 5% / 1)',
 				'theme-dark-teal': 'hsl(180 40% 45% / 1)',
+				'theme-dark-gray': '#18181b',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
