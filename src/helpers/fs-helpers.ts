@@ -8,7 +8,9 @@ import { cache } from 'react';
 import { SITE_PATHS } from '@/constants/constants';
 import { BlogPostFrontmatterType } from '@/types';
 
-export async function getBlogPostList(): Promise<BlogPostFrontmatterType[]> {
+export async function getBlogPostsFrontmatter(): Promise<
+	BlogPostFrontmatterType[]
+> {
 	const fileNames = await readDirectory(SITE_PATHS.blogContentBasePath);
 
 	const blogPosts: Array<BlogPostFrontmatterType> = [];

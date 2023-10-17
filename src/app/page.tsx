@@ -2,7 +2,7 @@ import React from 'react';
 
 import BlogArticleCard from '@/components/BlogArticleCard';
 import { SITE_TITLE } from '@/constants/constants';
-import { getBlogPostList } from '@/helpers/fs-helpers';
+import { getBlogPostsFrontmatter } from '@/helpers/fs-helpers';
 
 export const metadata = {
 	title: SITE_TITLE,
@@ -11,24 +11,38 @@ export const metadata = {
 };
 
 async function Home() {
-	const posts = await getBlogPostList();
+	const postsList = await getBlogPostsFrontmatter();
 
 	return (
 		<div className="wrapper max-w-[var('--page-wrapper-max-width')]">
 			<h1>Latest Articles</h1>
 
-			{posts.map((post) => {
-				const { slug, title, abstract, publishedOn } = post;
-				return (
-					<BlogArticleCard
-						key={slug}
-						slug={slug}
-						title={title}
-						abstract={abstract}
-						publishedOn={publishedOn}
-					/>
-				);
-			})}
+			<section className="grid grid-cols-1 gap-5 my-5">
+				{postsList.map((postFrontmatter) => {
+					const {
+						slug,
+						title,
+						abstract,
+						publishedOn,
+						image,
+						imageAlt,
+						author,
+					} = postFrontmatter;
+					return (
+						<BlogArticleCard
+							key={slug}
+							{...postFrontmatter}
+							slug={slug}
+							title={title}
+							abstract={abstract}
+							publishedOn={publishedOn}
+							image={image}
+							imageAlt={imageAlt}
+							author={author ?? 'Sebastian Pieczyński'}
+						/>
+					);
+				})}
+			</section>
 		</div>
 	);
 }
