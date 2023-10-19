@@ -3,6 +3,7 @@ import Link from 'next/link';
 import React from 'react';
 
 import BlogPostFrontmatterType from '@/types/BlogPostFrontmatterType';
+import { removeDiacritics } from '@/utils/utils';
 import { Image } from '@nextui-org/react';
 
 function BlogArticleCard({
@@ -18,7 +19,7 @@ function BlogArticleCard({
 		<div className="w-full overflow-hidden rounded-xl [&_p]:my-none">
 			<article className="flex flex-col bg-slate-100 dark:bg-slate-800 md:flex-row">
 				<div className="min-w-[50%] object-cover md:min-h-[26rem]">
-					<Link href={slug}>
+					<Link href={`/blog/${slug}`}>
 						<Image
 							src={image}
 							alt={imageAlt}
@@ -30,21 +31,25 @@ function BlogArticleCard({
 
 				<div className="flex h-[inherit] flex-col justify-between p-8">
 					<h2 className="text-3xl font-semibold mt-0">
-						<Link href={slug} className="no-underline">
+						<Link href={`/blog/${slug}`} className="no-underline">
 							{title}
 						</Link>
 					</h2>
 					<p className="text-lg line-clamp-6 md:line-clamp-4 my-0">
-						<Link href={slug} className="no-underline">
+						<Link href={`/blog/${slug}`} className="no-underline">
 							{abstract}
 						</Link>
 					</p>
 					<footer className="flex flex-shrink justify-self-start max-sm:p-8 pt-4 max-sm:flex-col max-sm:items-center max-sm:justify-center max-sm:gap-4">
 						<div className="aspect-square w-20 min-w-[3rem] overflow-hidden rounded-full">
 							<Image
-								src={`/image/profile/${author
-									?.toLocaleLowerCase()
-									.replaceAll(' ', '-')}.png`}
+								src={`/image/profile/${
+									author && author?.length > 0
+										? removeDiacritics(
+												author?.toLocaleLowerCase().replaceAll(' ', '-'),
+										  )
+										: 'sebastian-pieczynski'
+								}.png`}
 								alt={author}
 								removeWrapper
 							/>
