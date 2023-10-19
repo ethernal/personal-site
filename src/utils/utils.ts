@@ -2,6 +2,8 @@ import { ClassValue, clsx } from 'clsx';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 
+import { diacriticsToLettersMap } from './diacriticsMap';
+
 export function cn(...inputs: ClassValue[]) {
 	return twMerge(clsx(inputs));
 }
@@ -34,4 +36,19 @@ export function getDataAttributesFromJSONKeywords(
 	});
 
 	return dataKeywords;
+}
+
+/**
+ * Removes diacritics from a given string.
+ *
+ * @param {string} str - The input string
+ * @return {string} - The string with diacritics removed
+ */
+export function removeDiacritics(str: string) {
+	let changes = diacriticsToLettersMap;
+
+	for (var i = 0; i < changes.length; i++) {
+		str = str.replace(changes[i].letters, changes[i].base);
+	}
+	return str;
 }
