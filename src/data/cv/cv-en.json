@@ -217,8 +217,8 @@
 		},
 		{
 			"name": "TailwindCSS",
-			"level": "Beginner",
-			"value": 29,
+			"level": "Intermediate",
+			"value": 49,
 			"keywords": ["HTML", "CSS", "JSON", "Technical"]
 		},
 		{
@@ -467,7 +467,7 @@
 			"name": "First Certificate in English",
 			"date": "2003-12",
 			"issuer": "Cambridge",
-			"url": "/certificates/language-certificate-fce.png"
+			"url": "/certificates/language-certificate-fce-sebastian-pieczynski.png"
 		}
 	],
 	"specific": {
