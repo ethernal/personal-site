@@ -1,15 +1,15 @@
 import '@/app/globals.css';
 
 import { cookies } from 'next/headers';
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import MotionPreferencesConfig from '@/components/MotionPreferencesConfig/MotionPreferencesConfig';
-import { DARK_TOKENS, LIGHT_TOKENS } from '@/constants/constants';
 import { NextUIThemeProvider } from '@/context/nextui/NextUIThemeProvider';
 import Theme from '@/context/theme/ThemeContext';
 import ColorThemeType from '@/types/ColorThemeType';
+import { cn } from '@/utils/utils';
 
 function RootLayout({ children }: { children: ReactNode }) {
 	const savedThemeCookie = cookies().get('theme');
@@ -22,17 +22,22 @@ function RootLayout({ children }: { children: ReactNode }) {
 				<html
 					lang="en"
 					data-color-theme={savedTheme}
-					style={savedTheme === 'light' ? LIGHT_TOKENS : DARK_TOKENS}
-					className={savedTheme}
+					className={cn(savedTheme)}
 				>
-					<body>
+					<body
+						className={cn(
+							`
+							text-theme-light-text-black
+							bg-theme-light-background-primary
+
+							dark:bg-theme-dark-background-primary
+							dark:text-theme-dark-text-light
+							`,
+						)}
+					>
 						<NextUIThemeProvider>
 							<div className="w-full">
-								{/*
-							max-width: var(--page-wrapper-max-width);
-  margin-inline: auto;
-							*/}
-								<Header className="max-w-[var(--page-wrapper-max-width)] mx-auto" />
+								<Header className="max-w-7xl mx-auto" />
 								<main>{children}</main>
 								<Footer className="wrapper" />
 							</div>

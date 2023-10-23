@@ -1,4 +1,3 @@
-'use client';
 import Image from 'next/image';
 import { BsPersonCircle } from 'react-icons/bs';
 import { FiMail } from 'react-icons/fi';
@@ -6,12 +5,12 @@ import { GrStatusInfo } from 'react-icons/gr';
 import { RiPhoneLine, RiUserLocationLine } from 'react-icons/ri';
 import { TbWorldWww } from 'react-icons/tb';
 
-import ResponsiveImage from '@/components//ResponsiveImage';
 import TooltipMessage from '@/components//TooltipMessage';
 import SocialNetworkList from '@/components/CurriculumVitae/SocialNetworkList';
 import HorizontalItem from '@/components/HorizontalItem';
 import countries from '@/data/country/countries.json';
 import { PersonalInformation } from '@/types/CurriculumVitae';
+import { cn } from '@/utils/utils';
 
 import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
 import FigureUI, { FigureCaptionUI } from '../FigureUI';
@@ -29,10 +28,10 @@ export default function PersonalInformation({
 		countries[personalInformation.location.countryCode];
 
 	return (
-		<section className={className}>
+		<section className={cn('', className)}>
 			<article data-section-basic data-section-visible="true">
 				<div>
-					<CardUI className="relative grid grid-cols-1 xs:grid-cols-[1fr_170px]">
+					<CardUI className="bg-theme-light-background-card dark:bg-theme-dark-background-card relative grid grid-cols-1 xs:grid-cols-[1fr_170px]">
 						<span className="grid-start-1 grid-end-2">
 							<CardUIHeader>
 								<ol>
@@ -40,7 +39,7 @@ export default function PersonalInformation({
 										<BsPersonCircle /> {personalInformation.name}
 									</HorizontalItem>
 									<HorizontalItem as="li">
-										<GrStatusInfo className="dark:bg-theme-white" />
+										<GrStatusInfo className="dark:bg-theme-dark-white bg-theme-light-background-primary" />
 										{personalInformation.label}
 									</HorizontalItem>
 									<HorizontalItem as="li">
@@ -88,7 +87,7 @@ export default function PersonalInformation({
 							</CardUIFooter>
 						</span>
 						<FigureUI
-							className="p-0  grid-start-2 grid-end-3 mr-4"
+							className="p-0 grid-start-2 grid-end-3 mr-4"
 							options={{ variant: 'float', float: 'right' }}
 						>
 							<Image
@@ -97,7 +96,7 @@ export default function PersonalInformation({
 								width={150}
 								height={150}
 							/>
-							<FigureCaptionUI className="rounded-md">
+							<FigureCaptionUI className="rounded-theme-default">
 								{personalInformation.summary}
 							</FigureCaptionUI>
 						</FigureUI>

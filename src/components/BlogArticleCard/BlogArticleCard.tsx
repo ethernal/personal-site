@@ -1,9 +1,8 @@
-'use client';
 import Link from 'next/link';
 import React from 'react';
 
 import BlogPostFrontmatterType from '@/types/BlogPostFrontmatterType';
-import { removeDiacritics } from '@/utils/utils';
+import { cn, removeDiacritics } from '@/utils/utils';
 import { Image } from '@nextui-org/react';
 
 function BlogArticleCard({
@@ -14,10 +13,16 @@ function BlogArticleCard({
 	publishedOn,
 	image,
 	imageAlt,
-}: BlogPostFrontmatterType) {
+	className,
+}: BlogPostFrontmatterType & { className?: string }) {
 	return (
-		<div className="w-full overflow-hidden rounded-xl [&_p]:my-none">
-			<article className="flex flex-col bg-slate-100 dark:bg-slate-800 md:flex-row">
+		<div
+			className={cn(
+				'w-full overflow-hidden rounded-theme-default [&_p]:my-none shadow-medium hover:shadow-high hover:-translate-y-px duration-200',
+				className,
+			)}
+		>
+			<article className="flex flex-col bg-theme-light-background-secondary dark:bg-theme-dark-background-secondary md:flex-row">
 				<div className="min-w-[50%] object-cover md:min-h-[26rem]">
 					<Link href={`/blog/${slug}`}>
 						<Image

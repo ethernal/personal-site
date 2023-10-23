@@ -165,6 +165,8 @@ export const TooltipContent = React.forwardRef<
 type TooltipMessageProps = {
 	content: string;
 	className?: string;
+	contentClassName?: string;
+	showUnderline?: boolean;
 	children: React.ReactNode;
 } & TooltipOptions;
 
@@ -172,16 +174,26 @@ function TooltipMessage({
 	content,
 	children,
 	className,
+	contentClassName,
+	showUnderline = true,
 	...delegated
 }: TooltipMessageProps) {
 	return (
 		<Tooltip {...delegated}>
-			<TooltipTrigger className="underline decoration-wavy decoration-theme-black dark:decoration-theme-glass">
+			<TooltipTrigger
+				className={cn(
+					{
+						'underline decoration-wavy decoration-theme-black dark:decoration-theme-white':
+							showUnderline === true,
+					},
+					contentClassName,
+				)}
+			>
 				{content}
 			</TooltipTrigger>
 			<TooltipContent
 				className={cn(
-					'flow-root max-w-[40vw] bg-white rounded-lg p-2 opacity-95  border-2 border-white backdrop-blur-md [&_p]:text-sm [&_p]:mb-0 [&_p]:align-middle [&>img]:pe-2 [&>img]:float-left shadow-lg dark:bg-theme-black dark:text-theme-white dark:border-theme-olive',
+					'flow-root max-w-[40vw] bg-theme-light-background-secondary rounded-theme-default p-2 opacity-95  border-2 border-theme-accent-muted backdrop-blur-md [&_p]:text-sm [&_p]:mb-0 [&_p]:align-middle [&>img]:pe-2 [&>img]:float-left shadow-lg dark:bg-theme-dark-background-primary dark:text-theme-white dark:border-theme-accent',
 					className,
 				)}
 			>

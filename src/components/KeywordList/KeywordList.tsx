@@ -14,7 +14,7 @@ function KeywordList({ keywords, className }: KeywordsListProps) {
 	return (
 		<ul
 			className={cn(
-				'flex flex-row gap-2 flex-wrap bg-green-100 dark:bg-theme-olive p-2 backdrop-blur-lg rounded-md',
+				'flex flex-row gap-3 flex-wrap bg-theme-light-background-primary dark:bg-theme-dark-background-primary p-2 backdrop-blur-lg rounded-theme-default',
 				className,
 			)}
 		>
@@ -24,7 +24,7 @@ function KeywordList({ keywords, className }: KeywordsListProps) {
 						key={`keyword-${keyword
 							.toLowerCase()
 							.replaceAll(' ', '-')}-${index}`}
-						className="text-tiny uppercase dark:text-theme-white"
+						className="text-tiny uppercase text-theme-accent font-semibold tracking-wider"
 					>
 						{keyword}
 					</li>

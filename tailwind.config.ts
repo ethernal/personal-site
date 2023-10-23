@@ -9,27 +9,19 @@ const config: Config = {
 		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
 		'./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}', // for nextui
 	],
+	safelist: ['h-30', 'h-28', 'w-30', 'w-28'],
 	darkMode: 'class',
 	theme: {
-		// colors: {
-		// 	green: {
-		// 		50: '#F3F9F0',
-		// 		100: '#EAF5E6',
-		// 		200: '#D5EACC',
-		// 		300: '#BDDFAF',
-		// 		400: '#A3D18F',
-		// 		500: '#83C269',
-		// 		600: '#6AB54A',
-		// 		700: '#5B9C3F',
-		// 		800: '#4C8335',
-		// 		900: '#375E26',
-		// 		950: '#243E19',
-		// 	},
-		// },
 		extend: {
 			spacing: {
-				'viewport-padding': 'var(--page-wrapper-padding)',
-				'content-width': 'var(--content-width)',
+				// 'viewport-padding': 'var(--page-wrapper-padding)',
+				// 'content-width': 'var(--content-width)',
+			},
+			gap: {
+				'theme-card': '2rem',
+			},
+			borderRadius: {
+				'theme-default': '6px',
 			},
 			theme: {
 				aspectRatio: {
@@ -44,30 +36,77 @@ const config: Config = {
 				xs: '480px',
 			},
 			colors: {
-				'primary-color': 'var(--primary-color)',
-				'secondary-color': 'var(--secondary-color)',
-				decoration: 'var(--decoration-color)',
-				'background-color': 'var(--background-color)',
-				'text-color': 'var(--text-color)',
-				brand: 'var(--brand-color)',
-				'theme-white': 'var(--color-theme-white)',
-				'theme-olive': 'hsla(95, 85%, 25%, 0.1)',
-				'theme-black': 'var(--color-theme-black)',
-				'theme-glass': 'var(--color-theme-glass)',
-				'theme-light-green': 'hsl(120 50% 95% / 1)',
-				'theme-dark-green': 'hsl(120 50% 5% / 1)',
-				'theme-dark-teal': 'hsl(180 40% 45% / 1)',
-				'theme-dark-gray': '#18181b',
+				'primary-color': 'hsl(var(--primary-color) / <alpha-value>)',
+				brand: 'hsl(12 85% 40% / <alpha-value>)',
+
+				'theme-white': '#fff',
+				'theme-black': '#000',
+				'theme-accent': 'hsl(var(--theme-accent) / <alpha-value>)',
+				'theme-accent-muted': 'hsl(var(--theme-accent) / 0.5)',
+				'theme-inactive': 'hsl(0 0% 77%)',
+
+				'theme-dark-white': 'hsl(0 0% 93% / <alpha-value>)',
+				'theme-dark-black': 'hsl(229 44% 5% / <alpha-value>)',
+				'theme-dark-card': 'hsl(253 43% 4% / <alpha-value>)',
+				'theme-dark-secondary': 'hsl(193 43% 4% / <alpha-value>)',
+				'theme-dark-ternary': 'hsl(213 43% 4% / <alpha-value>)',
+				'theme-dark-text-gray': 'hsl(0 0% 77% / <alpha-value>)',
+				'theme-dark-accent': 'hsl(12 83% 62% / <alpha-value>)',
+
+				// DARK
+
+				'theme-dark-background-primary':
+					'hsl(var(--theme-dark-background-primary) / <alpha-value>)',
+				'theme-dark-background-secondary':
+					'hsl(var(--theme-dark-background-secondary) / <alpha-value>)',
+				'theme-dark-background-secondary-muted':
+					'hsl(var(--theme-dark-background-secondary) / var(--theme-mute-factor))',
+				'theme-dark-background-card':
+					'hsl(var(--theme-dark-background-card) / <alpha-value>)',
+
+				'theme-dark-text-light':
+					'hsl(var(--theme-dark-foreground-light) / <alpha-value>)',
+				'theme-dark-text-dark':
+					'hsl(var(--theme-dark-foreground-dark) / <alpha-value>)',
+				'theme-dark-text-muted':
+					'hsl(var(--theme-dark-foreground-light) / var(--theme-mute-factor))',
+
+				// LIGHT
+
+				'theme-light-text-light':
+					'hsl(var(--theme-light-foreground-light) / <alpha-value>)',
+				'theme-light-text-dark':
+					'hsl(var(--theme-light-foreground-dark) / <alpha-value>)',
+				'theme-light-text-muted':
+					'hsl(var(--theme-light-foreground-light) / var(--theme-mute-factor))',
+
+				'theme-light-background-primary':
+					'hsl(var(--theme-light-background-primary) / <alpha-value>)',
+				'theme-light-background-secondary':
+					'hsl(var(--theme-light-background-secondary) / <alpha-value>)',
+				'theme-light-background-secondary-muted':
+					'hsl(var(--theme-light-background-secondary) / var(--theme-mute-factor))',
+				'theme-light-background-card':
+					'hsl(var(--theme-light-background-card) / <alpha-value>)',
+
+				'theme-light-accent': 'hsl(var(--theme-accent) / <alpha-value>)',
+				'theme-light-inactive':
+					'hsl(var(--theme-light-inactive) / <alpha-value>)',
+			},
+			boxShadow: {
+				low: 'var(--shadow-elevation-low)',
+				medium: 'var(--shadow-elevation-medium)',
+				high: 'var(--shadow-elevation-high)',
 			},
 			backgroundImage: {
 				'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
 				'gradient-conic':
 					'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
 			},
-		},
-		animation: {
-			'spin-3s': 'spin 3s linear infinite',
-			'spin-2s': 'spin 2s linear infinite',
+			animation: {
+				'spin-3s': 'spin 3s linear infinite',
+				'spin-2s': 'spin 2s linear infinite',
+			},
 		},
 	},
 	plugins: [nextui()],

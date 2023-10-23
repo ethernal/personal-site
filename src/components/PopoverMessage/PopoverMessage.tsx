@@ -263,7 +263,7 @@ function PopoverMessage(props: PopoverMessageProps) {
 			<PopoverTrigger asChild>{children}</PopoverTrigger>
 			<PopoverContent
 				className={cn(
-					'bg-white shadow-lg border-theme-glass rounded-md border-2 text-sm p-2 w-max max-w-[calc(90vw - 10px)] flex flex-col [&>*]:m-0 [&>*]:mb-2',
+					'bg-white shadow-lg border-theme-glass rounded-theme-default border-2 text-sm p-2 w-max max-w-[calc(90vw - 10px)] flex flex-col [&>*]:m-0 [&>*]:mb-2',
 					className,
 				)}
 			>

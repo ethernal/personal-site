@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { CSSProperties } from 'react';
+import { CSSProperties } from 'react';
 
 import { SITE_TITLE } from '@/constants/constants';
 import { cn } from '@/utils/utils';

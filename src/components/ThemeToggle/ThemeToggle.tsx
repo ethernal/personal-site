@@ -29,13 +29,6 @@ const ThemeToggle: React.FC<ThemeToggleProps> = ({
 		root.classList.remove('light');
 		root.classList.remove('dark');
 		root.classList.add(nextTheme);
-
-		const colors = nextTheme === 'light' ? LIGHT_COLORS : DARK_COLORS;
-
-		/* populate root element with new CSS variables based on theme selected */
-		Object.entries(colors).forEach(([key, value]) => {
-			root.style.setProperty(key, value);
-		});
 	};
 
 	return (
