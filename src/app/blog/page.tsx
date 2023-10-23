@@ -31,15 +31,15 @@ async function Home() {
 					return (
 						<BlogArticleCard
 							key={slug}
-							slug={slug}
+							slug={slug ?? ''}
 							// extract all data from frontmatter
 							{...postFrontmatter}
 							// but be specific about what we want to use in the component
 							// this basically doubles the extraction but in case anyone uses
 							// frontmatter props without specifying them it will still work
-							title={title}
-							abstract={abstract}
-							publishedOn={publishedOn}
+							title={title ?? 'missing title'}
+							abstract={abstract ?? 'abstract missing'}
+							publishedOn={publishedOn ?? new Date().toLocaleDateString()}
 							image={image}
 							imageAlt={imageAlt}
 							author={author ?? 'Sebastian Pieczyński'}

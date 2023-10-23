@@ -92,7 +92,7 @@ export interface Publication {
 
 export type Skill = {
 	name: string;
-	level: SkillLevel;
+	level: SkillLevel<string>;
 	value: number;
 	keywords?: string[] | null;
 };

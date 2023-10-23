@@ -34,8 +34,8 @@ type ResponsiveImageProps = {
 	className?: string;
 	caption?: string;
 	alt: string;
-	width?: number | string;
-	height?: number | string;
+	width?: number | `${number}` | undefined;
+	height?: number | `${number}` | undefined;
 	options?: Prettify<ImageOptions>;
 	delegated?: ComponentProps<'img'>;
 };

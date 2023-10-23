@@ -5,8 +5,8 @@ type BlogPostFrontmatterType = {
 	published?: boolean;
 	publishedOn: string;
 	abstract: string;
-	image: string;
-	imageAlt: string;
+	image?: string;
+	imageAlt?: string;
 	imageCredits?: string;
 };
 
