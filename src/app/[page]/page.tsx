@@ -4,9 +4,10 @@ import ArticleInfo from '@/components/ArticleInfo';
 import { COMPONENT_MAP } from '@/constants/componentMap';
 import { MDXOptions, SITE_TITLE } from '@/constants/constants';
 import { loadPageContent } from '@/helpers/fs-helpers';
+import { PageParams } from '@/types/PageParamsType';
 
-export async function generateMetadata({ params, searchParams }) {
-	const pageName = params?.page;
+export async function generateMetadata({ params, searchParams }: PageParams) {
+	const pageName = params?.page ?? '';
 
 	if (pageName === 'mockServiceWorker.js') {
 		console.error('🐛 trying to load mockServiceWorker.js');
@@ -25,9 +26,9 @@ export async function generateMetadata({ params, searchParams }) {
 	};
 }
 
-async function SitePage({ params, searchParams }) {
+async function SitePage({ params, searchParams }: PageParams) {
 	const components = COMPONENT_MAP;
-	const pageName = params?.page;
+	const pageName = params?.page ?? '';
 
 	if (pageName === 'mockServiceWorker.js') {
 		console.error('🐛 trying to load mockServiceWorker.js');
