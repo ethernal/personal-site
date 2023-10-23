@@ -11,7 +11,13 @@ import {
 import { ProfileLink } from '@/components/CurriculumVitae/ProfileLink';
 import { SocialNetwork } from '@/types/CurriculumVitae';
 
-const networkIconMap = {
+type IconType = React.ElementType;
+
+type NetworkIconMap = {
+	[key: string]: IconType;
+};
+
+const networkIconMap: NetworkIconMap = {
 	twitter: RiTwitterXLine,
 	linkedin: RiLinkedinLine,
 	github: RiGithubLine,

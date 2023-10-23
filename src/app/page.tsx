@@ -19,7 +19,7 @@ async function Home() {
 			<h1>Latest Articles</h1>
 
 			<section className="grid grid-cols-1 gap-12 my-5">
-				{postsList.map((postFrontmatter: BlogPostFrontmatterType) => {
+				{postsList.map((postFrontmatter: Partial<BlogPostFrontmatterType>) => {
 					const {
 						slug,
 						title,
@@ -33,10 +33,10 @@ async function Home() {
 						<BlogArticleCard
 							key={slug}
 							{...postFrontmatter}
-							slug={slug}
-							title={title}
-							abstract={abstract}
-							publishedOn={publishedOn}
+							slug={slug ?? ''}
+							title={title ?? 'missing title'}
+							abstract={abstract ?? 'abstract missing'}
+							publishedOn={publishedOn ?? new Date().toLocaleDateString()}
 							image={image}
 							imageAlt={imageAlt}
 							author={author ?? 'Sebastian Pieczyński'}

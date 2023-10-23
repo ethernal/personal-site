@@ -3,7 +3,6 @@ import React from 'react';
 import { Moon, Sun } from 'react-feather';
 
 import VisuallyHidden from '@/components/VisuallyHidden';
-import { DARK_COLORS, LIGHT_COLORS } from '@/constants/constants';
 import { useThemeContext } from '@/context/theme/ThemeContext';
 
 type ThemeToggleProps = {

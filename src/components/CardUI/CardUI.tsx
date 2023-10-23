@@ -1,7 +1,14 @@
 import * as React from 'react';
 
 import { cn } from '@/utils/utils';
-import { Card, CardBody, CardFooter, CardHeader } from '@nextui-org/react';
+import {
+	Card,
+	CardBody,
+	CardFooter,
+	CardHeader,
+	CardProps,
+	InternalForwardRefRenderFunction,
+} from '@nextui-org/react';
 
 type CardUIProps = {
 	className?: string;
@@ -23,25 +30,23 @@ type CardUIFooterProps = {
 	children?: React.ReactNode;
 } & Prettify<React.ComponentProps<typeof CardFooter>>;
 
-const CardUI = React.memo(
-	React.forwardRef<typeof Card, CardUIProps>(function CardUI(
-		{ className = '', children, ...delegated }: CardUIProps,
-		ref: React.RefObject<HTMLDivElement | null> | undefined,
-	) {
-		return (
-			<Card
-				className={cn(
-					'py-4 min-w-[clamp(8rem,15rem,min(20rem,100%))] max-w-full flex-1 h-full',
-					className,
-				)}
-				ref={ref}
-				{...delegated}
-			>
-				{children}
-			</Card>
-		);
-	}),
-);
+const CardUI = React.memo(function CardUI({
+	className = '',
+	children,
+	...delegated
+}: CardUIProps) {
+	return (
+		<Card
+			className={cn(
+				'py-4 min-w-[clamp(8rem,15rem,min(20rem,100%))] max-w-full flex-1 h-full',
+				className,
+			)}
+			{...delegated}
+		>
+			{children}
+		</Card>
+	);
+});
 
 const CardUIHeader = React.memo(
 	React.forwardRef<typeof CardHeader, CardUIHeaderProps>(function CardUIHeader(
@@ -50,7 +55,6 @@ const CardUIHeader = React.memo(
 	) {
 		return (
 			<CardHeader
-				ref={ref}
 				className={cn(
 					'pt-0 pb-2 px-4 flex-col items-start tracking-wide',
 					className,

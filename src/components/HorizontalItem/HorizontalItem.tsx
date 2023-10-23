@@ -3,7 +3,7 @@ import React from 'react';
 import { cn } from '@/utils/utils';
 
 type HorizontalItemProps = {
-	as?: string;
+	as?: React.ElementType;
 	className?: string;
 	children: React.ReactNode;
 };

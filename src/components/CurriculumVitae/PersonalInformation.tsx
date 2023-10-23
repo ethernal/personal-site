@@ -8,7 +8,6 @@ import { TbWorldWww } from 'react-icons/tb';
 import TooltipMessage from '@/components//TooltipMessage';
 import SocialNetworkList from '@/components/CurriculumVitae/SocialNetworkList';
 import HorizontalItem from '@/components/HorizontalItem';
-import countries from '@/data/country/countries.json';
 import { PersonalInformation } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
 
@@ -24,8 +23,10 @@ export default function PersonalInformation({
 	className,
 	personalInformation,
 }: PersonalInformationProps) {
-	const country: typeof countries.PL =
-		countries[personalInformation.location.countryCode];
+	// const country: typeof countries.PL =
+	// 	countries[
+	// 		personalInformation.location.countryCode as keyof typeof countries
+	// 	];
 
 	return (
 		<section className={cn('', className)}>
@@ -63,10 +64,10 @@ export default function PersonalInformation({
 											<li>{personalInformation.location.region} </li>
 											<li>{personalInformation.location.city}</li>
 											<li>
-												<TooltipMessage content={country['Country Name']}>
+												<TooltipMessage content={'Poland'}>
 													<div>
-														<p>Country name: {country['Country Name']}</p>
-														<p>Timezone: {country['Time Zone in Capital']}</p>
+														<p>Country name: {'Poland'}</p>
+														<p>Timezone: {'Europe/Warsaw'}</p>
 													</div>
 												</TooltipMessage>
 											</li>
@@ -82,7 +83,7 @@ export default function PersonalInformation({
 								className={'gap-4 flex-wrap max-xs:flex-col max-xs:items-start'}
 							>
 								<SocialNetworkList
-									socialProfiles={personalInformation.profiles}
+									socialProfiles={personalInformation.profiles ?? []}
 								/>
 							</CardUIFooter>
 						</span>
