@@ -1,5 +1,3 @@
-'use client';
-
 import Link from 'next/link';
 
 import { Publication } from '@/types/CurriculumVitae';
@@ -20,7 +18,7 @@ function PublicationCard({
 	return (
 		<CardUI
 			className={cn(
-				'p-0 mb-4 min-h-[300px] max-w-full dark:border dark:border-theme-white dark:bg-theme-dark-gray',
+				'p-0 mb-4 min-h-[300px] max-w-full dark:border dark:border-theme-white dark:bg-theme-dark-background-card bg-theme-light-background-card',
 				className,
 			)}
 			isBlurred={true}
@@ -28,7 +26,7 @@ function PublicationCard({
 		>
 			<CardUIHeader
 				className={
-					'flex-col items-start bg-white bg-[linear-gradient(180deg,_rgba(255,255,255,0.4)_0%,_rgba(255,255,255,0.2)_100%)] pb-4 backdrop-blur-[2px]'
+					'flex-col items-start bg-white text-theme-light-text-dark dark:text-theme-dark-text-dark bg-[linear-gradient(180deg,_rgba(255,255,255,0.4)_0%,_rgba(255,255,255,0.2)_100%)] pb-4 backdrop-blur-[2px]'
 				}
 			>
 				<h4 className="font-bold text-large uppercase">{name}</h4>
@@ -44,7 +42,7 @@ function PublicationCard({
 						{website}
 					</Link>
 				)}
-				<p className="text-theme-black m-auto py-2 font-semibold text-small">
+				<p className="text-theme-light-text-dark dark:text-theme-dark-text-light m-auto py-2 font-semibold text-small">
 					{releaseDate}
 				</p>
 			</CardUIFooter>

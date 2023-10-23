@@ -12,7 +12,7 @@ export default function WorkHistory({
 	workHistory: employmentHistory,
 }: WorkHistoryProps) {
 	return (
-		<section className={cn('grid grid-cols-1 gap-4', className)}>
+		<section className={cn('grid grid-cols-1 gap-theme-card', className)}>
 			{employmentHistory.map((workplace) => {
 				const { name, startDate, keywords } = workplace;
 

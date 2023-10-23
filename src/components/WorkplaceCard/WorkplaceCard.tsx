@@ -1,12 +1,14 @@
-'use client';
-
 import Image from 'next/image';
 import Link from 'next/link';
 
-import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '@/components/CardUI';
+import CardUI, {
+	CardUIBody,
+	CardUIFooter,
+	CardUIHeader,
+} from '@/components/CardUI';
+import DividerUI from '@/components/DividerUI';
 import { Workplace } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
-import { Divider } from '@nextui-org/react';
 
 import FigureUI from '../FigureUI';
 import KeywordList from '../KeywordList';
@@ -31,18 +33,17 @@ function WorkplaceCard({ className, workplace }: WorkplaceCardProps) {
 
 	return (
 		<CardUI
-			className={cn('dark:bg-theme-dark-gray', className)}
+			className={cn(
+				'dark:bg-theme-dark-background-card bg-theme-light-background-card',
+				className,
+			)}
 			isBlurred={true}
 		>
 			<CardUIHeader>
 				<span className="flex gap-2 justify-between w-full items-center">
 					<h4 className="font-bold text-large uppercase">{name}</h4>
 					{logo && (
-						<FigureUI
-							className="block h-10 w-[clamp(40px,1rem,100%)] max-w-40 justify-end"
-							// width={0}
-							// height={0}
-						>
+						<FigureUI className="block h-10 w-[clamp(40px,1rem,100%)] max-w-40 justify-end">
 							<Image
 								src={logo ?? ''}
 								alt={name}
@@ -70,7 +71,7 @@ function WorkplaceCard({ className, workplace }: WorkplaceCardProps) {
 					</li>
 				</ul>
 			</CardUIHeader>
-			<Divider orientation="horizontal" />
+			<DividerUI orientation="horizontal" />
 
 			<CardUIBody className={'flex flex-col gap-2'}>
 				<p className="m-0">{summary}</p>
@@ -85,7 +86,7 @@ function WorkplaceCard({ className, workplace }: WorkplaceCardProps) {
 					))}
 				</ul>
 			</CardUIBody>
-			<Divider orientation="horizontal" />
+			<DividerUI orientation="horizontal" />
 			<CardUIFooter>
 				<KeywordList keywords={keywords ?? []} />
 			</CardUIFooter>

@@ -2,14 +2,27 @@
 
 import ResponsiveImage from '@/components/ResponsiveImage';
 import TooltipMessage from '@/components/TooltipMessage';
+import { cn } from '@/utils/utils';
 import { Card, CardBody, Tab, Tabs } from '@nextui-org/react';
 
 function AboutMeToggleMessage() {
 	return (
-		<div className="flex w-full flex-col mt-8">
-			<Tabs aria-label="About me.." defaultSelectedKey="recruiter">
-				<Tab key="friend" title="Friend">
-					<Card className="overflow-visible">
+		<div className={cn('flex w-full flex-col mt-8')}>
+			<Tabs
+				aria-label="About me.."
+				defaultSelectedKey="recruiter"
+				className=""
+				variant="underlined"
+				classNames={{
+					tabList:
+						'gap-8 w-full relative rounded-none p-0 border-b-theme-accent/25 border-b dark:bg-transparent',
+					cursor: 'w-full bg-theme-accent',
+					tab: 'max-w-fit px-0 h-12  dark:bg-transparent',
+					tabContent: 'group-data-[selected=true]:text-theme-accent',
+				}}
+			>
+				<Tab key="friend" title="Friend" className="">
+					<Card className="overflow-visible bg-theme-light-background-secondary dark:bg-theme-dark-background-secondary my-2">
 						<CardBody className="overflow-visible">
 							<p className="text-base leading-6 tracking-wide">
 								I am a software developer who loves to create applications that
@@ -60,7 +73,7 @@ function AboutMeToggleMessage() {
 										width={100}
 										height={100}
 										alt=""
-										className="[&>img]:object-contain"
+										className="[&>img]:object-contain dark:[&>img]:invert"
 									/>
 									<p>
 										Allows to connect to various databases and send and receive
@@ -97,7 +110,7 @@ function AboutMeToggleMessage() {
 										className="[&>img]:object-contain"
 									/>
 									<p>
-										Specification for retreiving <em>only needed</em> data from
+										Specification for retrieving <em>only needed</em> data from
 										the database via API calls.
 									</p>
 								</TooltipMessage>
@@ -111,7 +124,7 @@ function AboutMeToggleMessage() {
 										width={100}
 										height={100}
 										alt=""
-										className="[&>img]:object-contain"
+										className="[&>img]:object-contain dark:[&>img]:invert"
 									/>
 									<p>
 										Originally an abbreviation of Personal Home Page, but it now
@@ -168,7 +181,7 @@ function AboutMeToggleMessage() {
 										width={100}
 										height={100}
 										alt=""
-										className="[&>img]:object-contain"
+										className="[&>img]:object-contain dark:[&>img]:invert"
 									/>
 									<p>
 										Postgres, is a free and open-source relational database
@@ -187,7 +200,7 @@ function AboutMeToggleMessage() {
 										width={100}
 										height={100}
 										alt=""
-										className="[&>img]:object-contain"
+										className="[&>img]:object-contain dark:[&>img]:invert"
 									/>
 									<p>
 										Next.js is a flexible React framework that this website uses
@@ -204,7 +217,7 @@ function AboutMeToggleMessage() {
 										width={100}
 										height={100}
 										alt=""
-										className="[&>img]:object-contain"
+										className="[&>img]:object-contain dark:[&>img]:invert"
 									/>
 									<p>
 										Symfony is a set of reusable PHP components and a PHP
@@ -221,7 +234,7 @@ function AboutMeToggleMessage() {
 										width={100}
 										height={100}
 										alt=""
-										className="[&>img]:object-contain"
+										className="[&>img]:object-contain dark:[&>img]:invert"
 									/>
 									<p>
 										CSS stands for Cascading Style Sheets and it is a language
@@ -240,7 +253,7 @@ function AboutMeToggleMessage() {
 										width={100}
 										height={100}
 										alt=""
-										className="[&>img]:object-contain"
+										className="[&>img]:object-contain dark:[&>img]:invert"
 									/>
 									<p>
 										Wordpress is a Content Management System that allows to
@@ -265,8 +278,8 @@ function AboutMeToggleMessage() {
 						</CardBody>
 					</Card>
 				</Tab>
-				<Tab key="recruiter" title="Recruiter">
-					<Card className="overflow-visible">
+				<Tab key="recruiter" title="Recruiter" className="">
+					<Card className="overflow-visible bg-theme-light-background-secondary dark:bg-theme-dark-background-secondary my-2">
 						<CardBody className="overflow-visible">
 							<p className="text-base leading-6 tracking-wide">
 								I am a <span className="font-semibold">React Developer</span>{' '}
@@ -318,7 +331,7 @@ function AboutMeToggleMessage() {
 											width={100}
 											height={100}
 											alt=""
-											className="[&>img]:object-contain"
+											className="[&>img]:object-contain dark:[&>img]:invert"
 										/>
 										<p>
 											Allows to connect to various databases and send and
@@ -369,7 +382,7 @@ function AboutMeToggleMessage() {
 											width={100}
 											height={100}
 											alt=""
-											className="[&>img]:object-contain"
+											className="[&>img]:object-contain dark:[&>img]:invert"
 										/>
 										<p>
 											Originally an abbreviation of Personal Home Page, but it
@@ -427,7 +440,7 @@ function AboutMeToggleMessage() {
 											width={100}
 											height={100}
 											alt=""
-											className="[&>img]:object-contain"
+											className="[&>img]:object-contain dark:[&>img]:invert"
 										/>
 										<p>
 											Postgres, is a free and open-source relational database
@@ -446,7 +459,7 @@ function AboutMeToggleMessage() {
 											width={100}
 											height={100}
 											alt=""
-											className="[&>img]:object-contain"
+											className="[&>img]:object-contain dark:[&>img]:invert"
 										/>
 										<p>
 											Next.js is a flexible React framework that this website
@@ -463,7 +476,7 @@ function AboutMeToggleMessage() {
 											width={100}
 											height={100}
 											alt=""
-											className="[&>img]:object-contain"
+											className="[&>img]:object-contain dark:[&>img]:invert"
 										/>
 										<p>
 											Symfony is a set of reusable PHP components and a PHP
@@ -480,7 +493,7 @@ function AboutMeToggleMessage() {
 											width={100}
 											height={100}
 											alt=""
-											className="[&>img]:object-contain"
+											className="[&>img]:object-contain dark:[&>img]:invert"
 										/>
 										<p>
 											CSS stands for Cascading Style Sheets and it is a language
@@ -499,7 +512,7 @@ function AboutMeToggleMessage() {
 											width={100}
 											height={100}
 											alt=""
-											className="[&>img]:object-contain"
+											className="[&>img]:object-contain dark:[&>img]:invert"
 										/>
 										<p>
 											Wordpress is a Content Management System that allows to
@@ -525,8 +538,8 @@ function AboutMeToggleMessage() {
 						</CardBody>
 					</Card>
 				</Tab>
-				<Tab key="tech" title="Technical">
-					<Card className="overflow-visible">
+				<Tab key="tech" title="Technical" className="">
+					<Card className="overflow-visible dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary my-2">
 						<CardBody className="overflow-visible">
 							<p className="text-base leading-6 tracking-wide">
 								I am a React Developer / Full Stack who is responsible for
@@ -563,7 +576,8 @@ function AboutMeToggleMessage() {
 								as{' '}
 								<TooltipMessage content="ISO standards document management">
 									This was developed with Symfony (PHP framework) while working
-									at ifm ecolink. The application is still in use and operating.
+									at ifm ecolink. The application is still in use and
+									operational.
 								</TooltipMessage>
 								,{' '}
 								<TooltipMessage content="ticketing and machine	maintenance">

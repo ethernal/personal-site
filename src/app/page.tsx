@@ -3,6 +3,7 @@ import React from 'react';
 import BlogArticleCard from '@/components/BlogArticleCard';
 import { SITE_TITLE } from '@/constants/constants';
 import { getBlogPostsFrontmatter } from '@/helpers/fs-helpers';
+import BlogPostFrontmatterType from '@/types/BlogPostFrontmatterType';
 
 export const metadata = {
 	title: SITE_TITLE,
@@ -14,11 +15,11 @@ async function Home() {
 	const postsList = await getBlogPostsFrontmatter();
 
 	return (
-		<div className="wrapper max-w-[var('--page-wrapper-max-width')]">
+		<div className="wrapper ">
 			<h1>Latest Articles</h1>
 
-			<section className="grid grid-cols-1 gap-5 my-5">
-				{postsList.map((postFrontmatter) => {
+			<section className="grid grid-cols-1 gap-12 my-5">
+				{postsList.map((postFrontmatter: BlogPostFrontmatterType) => {
 					const {
 						slug,
 						title,

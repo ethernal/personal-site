@@ -1,14 +1,12 @@
-'use client';
-
 import CardUI, {
 	CardUIBody,
 	CardUIFooter,
 	CardUIHeader,
 } from '@/components/CardUI';
+import DividerUI from '@/components/DividerUI';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import { Project } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
-import { Divider } from '@nextui-org/react';
 
 import KeywordList from '../KeywordList';
 
@@ -30,7 +28,10 @@ function ProjectCard({ project, className = '' }: ProjectCardProps) {
 	} = project;
 	return (
 		<CardUI
-			className={cn('dark:bg-theme-dark-gray', className)}
+			className={cn(
+				'bg-theme-light-background-card dark:dark:bg-theme-dark-background-card',
+				className,
+			)}
 			isBlurred={true}
 			isFooterBlurred={true}
 		>
@@ -41,7 +42,7 @@ function ProjectCard({ project, className = '' }: ProjectCardProps) {
 				</p>
 				<small>{highlights}</small>
 			</CardUIHeader>
-			<Divider orientation="horizontal" />
+			<DividerUI orientation="horizontal" />
 
 			<CardUIBody className={'relative p-0'}>
 				{gallery && gallery?.length > 0 ? (
@@ -51,16 +52,13 @@ function ProjectCard({ project, className = '' }: ProjectCardProps) {
 							gallery && gallery?.length > 0 ? gallery[0]?.alt : 'missing image'
 						}
 						className="rounded-none aspect-video object-cover absolute top-0 left-0 w-full h-full opacity-25 z-0 "
-						style={{
-							opacity: 0.3,
-						}}
 					/>
 				) : null}
 				<p className="m-0 h-full w-full z-10 backdrop-blur-[2px] p-4 text-base">
 					{description}
 				</p>
 			</CardUIBody>
-			<Divider orientation="horizontal" />
+			<DividerUI orientation="horizontal" />
 			<CardUIFooter className={'text-tiny rounded-none max-w-[99%]'}>
 				<KeywordList keywords={keywords ?? []} />
 			</CardUIFooter>

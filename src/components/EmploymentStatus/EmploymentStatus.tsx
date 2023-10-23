@@ -1,13 +1,14 @@
-'use client';
 import Link from 'next/link';
 
+import DividerUI from '@/components/DividerUI';
 import {
 	DreamJob,
 	WorkExperienceAndAvailability,
 } from '@/types/CurriculumVitae';
-import { CircularProgress, Divider } from '@nextui-org/react';
+import { cn } from '@/utils/utils';
 
 import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
+import CircularProgressUI from '../CircularProgressUI';
 
 type EmploymentStatusProps = {
 	employmentStatus: WorkExperienceAndAvailability;
@@ -29,23 +30,23 @@ function WorkExperienceCard({
 	maxYears = 50,
 }: WorkExperienceCardProps) {
 	return (
-		<article>
-			<CardUI className={'min-h-[180px]'}>
-				<CardUIHeader className={'py-0 my-0 [&>*]:my-0'}>{header}</CardUIHeader>
-				<CardUIBody className={'justify-center py-0 items-center'}>
-					<CircularProgress
-						value={years}
-						label={label}
-						aria-label={label}
-						showValueLabel={true}
-						valueLabel={years}
-						maxValue={maxYears}
-						color="success"
-						size="lg"
-					/>
-				</CardUIBody>
-			</CardUI>
-		</article>
+		<CardUI
+			className={
+				'min-h-[180px] bg-theme-light-background-card dark:bg-theme-dark-background-card'
+			}
+		>
+			<CardUIHeader className={'py-0 my-0 [&>*]:my-0 items-center pb-4'}>
+				{header}
+			</CardUIHeader>
+			<CardUIBody className={'justify-center py-0 items-center'}>
+				<CircularProgressUI
+					value={years}
+					topic={label}
+					maxValue={maxYears}
+					size="3xl"
+				/>
+			</CardUIBody>
+		</CardUI>
 	);
 }
 
@@ -55,9 +56,13 @@ function EmploymentStatus({
 	className,
 }: EmploymentStatusProps) {
 	return (
-		<section className={className ?? ''}>
+		<section className={cn('', className) ?? ''}>
 			<article>
-				<CardUI>
+				<CardUI
+					className={
+						'bg-theme-light-background-card dark:bg-theme-dark-background-card'
+					}
+				>
 					<CardUIHeader>
 						<h4 className="text-large">Current Status:</h4>
 						{employmentStatus.searchState === 'activelySearching' ? (
@@ -69,11 +74,11 @@ function EmploymentStatus({
 							{employmentStatus.contractTypes?.join(', ')} work.
 						</p>
 					</CardUIHeader>
-					<Divider />
+					<DividerUI />
 					<CardUIBody className={'pt-4 text-xl'}>
 						<blockquote className="flex flex-col gap-1">
 							{employmentStatus.codingReason}
-							<footer className="text-black/60 dark:text-white/60">
+							<footer className="text-theme-light-text-muted dark:text-theme-dark-text-muted">
 								&mdash; Sebastian Pieczyński
 							</footer>
 						</blockquote>
@@ -110,7 +115,7 @@ function EmploymentStatus({
 					<WorkExperienceCard
 						years={employmentStatus.itExperienceYears}
 						header={<h3 className={'py-0'}>Office Experience</h3>}
-						label={`Worked in IT for ${employmentStatus.otherExperienceYears} years.`}
+						label={`I helped to build and shape organizations for ${employmentStatus.otherExperienceYears} years.`}
 					/>
 				</article>
 
@@ -118,7 +123,7 @@ function EmploymentStatus({
 					<WorkExperienceCard
 						years={employmentStatus.otherExperienceYears}
 						header={<h3 className={'py-0'}>IT Experience</h3>}
-						label={`I've wore different hats during these ${employmentStatus.otherExperienceYears} years.`}
+						label={`During my ${employmentStatus.otherExperienceYears} years I've been an IT expert, one man IT manager and software engineer.`}
 					/>
 				</article>
 
@@ -132,8 +137,8 @@ function EmploymentStatus({
 			</section>
 
 			<article>
-				<CardUI>
-					<CardUIHeader>
+				<CardUI className="bg-theme-light-background-card dark:bg-theme-dark-background-card">
+					<CardUIHeader className="items-center">
 						<h3>
 							Places I would 💓 to work from:{' '}
 							{dreamJob?.locations
@@ -141,7 +146,7 @@ function EmploymentStatus({
 								.join(' or ')}
 						</h3>
 					</CardUIHeader>
-					<CardUIBody className={'block'}>
+					<CardUIBody className="flex flex-col items-center">
 						<p className="text-base">
 							When working remotely and there are no offices in my location I
 							would prefer to work{' '}

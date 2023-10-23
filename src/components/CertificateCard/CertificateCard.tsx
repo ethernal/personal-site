@@ -1,8 +1,6 @@
-'use client';
-
-import ResponsiveImage from '@/components/ResponsiveImage';
 import { Certificate } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
+import { Image } from '@nextui-org/react';
 
 import CardUI, { CardUIFooter, CardUIHeader } from '../CardUI';
 
@@ -18,13 +16,16 @@ function CertificateCard({
 
 	return (
 		<CardUI
-			className={cn('p-0 mb-4 min-h-[300px] dark:text-slate-800', className)}
+			className={cn(
+				'p-0 text-theme-light-text-dark bg-theme-light-background-card dark:text-theme-dark-text-dark dark:bg-theme-dark-background-card',
+				className,
+			)}
 			isBlurred={true}
 			isFooterBlurred={true}
 		>
 			<CardUIHeader
 				className={
-					'absolute z-10 top-1 flex-col items-start bg-white bg-[linear-gradient(180deg,_rgba(255,255,255,0.4)_0%,_rgba(255,255,255,0.2)_100%)] pb-4 backdrop-blur-[2px]'
+					'absolute z-10 top-1 flex-col items-start bg-white bg-[linear-gradient(180deg,_rgba(255,255,255,0.6)_0%,_rgba(255,255,255,0.8)_100%)] pb-4 backdrop-blur-[2px]'
 				}
 			>
 				<h4 className="font-bold text-large uppercase">{name}</h4>
@@ -34,10 +35,11 @@ function CertificateCard({
 			</CardUIHeader>
 
 			{url && url?.length > 0 && (
-				<ResponsiveImage
-					alt="Card background"
-					className="z-0 w-full object-cover"
+				<Image
+					alt={name}
+					className="z-0 min-h-[250px] h-full w-full object-cover dark:invert "
 					src={url}
+					removeWrapper
 				/>
 			)}
 			<CardUIFooter
@@ -45,7 +47,7 @@ function CertificateCard({
 					'p-0 z-10 bottom-4 absolute text-tiny rounded-none align-middle'
 				}
 			>
-				<p className="text-theme-black m-auto py-2 font-semibold text-small">
+				<p className="text-theme-light-text-dark dark:text-theme-dark-text-light m-auto py-2 font-semibold text-small">
 					{date}
 				</p>
 			</CardUIFooter>

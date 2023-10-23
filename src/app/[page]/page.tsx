@@ -7,9 +7,15 @@ import { loadPageContent } from '@/helpers/fs-helpers';
 
 export async function generateMetadata({ params, searchParams }) {
 	const pageName = params?.page;
+
+	if (pageName === 'mockServiceWorker.js') {
+		console.error('🐛 trying to load mockServiceWorker.js');
+		return;
+	}
+
 	const page = await loadPageContent(pageName);
 
-	const { title, abstract, publishedOn } = page.frontmatter;
+	const { title, abstract, publishedOn } = page?.frontmatter ?? {};
 
 	return {
 		title: title,
@@ -22,9 +28,14 @@ export async function generateMetadata({ params, searchParams }) {
 async function SitePage({ params, searchParams }) {
 	const components = COMPONENT_MAP;
 	const pageName = params?.page;
+
+	if (pageName === 'mockServiceWorker.js') {
+		console.error('🐛 trying to load mockServiceWorker.js');
+		return;
+	}
 	const pageFile = await loadPageContent(pageName);
 
-	const { title, publishedOn } = pageFile.frontmatter;
+	const { title, publishedOn } = pageFile?.frontmatter ?? {};
 
 	return (
 		<article>
@@ -35,7 +46,7 @@ async function SitePage({ params, searchParams }) {
 			</header>
 			<div className="wrapper">
 				<MDXRemote
-					source={pageFile.content}
+					source={pageFile?.content ?? ''}
 					components={components}
 					options={MDXOptions} // see: https://github.com/hashicorp/next-mdx-remote/issues/341
 				/>
