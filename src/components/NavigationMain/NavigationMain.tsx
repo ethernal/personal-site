@@ -23,6 +23,10 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 		setMenuOpen((value) => !value);
 	};
 
+	const closeMenu = () => {
+		setMenuOpen(false);
+	};
+
 	return (
 		// primary header
 		<div
@@ -121,22 +125,22 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					duration-150`}
 				>
 					<li className="first-letter:font-semibold text-xl tracking-widest">
-						<Link href={`/blog`} className="">
+						<Link href={`/blog`} className="" onClick={closeMenu}>
 							Articles
 						</Link>
 					</li>
 					<li className="first-letter:font-semibold text-xl tracking-widest">
-						<Link href={`/about#cv`} className="uppercase">
+						<Link href={`/about#cv`} className="uppercase" onClick={closeMenu}>
 							CV
 						</Link>
 					</li>
 					<li className="first-letter:font-semibold text-xl tracking-widest">
-						<Link href={`/about`} className="">
+						<Link href={`/about`} className="" onClick={closeMenu}>
 							About
 						</Link>
 					</li>
 					<li className="first-letter:font-semibold text-xl tracking-widest">
-						<Link href={`/contact`} className="">
+						<Link href={`/contact`} className="" onClick={closeMenu}>
 							Contact
 						</Link>
 					</li>
