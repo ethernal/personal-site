@@ -133,7 +133,16 @@
 
 
   /* FUNCTIONAL COLORS */
-  --color-selection-text: hsl(var(--theme-accent) / <alpha-value>);
+  --color-selection-background: hsl(var(--theme-accent) / var(--theme-mute-factor));
+}
+
+:root[data-color-theme="dark"] {
+  --color-selection-text: hsl(var(--theme-dark-foreground-light) / 0.8);
+  --color-selection-background: hsl(var(--theme-accent) / var(--theme-mute-factor));
+}
+
+:root[data-color-theme="light"] {
+  --color-selection-text: hsl(var(--theme-light-foreground-light) / 0.9);
   --color-selection-background: hsl(var(--theme-accent) / var(--theme-mute-factor));
 }
 
@@ -207,7 +216,7 @@ h6 {
   background-color: var(
     --color-selection-background
   ) !important;
-  color: var(--color-selection-text) !important;
+  color: hsl(var(--color-selection-text)) !important;
   background-image: none !important;
   background-clip: revert !important;
   -webkit-background-clip: revert !important;
