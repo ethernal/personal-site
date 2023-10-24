@@ -7,6 +7,7 @@ import { Menu, X } from 'react-feather';
 import Logo from '@/components/Logo/Logo';
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 import { Badge } from '@nextui-org/react';
+import { useClickAway } from '@uidotdev/usehooks';
 
 import TooltipMessage from '../TooltipMessage/TooltipMessage';
 
@@ -22,6 +23,14 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 	const toggleMenu = () => {
 		setMenuOpen((value) => !value);
 	};
+
+	const closeMenu = () => {
+		setMenuOpen(false);
+	};
+
+	const ref = useClickAway<HTMLElement>(() => {
+		setMenuOpen(false);
+	});
 
 	return (
 		// primary header
@@ -68,6 +77,7 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 			{/* primary navigation */}
 			<nav
 				id="primary-navigation-menu"
+				ref={ref}
 				className={`
 				h-full
 				flex
@@ -121,22 +131,22 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					duration-150`}
 				>
 					<li className="first-letter:font-semibold text-xl tracking-widest">
-						<Link href={`/blog`} className="">
+						<Link href={`/blog`} className="" onClick={closeMenu}>
 							Articles
 						</Link>
 					</li>
 					<li className="first-letter:font-semibold text-xl tracking-widest">
-						<Link href={`/about#cv`} className="uppercase">
+						<Link href={`/about#cv`} className="uppercase" onClick={closeMenu}>
 							CV
 						</Link>
 					</li>
 					<li className="first-letter:font-semibold text-xl tracking-widest">
-						<Link href={`/about`} className="">
+						<Link href={`/about`} className="" onClick={closeMenu}>
 							About
 						</Link>
 					</li>
 					<li className="first-letter:font-semibold text-xl tracking-widest">
-						<Link href={`/contact`} className="">
+						<Link href={`/contact`} className="" onClick={closeMenu}>
 							Contact
 						</Link>
 					</li>
