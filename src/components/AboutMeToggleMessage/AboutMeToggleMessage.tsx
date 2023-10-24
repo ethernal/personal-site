@@ -15,16 +15,16 @@ function AboutMeToggleMessage() {
 				variant="underlined"
 				classNames={{
 					tabList:
-						'gap-theme-card w-full relative rounded-none p-0 border-b-theme-accent/25 border-b dark:bg-transparent',
+						'gap-theme-card w-full relative rounded-none p-0 ps-6 border-b-theme-accent/25 border-b dark:bg-transparent',
 					cursor: 'w-full bg-theme-accent',
-					tab: 'max-w-fit px-0 h-12  dark:bg-transparent ',
+					tab: 'max-w-fit px-0 h-12  dark:bg-transparent text-xl',
 					tabContent: 'group-data-[selected=true]:text-theme-accent',
 				}}
 			>
 				<Tab key="friend" title="Friend" className="">
 					<Card className="overflow-visible bg-theme-light-background-secondary dark:bg-theme-dark-background-secondary">
 						<CardBody className="overflow-visible">
-							<p className="text-base leading-6 tracking-wide">
+							<p className="text-base leading-6">
 								I am a software developer who loves to create applications that
 								make life easier and more enjoyable. I have built commercial
 								projects and toys using various technologies and frameworks,
@@ -281,10 +281,10 @@ function AboutMeToggleMessage() {
 				<Tab key="recruiter" title="Recruiter" className="">
 					<Card className="overflow-visible bg-theme-light-background-secondary dark:bg-theme-dark-background-secondary">
 						<CardBody className="overflow-visible">
-							<p className="text-base leading-6 tracking-wide">
+							<p className="text-base leading-6">
 								I am a <span className="font-semibold">React Developer</span>{' '}
-								and Full Stack with over 10 years of experience in IT, working
-								for various companies and clients. I worked with{' '}
+								and Full Stack Engineer with over 10 years of experience in IT,
+								working for various companies and clients. I worked with{' '}
 								<em>
 									{' '}
 									<TooltipMessage
@@ -542,20 +542,22 @@ function AboutMeToggleMessage() {
 					<Card className="overflow-visible dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary">
 						<CardBody className="overflow-visible">
 							<p className="text-base leading-6 tracking-wide">
-								I am a React Developer / Full Stack who is responsible for
-								project’s architecture, frontend and backend development and
-								deployment to AWS. I have worked with React, Typescript,
-								PrismaJS, TailwindCSS, and GraphQL as the core technologies for
-								latest applications. I have also worked with Figma for design
-								(as a consumer) and gathered requirements with the client during
-								meetings. I have been a technical lead in a{' '}
+								I am a React Developer and a Full Stack Engineer who is
+								responsible for project’s architecture, frontend and backend
+								development and deployment to AWS. I have worked with React,
+								Typescript, PrismaJS, TailwindCSS, and GraphQL as the core
+								technologies for latest applications. I also have experience
+								working with Figma as a consumer of designs. I have gathered
+								requirements with the client during meetings and translated them
+								into features implemented into the application. I have been a
+								&ldquo;technical lead&rdquo; in a{' '}
 								<TooltipMessage content="small team">
 									we were 3 developers me included and a UX/UI designer
 								</TooltipMessage>{' '}
 								of frontend and backend developers and mentored a junior
 								developer.
 							</p>
-							<p className="text-base leading-6 tracking-wide">
+							<p className="text-base leading-6">
 								In my last role I have worked on a{' '}
 								<TooltipMessage content="training application">
 									Subject to NDA so I cannot reveal what is not already public
@@ -564,11 +566,11 @@ function AboutMeToggleMessage() {
 								that connects trainers and trainees with personalized training
 								plans.
 							</p>
-							<p className="text-base leading-6 tracking-wide">
+							<p className="text-base leading-6">
 								At the same company I was also responsible for frontend projects
 								for an international company from the cyber-security space.
 							</p>
-							<p className="text-base leading-6 tracking-wide">
+							<p className="text-base leading-6">
 								Earlier I have worked with PHP and worked with MongoDB,
 								PostgreSQL, MySQL, Wordpress, CSS, NextJS, Symfony, NodeJS and
 								more. I have created and maintained various applications that
@@ -594,12 +596,12 @@ function AboutMeToggleMessage() {
 								</TooltipMessage>
 								.
 							</p>
-							<p className="text-base leading-6 tracking-wide">
+							<p className="text-base leading-6">
 								I have also helped design network infrastructure for production
 								halls and office areas and helped adopt new processes in R&D and
 								engineering departments.
 							</p>
-							<p className="text-base leading-6 tracking-wide">
+							<p className="text-base leading-6">
 								The website you are browsing was built using latest NextJS 13
 								and React 18.
 							</p>

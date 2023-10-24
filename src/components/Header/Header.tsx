@@ -9,7 +9,10 @@ type HeaderProps = {
 
 function Header({ className, ...delegated }: HeaderProps) {
 	return (
-		<header className={cn(className)} {...delegated}>
+		<header
+			className={cn('sticky top-0 z-20 isolate', className)}
+			{...delegated}
+		>
 			<NavigationMain />
 		</header>
 	);

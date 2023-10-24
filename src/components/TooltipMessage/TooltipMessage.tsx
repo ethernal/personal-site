@@ -193,7 +193,7 @@ function TooltipMessage({
 			</TooltipTrigger>
 			<TooltipContent
 				className={cn(
-					'max-xs:max-w-[90vw] max-xs:grid max-xs:grid-cols-1 flow-root max-w-[40vw] bg-theme-light-background-secondary rounded-theme-default p-2 opacity-95  border-2 border-theme-accent-muted backdrop-blur-md [&_p]:text-sm [&_p]:mb-0 [&_p]:align-middle [&>img]:pe-2 [&>img]:float-left shadow-lg dark:bg-theme-dark-background-primary dark:text-theme-white dark:border-theme-accent',
+					'max-xs:max-w-[90vw] max-xs:grid max-xs:grid-cols-1 flow-root max-w-[40vw] bg-theme-light-background-secondary rounded-theme-default p-2 opacity-95  border-2 border-theme-accent-muted backdrop-blur-md [&_p]:text-sm [&_p]:mb-0 [&_p]:align-middle [&>img]:pe-2 [&>img]:float-left shadow-lg dark:bg-theme-dark-background-primary dark:text-theme-white dark:border-theme-accent z-40',
 					className,
 				)}
 			>

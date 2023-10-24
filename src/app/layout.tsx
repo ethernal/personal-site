@@ -1,5 +1,10 @@
 import '@/app/globals.css';
 
+import {
+	Sansita as HeadingFont,
+	Source_Code_Pro as MonoFont,
+	Source_Sans_3 as BodyFont,
+} from 'next/font/google';
 import { cookies } from 'next/headers';
 import { ReactNode } from 'react';
 
@@ -10,6 +15,30 @@ import { NextUIThemeProvider } from '@/context/nextui/NextUIThemeProvider';
 import Theme from '@/context/theme/ThemeContext';
 import ColorThemeType from '@/types/ColorThemeType';
 import { cn } from '@/utils/utils';
+
+// If loading a variable font, you don't need to specify the font weight
+
+const headingFont = HeadingFont({
+	weight: ['400', '700'],
+	variable: '--font-heading',
+	subsets: ['latin'],
+	display: 'swap',
+});
+
+const bodyFont = BodyFont({
+	weight: ['400', '600'],
+	variable: '--font-body',
+	subsets: ['latin'],
+	display: 'swap',
+});
+
+
+const monoFont = MonoFont({
+	weight: ['400', '600'],
+	variable: '--font-mono',
+	subsets: ['latin'],
+	display: 'swap',
+});
 
 function RootLayout({ children }: { children: ReactNode }) {
 	const savedThemeCookie = cookies().get('theme');
@@ -22,7 +51,13 @@ function RootLayout({ children }: { children: ReactNode }) {
 				<html
 					lang="en"
 					data-color-theme={savedTheme}
-					className={cn(savedTheme)}
+					className={cn(
+						savedTheme,
+						bodyFont.variable,
+						headingFont.variable,
+						monoFont.variable,
+						bodyFont.className,
+					)}
 				>
 					<body
 						className={cn(
