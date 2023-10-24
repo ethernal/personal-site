@@ -6,6 +6,20 @@
   .force-translate-x-0 {
     transform: translateX(0%) !important;
   }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-sans;
+  }
+
+  pre {
+    @apply font-mono;
+  }
+
 }
 
 
@@ -103,7 +117,6 @@
 
 
   --theme-accent: 12 80% 43%;
-
 
 
   --shadow-light-color:30deg 95% 95%;
@@ -277,6 +290,10 @@ h3 {
   margin-top: 1.5em;
   margin-bottom: 0.5em;
   font-weight: 500;
+}
+
+p,li {
+  @apply tracking-wider;
 }
 
 p {

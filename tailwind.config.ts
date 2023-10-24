@@ -1,5 +1,7 @@
 import { nextui } from '@nextui-org/react';
 
+const defaultTheme = require('tailwindcss/defaultTheme');
+
 import type { Config } from 'tailwindcss';
 
 const config: Config = {
@@ -13,6 +15,14 @@ const config: Config = {
 	darkMode: 'class',
 	theme: {
 		extend: {
+			fontFamily: {
+				sans: ['var(--font-heading)', ...defaultTheme.fontFamily.sans],
+				serif: ['var(--font-body)', ...defaultTheme.fontFamily.serif],
+				mono: ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
+				code: ['var(--font-mono)'],
+				body: ['var(--font-body)'],
+				heading: ['var(--font-heading)'],
+			},
 			spacing: {
 				'theme-card': 'var(--theme-gap-card)',
 				'theme-default': 'var(--theme-gap-card)',
