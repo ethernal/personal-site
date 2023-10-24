@@ -7,6 +7,7 @@ import { Menu, X } from 'react-feather';
 import Logo from '@/components/Logo/Logo';
 import ThemeToggle from '@/components/ThemeToggle/ThemeToggle';
 import { Badge } from '@nextui-org/react';
+import { useClickAway } from '@uidotdev/usehooks';
 
 import TooltipMessage from '../TooltipMessage/TooltipMessage';
 
@@ -26,6 +27,10 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 	const closeMenu = () => {
 		setMenuOpen(false);
 	};
+
+	const ref = useClickAway<HTMLElement>(() => {
+		setMenuOpen(false);
+	});
 
 	return (
 		// primary header
@@ -72,6 +77,7 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 			{/* primary navigation */}
 			<nav
 				id="primary-navigation-menu"
+				ref={ref}
 				className={`
 				h-full
 				flex
