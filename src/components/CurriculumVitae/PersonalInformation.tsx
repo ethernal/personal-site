@@ -40,7 +40,7 @@ export default function PersonalInformation({
 										<BsPersonCircle /> {personalInformation.name}
 									</HorizontalItem>
 									<HorizontalItem as="li">
-										<GrStatusInfo className="dark:bg-theme-dark-white bg-theme-light-background-primary" />
+										<GrStatusInfo className="bg-transparent dark:bg-theme-dark-white" />
 										{personalInformation.label}
 									</HorizontalItem>
 									<HorizontalItem as="li">

@@ -35,7 +35,7 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 	return (
 		// primary header
 		<div
-			className={`${className} flex justify-between items-center mb-8 bg-theme-accent ps-8 dark:first:text-theme-white first:text-theme-white text-theme-light-text-light dark:text-theme-dark-text-dark max-xs:py-1.5  `}
+			className={`${className} flex justify-between items-center mb-8 bg-theme-accent ps-8 dark:first:text-theme-white first:text-theme-white text-theme-light-text-light dark:text-theme-dark-text-dark max-xs:py-1.5`}
 		>
 			<Badge
 				color="default"
@@ -43,13 +43,14 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					<TooltipMessage
 						content="🌱"
 						showUnderline={false}
-						contentClassName="hover:animate-bounce"
+						contentClassName="hover:animate-bounce z-30"
 					>
-						I am still just a sprout and more features are in the works.
+						I am still just a sprout and more features are in the works. Enjoy
+						your stay!
 					</TooltipMessage>
 				} // {''}
 				variant="faded"
-				className="opacity-75"
+				className="opacity-75 mr-2"
 			>
 				<Logo className={`mr-4 ps-viewport-padding order-first`} />
 			</Badge>
@@ -81,14 +82,17 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 				className={`
 				h-full
 				flex
-				py-4
+				py-2
 				justify-between
 
-				bg-theme-light-background-secondary
+				bg-theme-light-background-secondary/95
 				text-theme-light-text-dark
 
-				dark:bg-theme-dark-background-secondary
+				dark:bg-theme-dark-background-secondary/95
 				dark:text-theme-dark-text-light
+
+				font-sans
+				tracking-normal
 				`}
 			>
 				<motion.ul

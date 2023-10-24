@@ -14,7 +14,7 @@ function Logo({ className }: LogoProps) {
 			href="/"
 			className={cn(
 				className,
-				'no-underline block list-none text-xl font-semibold tracking-tight transition-all motion-reduce:transition-none motion-reduce:hover:transform-none md:text-2xl md:tracking-widest hover:font-black duration-150',
+				'no-underline block list-none text-xl font-semibold font-sans tracking-tight transition-all motion-reduce:transition-none motion-reduce:hover:transform-none md:text-2xl md:tracking-widest duration-150',
 			)}
 		>
 			{SITE_TITLE}
