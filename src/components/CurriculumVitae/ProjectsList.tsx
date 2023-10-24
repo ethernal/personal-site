@@ -10,7 +10,12 @@ type ProjectsListProps = {
 
 function ProjectsList({ projects, className }: ProjectsListProps) {
 	return (
-		<section className={cn('grid grid-cols-1 md:grid-cols-2 gap-4', className)}>
+		<section
+			className={cn(
+				'grid grid-cols-1 md:grid-cols-2 gap-theme-card',
+				className,
+			)}
+		>
 			{projects?.map((project: Project, projectIndex: number) => {
 				const {
 					name,

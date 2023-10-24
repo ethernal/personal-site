@@ -7,7 +7,7 @@ import { Card, CardBody, Tab, Tabs } from '@nextui-org/react';
 
 function AboutMeToggleMessage() {
 	return (
-		<div className={cn('flex w-full flex-col mt-8')}>
+		<div className={cn('flex w-full flex-col mt-8 mb-theme-card')}>
 			<Tabs
 				aria-label="About me.."
 				defaultSelectedKey="recruiter"
@@ -15,14 +15,14 @@ function AboutMeToggleMessage() {
 				variant="underlined"
 				classNames={{
 					tabList:
-						'gap-8 w-full relative rounded-none p-0 border-b-theme-accent/25 border-b dark:bg-transparent',
+						'gap-theme-card w-full relative rounded-none p-0 border-b-theme-accent/25 border-b dark:bg-transparent',
 					cursor: 'w-full bg-theme-accent',
-					tab: 'max-w-fit px-0 h-12  dark:bg-transparent',
+					tab: 'max-w-fit px-0 h-12  dark:bg-transparent ',
 					tabContent: 'group-data-[selected=true]:text-theme-accent',
 				}}
 			>
 				<Tab key="friend" title="Friend" className="">
-					<Card className="overflow-visible bg-theme-light-background-secondary dark:bg-theme-dark-background-secondary my-2">
+					<Card className="overflow-visible bg-theme-light-background-secondary dark:bg-theme-dark-background-secondary">
 						<CardBody className="overflow-visible">
 							<p className="text-base leading-6 tracking-wide">
 								I am a software developer who loves to create applications that
@@ -279,7 +279,7 @@ function AboutMeToggleMessage() {
 					</Card>
 				</Tab>
 				<Tab key="recruiter" title="Recruiter" className="">
-					<Card className="overflow-visible bg-theme-light-background-secondary dark:bg-theme-dark-background-secondary my-2">
+					<Card className="overflow-visible bg-theme-light-background-secondary dark:bg-theme-dark-background-secondary">
 						<CardBody className="overflow-visible">
 							<p className="text-base leading-6 tracking-wide">
 								I am a <span className="font-semibold">React Developer</span>{' '}
@@ -539,7 +539,7 @@ function AboutMeToggleMessage() {
 					</Card>
 				</Tab>
 				<Tab key="tech" title="Technical" className="">
-					<Card className="overflow-visible dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary my-2">
+					<Card className="overflow-visible dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary">
 						<CardBody className="overflow-visible">
 							<p className="text-base leading-6 tracking-wide">
 								I am a React Developer / Full Stack who is responsible for

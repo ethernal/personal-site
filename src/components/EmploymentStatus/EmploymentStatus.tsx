@@ -57,7 +57,7 @@ function EmploymentStatus({
 }: EmploymentStatusProps) {
 	return (
 		<section className={cn('', className) ?? ''}>
-			<article>
+			<article className="mb-theme-card">
 				<CardUI
 					className={
 						'bg-theme-light-background-card dark:bg-theme-dark-background-card'
@@ -86,7 +86,7 @@ function EmploymentStatus({
 				</CardUI>
 			</article>
 
-			<section className="grid max-xs:grid-cols-1 grid-cols-2 lg:grid-cols-3 gap-4 my-4">
+			<section className="grid max-xs:grid-cols-1 grid-cols-2 lg:grid-cols-3 gap-theme-card my-theme-card">
 				<article>
 					<WorkExperienceCard
 						years={employmentStatus.experienceYears}

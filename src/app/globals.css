@@ -68,7 +68,7 @@
 
   --page-content-width: calc(var(--page-wrapper-max-width) - var(--page-wrapper-padding-inline)*2);
 
-  --theme-gap-card: 3rem;
+  --theme-gap-card: 2rem;
 
   --theme-mute-factor: 0.4;
 
@@ -400,7 +400,7 @@ margin-top: 0;
 
 .auto-grid {
   display: grid;
-  gap: 1rem;
+  gap: var(--theme-gap-card);
   padding: 1rem 0;
   grid-template-columns: repeat(auto-fit, minmax(min(10rem,100%), 1fr))
 }

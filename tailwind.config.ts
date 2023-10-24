@@ -14,11 +14,13 @@ const config: Config = {
 	theme: {
 		extend: {
 			spacing: {
+				'theme-card': 'var(--theme-gap-card)',
+				'theme-default': 'var(--theme-gap-card)',
 				// 'viewport-padding': 'var(--page-wrapper-padding)',
 				// 'content-width': 'var(--content-width)',
 			},
 			gap: {
-				'theme-card': '2rem',
+				'theme-card': 'var(--theme-gap-card)',
 			},
 			borderRadius: {
 				'theme-default': '6px',

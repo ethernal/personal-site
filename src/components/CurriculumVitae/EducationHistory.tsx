@@ -9,7 +9,12 @@ type EducationHistoryProps = {
 
 function EducationHistory({ education, className }: EducationHistoryProps) {
 	return (
-		<section className={cn('grid grid-cols-1 md:grid-cols-3 gap-4', className)}>
+		<section
+			className={cn(
+				'grid grid-cols-1 md:grid-cols-3 gap-theme-card',
+				className,
+			)}
+		>
 			{education.map((institution: EducationInstitution, index) => {
 				return (
 					<article
