@@ -115,6 +115,8 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					className={`
 					flex max-xxs:inset-0
 					items-center
+					p-2
+					pe-theme-default
 					list-none
 					z-40
 					gap-6
@@ -126,13 +128,15 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					max-xs:left-1/2
 					max-xs:flex-col
 					max-xs:p-[min(2.5em,calc(var(--header-height)))_4rem]
-					xs:p-2
+					xs:pe-theme-default
 					data-[menu-open=false]:xs:force-translate-x-0
 
 					sm:text-xl
-					md:gap-8 [transition:gap]
+					md:gap-8
+					[transition:gap]
 
-					duration-150`}
+					duration-150
+					`}
 				>
 					<li className="first-letter:font-semibold text-xl tracking-widest">
 						<Link href={`/blog`} className="" onClick={closeMenu}>
