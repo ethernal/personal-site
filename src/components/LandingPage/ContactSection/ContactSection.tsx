@@ -5,10 +5,26 @@ import DividerUI from '@/components/DividerUI';
 import { cn } from '@/utils/utils';
 import { Button } from '@nextui-org/react';
 
-function ContactSection({ className }: { className?: string }) {
-	const [formData, setFormData] = React.useState({});
+type ContactSectionProps = {
+	className?: string;
+};
 
-	const updateFormData = (e) => {
+type ContactFormData = {
+	email: string;
+	name: string;
+	message: string;
+};
+
+function ContactSection({ className }: ContactSectionProps) {
+	const [formData, setFormData] = React.useState<ContactFormData | {}>({
+		email: '',
+		name: '',
+		message: '',
+	});
+
+	const updateFormData = (
+		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	): void => {
 		setFormData({
 			...formData,
 			[e.target.name]: e.target.value,
@@ -18,7 +34,6 @@ function ContactSection({ className }: { className?: string }) {
 	return (
 		<div className={cn('', className)}>
 			<div className="py-theme-default text-3xl flex flex-col gap-4">
-				<h2>Tell me about your project</h2>
 				<DividerUI className="bg-theme-accent w-72 h-0.5" />
 			</div>
 			<div>
@@ -56,6 +71,7 @@ function ContactSection({ className }: { className?: string }) {
 						placeholder="Message description"
 						className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent col-span-1"
 						// ignore this error - this is available in Chrome 120
+						//@ts-ignore
 						style={{ formSizing: 'content' }}
 						minLength={10}
 						onChange={updateFormData}
