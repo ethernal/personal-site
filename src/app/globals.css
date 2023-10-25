@@ -283,8 +283,8 @@ h1, h2, h3 {
 }
 
 h1 {
-  font-size: 1.75rem;
-  font-weight: 650;
+  @apply text-4xl;
+  @apply font-semibold;
 }
 
 h2 {
@@ -301,7 +301,7 @@ h3 {
   font-weight: 500;
 }
 
-p,li {
+p,li,ol {
   @apply tracking-wider;
 }
 

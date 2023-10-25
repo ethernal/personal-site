@@ -9,7 +9,7 @@ const config: Config = {
 		'./content/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/components/**/*.{js,ts,jsx,tsx,mdx}',
 		'./src/app/**/*.{js,ts,jsx,tsx,mdx}',
-		'./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}', // for nextui
+		'./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}', // for next-ui
 	],
 	safelist: ['h-30', 'h-28', 'w-30', 'w-28'],
 	darkMode: 'class',
@@ -69,17 +69,25 @@ const config: Config = {
 
 				'theme-dark-background-primary':
 					'hsl(var(--theme-dark-background-primary) / <alpha-value>)',
+				'theme-dark-background-primary-muted':
+					'hsl(var(--theme-dark-background-primary) / var(--theme-mute-factor))',
 				'theme-dark-background-secondary':
 					'hsl(var(--theme-dark-background-secondary) / <alpha-value>)',
 				'theme-dark-background-secondary-muted':
 					'hsl(var(--theme-dark-background-secondary) / var(--theme-mute-factor))',
 				'theme-dark-background-card':
 					'hsl(var(--theme-dark-background-card) / <alpha-value>)',
+				'theme-dark-background-card-muted':
+					'hsl(var(--theme-dark-background-card) / var(--theme-mute-factor))',
 
 				'theme-dark-text-light':
 					'hsl(var(--theme-dark-foreground-light) / <alpha-value>)',
+				'theme-dark-text-light-muted':
+					'hsl(var(--theme-dark-foreground-light) / var(--theme-mute-factor))',
 				'theme-dark-text-dark':
 					'hsl(var(--theme-dark-foreground-dark) / <alpha-value>)',
+				'theme-dark-text-dark-muted':
+					'hsl(var(--theme-dark-foreground-dark) / var(--theme-mute-factor))',
 				'theme-dark-text-muted':
 					'hsl(var(--theme-dark-foreground-light) / var(--theme-mute-factor))',
 
@@ -87,19 +95,27 @@ const config: Config = {
 
 				'theme-light-text-light':
 					'hsl(var(--theme-light-foreground-light) / <alpha-value>)',
+				'theme-light-text-light-muted':
+					'hsl(var(--theme-light-foreground-light) / var(--theme-mute-factor))',
 				'theme-light-text-dark':
 					'hsl(var(--theme-light-foreground-dark) / <alpha-value>)',
+				'theme-light-text-dark-muted':
+					'hsl(var(--theme-light-foreground-dark) / var(--theme-mute-factor))',
 				'theme-light-text-muted':
 					'hsl(var(--theme-light-foreground-light) / var(--theme-mute-factor))',
 
 				'theme-light-background-primary':
 					'hsl(var(--theme-light-background-primary) / <alpha-value>)',
+				'theme-light-background-primary-muted':
+					'hsl(var(--theme-light-background-primary) / var(--theme-mute-factor))',
 				'theme-light-background-secondary':
 					'hsl(var(--theme-light-background-secondary) / <alpha-value>)',
 				'theme-light-background-secondary-muted':
 					'hsl(var(--theme-light-background-secondary) / var(--theme-mute-factor))',
 				'theme-light-background-card':
 					'hsl(var(--theme-light-background-card) / <alpha-value>)',
+				'theme-light-background-card-muted':
+					'hsl(var(--theme-light-background-card) / var(--theme-mute-factor))',
 
 				'theme-light-accent': 'hsl(var(--theme-accent) / <alpha-value>)',
 				'theme-light-inactive':
