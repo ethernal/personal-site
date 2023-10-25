@@ -73,7 +73,7 @@ function RootLayout({ children }: { children: ReactNode }) {
 						<NextUIThemeProvider>
 							<div className="w-full">
 								<Header className="max-w-7xl mx-auto" />
-								<main>{children}</main>
+								<main className="max-w-7xl mx-auto">{children}</main>
 								<Footer className="wrapper" />
 							</div>
 						</NextUIThemeProvider>

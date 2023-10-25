@@ -84,6 +84,8 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 				flex
 				py-2
 				justify-between
+				rounded-br-theme-default
+				overflow-hidden
 
 				bg-theme-light-background-secondary/95
 				text-theme-light-text-dark

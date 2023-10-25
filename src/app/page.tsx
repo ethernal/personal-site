@@ -1,9 +1,12 @@
-import React from 'react';
-
-import BlogArticleCard from '@/components/BlogArticleCard';
+import Footer from '@/components/Footer';
+import AboutMeSection from '@/components/LandingPage/AboutMeSection';
+import ContactSection from '@/components/LandingPage/ContactSection';
+import HeroSection from '@/components/LandingPage/HeroSection';
+import RecentWorkSection from '@/components/LandingPage/RecentWorkSection';
+import TestimonialsSection from '@/components/LandingPage/TestimonialsSection';
+import WorkedForSection from '@/components/LandingPage/WorkedForSection';
+import NavigationMain from '@/components/NavigationMain';
 import { SITE_TITLE } from '@/constants/constants';
-import { getBlogPostsFrontmatter } from '@/helpers/fs-helpers';
-import BlogPostFrontmatterType from '@/types/BlogPostFrontmatterType';
 
 export const metadata = {
 	title: SITE_TITLE,
@@ -12,39 +15,22 @@ export const metadata = {
 };
 
 async function Home() {
-	const postsList = await getBlogPostsFrontmatter();
-
 	return (
-		<div className="wrapper ">
-			<h1>Latest Articles</h1>
+		<>
+			<div className="">
+				<HeroSection className="px-theme-default dark:bg-theme-dark-background-light" />
 
-			<section className="grid grid-cols-1 gap-12 my-5">
-				{postsList.map((postFrontmatter: Partial<BlogPostFrontmatterType>) => {
-					const {
-						slug,
-						title,
-						abstract,
-						publishedOn,
-						image,
-						imageAlt,
-						author,
-					} = postFrontmatter;
-					return (
-						<BlogArticleCard
-							key={slug}
-							{...postFrontmatter}
-							slug={slug ?? ''}
-							title={title ?? 'missing title'}
-							abstract={abstract ?? 'abstract missing'}
-							publishedOn={publishedOn ?? new Date().toLocaleDateString()}
-							image={image}
-							imageAlt={imageAlt}
-							author={author ?? 'Sebastian Pieczyński'}
-						/>
-					);
-				})}
-			</section>
-		</div>
+				<AboutMeSection className="px-theme-default rounded-theme-default bg-theme-light-background-secondary text-theme-light-text-light dark:text-theme-dark-text-light dark:bg-theme-dark-background-secondary" />
+
+				<WorkedForSection className="px-theme-default rounded-theme-default bg-theme-light-background-primary dark:bg-theme-dark-background-primary" />
+
+				<RecentWorkSection className="px-theme-default rounded-theme-default bg-theme-light-background-secondary text-theme-light-text-light dark:text-theme-dark-text-light dark:bg-theme-dark-background-secondary" />
+
+				<TestimonialsSection className="px-theme-default rounded-theme-default bg-theme-light-background-primary dark:bg-theme-dark-background-primary" />
+
+				<ContactSection className="px-theme-default rounded-theme-default text-theme-light-text-light dark:text-theme-dark-text-light" />
+			</div>
+		</>
 	);
 }
 
