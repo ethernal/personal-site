@@ -14,7 +14,7 @@ function CTAButton({
 		<Button
 			as={Link}
 			className={cn(
-				'text-theme-white bg-theme-accent rounded-md shadow-2xl shadow-black px-10 text-[clamp(0.925rem,-0.875rem+3vw,1.75rem)]',
+				'text-theme-white bg-theme-accent rounded-md shadow-lg shadow-black px-10 text-[clamp(1.025rem,-0.875rem+3vw,2.75rem)]',
 				className,
 			)}
 			href="#"

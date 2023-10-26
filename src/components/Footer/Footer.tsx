@@ -62,7 +62,7 @@ function Footer({ className }: FooterProps) {
 				</div>
 
 				<nav>
-					<h2 className={'mt-0 text-xl'}>Links</h2>
+					<h2 className={'mt-0'}>Links</h2>
 					<ul className={'mt-6 list-none p-0 last:mb-0'}>
 						<li className="mb-2">
 							<Link

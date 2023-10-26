@@ -33,7 +33,7 @@ const config: Config = {
 				'theme-card': 'var(--theme-gap-card)',
 			},
 			borderRadius: {
-				'theme-default': '6px',
+				'theme-default': 'var(--theme-radius-default)',
 			},
 			theme: {
 				aspectRatio: {

@@ -6,7 +6,10 @@ import { Divider, Image } from '@nextui-org/react';
 function AboutMeSection({ className }: { className?: string }) {
 	return (
 		<div
-			className={cn('w-full grid grid-cols-1 gap-4 md:grid-cols-2', className)}
+			className={cn(
+				'w-full py-theme-default grid grid-cols-1 gap-4 md:grid-cols-2',
+				className,
+			)}
 		>
 			<section className="flex justify-center items-center">
 				<Image
@@ -16,7 +19,7 @@ function AboutMeSection({ className }: { className?: string }) {
 				/>
 			</section>
 			<section className="flex flex-col gap-4">
-				<h2 className="text-3xl">About me</h2>
+				<h2>About me</h2>
 				<Divider className="bg-theme-accent h-0.5" />
 				<p>
 					My passion for building websites started since 2013 and since then i

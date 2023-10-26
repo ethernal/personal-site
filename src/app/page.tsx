@@ -26,7 +26,7 @@ async function Home() {
 
 				<RecentWorkSection className="px-theme-default rounded-theme-default bg-theme-light-background-secondary text-theme-light-text-light dark:text-theme-dark-text-light dark:bg-theme-dark-background-secondary" />
 
-				<TestimonialsSection className="px-theme-default rounded-theme-default bg-theme-light-background-primary dark:bg-theme-dark-background-primary" />
+				{/* <TestimonialsSection className="px-theme-default rounded-theme-default bg-theme-light-background-primary dark:bg-theme-dark-background-primary" /> */}
 
 				<ContactSection className="px-theme-default rounded-theme-default text-theme-light-text-light dark:text-theme-dark-text-light" />
 			</div>

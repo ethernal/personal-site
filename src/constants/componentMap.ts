@@ -2,6 +2,7 @@ import { MDXComponents } from 'mdx/types';
 
 import AboutMeToggleMessage from '@/components/AboutMeToggleMessage';
 import { default as CodeSnippet } from '@/components/CodeSnippet/CodeSnippet';
+import ContactForm from '@/components/ContactForm';
 import CV from '@/components/CurriculumVitae';
 import FullWidthSplitSection from '@/components/FullWidthSplitSection';
 import Image from '@/components/ImageSSR';
@@ -18,4 +19,5 @@ export const COMPONENT_MAP: MDXComponents = {
 	TooltipMessage,
 	CV,
 	FullWidthSplitSection,
+	ContactForm,
 };

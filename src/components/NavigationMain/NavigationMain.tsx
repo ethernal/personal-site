@@ -71,7 +71,7 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 				{menuOpen === false ? (
 					<Menu className="min-w-[24px] min-h-[24px]" />
 				) : (
-					<X className="fixed top-1" />
+					<X className="fixed top-1 text-theme-black" />
 				)}
 			</button>
 
@@ -121,7 +121,6 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					pe-theme-default
 					list-none
 					z-40
-					gap-6
 
 					supports-[backdrop-filter]:backdrop-blur-md
 
@@ -130,10 +129,13 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					max-xs:left-1/2
 					max-xs:flex-col
 					max-xs:p-[min(2.5em,calc(var(--header-height)))_4rem]
+					max-sm:gap-4
 					xs:pe-theme-default
 					data-[menu-open=false]:xs:force-translate-x-0
 
 					sm:text-xl
+					gap-6
+
 					md:gap-8
 					[transition:gap]
 

@@ -83,6 +83,8 @@
   --page-content-width: calc(var(--page-wrapper-max-width) - var(--page-wrapper-padding-inline)*2);
 
   --theme-gap-card: 2rem;
+  --theme-padding-default: 2rem;
+  --theme-radius-default: 6px;
 
   --theme-mute-factor: 0.4;
 
@@ -272,7 +274,9 @@ em {
 code {
   --font-code: var(--font-mono);
   font-family: var(--font-code);
+  white-space: pre-wrap;
 }
+
 
 code > * {
   margin-top: 0;
@@ -288,7 +292,7 @@ h1 {
 }
 
 h2 {
-  font-size: 1.5rem;
+  @apply text-3xl;
   margin-top: 1em;
   margin-bottom: 0.5em;
   font-weight: 600;
