@@ -8,14 +8,16 @@ import { cache } from 'react';
 import BlogPostFrontmatterType from '@/types/BlogPostFrontmatterType';
 
 export async function getBlogPostsFrontmatter() {
-	const fileNames = await readDirectory('/content/blog');
+	const fileNames = await readDirectory('/content/articles');
 
 	const blogPosts: Array<Partial<BlogPostFrontmatterType>> = [];
 
 	for (let fileName of fileNames) {
-		const rawContent = await readFile(`/content/blog/${fileName}`);
+		const rawContent = await readFile(`/content/articles/${fileName}`);
 
 		const { data: frontmatter } = matter(rawContent);
+
+		if (frontmatter?.published === false) return;
 
 		blogPosts.push({
 			slug: fileName.replace('.mdx', ''),
@@ -23,7 +25,7 @@ export async function getBlogPostsFrontmatter() {
 		});
 	}
 
-	return blogPosts.sort((p1, p2) =>
+	return blogPosts?.sort((p1, p2) =>
 		p1 &&
 		p1.publishedOn &&
 		p1.publishedOn < p2 &&
@@ -34,7 +36,7 @@ export async function getBlogPostsFrontmatter() {
 	);
 }
 export const loadBlogPost = cache(async (slug: string) => {
-	const rawContent = await readFile(`/content/blog/${slug}.mdx`);
+	const rawContent = await readFile(`/content/articles/${slug}.mdx`);
 
 	const { data: frontmatter, content } = matter(rawContent);
 

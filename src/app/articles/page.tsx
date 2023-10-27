@@ -13,12 +13,21 @@ export const metadata = {
 async function Home() {
 	const postsList = await getBlogPostsFrontmatter();
 
+	console.log(postsList);
+
 	return (
 		<div className="wrapper max-w-[var('--page-wrapper-max-width')]">
 			<h1>Latest Articles</h1>
 
 			<section className="grid grid-cols-1 gap-5 my-5">
-				{postsList.map((postFrontmatter) => {
+				{(postsList === undefined || postsList?.length === 0) && (
+					<p className="text-center text-3xl py-10 min-h-[55dvh]">
+						No published articles here, yet.
+						<br /> We know from a good source that there will be some fine
+						content here soon.
+					</p>
+				)}
+				{postsList?.map((postFrontmatter) => {
 					const {
 						slug,
 						title,
