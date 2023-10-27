@@ -29,20 +29,6 @@ function Footer({ className }: FooterProps) {
 					<Logo className={'text-xl hover:text-theme-accent'} />
 					<ul className={'list-none p-0 first:mt-6 last:mb-0'}>
 						<li className="mb-2">
-							<p className={'mb-0 mt-7 text-xs font-light text-decoration'}>
-								Inspired by {` `}
-								<Link
-									href="https://www.joshwcomeau.com/"
-									className={
-										'font-semibold text-theme-light-text-muted dark:text-theme-dark-text-light no-underline hover:underline hover:decoration-2 hover:underline-offset-[0.125em]'
-									}
-								>
-									Josh W. Comeau
-								</Link>
-								.
-							</p>
-						</li>
-						<li className="mb-2">
 							<p className={'mb-0 mt-4 text-sm text-decoration'}>
 								Created by{' '}
 								<Link
