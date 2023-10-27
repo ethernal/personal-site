@@ -25,7 +25,7 @@ async function BlogPost({ params }: BlogPostParams) {
 	const components = COMPONENT_MAP;
 
 	return (
-		<article className="max-w-[var('--page-wrapper-max-width')] wrapper">
+		<article className="max-w-[var('--page-wrapper-max-width')] wrapper pb-theme-default">
 			<BlogArticleHeader title={title} publishedOn={publishedOn} />
 			<div>
 				<MDXRemote

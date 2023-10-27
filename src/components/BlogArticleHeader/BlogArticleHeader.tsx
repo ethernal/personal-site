@@ -7,8 +7,8 @@ export type BlogArticleHeaderProps = {
 
 function BlogArticleHeader({ title, publishedOn }: BlogArticleHeaderProps) {
 	return (
-		<div>
-			<h2>{title}</h2>
+		<div className="mb-1">
+			<h2 className="mb-1">{title}</h2>
 			<p>Published on: {publishedOn}</p>
 		</div>
 	);

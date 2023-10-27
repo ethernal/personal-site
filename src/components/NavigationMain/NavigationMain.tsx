@@ -71,7 +71,7 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 				{menuOpen === false ? (
 					<Menu className="min-w-[24px] min-h-[24px]" />
 				) : (
-					<X className="fixed top-1" />
+					<X className="fixed top-1 text-theme-black" />
 				)}
 			</button>
 
@@ -84,6 +84,8 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 				flex
 				py-2
 				justify-between
+				rounded-br-theme-default
+				overflow-hidden
 
 				bg-theme-light-background-secondary/95
 				text-theme-light-text-dark
@@ -115,11 +117,8 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					className={`
 					flex max-xxs:inset-0
 					items-center
-					p-2
-					pe-theme-default
 					list-none
 					z-40
-					gap-6
 
 					supports-[backdrop-filter]:backdrop-blur-md
 
@@ -128,12 +127,18 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					max-xs:left-1/2
 					max-xs:flex-col
 					max-xs:p-[min(2.5em,calc(var(--header-height)))_4rem]
-					xs:pe-theme-default
+					max-sm:gap-2
+					max-sm:px-2
 					data-[menu-open=false]:xs:force-translate-x-0
 
 					sm:text-xl
+					gap-4
+
 					md:gap-8
 					[transition:gap]
+
+					p-2
+					px-theme-default
 
 					duration-150
 					`}

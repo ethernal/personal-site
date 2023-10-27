@@ -13,7 +13,7 @@ function Header({ className, ...delegated }: HeaderProps) {
 			className={cn('sticky top-0 z-20 isolate', className)}
 			{...delegated}
 		>
-			<NavigationMain />
+			<NavigationMain className="rounded-b-theme-default" />
 		</header>
 	);
 }

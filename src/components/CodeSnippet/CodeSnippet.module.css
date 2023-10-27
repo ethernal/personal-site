@@ -1,13 +1,18 @@
 .wrapper {
   border-radius: 0px !important;
-  margin: 0px calc(var(--viewport-padding) * -1) var(--page-wrapper-padding) !important;
   border: 1px solid var(--color-card-border);
+  margin-block: calc(var(--theme-padding-default)/2);
 }
+
 .wrapper pre {
-  padding: calc(var(--viewport-padding)/2 ) !important;
+  border-radius: var(--theme-radius-default);
+  padding: 0.5em !important;
 }
+
 .wrapper code {
-  font-family: var(--font-family-mono);
+  --font-code: var(--font-mono);
+  font-family: var(--font-code);
+  white-space: pre-wrap;
 }
 
 .wrapper code > div {
@@ -17,6 +22,6 @@
 
 @media (min-width: 56rem) {
   .wrapper {
-    border-radius: 8px !important;
+    border-radius: var(--theme-radius-default) !important;
   }
 }
