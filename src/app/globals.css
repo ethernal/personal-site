@@ -251,7 +251,7 @@ html {
   letter-spacing: -0.03125em;
 
   scroll-behavior: smooth;
-  scrollbar-gutter: stable;
+  scrollbar-gutter: auto;
 }
 
 body {
