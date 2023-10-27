@@ -117,8 +117,6 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					className={`
 					flex max-xxs:inset-0
 					items-center
-					p-2
-					pe-theme-default
 					list-none
 					z-40
 
@@ -129,15 +127,18 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					max-xs:left-1/2
 					max-xs:flex-col
 					max-xs:p-[min(2.5em,calc(var(--header-height)))_4rem]
-					max-sm:gap-4
-					xs:pe-theme-default
+					max-sm:gap-2
+					max-sm:px-2
 					data-[menu-open=false]:xs:force-translate-x-0
 
 					sm:text-xl
-					gap-6
+					gap-4
 
 					md:gap-8
 					[transition:gap]
+
+					p-2
+					px-theme-default
 
 					duration-150
 					`}

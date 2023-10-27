@@ -1,9 +1,7 @@
 import '@/app/globals.css';
 
 import {
-	Sansita as HeadingFont,
-	Source_Code_Pro as MonoFont,
-	Source_Sans_3 as BodyFont,
+    Sansita as HeadingFont, Source_Code_Pro as MonoFont, Source_Sans_3 as BodyFont
 } from 'next/font/google';
 import { cookies } from 'next/headers';
 import { ReactNode } from 'react';

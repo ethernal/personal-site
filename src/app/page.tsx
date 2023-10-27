@@ -1,11 +1,7 @@
-import Footer from '@/components/Footer';
 import AboutMeSection from '@/components/LandingPage/AboutMeSection';
 import ContactSection from '@/components/LandingPage/ContactSection';
 import HeroSection from '@/components/LandingPage/HeroSection';
-import RecentWorkSection from '@/components/LandingPage/RecentWorkSection';
-import TestimonialsSection from '@/components/LandingPage/TestimonialsSection';
 import WorkedForSection from '@/components/LandingPage/WorkedForSection';
-import NavigationMain from '@/components/NavigationMain';
 import { SITE_TITLE } from '@/constants/constants';
 
 export const metadata = {
@@ -24,7 +20,7 @@ async function Home() {
 
 				<WorkedForSection className="px-theme-default rounded-theme-default bg-theme-light-background-primary dark:bg-theme-dark-background-primary" />
 
-				<RecentWorkSection className="px-theme-default rounded-theme-default bg-theme-light-background-secondary text-theme-light-text-light dark:text-theme-dark-text-light dark:bg-theme-dark-background-secondary" />
+				{/* <RecentWorkSection className="px-theme-default rounded-theme-default bg-theme-light-background-secondary text-theme-light-text-light dark:text-theme-dark-text-light dark:bg-theme-dark-background-secondary" /> */}
 
 				{/* <TestimonialsSection className="px-theme-default rounded-theme-default bg-theme-light-background-primary dark:bg-theme-dark-background-primary" /> */}
 
