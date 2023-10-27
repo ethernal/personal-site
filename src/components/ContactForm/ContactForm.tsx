@@ -46,6 +46,8 @@ function ContactForm({ className }: { className?: string }) {
 					required
 					min={3}
 					onChange={updateFormData}
+					disabled
+					aria-disabled
 				/>
 				<input
 					name="email"
@@ -54,6 +56,8 @@ function ContactForm({ className }: { className?: string }) {
 					className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent"
 					required
 					onChange={updateFormData}
+					disabled
+					aria-disabled
 				/>
 			</div>
 			<textarea
@@ -65,6 +69,8 @@ function ContactForm({ className }: { className?: string }) {
 				style={{ formSizing: 'content' }}
 				minLength={10}
 				onChange={updateFormData}
+				disabled
+				aria-disabled
 			/>
 			<Button
 				className="text-base font-heading max-sm:text-2xl min-w-min sm:self-start text-theme-white bg-theme-accent rounded-md shadow-md shadow-black px-10 text-[clamp(0.925rem,-0.875rem+3vw,1.75rem)]"

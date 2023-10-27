@@ -13,8 +13,6 @@ export const metadata = {
 async function Home() {
 	const postsList = await getBlogPostsFrontmatter();
 
-	console.log(postsList);
-
 	return (
 		<div className="wrapper max-w-[var('--page-wrapper-max-width')]">
 			<h1>Latest Articles</h1>
