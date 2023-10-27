@@ -144,7 +144,7 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					`}
 				>
 					<li className="first-letter:font-semibold text-xl tracking-widest">
-						<Link href={`/blog`} className="" onClick={closeMenu}>
+						<Link href={`/articles`} className="" onClick={closeMenu}>
 							Articles
 						</Link>
 					</li>
