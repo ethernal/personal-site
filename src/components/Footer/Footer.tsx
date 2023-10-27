@@ -53,7 +53,7 @@ function Footer({ className }: FooterProps) {
 						<li className="mb-2">
 							<Link
 								className="text-base no-underline hover:underline hover:decoration-2 hover:underline-offset-[0.125em]"
-								href="/terms"
+								href="/terms-of-use"
 							>
 								Terms of Use
 							</Link>
@@ -61,7 +61,7 @@ function Footer({ className }: FooterProps) {
 						<li className="mb-2">
 							<Link
 								className="text-base no-underline hover:underline hover:decoration-2 hover:underline-offset-[0.125em]"
-								href="/privacy"
+								href="/privacy-policy"
 							>
 								Privacy Policy
 							</Link>
