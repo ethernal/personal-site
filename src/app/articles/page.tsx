@@ -19,11 +19,15 @@ async function Home() {
 
 			<section className="grid grid-cols-1 gap-5 my-5">
 				{(postsList === undefined || postsList?.length === 0) && (
-					<p className="text-center text-3xl py-10 min-h-[55dvh]">
-						No published articles here, yet.
-						<br /> We know from a good source that there will be some fine
-						content here soon.
-					</p>
+					<div className="min-h-[55dvh] py-10 text-center text-3xl">
+						<p className="text-center text-3xl pt-10">
+							No published articles here, yet.
+						</p>
+						<p className="text-center text-3xl pt-10">
+							We know from a good source that there will be some fine content
+							here soon.
+						</p>
+					</div>
 				)}
 				{postsList?.map((postFrontmatter) => {
 					const {

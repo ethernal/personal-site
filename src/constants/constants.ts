@@ -5,7 +5,7 @@ import remarkGfm from 'remark-gfm';
 
 export const SITE_PUBLISHED_YEAR_STRING = '2023';
 
-export const SITE_TITLE = 'sebee.dev';
+export const SITE_TITLE = 'sebee.website';
 export const AUTHOR = 'Sebastian Pieczynski';
 
 export const SITE_PATHS = {

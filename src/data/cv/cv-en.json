@@ -5,7 +5,7 @@
 		"picture": "/image/profile/sebastian-profile-photo.png",
 		"email": "s.pieczynski@gmail.com",
 		"phone": "(48) 668 248 360",
-		"website": "http://sebee.dev",
+		"website": "http://sebee.website",
 		"summary": "Software Developer focused on delightful User Experience",
 		"location": {
 			"address": "Plebiscytowa 88",
@@ -272,7 +272,7 @@
 				"Javascript",
 				"Typescript"
 			],
-			"url": "https://sebee.dev/"
+			"url": "https://sebee.website/"
 		},
 		{
 			"name": "Training Application",

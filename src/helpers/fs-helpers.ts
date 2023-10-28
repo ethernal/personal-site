@@ -8,6 +8,19 @@ import { cache } from 'react';
 import BlogPostFrontmatterType from '@/types/BlogPostFrontmatterType';
 
 export async function getBlogPostsFrontmatter() {
+
+	try {
+		const stats = await fs.stat('/content/articles');
+		if (!stats?.isDirectory) return;
+	} catch (err: any) {
+		if (err?.code === 'ENOENT') {
+			console.error('Directory does not exist');
+			return;
+		} else {
+			throw err;
+		}
+	}
+
 	const fileNames = await readDirectory('/content/articles');
 
 	const blogPosts: Array<Partial<BlogPostFrontmatterType>> = [];
