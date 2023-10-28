@@ -38,21 +38,36 @@ export async function sendMail({
 		text: otpText,
 	};
 
-	transporter.sendMail(mailOptions, function (error, info) {
-		if (error) {
-			console.error('Error: ', error?.name, 'Message: ', error?.message);
-			throw new Error(error?.message);
-		} else {
-			console.log(
-				`Email from: "${from}" to: "${toEmail}" with topic: "${subject}" sent.`,
-			);
-			return true;
-		}
+	// transporter.sendMail(mailOptions, function (error, info) {
+	// 	if (error) {
+	// 		console.error('Error: ', error?.name, 'Message: ', error?.message);
+	// 		throw new Error(error?.message);
+	// 	} else {
+	// 		console.log(
+	// 			`Email from: "${from}" to: "${toEmail}" with topic: "${subject}" sent.`,
+	// 		);
+	// 		return true;
+	// 	}
+	// });
+
+	await new Promise((resolve, reject) => {
+		// send mail
+		transporter.sendMail(mailOptions, (err, response) => {
+			if (err) {
+				console.error('Error: ', err?.name, 'Message: ', err?.message);
+				reject(err);
+			} else {
+				resolve(response);
+				console.log(
+					`Email from: "${from}" to: "${toEmail}" with topic: "${subject}" sent.`,
+				);
+			}
+		});
 	});
 }
 
 export async function sendEmailAction(data: FormData) {
-	'use server';
+	('use server');
 	const name = data.get('name') as string;
 	const email = data.get('email') as string;
 	const message = data.get('message') as string;
