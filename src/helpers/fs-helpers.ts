@@ -9,9 +9,15 @@ import BlogPostFrontmatterType from '@/types/BlogPostFrontmatterType';
 
 export async function getBlogPostsFrontmatter() {
 
-	const stats = await fs.stat('/content/articles');
-
-	if (!stats.isDirectory) return;
+	try {
+		const stats = await fs.stat('/content/articles');
+		if (!stats?.isDirectory) return;
+	} catch (err) {
+		if (err.code === 'ENOENT') {
+			console.error('Directory does not exist');
+			return;
+		}
+	}
 
 	const fileNames = await readDirectory('/content/articles');
 
