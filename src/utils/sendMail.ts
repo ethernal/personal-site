@@ -91,7 +91,7 @@ export async function sendEmailAction(data: FormData) {
 	const email = data.get('email') as string;
 	const message = data.get('message') as string;
 
-	resendSendMail({
+	await resendSendMail({
 		replyTo: email,
 		subject: 'Email from: ' + name + ' (' + email + ')',
 		toEmail: process.env.RESEND_TO_EMAIL ?? 'sebee.website@gmail.com',
