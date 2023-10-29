@@ -19,7 +19,7 @@ type SendMailParams = {
  * @returns A Promise that resolves to a boolean indicating whether the email was sent successfully.
  */
 export async function nodemailerSendMail({
-	from,
+	replyTo,
 	subject,
 	toEmail,
 	otpText,
@@ -35,7 +35,7 @@ export async function nodemailerSendMail({
 	});
 
 	const mailOptions = {
-		replyTo: from,
+		replyTo: replyTo,
 		to: toEmail,
 		subject: subject,
 		text: otpText,
