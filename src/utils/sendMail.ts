@@ -24,7 +24,9 @@ export async function sendMail({
 	otpText,
 }: SendMailParams) {
 	const transporter = nodemailer.createTransport({
-		service: 'gmail',
+		host: 'smtp.gmail.com',
+		port: 465,
+		secure: true,
 		auth: {
 			user: process.env.NODEMAILER_USER,
 			pass: process.env.NODEMAILER_PASS,
@@ -52,18 +54,31 @@ export async function sendMail({
 
 	await new Promise((resolve, reject) => {
 		// send mail
-		transporter.sendMail(mailOptions, (err, response) => {
+		transporter.sendMail(mailOptions, (err, info) => {
 			if (err) {
-				console.error('Error: ', err?.name, 'Message: ', err?.message);
+				console.error(err);
 				reject(err);
 			} else {
-				resolve(response);
-				console.log(
-					`Email from: "${from}" to: "${toEmail}" with topic: "${subject}" sent.`,
-				);
+				console.log(info);
+				resolve(info);
 			}
 		});
 	});
+
+	// await new Promise((resolve, reject) => {
+	// 	// send mail
+	// 	transporter.sendMail(mailOptions, (err, response) => {
+	// 		if (err) {
+	// 			console.error('Error: ', err?.name, 'Message: ', err?.message);
+	// 			reject(err);
+	// 		} else {
+	// 			resolve(response);
+	// 			console.log(
+	// 				`Email from: "${from}" to: "${toEmail}" with topic: "${subject}" sent.`,
+	// 			);
+	// 		}
+	// 	});
+	// });
 }
 
 export async function sendEmailAction(data: FormData) {
