@@ -70,7 +70,7 @@ export async function nodemailerSendMail({
 
 export async function resendSendMail({
 	replyTo = 'noreply@sebee.website',
-	subject = 'Hello World from sebee.wesite',
+	subject = 'Hello World from sebee.website',
 	toEmail = 'testament777@gmail.com',
 	otpText = '<p>Congrats on sending your <strong>first email</strong>!</p>',
 }: SendMailParams) {
