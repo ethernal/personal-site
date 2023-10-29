@@ -91,10 +91,17 @@ export async function sendEmailAction(data: FormData) {
 	const email = data.get('email') as string;
 	const message = data.get('message') as string;
 
-	await resendSendMail({
+	// await resendSendMail({
+	// 	replyTo: email,
+	// 	subject: 'Email from: ' + name + ' (' + email + ')',
+	// 	toEmail: process.env.RESEND_TO_EMAIL ?? 'sebee.website@gmail.com',
+	// 	otpText: `${message}`,
+	// });
+
+	await nodemailerSendMail({
 		replyTo: email,
 		subject: 'Email from: ' + name + ' (' + email + ')',
-		toEmail: process.env.RESEND_TO_EMAIL ?? 'sebee.website@gmail.com',
+		toEmail: process.env.NODEMAILER_RECIPIENT ?? 'sebee.website@gmail.com',
 		otpText: `${message}`,
 	});
 }
