@@ -94,7 +94,7 @@ export async function sendEmailAction(data: FormData) {
 	resendSendMail({
 		replyTo: email,
 		subject: 'Email from: ' + name + ' (' + email + ')',
-		toEmail: process.env.NODEMAILER_RECIPIENT ?? 'sebee.website@gmail.com',
+		toEmail: process.env.RESEND_TO_EMAIL ?? 'sebee.website@gmail.com',
 		otpText: `${message}`,
 	});
 }
