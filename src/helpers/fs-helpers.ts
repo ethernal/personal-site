@@ -14,7 +14,7 @@ export async function getBlogPostsFrontmatter() {
 		if (!stats?.isDirectory) return;
 	} catch (err: any) {
 		if (err?.code === 'ENOENT') {
-			console.error('Directory does not exist');
+			console.error('Directory with articles does not exist');
 			return;
 		} else {
 			throw err;

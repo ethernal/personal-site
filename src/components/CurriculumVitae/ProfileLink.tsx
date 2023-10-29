@@ -40,7 +40,7 @@ export function ProfileLink({
 
 	return (
 		<Link
-			href={linkAddress}
+			href={linkAddress ?? '#'}
 			target="_blank"
 			className={className}
 			{...delegated}

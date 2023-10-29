@@ -1,4 +1,5 @@
 import NextImage from 'next/image';
+import Link from 'next/link';
 
 import { cn } from '@/utils/utils';
 import { Image } from '@nextui-org/react';
@@ -21,8 +22,11 @@ function HeroSection({ className }: { className?: string }) {
 					using software and making products that closely align with business
 					requirements of my clients.
 				</p>
-				{/* TODO: call to action should invoke some contact page or form */}
-				<CTAButton className="px-10 py-2 font-heading sm:text-4xl">
+				<CTAButton
+					as={Link}
+					className="px-10 py-2 font-heading sm:text-4xl"
+					href="#contact"
+				>
 					Get in Touch
 				</CTAButton>
 			</section>

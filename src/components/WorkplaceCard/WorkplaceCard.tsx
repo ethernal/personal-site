@@ -61,13 +61,15 @@ function WorkplaceCard({ className, workplace }: WorkplaceCardProps) {
 					<li className="text-tiny">{position}</li>
 					<li className="text-tiny">{location}</li>
 					<li className="text-tiny">
-						<Link
-							href={website}
-							target="_blank"
-							className="no-decoration no-underline hover:text-primary-color"
-						>
-							{website}
-						</Link>
+						{website?.length > 0 ? (
+							<Link
+								href={website}
+								target="_blank"
+								className="no-decoration no-underline hover:text-primary-color"
+							>
+								{website}
+							</Link>
+						) : null}
 					</li>
 				</ul>
 			</CardUIHeader>

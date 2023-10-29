@@ -10,9 +10,9 @@ type ContactSectionProps = {
 
 function ContactSection({ className }: ContactSectionProps) {
 	return (
-		<div className={cn('', className)}>
+		<div id="contact" className={cn('', className)}>
 			<div className="py-theme-default text-3xl flex flex-col gap-4">
-				<h2>Tell me about your project</h2>
+				<h2>Let&apos;s get in touch!</h2>
 				<DividerUI className="bg-theme-accent w-full h-0.5" />
 			</div>
 			<div>

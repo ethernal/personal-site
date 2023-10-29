@@ -1,14 +1,12 @@
 import Link from 'next/link';
 
 import DividerUI from '@/components/DividerUI';
-import {
-	DreamJob,
-	WorkExperienceAndAvailability,
-} from '@/types/CurriculumVitae';
+import { DreamJob, WorkExperienceAndAvailability } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
 
 import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
 import CircularProgressUI from '../CircularProgressUI';
+import CTAButton from '../LandingPage/CTAButton';
 
 type EmploymentStatusProps = {
 	employmentStatus: WorkExperienceAndAvailability;
@@ -161,12 +159,13 @@ function EmploymentStatus({
 						</p>
 					</CardUIBody>
 					<CardUIFooter className={'justify-center'}>
-						<Link
+						<CTAButton
 							className="text-xl font-semibold "
-							href="mailto:s.pieczynski@gmail.com?subject=Let%27s%20work%20together&body=Hi%20Sebastian%21%0D%0A%0D%0AI%20have%20seen%20you%20page%20and%20wanted%20to%20get%20in%20touch%20about%20existing%20work%20opportunity.%0D%0A%0D%0A%0D%0ABest%20regards%2C%0D%0A"
+							as={Link}
+							href="#contact"
 						>
 							Let&apos;s get in touch!
-						</Link>
+						</CTAButton>
 					</CardUIFooter>
 				</CardUI>
 			</article>

@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import { Image } from '@nextui-org/react';
+import { Button, Image } from '@nextui-org/react';
 
 import CTAButton from '../CTAButton';
 
@@ -32,7 +32,10 @@ function PortfolioItem({
 				<div className="flex justify-center items-center col-start-1 row-start-1 z-10 w-full h-full opacity-0 group-hover:opacity-60 bg-black transition-opacity duration-250"></div>
 
 				<div className="flex justify-center items-center col-start-1 row-start-1 z-20 w-full h-full opacity-0 group-hover:opacity-100 bg-transparent transition-opacity duration-250">
-					<CTAButton className="opacity-100 z-20 bg-transparent text-theme-accent border-theme-accent border-2 h-12">
+					<CTAButton
+						as={Button}
+						className="opacity-100 z-20 bg-transparent text-theme-accent border-theme-accent border-2 h-12"
+					>
 						View
 					</CTAButton>
 				</div>
