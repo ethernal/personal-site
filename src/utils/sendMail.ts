@@ -1,9 +1,10 @@
 'use server';
 import nodemailer from 'nodemailer';
+import { Resend } from 'resend';
 
 //-----------------------------------------------------------------------------
 type SendMailParams = {
-	from: string;
+	replyTo: string;
 	subject: string;
 	toEmail: string;
 	otpText: string;
@@ -17,7 +18,7 @@ type SendMailParams = {
  * @param otpText - The text of the email.
  * @returns A Promise that resolves to a boolean indicating whether the email was sent successfully.
  */
-export async function sendMail({
+export async function nodemailerSendMail({
 	from,
 	subject,
 	toEmail,
@@ -52,6 +53,7 @@ export async function sendMail({
 	// 	}
 	// });
 
+	// for serverless environment
 	await new Promise((resolve, reject) => {
 		// send mail
 		transporter.sendMail(mailOptions, (err, info) => {
@@ -64,21 +66,23 @@ export async function sendMail({
 			}
 		});
 	});
+}
 
-	// await new Promise((resolve, reject) => {
-	// 	// send mail
-	// 	transporter.sendMail(mailOptions, (err, response) => {
-	// 		if (err) {
-	// 			console.error('Error: ', err?.name, 'Message: ', err?.message);
-	// 			reject(err);
-	// 		} else {
-	// 			resolve(response);
-	// 			console.log(
-	// 				`Email from: "${from}" to: "${toEmail}" with topic: "${subject}" sent.`,
-	// 			);
-	// 		}
-	// 	});
-	// });
+export async function resendSendMail({
+	replyTo = 'noreply@sebee.website',
+	subject = 'Hello World from sebee.wesite',
+	toEmail = 'testament777@gmail.com',
+	otpText = '<p>Congrats on sending your <strong>first email</strong>!</p>',
+}: SendMailParams) {
+	const resend = new Resend(process.env.RESEND_API_KEY);
+
+	resend.emails.send({
+		from: process.env.RESEND_FROM_EMAIL ?? 'noreply@sebee.website',
+		reply_to: replyTo,
+		to: toEmail,
+		subject: subject,
+		html: otpText,
+	});
 }
 
 export async function sendEmailAction(data: FormData) {
@@ -87,8 +91,8 @@ export async function sendEmailAction(data: FormData) {
 	const email = data.get('email') as string;
 	const message = data.get('message') as string;
 
-	sendMail({
-		from: email ?? 'sebee.website@gmail.com',
+	resendSendMail({
+		replyTo: email,
 		subject: 'Email from: ' + name + ' (' + email + ')',
 		toEmail: process.env.NODEMAILER_RECIPIENT ?? 'sebee.website@gmail.com',
 		otpText: `${message}`,
