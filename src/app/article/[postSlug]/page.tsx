@@ -1,5 +1,7 @@
 import { MDXRemote } from 'next-mdx-remote/rsc';
 import Image from 'next/image';
+import Link from 'next/link';
+import { FaChevronLeft as GoBackIcon } from 'react-icons/fa';
 
 import BlogArticleHeader from '@/components/BlogArticleHeader';
 import { COMPONENT_MAP, MDXOptions, SITE_TITLE } from '@/constants';
@@ -41,6 +43,15 @@ async function BlogPost({ params }: BlogPostParams) {
 					components={components}
 					options={MDXOptions} // see: https://github.com/hashicorp/next-mdx-remote/issues/341
 				/>
+				<Link
+					href="/articles"
+					className="mt-theme-default text-xl flex gap-2 items-end justify-end"
+				>
+					<GoBackIcon className="text-theme-accent" />
+					<span className="first-letter:semibold font-heading">
+						Back to Articles
+					</span>
+				</Link>
 			</div>
 		</article>
 	);
