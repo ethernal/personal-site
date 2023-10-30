@@ -6,6 +6,8 @@ import Logo from '@/components/Logo';
 import { SITE_PUBLISHED_YEAR_STRING, SOCIAL_X_HANDLE } from '@/constants/constants';
 import { cn } from '@/utils/utils';
 
+import NewTabIcon from '../NewTabIcon';
+
 type FooterProps = {
 	className?: string;
 };
@@ -68,11 +70,12 @@ function Footer({ className }: FooterProps) {
 						</li>
 						<li className="mb-2">
 							<Link
-								className="text-base no-underline hover:underline hover:decoration-2 hover:underline-offset-[0.125em]"
+								className="text-base no-underline hover:underline hover:decoration-2 hover:underline-offset-[0.125em] flex gap-2 items-center"
 								href={`https://twitter.com/${SOCIAL_X_HANDLE}`}
 								target="_blank"
+								aria-description="Link to Sebastian's X / Twitter profile that opens in new tab"
 							>
-								Twitter / X
+								Twitter / X <NewTabIcon />
 							</Link>
 						</li>
 					</ul>
