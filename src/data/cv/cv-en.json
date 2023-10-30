@@ -43,18 +43,20 @@
 				"Architected the application for personal trainings, designed database allowing any type and combination of exercises as well as normalized it for machine learning use."
 			],
 			"keywords": [
+				"React",
+				"GraphQL",
 				"API",
 				"Backend",
 				"Frontend",
 				"Javascript",
 				"Linux",
 				"MacOS",
-				"React",
 				"REST",
-				"TailwindCSS",
+				"CSS",
 				"Tailwind",
 				"Typescript",
-				"Database Design"
+				"Database Design",
+				"Remote"
 			]
 		},
 		{
@@ -187,13 +189,13 @@
 		{
 			"name": "React",
 			"level": "Intermediate",
-			"value": 70,
+			"value": 60,
 			"keywords": ["HTML", "CSS", "Javascript", "JSX", "Frontend", "Technical"]
 		},
 		{
 			"name": "CSS",
 			"level": "Advanced",
-			"value": 60,
+			"value": 55,
 			"keywords": ["HTML", "CSS", "Javascript", "Frontend", "Technical"]
 		},
 		{
@@ -258,7 +260,7 @@
 			"startDate": "2022-09-04",
 			"description": "Personal website with articles powered by Next.js 13, React and MDX.",
 			"highlights": [
-				"Database schema is normalized and designed for any exercise regime that can be thought of, including variants happening during the exercise."
+				"Used to learn about Next.js and latest features in React. Built with TailwindCSS and MDX and uses Server Actions and Server Components."
 			],
 			"keywords": [
 				"React",
@@ -268,7 +270,9 @@
 				"MDX",
 				"Next",
 				"Next.js",
-				"13",
+				"SSR",
+				"Server Actions",
+				"React Server Components",
 				"Javascript",
 				"Typescript"
 			],
@@ -280,7 +284,7 @@
 			"endDate": "2023-07-01",
 			"description": "Application that connects Trainers to Trainees and allows to create any type of training regime.",
 			"highlights": [
-				"Database schema is normalized and designed for any exercise regime that can be thought of, including variants happening during the exercise."
+				"Database schema is normalized and designed for any exercise regime that can be thought. Built as a React application with GraphQL and TailwindCSS and TailwindUI."
 			],
 			"keywords": [
 				"React",
@@ -303,10 +307,10 @@
 		{
 			"name": "Various frontend projects for a company in the cybersecurity space",
 			"startDate": "2021-11-01",
-			"endDate": "2023-06-01",
-			"description": "Application that connects Trainers to Trainees and allows to create any type of training regime.",
+			"endDate": "2023-07-01",
+			"description": "Frontend projects for a company serving millions of customers in the world. Built with React Hooks and best practices.",
 			"highlights": [
-				"Database schema is normalized and designed for any exercise regime that can be thought of, including any variations happening during the exercise."
+				"Completed two major projects related to UI redesign while adding new features and optimizing performance and user experience."
 			],
 			"keywords": [
 				"Linux",
@@ -327,7 +331,7 @@
 			"endDate": "2020",
 			"description": "Document management for ISO standardization documents. Allows for maintenance of ISO standards for the company by a single person department since 2015. Closely developed with the stakeholder.",
 			"highlights": [
-				"Project was considered to be implemented globally worldwide by the company, but since it was developed by a single person it was decided not to be deployed."
+				"Project was considered to be implemented globally worldwide by the company. Followed closely what the customer needed and was in constant development during the years. To this day it is utilized and brings value to the company optimizing document delivery and management."
 			],
 			"url": "",
 			"keywords": [
@@ -347,7 +351,7 @@
 			"name": "Internal Document Management and Production Ticketing System",
 			"startDate": "2015",
 			"endDate": "2020",
-			"description": "Ticketing system and machine park maintenance application – minimizes time to fix, improves production process. Generates thousands of euro savings monthly. Close development with management and maintenance employees.",
+			"description": "Ticketing system and machine park maintenance application. Minimizes time to fix the issue and allows better tracking of potential production blockers, improves production process. Generates thousands of euro savings monthly. Close development with management and maintenance department.",
 			"highlights": [
 				"Project has saved thousands and possibly hundreds of thousands of euros to this day in operation costs. Another commercial project was rejected due to cost and it offered similar functionality."
 			],
@@ -358,6 +362,7 @@
 				"CSS",
 				"Bootstrap",
 				"Doctrine",
+				"Sonata",
 				"Symfony",
 				"Frontend",
 				"Backend",
@@ -468,7 +473,7 @@
 	],
 	"specific": {
 		"basics": {
-			"visaSponsorship": true,
+			"visaSponsorship": false,
 			"personalDescription": "This is a longer description of me, of my backstory, my backyard, my backfire, my backend, my frontend and my friends."
 		},
 		"dreamJob": {
@@ -490,7 +495,7 @@
 				},
 				"hasOffice": {
 					"frequency": "in office",
-					"daysPerMonth": 4
+					"daysPerMonth": 8
 				}
 			}
 		},
