@@ -310,7 +310,7 @@ p,li,ol {
 }
 
 p {
-  font-size: 1rem;
+  @apply text-lg;
   margin-bottom: 1.25em;
   text-align: justify;
 }
