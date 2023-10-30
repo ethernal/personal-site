@@ -320,7 +320,7 @@ p code {
   font-size: 0.9em;
   background: var(--color-theme-glass);
   border: 0.5px solid var(--color-theme-glass);
-  border-radius: 4px;
+  border-radius: 0 0 var(--theme-radius-default) var(--theme-radius-default);
   padding: 0 4px;
   margin: -0.25em -1px;
   font-family: var(--font-family-mono);

@@ -5,7 +5,7 @@
 }
 
 .wrapper pre {
-  border-radius: var(--theme-radius-default);
+  border-radius: 0 0 var(--theme-radius-default) var(--theme-radius-default);
   padding: 0.5em !important;
 }
 
