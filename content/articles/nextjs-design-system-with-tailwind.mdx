@@ -1,0 +1,481 @@
+---
+title: Design system with Dark Mode built with TailwindCSS for Next.js
+author: Sebastian Pieczyński
+date: 2023-10-31
+published: true
+category: React
+keywords: [nextjs, design system, tailwind, css, react, custom hook, theme, useThemeContext, context, typescript, react context hook, tailwindcss, next.js, dark mode, prevent content flashing],
+abstract: 'Dark mode in Next.js with TailwindCSS - How to write pure TailwindCSS classes while allowing developers and designers to set everything up as they see fit.'
+image:'/image/article/01-design-system-with-tailwind-and-nextjs/design-system-with-tailwind-in-nextjs.jpeg'
+---
+
+Hello Engineers!
+
+When designing this website the thing that has changed the most and took longest to get right was the design system and streamlining the Developer eXperience with dark mode.
+
+I wanted a simple solution that would be intuitive and straightforward to use. I love using the right tools and as much of the native ones as possible so I wanted to leverage CSS variables but I also wanted to use TailwindCSS the right way&trade; without smart or hacky code.
+
+At the time of writing I am very happy with the solution and I would like to share with you what I learned and how it's implemented on this website. The added benefit is that content flashing will not happen when using it and there is no need to use any smart code or hacks to achieve it!
+
+The road there as I mentioned was nothing but straightforward.
+
+## In the beginning...
+
+There was a developer and there was a black IDE. IDE was empty and only the cursor was pulsing slowly. After a time a developer started to write code. The cursor was moving and the IDE was filled with code. The developer was happy it was good to move forward, pixels were drawn on the screen. After a while it all went wrong.. variables were all over the place with names as they saw fit at the time, paddings and margins were not uniform and changing color required editing each place separately. It was a mess and developer was sad.
+
+The purge was needed.
+
+...
+
+If that short story reminds you of a thing or two then as you can clearly see you are not alone. Working with designers and having defined the details of how things are supposed to work helps a lot. If it's a solo project that has no defined structure yet then, well sometimes it leaks.
+
+Thankfully I was already using TailwindCSS (it's awesome!) and there is documentation showing how to use CSS variables with Tailwind classes: see [how to use variables with Tailwind](https://tailwindcss.com/docs/variables) and especially how to define colors to be fully usable the same way as "native" Tailwind classes: see [how to define colors](https://tailwindcss.com/docs/customizing-colors).
+
+It requires us to define the variable in the `:root` element and then we can use it in the `tailwind.config.ts`.
+
+```globals.css
+  --theme-gap-card: 2rem;
+  --theme-padding-default: 2rem;
+  --theme-radius-default: 6px;
+
+  --theme-mute-factor: 0.4;
+
+  /* COLORS */
+  /* Light */
+  --theme-light-color-primary: 80deg 90% 30%;
+
+  --theme-light-foreground-light: 50deg 10% 10%;
+  --theme-light-foreground-dark: 50deg 0% 0%;
+
+  --theme-light-background-primary: 50deg 10% 90%;
+  --theme-light-background-secondary: 50deg 20% 80%;
+
+  /* Dark */
+
+  --theme-dark-color-primary: 220deg 90% 20%;
+
+  --theme-dark-foreground-light: 230deg 95% 95%;
+  --theme-dark-foreground-dark: 230deg 45% 5%;
+
+  --theme-dark-background-primary: 230deg 45% 4%;
+  --theme-dark-background-secondary: 225deg 35% 15%;
+
+  --theme-dark-foreground-primary: 220deg 100% 100%;
+
+  --theme-accent: 12 80% 43%;
+```
+
+And then we can use these variables to create classes in Tailwind.
+
+```tailwind.config.ts
+theme: {
+		extend: {
+      borderRadius: {
+        'theme-default': 'var(--theme-radius-default)',
+      },
+      /* ,,, */
+      colors: {
+        'theme-dark-background-primary':
+        'hsl(var(--theme-dark-background-primary) / <alpha-value>)',
+        'theme-dark-background-primary-muted':
+        'hsl(var(--theme-dark-background-primary) / var(--theme-mute-factor))',
+      },
+    }
+}
+```
+
+By defining only the values for `hsl(...)` CSS function we can now use the tailwinds `<alpha-value>` placeholder and use the class like this:
+
+```html
+<div class="bg-theme-light-background-primary/10">
+  <!-- ... -->
+</div>
+```
+
+If we defined the CSS variable with as a full `hsl` function we would have lost the ability to control the alpha channel and the code above would not work.
+
+## Configuring Dark Mode in Tailwind
+
+Configuring "Dark Mode" in Tailwind is pretty easy:
+
+First we need to setup how dark mode should be handled by Tailwind itself. For Next.js I have found that using the `class` method is the most optimal way as it integrates well with other solutions and will prevent content flashing since the layout will be server side rendered.
+
+```tailwind.config.ts
+import type { Config } from 'tailwindcss';
+
+const config: Config = {
+  darkMode: 'class',
+  content: [
+    //...
+	],
+  //...
+}
+```
+
+Now whenever we want to see dark mode CSS applied via Tailwind we only need to toggle `dark` class on the `html` element.
+
+```tsx
+<p className="text-slate-900 dark:text-slate-50">Hello World</p>
+```
+
+If the class on `html` element is set to 'dark' now the text will be white and black if not.
+
+Slightly more involving is handling the actual change and saving of the styles.
+
+## Creating ThemeContext and Provider
+
+There are two main parts of the functionality we need to handle:
+
+1. Storing the user preferences.
+2. Sharing the preferred setting.
+
+To keep user preferences regarding the theme we will use cookies as they are a key-value pair database but in the browser and they are sent to the server on every request. This fits our purpose perfectly as we need that value on initial render (even if user is visiting for the first time) and it stays with the user and is under his or hers control.
+
+Sharing the user setting will require to share it on the client and on the server.
+
+To store the theme for the client (browser) we will use Context. In React we create Context when we want to share a property between components without prop-drilling (passing it down manually to all components).
+
+### Designing the API for the component with TypeScript
+
+I'll start slowly and explain crucial parts of the code, if you are familliar with the pattern you can scroll below to see the full source code.
+
+To create new Context (and you can have many in your application) we use `createContext` function provided by React.
+
+Let's think what we need our Context to be and what to provide:
+1. we need to know what theme is currently selected and...
+2. we need to be able to change the theme.
+
+So our Context will need to keep both `theme` variable (that can be set to `light` or `dark`) and `setTheme` function to manipulate the `theme`. Knowing that let's name give it a name of `ThemeContext` and strongly type it:
+
+```tsx
+type ThemeContext = {
+	theme: ColorThemeType;
+	setTheme: React.Dispatch<React.SetStateAction<ColorThemeType>>;
+};
+```
+
+To keep the `theme` variable in check we'll limit it's values to `light` and `dark` with the following type:
+
+```ts
+type ColorThemeType = 'light' | 'dark';
+```
+
+That way it will only be able to be set to predefined values when using TypeScript.
+
+####
+
+Now that we have design of our function we can start coding it.
+
+```tsx
+const ThemeContext = createContext<ThemeContext | null>(null);
+```
+
+This will create new Context (think of it as an external slot or bucket for variables, outside of the components tree) and assign it value of `null` (more on this in a second).
+
+Context itself **MUST** be created **OUTSIDE** of the component so it's not part of the Provider we will be using now.
+
+I've decided to name it `Theme` but you will see components like this named `ThemeProvider` or similar more often to indicate they are utilizing context API.
+
+Reference: [React `createContext` documentation](https://react.dev/reference/react/createContext)
+
+```tsx
+function Theme({ initialTheme = 'light', children }: ThemeProps) {
+	const [theme, setTheme] = useState<ColorThemeType>(initialTheme);
+
+	return (
+		<ThemeContext.Provider value={{ theme, setTheme }}>
+			{children}
+		</ThemeContext.Provider>
+	);
+}
+```
+
+You can see that we are allowing to set the `initialTheme` and just in case the value is not provided we are setting it to `light` by default. That way we are ensuring that the value is always available.
+
+You will note that we are using `Provider` sub component that `ThemeContest` well provides. The provider accepts a `value` prop that is the value/object/property that will be passed to **all** underlying components. That value can be anything we want and usually it will be an object holding multiple properties or it could be a single property if we wanted theme to be read only.
+
+```documentation-example.jsx
+function App() {
+  const [theme, setTheme] = useState('light');
+  // ...
+  return (
+    <ThemeContext.Provider value={theme}>
+      <Page />
+    </ThemeContext.Provider>
+  );
+}
+```
+
+Provider reference: (React documentation)[https://react.dev/reference/react/createContext#provider].
+
+Finally we are rendering the `children` passed to the `Theme` - this will render all the components that we pass as children of the `Theme`. This allows us to control from what level the `theme` and `setTheme` props are available.
+
+### Creating custom hook to return the ThemeContext
+
+One unusual thing about the way this Context Provider is written is the creation of `useThemeContext` hook.
+
+Let's first look at how we would utilize `ThemeContext` without the custom hook.
+
+Without the custom `useThemeContext` hook we would need to:
+
+1. import the ThemeContext itself,
+2. verify if the values actually exist in the context
+3. and throw an error if they don't.
+4. then destructure them from the context variable and use them.
+
+```tsx
+import { ThemeContext } from '@/context/ThemeContext';
+
+const context = useContext(ThemeContext);
+
+if (!context) {
+  throw new Error('ThemeContext must be used within ThemeContextProvider');
+}
+
+const { theme, setTheme } = context;
+```
+
+I think you can see the pattern here, and we would need to do this **every time**.
+As someone wise once said, that's no way to live your life.
+
+This is why for every context we create we'll also provide a custom hook that will look like this:
+
+```tsx
+export function useThemeContext(): ThemeContext {
+	const context = useContext(ThemeContext);
+
+	if (context === undefined || context === null) {
+		throw new Error('useThemeContext must be used within ThemeContextProvider');
+	}
+
+	return context;
+}
+```
+
+By utilizing this pattern we encapsulate all the logic related to verifying that the hook can be safely used, we make our TypeScript checks happy and can simplify the way consumers (developers or us) interact with the `ThemeContext`.
+Now we only need to destructure `useThemeContext` hook into `theme` and `setTheme` variables. If the hook is used outside of (or above the level) where `ThemeContext` is defined it will throw an error notifying the developer that the function cannot be used at that level.
+
+```usage-of-useThemeContext.tsx
+  const { theme, setTheme } = useThemeContext();
+```
+
+Here's the full code for `ThemeContext` in TypeScript.
+
+```ThemeContext.tsx
+'use client';
+import React, { createContext, ReactNode, useContext, useState } from 'react';
+
+import ColorThemeType from '@/types/ColorThemeType';
+
+type ThemeContext = {
+	theme: ColorThemeType;
+	setTheme: React.Dispatch<React.SetStateAction<ColorThemeType>>;
+};
+
+type ThemeProps = {
+	initialTheme: ColorThemeType;
+	children: ReactNode;
+};
+
+const ThemeContext = createContext<ThemeContext | null>(null);
+
+function Theme({ initialTheme = 'light', children }: ThemeProps) {
+	const [theme, setTheme] = useState<ColorThemeType>(initialTheme);
+
+	return (
+		<ThemeContext.Provider value={{ theme, setTheme }}>
+			{children}
+		</ThemeContext.Provider>
+	);
+}
+
+export function useThemeContext(): ThemeContext {
+	const context = useContext(ThemeContext);
+
+	if (context === undefined || context === null) {
+		throw new Error('useThemeContext must be used within ThemeContextProvider');
+	}
+
+	return context;
+}
+
+export default Theme;
+```
+
+Our prop sharing logic is complete, we can use the `ThemeContext` to share what theme is currently selected with `theme` variable and we can change it via `setTheme` function shared by the `useThemeContext` hook.
+
+But our users can't..
+
+## Retrieving the theme settings and rendering theme on the server
+
+With the business logic part done we can now start providing the functionality to the users on frontend or our application.
+
+First we need to use the `Theme` component in a place from which we want to start allowing changes to the theme. usually it's the root of the application and in Next.js 13 and later with App Router the best place to do this would be the main `layout.tsx` file located at `src/app/layout.tsx`.
+
+Some code was omitted for the sake of brevity.
+
+Note that this component **does not** use the `use client;` directive as it is a server side component and **must** be used on the server as it uses cookies to retrieve the saved theme **before** it gets sent to the user.
+
+```src/app/layout.tsx
+import { cookies } from 'next/headers';
+
+function RootLayout({ children }: { children: ReactNode }) {
+
+	const savedThemeCookie = cookies().get('theme');
+	const savedTheme: ColorThemeType = (savedThemeCookie?.value ??
+		'light') as ColorThemeType;
+
+	return (
+			<Theme initialTheme={savedTheme}>
+				<html
+					lang="en"
+					data-color-theme={savedTheme}
+					className={cn(
+						savedTheme,
+					)}
+				>
+					<body
+						className={cn(
+							`
+							text-theme-light-text-black
+							bg-theme-light-background-primary
+
+							dark:bg-theme-dark-background-primary
+							dark:text-theme-dark-text-light
+							`,
+						)}
+					>
+							<div>
+								<Header/>
+								<main>{children}</main>
+								<Footer/>
+							</div>
+					</body>
+				</html>
+			</Theme>
+	);
+}
+
+export default RootLayout;
+```
+
+The part where we retrieve the `theme` variable from the cookies and set it while the page is still rendering on the server is the secret sauce to preventing content flashing as it never needs to change and by using tailwind we are sure that all the CSS we need for the page is already present.
+
+```tsx
+  const savedThemeCookie = cookies().get('theme');
+	const savedTheme: ColorThemeType = (savedThemeCookie?.value ?? 'light') as ColorThemeType;
+
+	return (
+			<Theme initialTheme={savedTheme}>
+      /* ^...^ */
+      </Theme>
+  );
+```
+
+We are also making sure that if the cookie is not set a default value is passed.
+
+Then we pass that variable as `initialTheme` since that value can change in the future to the `Theme` context component.
+
+We also set html class to the value of the `savedTheme`:
+
+```tsx
+<html
+	lang="en"
+	data-color-theme={savedTheme}
+	className={savedTheme}
+>
+// ...
+</html>
+```
+
+This way we have completed the retrieving theme setting for the user.
+
+### Toggling the theme and saving user preferences
+
+For now we have achieved 3 goals:
+
+1. We have a dark mode and light mode enabled via TailwindCSS.
+2. We can retrieve the user preferences from the cookies stored in the browser.
+3. We can share the theme between components in the application.
+
+But we still cannot change the theme. Let's work on that next.
+
+Cookie operations provided by next are available only on the server side, but we need to use it on the client side as well.
+
+To manipulate cookies we'll use the `js-cookie` package.
+
+install it with:
+
+```bash
+npm install js-cookie
+```
+
+Then we'll create a `ThemeToggle` component.
+
+Thanks to our custom `useThemeContext` hook we can easily get current `theme` and `setTheme` functions.
+
+Then:
+
+1. using a button we will render the moon or sun icons based on what value `theme` variable holds and
+2. change it with `handleThemeChange` when it's clicked.
+3. `handleThemeChange` function will in turn:
+  a. compute the next theme based on current `theme` value,
+  b. remove all possible values for the theme (remove everything to be safe),
+  c. replace the value of the theme to the opposite one,
+  d. store the new value or update existing one in a cookie.
+
+Again some parths of the code (like imports and classes) had been removed to focus on the solution.
+
+```ThemeToggle.tsx
+const ThemeToggle: React.FC<ThemeToggleProps> = () => {
+	const { theme, setTheme } = useThemeContext();
+
+	const handleThemeChange = () => {
+		const nextTheme = theme === 'light' ? 'dark' : 'light';
+
+		setTheme(nextTheme);
+		Cookie.set('theme', nextTheme, { expires: 380 });
+
+		const root = document.documentElement;
+		root.classList.remove('light');
+		root.classList.remove('dark');
+		root.classList.add(nextTheme);
+	};
+
+	return (
+		<button onClick={handleThemeChange}>
+			{theme === 'light' ? (
+				<Sun/>
+			) : (
+				<Moon/>
+			)}
+			<VisuallyHidden>Toggle dark / light mode</VisuallyHidden>
+		</button>
+	);
+};
+
+export default ThemeToggle;
+```
+
+After using the `ThemeToggle` on a page and in any location and clicking it the class assigned to the html tag changes!
+
+With this we have achieved our final goal of allowing user to change the theme and save it.
+
+## Defining styles for Dark Mode
+
+Defining dark mode in TailwindCSS is straightforward: just add `dark:` prefix to the utility class name and it will only activate in dark mode. As with the example
+
+```tsx
+<p className="text-slate-900 dark:text-slate-50">Hello World</p>
+```
+
+## Bonus - Using with NextUI
+
+NextUI is a set of components that are beautifully crafted with nice touch of sensible animations styled with TailwindCSS. With the presented setup it will work out of the box after following the installation process as it uses Tailwind and class based detection for the dark mode. See the [installation guide](https://nextui.org/docs/frameworks/nextjs) for more information.
+
+## Conclusion
+
+With the presented approach we have successfully created the design system with Tailwind and Next.js, configured and setup dark mode without content flashing and provided user with simple way to preserve the theme between site visits.
+
+I hope you found this helpful and enjoyed it, if you have any questions please reach out to me on [Twitter](https://twitter.com/spieczynski) or [Contact Page](/contact).
+
