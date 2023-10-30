@@ -11,7 +11,9 @@ function ArticleInfo({ publishedOn, children }: ArticleInfoProps) {
 			<div className={`px-viewport-padding`}>
 				<h2 className={`mb-0`}>{children}</h2>
 				<ul className={`m-0 list-none`}>
-					<li className={`text-sm`}>Published on: {publishedOn}</li>
+					<li className={`text-sm`}>
+						Published on: {new Date(publishedOn).toLocaleDateString()}
+					</li>
 				</ul>
 			</div>
 		);

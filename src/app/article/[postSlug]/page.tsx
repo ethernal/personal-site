@@ -1,4 +1,5 @@
 import { MDXRemote } from 'next-mdx-remote/rsc';
+import Image from 'next/image';
 
 import BlogArticleHeader from '@/components/BlogArticleHeader';
 import { COMPONENT_MAP, MDXOptions, SITE_TITLE } from '@/constants';
@@ -14,7 +15,7 @@ export async function generateMetadata({ params }: BlogPostParams) {
 		title: title,
 		name: `${title} • ${SITE_TITLE}`,
 		content: abstract,
-		created: publishedOn,
+		created: new Date(publishedOn).toLocaleDateString(),
 	};
 }
 
@@ -28,6 +29,13 @@ async function BlogPost({ params }: BlogPostParams) {
 		<article className="max-w-[var('--page-wrapper-max-width')] wrapper pb-theme-default">
 			<BlogArticleHeader title={title} publishedOn={publishedOn} />
 			<div>
+				<Image
+					src={post.frontmatter.image}
+					alt={post.frontmatter.imageAlt}
+					className="object-cover max-h-[500px] w-full max-w-full mb-theme-default rounded-theme-default"
+					height={500}
+					width={1200}
+				/>
 				<MDXRemote
 					source={post?.content}
 					components={components}

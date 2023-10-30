@@ -18,7 +18,7 @@ function BlogArticleCard({
 	return (
 		<div
 			className={cn(
-				'w-full overflow-hidden rounded-theme-default [&_p]:my-none shadow-medium hover:shadow-high hover:-translate-y-px duration-200',
+				'w-full overflow-hidden rounded-theme-default [&_p]:my-none shadow-medium hover:shadow-high hover:-translate-y-px duration-200 h-min',
 				className,
 			)}
 		>
@@ -66,9 +66,9 @@ function BlogArticleCard({
 							<p>
 								<time
 									className="text-slate-500 dark:text-slate-500 my-0"
-									dateTime={publishedOn}
+									dateTime={new Date(publishedOn).toLocaleDateString()}
 								>
-									{publishedOn}
+									{new Date(publishedOn).toLocaleDateString()}
 								</time>
 							</p>
 						</div>

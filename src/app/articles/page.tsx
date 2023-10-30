@@ -14,7 +14,7 @@ async function Home() {
 	const postsList = await getArticlesFrontmatter();
 
 	return (
-		<div className="wrapper max-w-[var('--page-wrapper-max-width')]">
+		<div className="wrapper max-w-[var('--page-wrapper-max-width')] min-h-[67dvh]">
 			<h1>Latest Articles</h1>
 
 			<section className="grid grid-cols-1 gap-5 my-5">
@@ -34,7 +34,7 @@ async function Home() {
 						slug,
 						title,
 						abstract,
-						publishedOn,
+						publishedOn = '',
 						image,
 						imageAlt,
 						author,
