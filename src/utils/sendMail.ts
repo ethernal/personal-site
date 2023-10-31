@@ -1,5 +1,6 @@
 'use server';
-import nodemailer from 'nodemailer';
+import nodemailer, { SentMessageInfo } from 'nodemailer';
+import SMTPTransport from 'nodemailer/lib/smtp-transport';
 import { Resend } from 'resend';
 
 //-----------------------------------------------------------------------------
@@ -9,21 +10,13 @@ type SendMailParams = {
 	toEmail: string;
 	otpText: string;
 };
-/**
- * Sends an email with the specified subject, toEmail, and otpText.
- *
- * @param from - The sender's email address.
- * @param subject - The subject of the email.
- * @param toEmail - The recipient's email address.
- * @param otpText - The text of the email.
- * @returns A Promise that resolves to a boolean indicating whether the email was sent successfully.
- */
+
 export async function nodemailerSendMail({
 	replyTo,
 	subject,
 	toEmail,
 	otpText,
-}: SendMailParams) {
+}: SendMailParams): Promise<Error | SentMessageInfo> {
 	const transporter = nodemailer.createTransport({
 		host: 'smtp.gmail.com',
 		port: 465,
@@ -54,16 +47,19 @@ export async function nodemailerSendMail({
 	// });
 
 	// for serverless environment
-	return await new Promise((resolve, reject) => {
+	return await new Promise<Error | SentMessageInfo>((resolve, reject) => {
 		// send mail
-		transporter.sendMail(mailOptions, (err, info) => {
-			if (err) {
-				console.error(err);
-				reject(err);
-			} else {
-				resolve(info);
-			}
-		});
+		transporter.sendMail(
+			mailOptions,
+			(err: Error | null, info: SentMessageInfo) => {
+				if (err) {
+					console.error(err);
+					reject(err);
+				} else {
+					resolve(info);
+				}
+			},
+		);
 	});
 }
 
@@ -104,7 +100,7 @@ export async function sendEmailAction(data: FormData) {
 		otpText: `${message}`,
 	});
 
-	if (res?.accepted.length > 0) {
+	if ('accepted' in res && res?.accepted.length > 0) {
 		return true;
 	} else {
 		return false;
