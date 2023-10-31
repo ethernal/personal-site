@@ -277,6 +277,10 @@ code {
   white-space: pre-wrap;
 }
 
+code ::selection {
+  background-color: hsl(var(--theme-light-background-primary) / 0.7)!important;
+}
+
 
 code > * {
   margin-top: 0;
