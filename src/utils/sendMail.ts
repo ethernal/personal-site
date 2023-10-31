@@ -54,14 +54,13 @@ export async function nodemailerSendMail({
 	// });
 
 	// for serverless environment
-	await new Promise((resolve, reject) => {
+	return await new Promise((resolve, reject) => {
 		// send mail
 		transporter.sendMail(mailOptions, (err, info) => {
 			if (err) {
 				console.error(err);
 				reject(err);
 			} else {
-				console.log(info);
 				resolve(info);
 			}
 		});
@@ -98,10 +97,16 @@ export async function sendEmailAction(data: FormData) {
 	// 	otpText: `${message}`,
 	// });
 
-	await nodemailerSendMail({
+	const res = await nodemailerSendMail({
 		replyTo: email,
 		subject: 'Email from: ' + name + ' (' + email + ')',
 		toEmail: process.env.NODEMAILER_RECIPIENT ?? 'sebee.website@gmail.com',
 		otpText: `${message}`,
 	});
+
+	if (res?.accepted.length > 0) {
+		return true;
+	} else {
+		return false;
+	}
 }
