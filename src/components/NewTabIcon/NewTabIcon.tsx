@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ImNewTab as NewTab } from 'react-icons/im';
+import { RiExternalLinkLine as NewTab } from 'react-icons/ri';
 
 import { cn } from '@/utils/utils';
 
