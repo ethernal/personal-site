@@ -100,8 +100,7 @@
   --theme-light-background-card: 50deg 20% 80%;
 
   --theme-light-foreground-primary: 0deg 0% 0%;
-  --theme-light-inactive: 0 0% 77%;
-
+  --theme-light-inactive: var(--theme-inactive);
   /* Dark */
 
   --theme-dark-color-primary: 220deg 90% 20%;
@@ -115,9 +114,9 @@
 
   --theme-dark-foreground-primary: 220deg 100% 100%;
 
-  --theme-dark-inactive: 0 0% 77%;
+  --theme-dark-inactive: var(--theme-inactive);
 
-
+  --theme-inactive: 0 0% 77%;
   --theme-accent: 12 80% 43%;
 
 
@@ -271,7 +270,7 @@ em {
   font-style: italic;
 }
 
-code {
+pre code {
   --font-code: var(--font-mono);
   font-family: var(--font-code);
   white-space: pre-wrap;
@@ -318,12 +317,13 @@ p {
 p code {
   display: inline-block;
   font-size: 0.9em;
-  background: var(--color-theme-glass);
+  background: hsl(var(--theme-inactive)/0.9);
+  color:hsl(var(--theme-dark-foreground-dark));
   border: 0.5px solid var(--color-theme-glass);
   border-radius: 4px;
-  padding: 0 4px;
+  padding: 2px 4px;
   margin: -0.25em -1px;
-  font-family: var(--font-family-mono);
+  font-family: var(--font-code);
 }
 
 a {
