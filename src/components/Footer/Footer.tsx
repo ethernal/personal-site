@@ -1,6 +1,7 @@
 import format from 'date-fns/format';
 import Link from 'next/link';
 import React from 'react';
+import { RiTwitterLine as TwitterOldIcon, RiTwitterXFill as TwitterXIcon } from 'react-icons/ri';
 
 import Logo from '@/components/Logo';
 import { SITE_PUBLISHED_YEAR_STRING, SOCIAL_X_HANDLE } from '@/constants/constants';
@@ -75,7 +76,8 @@ function Footer({ className }: FooterProps) {
 								target="_blank"
 								aria-description="Link to Sebastian's X / Twitter profile that opens in new tab"
 							>
-								Twitter / X <NewTabIcon />
+								<TwitterXIcon alt="twitter x icon" /> @spieczynski{' '}
+								<NewTabIcon />
 							</Link>
 						</li>
 					</ul>
