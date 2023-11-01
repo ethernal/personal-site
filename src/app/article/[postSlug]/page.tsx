@@ -15,7 +15,7 @@ export async function generateMetadata({ params }: BlogPostParams) {
 
 	return {
 		metadataBase: new URL(
-			'sebee-website-git-ethernal-issue70first-article-ethernal1.vercel.app',
+			'https://sebee-website-git-ethernal-issue70first-article-ethernal1.vercel.app',
 		),
 		title: title,
 		name: `${title} • ${SITE_TITLE}`,
