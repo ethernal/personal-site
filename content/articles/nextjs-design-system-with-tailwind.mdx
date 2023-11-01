@@ -204,8 +204,9 @@ I'll start slowly and explain crucial parts of the code, if you are familiar wit
 To create new Context (and you can have many in your application) we use `createContext` function provided by React.
 
 Let's think what we need our Context to be and what to provide:
+
 1. we need to know what theme is currently selected and...
-2. we need to be able to change the theme.
+1. we need to be able to change the theme.
 
 So our Context will need to keep both `theme` variable (that can be set to `light` or `dark`) and `setTheme` function to manipulate the `theme`. Knowing that let's name give it a name of `ThemeContext` and strongly type it:
 
@@ -260,7 +261,7 @@ You can see that we are allowing to set the `initialTheme`, this is very importa
 
 You will note that we are using `Provider` sub component that is a part of `ThemeContest`. The provider accepts a `value` prop that is the value/object/property that we want to share across the component's tree. It will be passed to **all** underlying components (children) of the `Theme` component. That value can be anything we want and usually it will be an object holding multiple properties or it could be a single property if we wanted theme to be read only.
 
-Single read only value in context example:
+Exxample of passing single read only value to context from React documentation:
 
 ```documentation-example.jsx
 function App() {
@@ -274,7 +275,7 @@ function App() {
 }
 ```
 
-Provider reference: [React documentation](https://react.dev/reference/react/createContext#provider) <NewTabIcon/>.
+Reference: [React documentation](https://react.dev/reference/react/createContext#provider) <NewTabIcon/>.
 
 Finally we are rendering the `children` passed to the `Theme` - this will render all the components that we pass as the children of the `Theme`. This allows us to control from what level the `theme` and `setTheme` props are available.
 
@@ -286,10 +287,10 @@ Let's first look at how we would utilize `ThemeContext` without the custom hook.
 
 Without the custom `useThemeContext` hook we would need to:
 
-1. import the ThemeContext itself,
-2. verify if the values actually exist in the context
-3. and throw an error if they don't.
-4. then destructure them from the context variable and use them.
+1. import the ThemeContext itself...
+2. verify if the `theme` and `setTheme` values actually exist in the context...
+3. throw an error if they don't.
+4. Destructure them from the context variable and use them.
 
 ```tsx
 import { ThemeContext } from '@/context/ThemeContext';
@@ -486,13 +487,13 @@ Thanks to our custom `useThemeContext` hook we can easily get current `theme` an
 
 Then:
 
-1. using a button we will render the moon or sun icons based on what value `theme` variable holds and
+1. Using a button we will render the moon or sun icons based on what value `theme` variable holds and
 1. change it with `handleThemeChange` when it's clicked.
 1. `handleThemeChange` function will in turn:
-	1. compute the next theme based on current `theme` value,
-	1. remove all possible values for the theme (remove everything to be safe),
-	1. replace the value of the theme to the opposite one,
-	1. store the new value or update existing one in a cookie.
+	1. Compute the next theme based on current `theme` value.
+	1. Remove all possible values for the theme (remove everything to be safe).
+	1. Replace the value of the theme to the opposite one.
+	1. Store the new value or update existing one in a cookie.
 
 Again some parts of the code (like imports and classes) had been removed to focus on the solution.
 
@@ -544,7 +545,7 @@ How cool is that?! 😁
 
 ## Bonus - Using with NextUI
 
-NextUI is a set of components that are beautifully crafted with nice touch of sensible animations styled with TailwindCSS 🤯. With the presented setup it will work out of the box after following the installation process as it uses Tailwind and class based detection for the dark mode. See the [installation guide](https://nextui.org/docs/frameworks/nextjs) <NewTabIcon/> for more information.
+NextUI is a set of components that are beautifully crafted with nice touch of sensible animations styled with TailwindCSS 🤯. With the presented setup it will work out of the box after following the installation process as it uses Tailwind and class based detection for the dark mode. See the [installation guide for nextui components](https://nextui.org/docs/frameworks/nextjs) <NewTabIcon/> for more information.
 
 ## Conclusion
 
