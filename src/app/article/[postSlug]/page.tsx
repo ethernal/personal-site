@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: BlogPostParams) {
 			siteName: SITE_TITLE,
 			images: [
 				{
-					url: `/${params.postSlug}/opengraph-image.png`,
+					url: `/image/article/${params.postSlug}/opengraph-image.png`,
 					width: 1200,
 					height: 630,
 					alt: 'Read ' + title + ' ' + SITE_TITLE,
