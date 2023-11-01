@@ -14,11 +14,28 @@ export async function generateMetadata({ params }: BlogPostParams) {
 	const { title, abstract, publishedOn, keywords } = post.frontmatter;
 
 	return {
+		metadataBase: new URL('https://sebee.website'),
 		title: title,
 		name: `${title} • ${SITE_TITLE}`,
 		content: abstract,
 		keywords: keywords?.join(', ') + ', ' + SITE_TITLE,
 		created: new Date(publishedOn).toLocaleDateString(),
+		openGraph: {
+			title: title,
+			description: abstract,
+			url: `/article/${params.postSlug}`,
+			siteName: SITE_TITLE,
+			images: [
+				{
+					url: `/${params.postSlug}/opengraph-image.png`,
+					width: 1200,
+					height: 630,
+					alt: 'Read ' + title + ' ' + SITE_TITLE,
+				},
+			],
+			locale: 'en_US',
+			type: 'website',
+		},
 	};
 }
 
