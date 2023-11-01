@@ -14,6 +14,7 @@
   h5,
   h6 {
     @apply font-sans;
+    scroll-margin-top: var(--theme-header-height);
   }
 
   pre {
@@ -73,7 +74,7 @@
   --theme-duration-default: 200ms;
 
   /* Layout calculation */
-  --header-height: 5rem;
+  --theme-header-height: 5rem;
 
   --page-wrapper-max-width: clamp(min(100%, 80rem), 90%, 80rem);
   --page-wrapper-padding: 2rem;
@@ -304,17 +305,51 @@ h2 {
 
 h3 {
   font-size: 1.25rem;
-  margin-top: 1.5em;
+  margin-top: 1rem;
   margin-bottom: 0.5em;
   font-weight: 500;
 }
 
-p,li,ol {
+p,li,ol,ul {
+  @apply text-lg;
   @apply tracking-wider;
 }
 
+article[data-page-article="true"] .footnotes ol, main .footnotes ul, main .footnotes li {
+  list-style: none;
+}
+
+article[data-page-article="true"] .footnotes li::before {
+  content: none;
+}
+
+article[data-page-article="true"] ol {
+  counter-reset: item;
+  margin-bottom: calc(var(--theme-padding-default)/2);
+}
+
+article[data-page-article="true"] li {
+  display: block;
+  counter-increment: item;
+}
+
+article[data-page-article="true"] ol li:before {
+    content: counters(item, ".") ". ";
+}
+
+article[data-page-article="true"] ol, main ol li {
+  list-style: revert;
+
+  list-style-position: inside;
+  @apply leading-7;
+  /* margin-inline: var(--theme-padding-default); */
+}
+
+ol ol, ol ul {
+  padding-inline-start: calc(var(--theme-padding-default)/2);
+}
+
 p {
-  @apply text-lg;
   margin-bottom: 1.25em;
   text-align: justify;
 }
@@ -338,8 +373,18 @@ a {
   transition: all var(--transition-default-time);
 }
 
-a:hover,
-a:focus {
+a code {
+  text-decoration: underline hsl(var(--theme-accent) / 1) solid 1.5px;
+  text-underline-offset: 0.125em;
+}
+
+
+a:hover,a:focus {
+  text-decoration-thickness: 3px;
+}
+
+a:hover > code,
+a:focus > code{
   text-decoration-thickness: 3px;
 }
 

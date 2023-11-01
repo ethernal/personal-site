@@ -11,12 +11,13 @@ import { BlogPostParams } from '@/types/BlogPageType';
 export async function generateMetadata({ params }: BlogPostParams) {
 	const post = await loadBlogPost(params.postSlug);
 
-	const { title, abstract, publishedOn } = post.frontmatter;
+	const { title, abstract, publishedOn, keywords } = post.frontmatter;
 
 	return {
 		title: title,
 		name: `${title} • ${SITE_TITLE}`,
 		content: abstract,
+		keywords: keywords?.join(', ') + ', ' + SITE_TITLE,
 		created: new Date(publishedOn).toLocaleDateString(),
 	};
 }
@@ -28,7 +29,10 @@ async function BlogPost({ params }: BlogPostParams) {
 	const components = COMPONENT_MAP;
 
 	return (
-		<article className="max-w-[var('--page-wrapper-max-width')] wrapper pb-theme-default">
+		<article
+			data-page-article
+			className="max-w-[var('--page-wrapper-max-width')] wrapper pb-theme-default"
+		>
 			<BlogArticleHeader title={title} publishedOn={publishedOn} />
 			<div>
 				<Image
