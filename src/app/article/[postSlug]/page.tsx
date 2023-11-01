@@ -36,6 +36,15 @@ export async function generateMetadata({ params }: BlogPostParams) {
 			locale: 'en_US',
 			type: 'website',
 		},
+		twitter: {
+			card: 'summary_large_image',
+			title: title,
+			description: abstract,
+			site: '@spieczynski',
+			creator: '@spieczynski',
+			creatorId: '@spieczynski',
+			images: [`/image/article/${params.postSlug}/opengraph-image.png`],
+		},
 	};
 }
 
