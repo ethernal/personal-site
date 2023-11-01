@@ -47,7 +47,6 @@ async function SitePage({ params, searchParams }: PageParams) {
 				<MDXRemote
 					source={pageFile?.content ?? ''}
 					components={components}
-					//@ts-ignore
 					options={MDXOptions} // see: https://github.com/hashicorp/next-mdx-remote/issues/341
 				/>
 			</div>

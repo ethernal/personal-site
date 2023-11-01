@@ -4,6 +4,7 @@ import rehypeSlug from 'rehype-slug';
 import { remarkHeadingId } from 'remark-custom-heading-id';
 import remarkGfm from 'remark-gfm';
 import remarkToc from 'remark-toc';
+import { Pluggable } from 'unified';
 
 export const SITE_PUBLISHED_YEAR_STRING = '2023';
 
@@ -32,12 +33,14 @@ export const MDXOptions = {
 					tight: true,
 					maxDepth: 3,
 				},
-			],
+			] as unknown as Pluggable<any[]>,
 		],
 		rehypePlugins: [
 			rehypeSlug,
 			rehypeAutolinkHeadings,
-			[rehypeExternalLinks, { target: '_blank' }],
+			[rehypeExternalLinks, { target: '_blank' }] as unknown as Pluggable<
+				any[]
+			>,
 		],
 	},
 };
