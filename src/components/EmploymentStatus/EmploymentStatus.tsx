@@ -6,6 +6,7 @@ import { cn } from '@/utils/utils';
 
 import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
 import CircularProgressUI from '../CircularProgressUI';
+import CTALink from '../CTALink';
 import CTAButton from '../LandingPage/CTAButton';
 
 type EmploymentStatusProps = {
@@ -159,13 +160,9 @@ function EmploymentStatus({
 						</p>
 					</CardUIBody>
 					<CardUIFooter className={'justify-center'}>
-						<CTAButton
-							className="text-xl font-semibold "
-							as={Link}
-							href="#contact"
-						>
+						<CTALink className="text-xl font-semibold " href="/contact">
 							Let&apos;s get in touch!
-						</CTAButton>
+						</CTALink>
 					</CardUIFooter>
 				</CardUI>
 			</article>

@@ -6,6 +6,7 @@ import ContactForm from '@/components/ContactForm';
 import CV from '@/components/CurriculumVitae';
 import FullWidthSplitSection from '@/components/FullWidthSplitSection';
 import Image from '@/components/ImageSSR';
+import NewTabIcon from '@/components/NewTabIcon';
 import ResponsiveImage from '@/components/ResponsiveImage';
 import Spinner from '@/components/Spinner';
 import TooltipMessage from '@/components/TooltipMessage';
@@ -20,4 +21,5 @@ export const COMPONENT_MAP: MDXComponents = {
 	CV,
 	FullWidthSplitSection,
 	ContactForm,
+	NewTabIcon,
 };

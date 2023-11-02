@@ -18,13 +18,13 @@ function BlogArticleCard({
 	return (
 		<div
 			className={cn(
-				'w-full overflow-hidden rounded-theme-default [&_p]:my-none shadow-medium hover:shadow-high hover:-translate-y-px duration-200',
+				'w-full overflow-hidden rounded-theme-default [&_p]:my-none shadow-medium hover:shadow-high hover:-translate-y-px duration-200 h-min',
 				className,
 			)}
 		>
 			<article className="flex flex-col bg-theme-light-background-secondary dark:bg-theme-dark-background-secondary md:flex-row">
 				<div className="min-w-[50%] object-cover md:min-h-[26rem]">
-					<Link href={`/blog/${slug}`}>
+					<Link href={`/article/${slug}`}>
 						<Image
 							src={image}
 							alt={imageAlt}
@@ -36,12 +36,12 @@ function BlogArticleCard({
 
 				<div className="flex h-[inherit] flex-col justify-between p-8">
 					<h2 className="text-3xl font-semibold mt-0">
-						<Link href={`/blog/${slug}`} className="no-underline">
+						<Link href={`/article/${slug}`} className="no-underline">
 							{title}
 						</Link>
 					</h2>
 					<p className="text-lg line-clamp-6 md:line-clamp-4 my-0">
-						<Link href={`/blog/${slug}`} className="no-underline">
+						<Link href={`/article/${slug}`} className="no-underline">
 							{abstract}
 						</Link>
 					</p>
@@ -66,9 +66,9 @@ function BlogArticleCard({
 							<p>
 								<time
 									className="text-slate-500 dark:text-slate-500 my-0"
-									dateTime={publishedOn}
+									dateTime={new Date(publishedOn).toLocaleDateString()}
 								>
-									{publishedOn}
+									{new Date(publishedOn).toLocaleDateString()}
 								</time>
 							</p>
 						</div>

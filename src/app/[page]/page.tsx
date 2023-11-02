@@ -22,7 +22,7 @@ export async function generateMetadata({ params, searchParams }: PageParams) {
 		title: title,
 		name: `${title} • ${SITE_TITLE}`,
 		content: abstract,
-		created: publishedOn,
+		created: new Date(publishedOn).toLocaleDateString(),
 	};
 }
 
@@ -41,7 +41,7 @@ async function SitePage({ params, searchParams }: PageParams) {
 	return (
 		<article>
 			<header className="mx-auto max-w-[var(--page-wrapper-max-width)] wrapper">
-				<ArticleInfo publishedOn={''}>{title}</ArticleInfo>
+				<ArticleInfo publishedOn={publishedOn}>{title}</ArticleInfo>
 			</header>
 			<div className="wrapper">
 				<MDXRemote

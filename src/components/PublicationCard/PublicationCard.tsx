@@ -4,6 +4,7 @@ import { Publication } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
 
 import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
+import NewTabIcon from '../NewTabIcon';
 
 type PublicationCardProps = {
 	publication: Prettify<Publication>;
@@ -38,8 +39,8 @@ function PublicationCard({
 
 			<CardUIFooter className={'p-4 text-tiny rounded-none'}>
 				{website && website?.length > 0 && (
-					<Link href={website} target="_blank">
-						{website}
+					<Link href={website} target="_blank" className="">
+						{website} <NewTabIcon className="inline-flex ms-1" />
 					</Link>
 				)}
 				<p className="text-theme-light-text-dark dark:text-theme-dark-text-light m-auto py-2 font-semibold text-small">

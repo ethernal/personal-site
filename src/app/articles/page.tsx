@@ -2,19 +2,19 @@ import React from 'react';
 
 import BlogArticleCard from '@/components/BlogArticleCard';
 import { SITE_TITLE } from '@/constants';
-import { getBlogPostsFrontmatter } from '@/helpers/fs-helpers';
+import { getArticlesFrontmatter } from '@/helpers/fs-helpers';
 
 export const metadata = {
 	title: SITE_TITLE,
 	description:
-		"Sebastian's thoughts on software development and all things about life.",
+		"Sebastian's thoughts on software development and all things about life. Expect React, NextJS, Remix, TailwindCSS and more.",
 };
 
 async function Home() {
-	const postsList = await getBlogPostsFrontmatter();
+	const postsList = await getArticlesFrontmatter();
 
 	return (
-		<div className="wrapper max-w-[var('--page-wrapper-max-width')]">
+		<div className="wrapper max-w-[var('--page-wrapper-max-width')] min-h-[67dvh]">
 			<h1>Latest Articles</h1>
 
 			<section className="grid grid-cols-1 gap-5 my-5">
@@ -34,7 +34,7 @@ async function Home() {
 						slug,
 						title,
 						abstract,
-						publishedOn,
+						publishedOn = '',
 						image,
 						imageAlt,
 						author,

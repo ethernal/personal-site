@@ -126,7 +126,7 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 					max-xs:inset-0
 					max-xs:left-1/2
 					max-xs:flex-col
-					max-xs:p-[min(2.5em,calc(var(--header-height)))_4rem]
+					max-xs:p-[min(2.5em,calc(var(--theme-header-height)))_4rem]
 					max-sm:gap-2
 					max-sm:px-2
 					data-[menu-open=false]:xs:force-translate-x-0

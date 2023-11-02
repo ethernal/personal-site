@@ -7,26 +7,25 @@ import { cache } from 'react';
 
 import BlogPostFrontmatterType from '@/types/BlogPostFrontmatterType';
 
-export async function getBlogPostsFrontmatter() {
-
+export async function getArticlesFrontmatter() {
 	try {
-		const stats = await fs.stat('/content/articles');
+		const stats = await fs.stat('./content/articles');
 		if (!stats?.isDirectory) return;
 	} catch (err: any) {
 		if (err?.code === 'ENOENT') {
-			console.error('Directory with articles does not exist');
+			console.error('Directory with articles does not exist: ', err);
 			return;
 		} else {
 			throw err;
 		}
 	}
 
-	const fileNames = await readDirectory('/content/articles');
+	const fileNames = await readDirectory('./content/articles');
 
 	const blogPosts: Array<Partial<BlogPostFrontmatterType>> = [];
 
 	for (let fileName of fileNames) {
-		const rawContent = await readFile(`/content/articles/${fileName}`);
+		const rawContent = await readFile(`./content/articles/${fileName}`);
 
 		const { data: frontmatter } = matter(rawContent);
 
@@ -49,7 +48,7 @@ export async function getBlogPostsFrontmatter() {
 	);
 }
 export const loadBlogPost = cache(async (slug: string) => {
-	const rawContent = await readFile(`/content/articles/${slug}.mdx`);
+	const rawContent = await readFile(`./content/articles/${slug}.mdx`);
 
 	const { data: frontmatter, content } = matter(rawContent);
 
@@ -60,8 +59,9 @@ export const loadPageContent = cache(async (path: string) => {
 	if (path === 'mockServiceWorker.js') return;
 
 	const fileNameWithoutSuffix = path;
+
 	const rawContent = await readFile(
-		`/content/page/${fileNameWithoutSuffix}/${fileNameWithoutSuffix}.mdx`,
+		`./content/page/${fileNameWithoutSuffix}/${fileNameWithoutSuffix}.mdx`,
 	);
 
 	const { data: frontmatter, content } = matter(rawContent);

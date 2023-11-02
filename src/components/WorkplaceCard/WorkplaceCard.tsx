@@ -12,6 +12,7 @@ import { cn } from '@/utils/utils';
 
 import FigureUI from '../FigureUI';
 import KeywordList from '../KeywordList';
+import NewTabIcon from '../NewTabIcon';
 
 type WorkplaceCardProps = {
 	workplace: Prettify<Workplace>;
@@ -67,7 +68,9 @@ function WorkplaceCard({ className, workplace }: WorkplaceCardProps) {
 								target="_blank"
 								className="no-decoration no-underline hover:text-primary-color"
 							>
-								{website}
+								<span className="flex gap-1">
+									{website} <NewTabIcon />
+								</span>
 							</Link>
 						) : null}
 					</li>
