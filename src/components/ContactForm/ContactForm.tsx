@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+import { AiOutlineCloseCircle as CloseCircularIcon } from 'react-icons/ai';
 
 import { sendEmailAction } from '@/utils/sendMail';
 import { cn } from '@/utils/utils';
@@ -13,6 +14,7 @@ type ContactFormData = {
 	message: string;
 };
 
+type ContactFormStatus = 'idle' | 'sending' | 'error' | 'success';
 function ContactForm({ className }: { className?: string }) {
 	const initialData = {
 		email: '',
@@ -21,6 +23,7 @@ function ContactForm({ className }: { className?: string }) {
 	};
 
 	const [formData, setFormData] = React.useState<ContactFormData>(initialData);
+	const [formStatus, setFormStatus] = React.useState<ContactFormStatus>('idle');
 
 	const resetFormData = (): void => {
 		setFormData(initialData);
@@ -37,9 +40,14 @@ function ContactForm({ className }: { className?: string }) {
 	return (
 		<form
 			className={cn('flex flex-col gap-4 pb-10', className)}
-			action={(data) => {
-				sendEmailAction(data);
-				resetFormData();
+			action={async (data) => {
+				const delivered = await sendEmailAction(data);
+				if (delivered) {
+					setFormStatus('success');
+					resetFormData();
+				} else {
+					setFormStatus('error');
+				}
 			}}
 		>
 			<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -52,8 +60,7 @@ function ContactForm({ className }: { className?: string }) {
 					min={3}
 					onChange={updateFormData}
 					value={formData.name}
-					// disabled
-					// aria-disabled
+					disabled={formStatus !== 'idle'}
 				/>
 				<input
 					name="email"
@@ -63,8 +70,7 @@ function ContactForm({ className }: { className?: string }) {
 					required
 					onChange={updateFormData}
 					value={formData.email}
-					// disabled
-					// aria-disabled
+					disabled={formStatus !== 'idle'}
 				/>
 			</div>
 			<textarea
@@ -77,16 +83,42 @@ function ContactForm({ className }: { className?: string }) {
 				minLength={10}
 				onChange={updateFormData}
 				value={formData.message}
-				// disabled
-				// aria-disabled
+				disabled={formStatus !== 'idle'}
 			/>
 			<CTAButton
 				as={Button}
 				type="submit"
 				className="text-base font-heading max-sm:text-2xl min-w-min sm:self-start text-theme-white bg-theme-accent rounded-md shadow-md shadow-black px-10 text-[clamp(0.925rem,-0.875rem+3vw,1.75rem)]"
+				onClick={() => setFormStatus('sending')}
+				disabled={formStatus !== 'idle'}
 			>
 				Send
 			</CTAButton>
+			{formStatus !== 'idle' ? (
+				<div
+					className={cn(
+						'relative w-full rounded-theme-default',
+						{ 'bg-yellow-600': formStatus === 'sending' },
+						{ 'bg-red-600': formStatus === 'error' },
+						{ 'bg-green-600': formStatus === 'success' },
+					)}
+				>
+					<p className="text-lg p-theme-default m-0 text-theme-white dark:text-theme-dark-text-dark">
+						{formStatus === 'sending' && <span>Sending...</span>}
+						{formStatus === 'success' && <span>Message sent</span>}
+						{formStatus === 'error' && (
+							<span>
+								Error sending message. Please try again or contact me via X /
+								Twitter.
+							</span>
+						)}
+					</p>
+					<CloseCircularIcon
+						className="absolute top-2 right-2 cursor-pointer w-6 h-6"
+						onClick={() => setFormStatus('idle')}
+					/>
+				</div>
+			) : null}
 		</form>
 	);
 }

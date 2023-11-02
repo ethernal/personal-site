@@ -9,6 +9,11 @@
   padding: 0.5em !important;
 }
 
+.wrapper pre:nth-child(2) {
+  border-radius:var(--theme-radius-default);
+  padding: 0.5em;
+}
+
 .wrapper code {
   --font-code: var(--font-mono);
   font-family: var(--font-code);

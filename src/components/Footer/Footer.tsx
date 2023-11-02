@@ -33,7 +33,7 @@ function Footer({ className }: FooterProps) {
 					<ul className={'list-none p-0 first:mt-6 last:mb-0'}>
 						<li className="mb-2">
 							<p className={'mb-0 mt-4 text-sm text-decoration'}>
-								Created by{' '}
+								Created with ❤️ by{' '}
 								<Link
 									href="/"
 									className={
@@ -67,6 +67,14 @@ function Footer({ className }: FooterProps) {
 								href="/privacy-policy"
 							>
 								Privacy Policy
+							</Link>
+						</li>
+						<li className="mb-2">
+							<Link
+								className="text-base no-underline hover:underline hover:decoration-2 hover:underline-offset-[0.125em]"
+								href="/cookie-policy"
+							>
+								Cookie Policy
 							</Link>
 						</li>
 						<li className="mb-2">
