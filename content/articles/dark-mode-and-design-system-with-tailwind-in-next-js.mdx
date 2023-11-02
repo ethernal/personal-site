@@ -150,7 +150,7 @@ If we defined the CSS variable including `hsl` function we would have lost the a
 
 Configuring the "dark mode" in Tailwind is done with only one line of code in the `tailwind.config.ts` file. Using it with our design is also straightforward but I will show you some cool ways to make it easier to implement into the website or app.
 
-First we need to setup how dark mode should be handled by Tailwind itself. For Next.js I have found that using the `class` method is the most optimal way as it integrates well with other solutions and will prevent content flashing since the layout will be server side rendered first.
+First we need to setup how dark mode should be handled by Tailwind itself. For Next.js I have found that using the `class` configuration option is the most optimal way as it integrates well with other solutions and will prevent content flashing since the layout will be server side rendered first.
 
 ```tailwind.config.ts
 import type { Config } from 'tailwindcss';
@@ -465,11 +465,11 @@ This way we have completed the retrieving theme setting for the user.
 
 For now we have achieved these goals:
 
-- [x] We have a dark mode and light mode enabled via TailwindCSS.
-- [x] We can retrieve the user preferences from the cookies stored in the browser.
-- [x] We can share the theme between components in the application.
+1. We have a dark mode and light mode enabled via TailwindCSS.
+1. We can retrieve the user preferences from the cookies stored in the browser.
+1. We can share the theme between components in the application.
 
-But we still cannot change the theme. Let's work on that next.
+But we still *cannot change the theme*. Let's work on that next.
 
 Cookie operations provided by next are available only on the server side, but we need to use it on the client side as well.
 
