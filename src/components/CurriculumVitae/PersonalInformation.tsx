@@ -59,9 +59,6 @@ export default function PersonalInformation({
 									<HorizontalItem as="li" className="items-start">
 										<RiUserLocationLine />
 										<ol>
-											<li>{personalInformation.location.address}</li>
-											<li>{personalInformation.location.postalCode} </li>
-											<li>{personalInformation.location.region} </li>
 											<li>{personalInformation.location.city}</li>
 											<li>
 												<TooltipMessage content={'Poland'}>
