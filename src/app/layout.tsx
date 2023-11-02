@@ -6,6 +6,7 @@ import {
 import { cookies } from 'next/headers';
 import { ReactNode } from 'react';
 
+import CookiePolicyBanner from '@/components/CookiePolicyBanner';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import MotionPreferencesConfig from '@/components/MotionPreferencesConfig/MotionPreferencesConfig';
@@ -74,6 +75,7 @@ function RootLayout({ children }: { children: ReactNode }) {
 								<main className="max-w-7xl mx-auto">{children}</main>
 								<Footer className="wrapper" />
 							</div>
+							<CookiePolicyBanner />
 						</NextUIThemeProvider>
 					</body>
 				</html>
