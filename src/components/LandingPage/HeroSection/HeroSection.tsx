@@ -37,7 +37,7 @@ function HeroSection({ className }: { className?: string }) {
 					alt="My profile"
 					width={250}
 					height={450}
-					className="row-start-1 row-end-2 col-start-1 col-end-1 self-end pointer-events-none "
+					className="row-start-1 row-end-2 col-start-1 col-end-1 self-end pointer-events-none"
 					as={NextImage}
 				/>
 				<div className="w-52 justify-self-center aspect-square -mt-8 dark:bg-theme-dark-background-secondary-muted bg-theme-light-background-secondary rounded-full row-start-1 row-end-1 col-start-1 col-end-1"></div>
