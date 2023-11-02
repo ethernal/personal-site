@@ -181,7 +181,7 @@
 			"name": "Comparison analysis for websites based on HHS guidelines.",
 			"publisher": "National Conference for Students and Young Researchers",
 			"releaseDate": "2012-05-01",
-			"website": "https://www.hhs.gov/web/policies-and-standards/index.html",
+			"website": "https://bibliotekanauki.pl/articles/151823.pdf",
 			"summary": "Article about quantitative methodology of comparing and ranking websites before Google Lighthouse or other automated testing tools were commonly used. It was also used by Walery Susłow from Technical University of Koszalin to quantitatively rank and grade students' work. It allows to compare end products to selected set of metrics and at the same time gives full control over each metric importance. This allows to rank products/websites while limiting personal biases to minimum since metrics in turn are also quantitative."
 		}
 	],
