@@ -30,7 +30,7 @@ function CookiePolicyBanner() {
 	};
 
 	return policyAccepted === false ? (
-		<section className="fixed flex gap-theme-default items-center justify-between max-w-4xl p-4 mx-auto bg-theme-light-background-secondary border border-gray-200 shadow-md dark:bg-theme-dark-background-secondary left-theme-default right-theme-default bottom-16 dark:shadow-gray-900 shadow-gray-100 md:gap-x-4 dark:border-gray-700 rounded-theme-default">
+		<section className="z-50 fixed flex gap-theme-default items-center justify-between max-w-4xl p-4 mx-auto bg-theme-light-background-secondary border border-gray-200 shadow-md dark:bg-theme-dark-background-secondary left-theme-default right-theme-default bottom-16 dark:shadow-gray-900 shadow-gray-100 md:gap-x-4 dark:border-gray-700 rounded-theme-default">
 			<p className="text-sm text-theme-light-text-dark dark:text-theme-dark-text-light mb-0">
 				By continuing to use this site you consent to the use of cookies 🍪 in
 				accordance with our <Link href="/cookie-policy">🍪 cookie policy</Link>.
