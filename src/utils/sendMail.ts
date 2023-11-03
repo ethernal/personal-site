@@ -95,10 +95,6 @@ export async function sendEmailAction(prevState: any, formData: FormData) {
 	// 	otpText: `${message}`,
 	// });
 
-	console.log('name: ', name);
-	console.log('email: ', email);
-	console.log('message: ', message);
-
 	if (name === null || email === null || message === null) {
 		return false;
 	}
@@ -111,7 +107,6 @@ export async function sendEmailAction(prevState: any, formData: FormData) {
 			otpText: `${message}`,
 		});
 
-		console.log('Response after email: ', response.response);
 		if ('accepted' in response && response?.accepted.length > 0) {
 			return true;
 		} else {
