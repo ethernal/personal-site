@@ -4,7 +4,6 @@ const nextConfig = {
 		outputFileTracingIncludes: {
 			'/*': ['./content/**/*'],
 		},
-		serverActions: true,
 	},
 };
 
