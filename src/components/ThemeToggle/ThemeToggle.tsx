@@ -1,6 +1,7 @@
 import Cookie from 'js-cookie';
 import React from 'react';
 import { Moon, Sun } from 'react-feather';
+import { toast } from 'react-toastify';
 
 import VisuallyHidden from '@/components/VisuallyHidden';
 import { useThemeContext } from '@/context/theme/ThemeContext';

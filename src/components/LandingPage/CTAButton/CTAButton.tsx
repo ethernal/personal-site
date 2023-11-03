@@ -16,6 +16,7 @@ function CTAButton({ className, children, ...delegated }: CTAButtonProps) {
 				className,
 			)}
 			variant="flat"
+			type="submit"
 			{...delegated}
 		>
 			<span className="-mt-px">{children}</span>

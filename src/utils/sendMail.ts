@@ -1,6 +1,7 @@
 'use server';
+import { revalidatePath } from 'next/cache';
 import nodemailer, { SentMessageInfo } from 'nodemailer';
-import SMTPTransport from 'nodemailer/lib/smtp-transport';
+import { toast } from 'react-toastify';
 import { Resend } from 'resend';
 
 //-----------------------------------------------------------------------------
@@ -80,11 +81,12 @@ export async function resendSendMail({
 	});
 }
 
-export async function sendEmailAction(data: FormData) {
+export async function sendEmailAction(prevState: any, formData: FormData) {
 	('use server');
-	const name = data.get('name') as string;
-	const email = data.get('email') as string;
-	const message = data.get('message') as string;
+	const name = formData.get('name') as string;
+	const email = formData.get('email') as string;
+	const message = formData.get('message') as string;
+	toast;
 
 	// await resendSendMail({
 	// 	replyTo: email,
@@ -93,16 +95,30 @@ export async function sendEmailAction(data: FormData) {
 	// 	otpText: `${message}`,
 	// });
 
-	const res = await nodemailerSendMail({
-		replyTo: email,
-		subject: 'Email from: ' + name + ' (' + email + ')',
-		toEmail: process.env.NODEMAILER_RECIPIENT ?? 'sebee.website@gmail.com',
-		otpText: `${message}`,
-	});
+	console.log('name: ', name);
+	console.log('email: ', email);
+	console.log('message: ', message);
 
-	if ('accepted' in res && res?.accepted.length > 0) {
-		return true;
-	} else {
+	if (name === null || email === null || message === null) {
+		return false;
+	}
+
+	try {
+		const response = await nodemailerSendMail({
+			replyTo: email,
+			subject: 'Email from: ' + name + ' (' + email + ')',
+			toEmail: process.env.NODEMAILER_RECIPIENT ?? 'sebee.website@gmail.com',
+			otpText: `${message}`,
+		});
+
+		console.log('Response after email: ', response.response);
+		if ('accepted' in response && response?.accepted.length > 0) {
+			return true;
+		} else {
+			return false;
+		}
+	} catch (e) {
+		console.error(e);
 		return false;
 	}
 }
