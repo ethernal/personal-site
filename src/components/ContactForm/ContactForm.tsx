@@ -39,15 +39,20 @@ function ContactForm({ className }: { className?: string }) {
 		error: '',
 	};
 
+
+	const toastId = React.useRef<Id | null>(null);
+
+	const formRef = React.useRef<HTMLFormElement | null>(null);
 	const [state, formAction] = useFormState(
 		async (prev: any, formData: FormData) => {
 			const res = await sendEmailAction(prev, formData);
-			if (res === true) updateMailSuccess();
-			else updateMailError();
+			if (res === true) {
+				updateMailSuccess();
+				formRef.current?.reset();
+			} else updateMailError();
 		},
 		initialFormState,
 	);
-	const toastId = React.useRef<Id | null>(null);
 
 	const sendMailInProgress = () =>
 		(toastId.current = toast('Sending your message. Please wait...', {
@@ -79,6 +84,7 @@ function ContactForm({ className }: { className?: string }) {
 					sendMailInProgress();
 					formAction(formData);
 				}}
+				ref={formRef}
 			>
 				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
 					<input
