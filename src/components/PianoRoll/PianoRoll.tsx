@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import * as React from 'react';
 
 import { cn } from '@/utils/utils';
@@ -9,7 +10,7 @@ import pianoroll from '../../utils/pianoroll';
 type PianoRollProps = {
 	sequence: Array<any>;
 	id: string;
-	listIndex: number;
+	listIndex?: number | string;
 	className?: string;
 	delegated?: any;
 };
@@ -35,19 +36,18 @@ function PianoRoll({
 	return (
 		/* piano-roll-card styles */
 		<div
-			className={cn('border-1 border-[#ccc] mb-3 p-3', className)}
+			className={cn('border-1 border-[#ccc] mb-3 p-3 rounded-lg', className)}
 			{...delegated}
 		>
-			{/* description styles */}
-			<div className="text-2xl pb-3 font-semibold">
-				Piano roll no. {listIndex}
-			</div>
-			{/* piano-roll-svg styles */}
-			<svg
-				id="pianoRollContainer"
-				ref={svgRef}
-				className="piano-roll-svg border-2 border-[#381815] bg-white"
-			></svg>
+			<Link href={`/piano-roll/${id}`}>
+				{/* description styles */}
+				{/* piano-roll-svg styles */}
+				<svg
+					id="pianoRollContainer"
+					ref={svgRef}
+					className="piano-roll-svg border-2 border-[#381815] bg-white"
+				></svg>
+			</Link>
 		</div>
 	);
 }

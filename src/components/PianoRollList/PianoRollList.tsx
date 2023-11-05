@@ -51,13 +51,16 @@ function PianoRollList() {
 		<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 my-8">
 			{sequences.map((sequence, index) => {
 				return (
-					<PianoRoll
-						key={sequence?.id}
-						id={sequence?.id}
-						sequence={sequence?.data}
-						listIndex={index + 1}
-						className="hover:scale-105 transition-transform duration-200"
-					/>
+					<div key={sequence?.id}>
+						<div className="text-2xl pb-3 font-semibold">
+							Piano roll no. {index + 1}
+						</div>
+						<PianoRoll
+							id={sequence?.id}
+							sequence={sequence?.data}
+							className="hover:scale-105 transition-transform duration-200"
+						/>
+					</div>
 				);
 			})}
 		</div>
