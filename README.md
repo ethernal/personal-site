@@ -4,7 +4,7 @@ See the video presentation of the phase 1 on YouTube
 
 (https://youtu.be/XNIlsewRZfw)[https://youtu.be/XNIlsewRZfw]
 
-Access the live website: (PianoRoll Challenge (phase 1))[https://vercel-sebee.website/piano-roll]
+Access the live website: (PianoRoll Challenge (phase 1))[https://sebee-website-git-pianoroll-challenge-ethernal1.vercel.app/piano-roll]
 
 To run this locally:
 1. Install the LTS version of Node from [the download page](https://nodejs.org/en/download)

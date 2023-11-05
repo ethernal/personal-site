@@ -42,9 +42,9 @@ function PianoRollList() {
 		};
 
 		// uncomment to use live data
-		// loadPianoRollData();
+		loadPianoRollData();
 		// comment when using live data
-		setSequences(prepareSequencesData(pianoRollSample));
+		// setSequences(prepareSequencesData(pianoRollSample));
 	}, [setSequences]);
 
 	return (
