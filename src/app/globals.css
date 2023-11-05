@@ -67,6 +67,8 @@
 }
 /* THEME VARIABLES */
 :root {
+	--toastify-color-progress-light: hsl(var(--theme-accent) / 1);
+	--toastify-color-progress-dark: hsl(var(--theme-accent) / 1);
 	/* transitions */
 	--theme-duration-default: 200ms;
 

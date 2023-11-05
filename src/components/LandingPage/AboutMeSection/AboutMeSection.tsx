@@ -22,18 +22,19 @@ function AboutMeSection({ className }: { className?: string }) {
 				<h2>About me</h2>
 				<Divider className="bg-theme-accent h-0.5" />
 				<p>
-					My passion for building websites started since 2013 and since then i
-					have helped companies around the world build amazing websites and
-					products that create real value for the business and users.
+					My passion for creating software started while I was still in primary
+					school but I started creating real products in 2013 and since then i
+					have built applications and products that multiply the value of the
+					businesses.
 				</p>
 				<p>
 					I enjoy solving problems with clean scalable solutions and I also have
-					a genuine passion for inspiring design.
+					a genuine passion for UX design as I find that easy to use products
+					turn people into their best possible versions.
 				</p>
 				<p>
-					I am a fullstack developer focusing on core frontend and backend
-					technologies which include HTML, CSS, Javascript, React and other core
-					languages
+					I am a fullstack developer focusing on frontend technologies which
+					include HTML, CSS, Javascript and Typescript, React and others.
 				</p>
 			</section>
 		</div>

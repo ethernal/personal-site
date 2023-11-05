@@ -1,10 +1,10 @@
 'use client';
 import * as React from 'react';
-import { AiOutlineCloseCircle as CloseCircularIcon } from 'react-icons/ai';
+import { useFormState, useFormStatus } from 'react-dom';
+import { Id, toast } from 'react-toastify';
 
 import { sendEmailAction } from '@/utils/sendMail';
 import { cn } from '@/utils/utils';
-import { Button } from '@nextui-org/react';
 
 import CTAButton from '../LandingPage/CTAButton';
 
@@ -15,111 +15,111 @@ type ContactFormData = {
 };
 
 type ContactFormStatus = 'idle' | 'sending' | 'error' | 'success';
+
+function Submit({
+	className,
+	children,
+}: {
+	className?: string;
+	children: React.ReactNode;
+}) {
+	const status = useFormStatus();
+	return (
+		<button type="submit" disabled={status.pending} className={className}>
+			{children}
+		</button>
+	);
+}
+
 function ContactForm({ className }: { className?: string }) {
-	const initialData = {
+	const initialFormState = {
 		email: '',
 		name: '',
 		message: '',
+		error: '',
 	};
 
-	const [formData, setFormData] = React.useState<ContactFormData>(initialData);
-	const [formStatus, setFormStatus] = React.useState<ContactFormStatus>('idle');
 
-	const resetFormData = (): void => {
-		setFormData(initialData);
-	};
+	const toastId = React.useRef<Id | null>(null);
 
-	const updateFormData = (
-		e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-	): void => {
-		const newFormData = { ...formData, [e.target.name]: e.target.value };
+	const formRef = React.useRef<HTMLFormElement | null>(null);
+	const [state, formAction] = useFormState(
+		async (prev: any, formData: FormData) => {
+			const res = await sendEmailAction(prev, formData);
+			if (res === true) {
+				updateMailSuccess();
+				formRef.current?.reset();
+			} else updateMailError();
+		},
+		initialFormState,
+	);
 
-		setFormData(newFormData);
-	};
+	const sendMailInProgress = () =>
+		(toastId.current = toast('Sending your message. Please wait...', {
+			autoClose: false,
+		}));
 
+	const updateMailSuccess = () =>
+		toastId.current &&
+		toast.update(toastId.current, {
+			render: 'Your message has been sent. Thank you!',
+			type: 'success',
+			autoClose: 5000,
+		});
+
+	const updateMailError = () =>
+		toastId.current &&
+		toast.update(toastId.current, {
+			render: 'Something went wrong. Please try again later.',
+			type: 'error',
+			autoClose: 5000,
+		});
+
+	state?.error ? updateMailError() : null;
 	return (
-		<form
-			className={cn('flex flex-col gap-4 pb-10', className)}
-			action={async (data) => {
-				const delivered = await sendEmailAction(data);
-				if (delivered) {
-					setFormStatus('success');
-					resetFormData();
-				} else {
-					setFormStatus('error');
-				}
-			}}
-		>
-			<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-				<input
-					name="name"
-					type="text"
-					placeholder="Name"
-					className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent focus:outline-2 disabled:cursor-not-allowed disabled:bg-opacity-50"
-					required
-					min={3}
-					onChange={updateFormData}
-					value={formData.name}
-					disabled={formStatus !== 'idle'}
-				/>
-				<input
-					name="email"
-					type="email"
-					placeholder="Email Address"
-					className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent disabled:cursor-not-allowed disabled:bg-opacity-50"
-					required
-					onChange={updateFormData}
-					value={formData.email}
-					disabled={formStatus !== 'idle'}
-				/>
-			</div>
-			<textarea
-				name="message"
-				placeholder="Message description"
-				className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent col-span-1 disabled:cursor-not-allowed disabled:bg-opacity-50"
-				// ignore this error - this is available in Chrome 120
-				//@ts-ignore
-				style={{ formSizing: 'content' }}
-				minLength={10}
-				onChange={updateFormData}
-				value={formData.message}
-				disabled={formStatus !== 'idle'}
-			/>
-			<CTAButton
-				as={Button}
-				type="submit"
-				className="text-base font-heading max-sm:text-2xl min-w-min sm:self-start text-theme-white bg-theme-accent rounded-md shadow-md shadow-black px-10 text-[clamp(0.925rem,-0.875rem+3vw,1.75rem)]"
-				onClick={() => setFormStatus('sending')}
-				disabled={formStatus !== 'idle'}
+		<>
+			<form
+				className={cn('flex flex-col gap-4 pb-10', className)}
+				action={(formData) => {
+					sendMailInProgress();
+					formAction(formData);
+				}}
+				ref={formRef}
 			>
-				Send
-			</CTAButton>
-			{formStatus !== 'idle' ? (
-				<div
-					className={cn(
-						'relative w-full rounded-theme-default',
-						{ 'bg-yellow-600': formStatus === 'sending' },
-						{ 'bg-red-600': formStatus === 'error' },
-						{ 'bg-green-600': formStatus === 'success' },
-					)}
-				>
-					<p className="text-lg p-theme-default m-0 text-theme-white dark:text-theme-dark-text-dark">
-						{formStatus === 'sending' && <span>Sending...</span>}
-						{formStatus === 'success' && <span>Message sent</span>}
-						{formStatus === 'error' && (
-							<span>
-								Error sending message. Please try again or contact me via X /
-								Twitter.
-							</span>
-						)}
-					</p>
-					<CloseCircularIcon
-						className="absolute top-2 right-2 cursor-pointer w-6 h-6"
-						onClick={() => setFormStatus('idle')}
+				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+					<input
+						name="name"
+						type="text"
+						placeholder="Name"
+						className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent focus:outline-2 disabled:cursor-not-allowed disabled:bg-opacity-50"
+						required
+						min={3}
+					/>
+					<input
+						name="email"
+						type="email"
+						placeholder="Email Address"
+						className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent disabled:cursor-not-allowed disabled:bg-opacity-50"
+						required
 					/>
 				</div>
-			) : null}
-		</form>
+				<textarea
+					name="message"
+					placeholder="Message description"
+					className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent col-span-1 disabled:cursor-not-allowed disabled:bg-opacity-50"
+					// ignore this error - this is available in Chrome 120
+					//@ts-ignore
+					style={{ formSizing: 'content' }}
+					minLength={10}
+				/>
+				<Submit className="text-base font-heading max-sm:text-2xl min-w-min sm:self-start text-theme-white bg-theme-accent rounded-md shadow-md shadow-black px-10 text-[clamp(0.925rem,-0.875rem+3vw,1.75rem)] disabled:bg-gray-400 disabled:pointer-events-none disabled:cursor-not-allowed">
+					Send
+				</Submit>
+				<p aria-live="polite" className="sr-only">
+					{state?.error}
+				</p>
+			</form>
+		</>
 	);
 }
 

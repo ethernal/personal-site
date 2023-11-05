@@ -1,10 +1,14 @@
+import 'react-toastify/dist/ReactToastify.css';
 import '@/app/globals.css';
 
 import {
-    Sansita as HeadingFont, Source_Code_Pro as MonoFont, Source_Sans_3 as BodyFont
+	Sansita as HeadingFont,
+	Source_Code_Pro as MonoFont,
+	Source_Sans_3 as BodyFont,
 } from 'next/font/google';
 import { cookies } from 'next/headers';
 import { ReactNode } from 'react';
+import { ToastContainer } from 'react-toastify';
 
 import CookiePolicyBanner from '@/components/CookiePolicyBanner';
 import Footer from '@/components/Footer';
@@ -30,7 +34,6 @@ const bodyFont = BodyFont({
 	subsets: ['latin'],
 	display: 'swap',
 });
-
 
 const monoFont = MonoFont({
 	weight: ['400', '600'],
@@ -73,9 +76,23 @@ function RootLayout({ children }: { children: ReactNode }) {
 							<div className="w-full">
 								<Header className="max-w-7xl mx-auto" />
 								<main className="max-w-7xl mx-auto">{children}</main>
+
 								<Footer className="wrapper" />
 							</div>
 							<CookiePolicyBanner />
+							<ToastContainer
+								position="bottom-right"
+								autoClose={4000}
+								hideProgressBar={false}
+								newestOnTop
+								closeOnClick
+								rtl={false}
+								pauseOnFocusLoss
+								draggable
+								pauseOnHover
+								toastClassName="bg-theme-light-background-secondary dark:bg-theme-dark-background-secondary"
+								progressClassName={'bg-theme-accent'}
+							/>
 						</NextUIThemeProvider>
 					</body>
 				</html>
