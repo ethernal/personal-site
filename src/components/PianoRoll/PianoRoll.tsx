@@ -8,6 +8,7 @@ import pianoroll from '../../utils/pianoroll';
 
 type PianoRollProps = {
 	sequence: Array<any>;
+	id: string;
 	listIndex: number;
 	className?: string;
 	delegated?: any;
@@ -16,6 +17,7 @@ type PianoRollProps = {
 // React component
 function PianoRoll({
 	sequence,
+	id,
 	listIndex,
 	className,
 	...delegated
@@ -30,26 +32,8 @@ function PianoRoll({
 		}
 	}, [sequence]);
 
-	// 	.piano-roll-svg {
-	//   border: 2px solid #381815;
-	// }
-
-	// .piano-roll-card {
-	//   border: 1px solid #ccc;
-	//   margin-bottom: 10px;
-	//   padding: 10px;
-	//   width: 50%;
-	//   box-sizing: border-box;
-	// }
-
-	// .description {
-	//   margin-top: 10px;
-	// }
-
-	{
-		/* piano-roll-card styles */
-	}
 	return (
+		/* piano-roll-card styles */
 		<div
 			className={cn('border-1 border-[#ccc] mb-3 p-3', className)}
 			{...delegated}

@@ -1,16 +1,27 @@
 'use client';
 import * as React from 'react';
 
+import { usePianoRollContext } from '@/context/pianoroll/PianoRollContext';
 import { pianoRollSample } from '@/data/piano';
+import { PianoRollType } from '@/types/Pianoroll/PianoRollTypes';
 
 import PianoRoll from '../PianoRoll';
 
-function PianoRollList() {
-	const [pianoRolls, setPianoRolls] = React.useState<typeof pianoRollSample>(
-		[],
-	);
+const prepareSequencesData = (data: Array<PianoRollType>) => {
+	let sequencesData = [];
 
-	let sequences = [];
+	for (let it = 0; it < 20; it++) {
+		const start = it * 60;
+		const end = start + 60;
+		const partData = data.slice(start, end);
+		sequencesData.push({ id: crypto.randomUUID(), data: partData });
+	}
+
+	return sequencesData;
+};
+
+function PianoRollList() {
+	const { sequences, setSequences } = usePianoRollContext();
 
 	React.useEffect(() => {
 		const loadPianoRollData = async () => {
@@ -20,7 +31,10 @@ function PianoRollList() {
 					throw new Error(`HTTP error! Status: ${response.status}`);
 				}
 				const data = await response.json();
-				setPianoRolls(data);
+
+				const sequencesData = prepareSequencesData(data);
+
+				setSequences(sequencesData);
 			} catch (e) {
 				console.error('Error loading data:', e);
 				throw e;
@@ -30,15 +44,8 @@ function PianoRollList() {
 		// uncomment to use live data
 		// loadPianoRollData();
 		// comment when using live data
-		setPianoRolls(pianoRollSample);
-	}, []);
-
-	for (let it = 0; it < 20; it++) {
-		const start = it * 60;
-		const end = start + 60;
-		const partData = pianoRolls.slice(start, end);
-		sequences.push({ id: crypto.randomUUID(), data: partData });
-	}
+		setSequences(prepareSequencesData(pianoRollSample));
+	}, [setSequences]);
 
 	return (
 		<div className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-4 my-8">
@@ -46,6 +53,7 @@ function PianoRollList() {
 				return (
 					<PianoRoll
 						key={sequence?.id}
+						id={sequence?.id}
 						sequence={sequence?.data}
 						listIndex={index + 1}
 						className="hover:scale-105 transition-transform duration-200"
