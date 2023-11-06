@@ -52,4 +52,5 @@ function PianoRoll({
 	);
 }
 
+// memo will make sure that component will not be re-rendered when props are not changed since it's heavy to create
 export default React.memo(PianoRoll);

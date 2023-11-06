@@ -4,6 +4,9 @@ export const metadata = {
 	title: 'PianoRoll Challenge',
 	description: 'Challenge for PianoRoll frontend',
 };
+/**
+ * Page displaying a list of PianoRolls
+ */
 async function PianoChallenge() {
 	return (
 		<div className="wrapper max-w-[var('--page-wrapper-max-width')] min-h-[67dvh]">

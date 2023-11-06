@@ -7,6 +7,9 @@ import { PianoRollType } from '@/types/Pianoroll/PianoRollTypes';
 
 import PianoRoll from '../PianoRoll';
 
+/**
+ * process data for the piano roll into sequences as used in the example app
+ */
 const prepareSequencesData = (data: Array<PianoRollType>) => {
 	let sequencesData = [];
 
@@ -23,6 +26,9 @@ const prepareSequencesData = (data: Array<PianoRollType>) => {
 function PianoRollList() {
 	const { sequences, setSequences } = usePianoRollContext();
 
+	/**
+	 * async load data from https://pianoroll.ai/random_notes and save it into the context so it's accessible to all components
+	 */
 	React.useEffect(() => {
 		const loadPianoRollData = async () => {
 			try {
@@ -43,7 +49,7 @@ function PianoRollList() {
 
 		// uncomment to use live data
 		loadPianoRollData();
-		// comment when using live data
+		// comment when using sample data (offline use)
 		// setSequences(prepareSequencesData(pianoRollSample));
 	}, [setSequences]);
 

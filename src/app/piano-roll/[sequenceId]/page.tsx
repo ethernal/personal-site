@@ -7,26 +7,7 @@ export const metadata = {
 	description: 'Challenge for PianoRoll frontend',
 };
 
-// +-----------------------------------+  +--------------+
-// |                                   |  |              |
-// |                                   |  |  Piano Roll  |
-// |                                   |  |              |
-// |        Main Piano Roll            |  +--------------+
-// |                                   |  +--------------+
-// |                                   |  |              |
-// |                                   |  |  Piano Roll  |
-// +-----------------------------------+  |              |
-//                                        +--------------+
-//                                              ...
-// ```
-
-// Here are development tasks to build this interface:
-
-// 1. **Implement Grid Layout**: Display the Piano Rolls in a responsive grid layout on the main page.
-// 2. **Implement Interactive Selection**: Make each Piano Roll in the grid clickable. Upon clicking an item, it should become the main element on the page, enlarging for better visibility.
-// 3. **List Display**: Simultaneously, display the rest of the Piano Rolls in a vertical list on the right side of the page, similar to how videos are listed on YouTube’s watch page. Ensure that the list is scrollable if there are more items than can fit on the screen.
-// 4. **Styling**: Apply styling to make the grid and its items visually appealing. Ensure that Piano Rolls are identifiable and have a consistent size across different screen resolutions.
-
+// Single PianoRoll YouTube like view will receive dynamic param "sequenceId" and find it in the data passed via context and display it. Side will have all other sequences.
 async function PianoChallengeSequence({
 	params,
 }: {
@@ -48,7 +29,9 @@ async function PianoChallengeSequence({
 				<h2>Comments</h2>
 				<p>No comments yet.</p>
 			</div>
-			<PianoRollVerticalList exclude={[sequenceId]} />
+			<aside>
+				<PianoRollVerticalList exclude={[sequenceId]} />
+			</aside>
 		</div>
 	);
 }

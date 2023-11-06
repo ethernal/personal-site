@@ -1,3 +1,6 @@
+/**
+ * Extract functions and variables from piano roll class
+ */
 export function generateGradientTable(startColor, endColor, steps) {
 	const gradientTable = [];
 	for (let i = 0; i < steps; i++) {
@@ -146,6 +149,9 @@ function drawPianoRollSequence(sequence, noteColormap, svgElement) {
 	});
 }
 
+/**
+ * The class now is only responsible for drawing the piano roll from the sequence data
+ */
 export default class PianoRoll {
 	constructor(svgElement, sequence) {
 		if (svgElement) {

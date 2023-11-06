@@ -163,6 +163,11 @@ const NavigationMain: React.FC<NavigationMainProps> = (props) => {
 							Contact
 						</Link>
 					</li>
+					<li className="first-letter:font-semibold text-xl tracking-widest">
+						<Link href={`/piano-roll`} className="" onClick={closeMenu}>
+							PianoRoll
+						</Link>
+					</li>
 					<li>
 						<ThemeToggle
 							className={`flex gap-4 items-center flex-grow-0 flex-shrink-0`}
