@@ -6,15 +6,11 @@ import { Id, toast } from 'react-toastify';
 import { sendEmailAction } from '@/utils/sendMail';
 import { cn } from '@/utils/utils';
 
-import CTAButton from '../LandingPage/CTAButton';
-
 type ContactFormData = {
 	email: string;
 	name: string;
 	message: string;
 };
-
-type ContactFormStatus = 'idle' | 'sending' | 'error' | 'success';
 
 function Submit({
 	className,
@@ -32,13 +28,11 @@ function Submit({
 }
 
 function ContactForm({ className }: { className?: string }) {
-	const initialFormState = {
+	const initialFormState: ContactFormData = {
 		email: '',
 		name: '',
 		message: '',
-		error: '',
 	};
-
 
 	const toastId = React.useRef<Id | null>(null);
 
@@ -115,9 +109,6 @@ function ContactForm({ className }: { className?: string }) {
 				<Submit className="text-base font-heading max-sm:text-2xl min-w-min sm:self-start text-theme-white bg-theme-accent rounded-md shadow-md shadow-black px-10 text-[clamp(0.925rem,-0.875rem+3vw,1.75rem)] disabled:bg-gray-400 disabled:pointer-events-none disabled:cursor-not-allowed">
 					Send
 				</Submit>
-				<p aria-live="polite" className="sr-only">
-					{state?.error}
-				</p>
 			</form>
 		</>
 	);
