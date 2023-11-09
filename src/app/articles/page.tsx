@@ -17,7 +17,7 @@ async function Home() {
 		<div className="wrapper max-w-[var('--page-wrapper-max-width')] min-h-[67dvh]">
 			<h1>Latest Articles</h1>
 
-			<section className="grid grid-cols-1 gap-5 my-5">
+			<section className="grid grid-cols-1 gap-8 my-5">
 				{(postsList === undefined || postsList?.length === 0) && (
 					<div className="min-h-[55dvh] py-10 text-center text-3xl">
 						<p className="text-center text-3xl pt-10">

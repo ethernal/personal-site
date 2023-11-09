@@ -1,0 +1,721 @@
+---
+title: How to send emails for free using Next.js and nodemailer with Server Actions
+author: Sebastian Pieczynski
+publishedOn: 2023-11-09
+abstract: Learn how to use nodemailer to crete a contact form that sends emails for free from custom mailbox using Next.js with Server Actions
+image: "/image/article/how-to-send-emails-for-free-using-next.js-and-nodemailer-with-server-actions/send-email-for-free-using-server-actions-in-nextjs.png"
+imageAlt: ""
+keywords: [nextjs, server actions, nodemailer, contact form, email, free, gmail, secure application password]
+---
+
+## Contents
+
+<p className="text-3xl text-theme-accent font-semibold font-heading">Hello Engineers!</p>
+
+Server actions are [stable since Next.js 14](https://nextjs.org/blog/next-14#server-actions-stable) <NewTabIcon/> and today I'll show you how I am using them to send emails using nodemailer on this website without the need for additional services (apart from free email account).
+
+## The Problem
+
+When I was building this site I wanted to give people ability to contact me directly. Social media is one way but I don't want to use third party service and sending an email is a bit more personal and direct. But how to do it without using external services?
+
+## Breaking it down
+
+What do we need to send emails?
+
+1. Email account from which to send emails,
+2. a reusable contact form for users to fill out,
+3. a library that will send the emails programmatically,
+4. code that will handle our custom data and form securely,
+5. a way to notify users about status of email being sent.
+
+There is quite a bit that goes into such a simple task but breaking it down will make it easier to complete.
+
+## The Solution
+
+We'll take it one step at a time. First let's prepare our "infrastructure".
+
+### Email account
+
+For email account I'll be using Google Mail, but the way I'm showing should work with any email provider.
+
+### Contact Form
+
+Since there can be many places where we might want to use the contact form let's create a component that will encapsulate the functionality. We'll split the form into two components: `Submit` and `Form`. Why will become clear later when we're using Server Actions and new React hooks to handle the form status.
+
+Submit button and the form:
+
+```ContactForm.tsx
+'use client';
+
+function Submit({
+	className,
+	children,
+}: {
+	className?: string;
+	children: React.ReactNode;
+}) {
+
+	return (
+		<button type="submit" className={className}>
+			{children}
+		</button>
+	);
+}
+
+function ContactForm({ className }: { className?: string }) {
+	const initialFormState: ContactFormData = {
+		email: '',
+		name: '',
+		message: '',
+	};
+
+	return (
+<form
+	className={cn('flex flex-col gap-4 pb-10', className)}
+>
+	<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+		<input
+			name="name"
+			type="text"
+			placeholder="Name"
+			className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent focus:outline-2 disabled:cursor-not-allowed disabled:bg-opacity-50"
+			required
+			min={3}
+		/>
+		<input
+			name="email"
+			type="email"
+			placeholder="Email Address"
+			className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent disabled:cursor-not-allowed disabled:bg-opacity-50"
+			required
+		/>
+	</div>
+
+	<textarea
+		name="message"
+		placeholder="Message description"
+		className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent col-span-1 disabled:cursor-not-allowed disabled:bg-opacity-50"
+		// ignore this error - this is available in Chrome 120
+		//@ts-ignore
+		style={{ formSizing: 'content' }}
+		minLength={10}
+	/>
+	<Submit className="text-base font-heading max-sm:text-2xl min-w-min sm:self-start text-theme-white bg-theme-accent rounded-md shadow-md shadow-black px-10 text-[clamp(0.925rem,-0.875rem+3vw,1.75rem)] disabled:bg-gray-400 disabled:pointer-events-none disabled:cursor-not-allowed">
+		Send
+	</Submit>
+  <p aria-live="polite" className="sr-only">
+	  {state?.error}
+  </p>
+</form>
+	);
+}
+
+export default ContactForm;
+```
+
+Nothing too fancy for now. We are creating three inputs for: name, email and message in the form and allowing it to be submitted with a button. Usually we would create a 'handleSubmit' function and attach it to the `onSubmit` event on the form, but not today 🙂.
+
+With our form done we can start thinking about functionality.
+
+### The Library
+
+When sending emails using javascript, [nodemailer](https://nodemailer.com/) <NewTabIcon/> is the first solution that comes to mind.
+
+Let's install it and start wiring our form.
+
+To add nodemailer to the project with `npm` use the following command:
+
+```bash
+npm install nodemailer
+```
+
+With the library prepared for use let's start adding functionality...
+
+### Securing the data
+
+Before we start coding we need a way to secure our connection data (username and password). We'll use `.env` file to store it.
+
+Install `dotenv` package:
+
+```bash
+npm install --save dotenv
+```
+
+Then in `.gitignore` modify .env section and add the following before proceeding:
+
+```.gitignore
+# local env files
+.env*.local
+.env
+.env.*
+!.env.dist
+```
+
+Create two files: `.env` and `.env.dist`
+
+First let's fill out data for `.env.dist`. Note that this file is used to "save" what data is required to be set as the file with actual data will NOT be saved in the repository. Without it we would need to check what environmental variables are set in code and if we missed any it would be a pain to find.
+
+```.env.dist
+NODEMAILER_PASS=""
+NODEMAILER_USER=""
+NODEMAILER_RECIPIENT=""
+```
+
+You can make a copy of **empty** `.env.dist` and name it `.env` and fill it out.
+
+```.env
+NODEMAILER_PASS="[PASSSWORD]"
+NODEMAILER_USER="[EMAIL]"
+NODEMAILER_RECIPIENT="[DEFAUL_RECEPIENT]"
+```
+
+To use gmail account we need to add password to `.env`. Instead of using you password you can generate application password. This is different from less secure apps access, see: [Sign in with app passwords](https://support.google.com/accounts/answer/185833?sjid=14462979090478379185-EU) <NewTabIcon/>
+
+Here are the steps required to obtain the application password:
+
+Create & use app passwords
+
+Important: To create an app password, you need 2-Step Verification on your Google Account.
+
+If you use 2-Step-Verification and get a "password incorrect" error when you sign in, you can try to use an app password.
+
+1. Go to your Google Account.
+2. Select Security.
+3. Under "Signing in to Google," select 2-Step Verification.
+4. At the bottom of the page, select App passwords.
+5. Enter a name that helps you remember where you’ll use the app password.
+6. Select Generate.
+7. To enter the app password, follow the instructions on your screen. The app password is the 16-character code that generates on our device.
+8. Select Done.
+
+The password is visible only once. Copy it to your `.env` file.
+
+
+Example:
+
+```.env
+NODEMAILER_PASS="abcd efgh ijkl mnop"
+NODEMAILER_USER="example.mail@gmail.com"
+NODEMAILER_RECIPIENT="private-email@gmail.com"
+```
+
+If you want more flexibility you could add HOST and PORT variables like so as well, here's data for Gmail:
+
+```.env
+NODEMAILER_HOST="smtp.gmail.com"
+NODEMAILER_PORT=465
+```
+
+Now we are ready to start writing the function that will be sending emails.
+
+### Writing `nodemailerSendMail` function
+
+The `nodemailerSendMail` function will accept four parameters: `replyTo`, `subject`, `toEmail` and `otpText`.
+
+`replyTo`
+: the email address of the sender, as by default the sender will be set to our internal email
+
+`subject`
+: the subject of the email
+
+`toEmail`
+: the email address of the recipient
+
+`otpText`
+: the text of the email
+
+```utils/sendMail.ts
+'use server';
+// ...
+type SendMailParams = {
+	replyTo: string;
+	subject: string;
+	toEmail: string;
+	otpText: string;
+};
+
+export async function nodemailerSendMail({
+	replyTo,
+	subject,
+	toEmail,
+	otpText,
+}: SendMailParams): Promise<Error | SentMessageInfo> {
+	const transporter = nodemailer.createTransport({
+		host: 'smtp.gmail.com',
+		port: 465,
+		secure: true,
+		auth: {
+			user: process.env.NODEMAILER_USER,
+			pass: process.env.NODEMAILER_PASS,
+		},
+	});
+
+	const mailOptions = {
+		replyTo: replyTo,
+		to: toEmail,
+		subject: subject,
+		text: otpText,
+	};
+
+	// for serverless environment use promises
+	return await new Promise<Error | SentMessageInfo>((resolve, reject) => {
+		// send mail
+		transporter.sendMail(
+			mailOptions,
+			(err: Error | null, info: SentMessageInfo) => {
+				if (err) {
+          // console errors will be logged only to the server output
+					console.error(err);
+					reject(err);
+				} else {
+					resolve(info);
+				}
+			},
+		);
+	});
+}
+```
+
+The section of note is:
+
+```utils/sendMail.ts
+'use server';
+// ...
+return await new Promise<Error | SentMessageInfo>((resolve, reject) => {
+		// send mail
+		transporter.sendMail(
+			mailOptions,
+			(err: Error | null, info: SentMessageInfo) => {
+				if (err) {
+          // console errors will be logged only to the server output
+					console.error(err);
+					reject(err);
+				} else {
+					resolve(info);
+				}
+			},
+		);
+	});
+```
+
+When deploying to serverless we must wrap the `sendMail` in a promise and `await` for it to either `resolve` or `reject` then we return that result.
+
+We can now send emails from your server. We'll now use server actions to handle the form submission.
+
+### Wiring up the form with Server Action
+
+To add server action to the form instead of using `onSubmit` event handler we connect the function to the `action` attribute of the form.
+
+First let's define the `formAction` and form state using [`useFormState`](https://react.dev/reference/react-dom/hooks/useFormState) <NewTabIcon/> hook. This hook "allows you to update state based on the result of a form action".
+
+
+Let's define initial form state. Note that I've also added `error` as it's a property that can be returned from the form action.
+
+```ContactForm.tsx
+const initialFormState = {
+		email: '',
+		name: '',
+		message: '',
+	};
+```
+
+And the action itself:
+
+```ContactForm.tsx
+const [state, formAction] = useFormState(
+		async (prev: any, formData: FormData) => {
+			const res = await sendEmailAction(prev, formData);
+			if (res === true) {
+				formRef.current?.reset();
+			}
+		},
+		initialFormState,
+	);
+```
+
+Our form will now change from:
+
+```ContactForm.tsx
+<form
+	className={cn('flex flex-col gap-4 pb-10', className)}
+>
+// ...
+</form>
+```
+
+to:
+
+```ContactForm.tsx
+<form
+	className={cn('flex flex-col gap-4 pb-10', className)}
+	action={(formData) => {
+		formAction(formData);
+	}}
+>
+//...
+</form>
+```
+
+You probably noticed that we do not have `sendEmailAction` defined anywhere. Let's fix that.
+
+Go to the `/utils/sendMail.ts` fire and add `sendEmailAction` function:
+
+```utils/sendMail.tsx
+export async function sendEmailAction(prevState: any, formData: FormData) {
+	('use server');
+	const name = formData.get('name') as string;
+	const email = formData.get('email') as string;
+	const message = formData.get('message') as string;
+	toast;
+
+	if (name === null || email === null || message === null) {
+		return false;
+	}
+
+	try {
+		const response = await nodemailerSendMail({
+			replyTo: email,
+			subject: 'Email from: ' + name + ' (' + email + ')',
+			toEmail: process.env.NODEMAILER_RECIPIENT ?? 'default@example.com',
+			otpText: `${message}`,
+		});
+
+    // check if the response is 2xx and if so return true
+    // see:
+		if ('response' in response && response?.response[0] === '2') {
+			return true;
+		} else {
+			return false;
+		}
+	} catch (e) {
+		console.error(e);
+		return false;
+	}
+}
+```
+
+The `('use server');` in the beginning of the function tells Next.js that this is a server action and that it should be run on the server.
+
+Here we are verifying data sent to the server from the form making sure it's non empty and attempting to send the message using the previously defined `nodemailerSendMail` function. If it sends successfully we return true otherwise we return false. To verify this we also check the response from the server, see: [SMTP response codes](https://en.wikipedia.org/wiki/List_of_SMTP_server_return_codes) <NewTabIcon/>. This will be important when we want to notify users about the message status.
+
+You can check the form now and it will send the mail to selected inbox.
+
+Note that for it to work you need to check how to set Environment Variables for your hosting provider as `.env` files are not part of the repository and **SHOULD NEVER** be committed.
+
+### Notifying users
+
+For notifications I prefer the toast messages as they are generally unobtrusive. We will use `react-toastify` package to display them.
+
+First let's install it:
+```bash
+npm install --save react-toastify
+```
+
+You can see the react-toastify [documentation here](https://fkhadra.github.io/react-toastify/installation/) <NewTabIcon />.
+
+And as per document suggestion:
+
+> Remember to render the ToastContainer once in your application tree. If you can't figure out where to put it, rendering it in the application root would be the best bet.
+
+We'll put it in the main layout as we may want send out messages from different places and about various events.
+
+```src/app/layout.tsx
+import 'react-toastify/dist/ReactToastify.css'; // import toastify BEFORE the app styles or it will overwrite custom settings
+import '@/app/globals.css';
+
+import { ToastContainer } from 'react-toastify';
+
+// ....
+
+function RootLayout({ children }: { children: ReactNode }) {
+	const savedThemeCookie = cookies().get('theme');
+	const savedTheme: ColorThemeType = (savedThemeCookie?.value ??
+		'light') as ColorThemeType;
+
+return (
+<MotionPreferencesConfig>
+	<Theme initialTheme={savedTheme}>
+		<html>
+			<body>
+        {/* ... */}
+        <ToastContainer
+						position="bottom-right"
+						autoClose={4000}
+						hideProgressBar={false}
+						newestOnTop
+						closeOnClick
+						rtl={false}
+						pauseOnFocusLoss
+						draggable
+						pauseOnHover
+						toastClassName="bg-theme-light-background-secondary dark:bg-theme-dark-background-secondary"
+						progressClassName={'bg-theme-accent'}
+					/>
+				</NextUIThemeProvider>
+			</body>
+		</html>
+	</Theme>
+</MotionPreferencesConfig>
+);
+}
+```
+The settings you see for the `ToastContainer` can also be configured using [official website](https://fkhadra.github.io/react-toastify/introduction) <NewTabIcon />.
+
+The most important that we care about is `position`, we change it to `"bottom-right"`. We also use `toastClassName` and `progressClassName` properties to style the component. Import the component's styles before global tailwind styles as they will get overwritten otherwise.
+
+Let's add toast notifications for our users!
+
+
+We will need to update the `formAction` to change the status of the toast if the email was sent successfully or not.
+If everything went fine we'll invoke `updateMailSuccess` and if not we'll invoke `updateMailError`. This is why the function was returning `boolean` value as it makes it easy now to know if the email was sent of not.
+
+To control how notifications are displayed we will use the method shown in the official documentation [show here](https://fkhadra.github.io/react-toastify/update-toast) <NewTabIcon/>.
+
+To create a toast it is enough to call the `toast` function like so:
+
+```code-from-the-docs.tsx
+  import React from 'react';
+  import { ToastContainer, toast } from 'react-toastify';
+
+  import 'react-toastify/dist/ReactToastify.css';
+  // minified version is also included
+  // import 'react-toastify/dist/ReactToastify.min.css';
+
+  function App(){
+    const notify = () => toast("Wow so easy !");
+
+    return (
+      <div>
+        <button onClick={notify}>Notify !</button>
+        <ToastContainer />
+      </div>
+    );
+  }
+```
+You are not limited to calling or using the `toast` function to place where `ToastContainer` is defined. It can be any other place in the app. Just remember to have only one `ToastContainer`.
+
+ Our case, as it usually stands with projects I start, is a bit more complicated. Luckily for us `react-toastify` package has all the building blocks and examples to fit our need exactly.
+
+ We need to render the initial toast state (sending message in progress, without a timeout) and then depending on the state of the response update the existing toast to show success (if true was returned from the email function) or error (if the response was false).
+ If you remember the docs or notes above the `toast` function arguments supersede the `ToastContainer` component. We'll use that to our advantage.
+
+To accomplish our goal we need a reference to the toast which we will update to success or error states later.`react-toastify` shows how to do this [in the official documentation](https://fkhadra.github.io/react-toastify/update-toast) <NewTabIcon/>.
+
+Let's start writing our toast functions. First let's start with sending initial information that sending is in progress:
+
+```tsx
+	const toastId = React.useRef<Id | null>(null);
+
+	const sendMailInProgress = () =>
+		(toastId.current = toast('Sending your message. Please wait...', {
+			autoClose: false,
+		}));
+```
+
+It's as simple as the example with the two exceptions: first is that we are assigning the toast to the `toastId` ref (see more in the [React documentation](https://react.dev/reference/react/useRef) <NewTabIcon/>) that is the reference to the toast. This is because we want to update it later on. Second is that we set `autoClose` prop to `false` that way the toast message will not have a timeout and it will never disappear. Now we need functions that will update it to show success or error, these are again standalone and do not depend on the way we implement the toast.
+
+```tsx
+const updateMailSuccess = () =>
+		toastId.current &&
+		toast.update(toastId.current, {
+			render: 'Your message has been sent. Thank you!',
+			type: 'success',
+			autoClose: 5000,
+		});
+
+	const updateMailError = () =>
+		toastId.current &&
+		toast.update(toastId.current, {
+			render: 'Something went wrong. Please try again later.',
+			type: 'error',
+			autoClose: 5000,
+		});
+```
+
+Here we use the `update` method of a toast with the reference to the toast we want to update. We set `autoClose` to `5000` so that the toast message will disappear after five seconds after the update.
+
+Now we can update the `formAction` method in the `useFormState` hook as well as the form itself to show the initial toast when starting to process the action:
+
+```tsx
+const formRef = React.useRef<HTMLFormElement | null>(null);
+
+const [state, formAction] = useFormState(
+	async (prev: any, formData: FormData) => {
+		const res = await sendEmailAction(prev, formData);
+		if (res === true) {
+			updateMailSuccess();
+			formRef.current?.reset();
+		} else updateMailError();
+	},
+	initialFormState,
+);
+
+//...
+return (
+	<form
+		className={cn('flex flex-col gap-4 pb-10', className)}
+		action={(formData) => {
+			sendMailInProgress();
+			formAction(formData);
+		}}
+		ref={formRef}
+	>
+		{** ... **/}
+	</form>
+);
+```
+
+When we receive the response from the `sendEmailAction` function we update the toast message to success or error depending on the response value returned. If it was successful we also reset the form state using the form reference created with another `useRef` hook.
+
+We should also disable the send button when mail is being sent as we do not want to be spammed with the same message.
+
+```tsx
+function Submit({
+	className,
+	children,
+}: {
+	className?: string;
+	children: React.ReactNode;
+}) {
+	const status = useFormStatus();
+	return (
+		<button type="submit" disabled={status.pending} className={className}>
+			{children}
+		</button>
+	);
+}
+```
+
+Congratulations! You now have a contact form that users can fill out and tell you how awesome your website is 😉 and all of it free!
+
+Below is the full source of the `ContactForm` component.
+
+```ContactForm.tsx
+'use client';
+import * as React from 'react';
+import { useFormState, useFormStatus } from 'react-dom';
+import { Id, toast } from 'react-toastify';
+
+import { sendEmailAction } from '@/utils/sendMail';
+import { cn } from '@/utils/utils';
+
+type ContactFormData = {
+	email: string;
+	name: string;
+	message: string;
+};
+
+function Submit({
+	className,
+	children,
+}: {
+	className?: string;
+	children: React.ReactNode;
+}) {
+	const status = useFormStatus();
+	return (
+		<button type="submit" disabled={status.pending} className={className}>
+			{children}
+		</button>
+	);
+}
+
+function ContactForm({ className }: { className?: string }) {
+	const initialFormState: ContactFormData = {
+		email: '',
+		name: '',
+		message: '',
+	};
+
+	const toastId = React.useRef<Id | null>(null);
+
+	const formRef = React.useRef<HTMLFormElement | null>(null);
+	const [state, formAction] = useFormState(
+		async (prev: any, formData: FormData) => {
+			const res = await sendEmailAction(prev, formData);
+			if (res === true) {
+				updateMailSuccess();
+				formRef.current?.reset();
+			} else updateMailError();
+		},
+		initialFormState,
+	);
+
+	const sendMailInProgress = () =>
+		(toastId.current = toast('Sending your message. Please wait...', {
+			autoClose: false,
+		}));
+
+	const updateMailSuccess = () =>
+		toastId.current &&
+		toast.update(toastId.current, {
+			render: 'Your message has been sent. Thank you!',
+			type: 'success',
+			autoClose: 5000,
+		});
+
+	const updateMailError = () =>
+		toastId.current &&
+		toast.update(toastId.current, {
+			render: 'Something went wrong. Please try again later.',
+			type: 'error',
+			autoClose: 5000,
+		});
+
+	state?.error ? updateMailError() : null;
+	return (
+		<>
+			<form
+				className={cn('flex flex-col gap-4 pb-10', className)}
+				action={(formData) => {
+					sendMailInProgress();
+					formAction(formData);
+				}}
+				ref={formRef}
+			>
+				<div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+					<input
+						name="name"
+						type="text"
+						placeholder="Name"
+						className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent focus:outline-2 disabled:cursor-not-allowed disabled:bg-opacity-50"
+						required
+						min={3}
+					/>
+					<input
+						name="email"
+						type="email"
+						placeholder="Email Address"
+						className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent disabled:cursor-not-allowed disabled:bg-opacity-50"
+						required
+					/>
+				</div>
+				<textarea
+					name="message"
+					placeholder="Message description"
+					className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent col-span-1 disabled:cursor-not-allowed disabled:bg-opacity-50"
+					// ignore this error - this is available in Chrome 120
+					//@ts-ignore
+					style={{ formSizing: 'content' }}
+					minLength={10}
+				/>
+				<Submit className="text-base font-heading max-sm:text-2xl min-w-min sm:self-start text-theme-white bg-theme-accent rounded-md shadow-md shadow-black px-10 text-[clamp(0.925rem,-0.875rem+3vw,1.75rem)] disabled:bg-gray-400 disabled:pointer-events-none disabled:cursor-not-allowed">
+					Send
+				</Submit>
+			</form>
+		</>
+	);
+}
+
+export default ContactForm;
+```
+
+## Conclusion
+
+Today we have created a contact form for our visitors to contact us using new feature in Next.js 14, we explored how to use server actions to achieve the task and how much simpler that process is from setting up the full API route. We also learned how to send emails using nodemailer and how to use `react-toastify` to display notifications to the users about the status of the process. We have also learned a bit about how to use `ref`s in React and how they can be useful for forms.
+
+As always you can contact me (via the form 👇 for example 😄) and let me know what you think. Any feedback is welcome and I will use it to improve the article.
+
+## Form Demo
+
+<ContactForm/>
