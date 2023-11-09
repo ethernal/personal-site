@@ -42,9 +42,11 @@ For email account I'll be using Google Mail, but the way I'm showing should work
 
 Since there can be many places where we might want to use the contact form let's create a component that will encapsulate the functionality. We'll split the form into two components: `Submit` and `Form`. Why will become clear later when we're using Server Actions and new React hooks to handle the form status.
 
-Submit button:
+Submit button and the form:
 
-```tsx
+```ContactForm.tsx
+'use client';
+
 function Submit({
 	className,
 	children,
@@ -59,11 +61,15 @@ function Submit({
 		</button>
 	);
 }
-```
 
-The form:
+function ContactForm({ className }: { className?: string }) {
+	const initialFormState: ContactFormData = {
+		email: '',
+		name: '',
+		message: '',
+	};
 
-```tsx
+	return (
 <form
 	className={cn('flex flex-col gap-4 pb-10', className)}
 >
@@ -101,6 +107,10 @@ The form:
 	  {state?.error}
   </p>
 </form>
+	);
+}
+
+export default ContactForm;
 ```
 
 Nothing too fancy for now. We are creating three inputs for: name, email and message in the form and allowing it to be submitted with a button. Usually we would create a 'handleSubmit' function and attach it to the `onSubmit` event on the form, but not today 🙂.
@@ -704,4 +714,8 @@ export default ContactForm;
 
 Today we have created a contact form for our visitors to contact us using new feature in Next.js 14, we explored how to use server actions to achieve the task and how much simpler that process is from setting up the full API route. We also learned how to send emails using nodemailer and how to use `react-toastify` to display notifications to the users about the status of the process. We have also learned a bit about how to use `ref`s in React and how they can be useful for forms.
 
-As always you can contact me ([via the form](/contact) for example 😄) and let me know what you think. Any feedback is welcome and I will use it to improve the article.
+As always you can contact me (via the form 👇 for example 😄) and let me know what you think. Any feedback is welcome and I will use it to improve the article.
+
+## Form Demo
+
+<ContactForm/>
