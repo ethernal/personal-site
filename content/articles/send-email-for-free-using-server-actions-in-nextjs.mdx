@@ -12,7 +12,7 @@ keywords: [nextjs, server actions, nodemailer, contact form, email, free, gmail,
 
 <p className="text-3xl text-theme-accent font-semibold font-heading">Hello Engineers!</p>
 
-Server actions are [stable since Next.js 14](https://nextjs.org/blog/next-14#server-actions-stable) and today I'll show you how I am using them to send emails using nodemailer on this website without the need for additional services (apart from free email account).
+Server actions are [stable since Next.js 14](https://nextjs.org/blog/next-14#server-actions-stable) <NewTabIcon/> and today I'll show you how I am using them to send emails using nodemailer on this website without the need for additional services (apart from free email account).
 
 ## The Problem
 
@@ -461,8 +461,124 @@ If everything went fine we'll invoke `updateMailSuccess` and if not we'll invoke
 
 To control how notifications are displayed we will use the method shown in the official documentation [show here](https://fkhadra.github.io/react-toastify/update-toast) <NewTabIcon/>.
 
-<p className="text-4xl text-red-600">//TODO: explain how to use it</p>
+To create a toast it is enough to call the `toast` function like so:
 
+```code-from-the-docs.tsx
+  import React from 'react';
+  import { ToastContainer, toast } from 'react-toastify';
+
+  import 'react-toastify/dist/ReactToastify.css';
+  // minified version is also included
+  // import 'react-toastify/dist/ReactToastify.min.css';
+
+  function App(){
+    const notify = () => toast("Wow so easy !");
+
+    return (
+      <div>
+        <button onClick={notify}>Notify !</button>
+        <ToastContainer />
+      </div>
+    );
+  }
+```
+You are not limited to calling or using the `toast` function to place where `ToastContainer` is defined. It can be any other place in the app. Just remember to have only one `ToastContainer`.
+
+ Our case, as it usually stands with projects I start, is a bit more complicated. Luckily for us `react-toastify` package has all the building blocks and examples to fit our need exactly.
+
+ We need to render the initial toast state (sending message in progress, without a timeout) and then depending on the state of the response update the existing toast to show success (if true was returned from the email function) or error (if the response was false).
+ If you remember the docs or notes above the `toast` function arguments supersede the `ToastContainer` component. We'll use that to our advantage.
+
+To accomplish our goal we need a reference to the toast which we will update to success or error states later.`react-toastify` shows how to do this [in the official documentation](https://fkhadra.github.io/react-toastify/update-toast) <NewTabIcon/>.
+
+Let's start writing our toast functions. First let's start with sending initial information that sending is in progress:
+
+```tsx
+	const toastId = React.useRef<Id | null>(null);
+
+	const sendMailInProgress = () =>
+		(toastId.current = toast('Sending your message. Please wait...', {
+			autoClose: false,
+		}));
+```
+
+It's as simple as the example with the two exceptions: first is that we are assigning the toast to the `toastId` ref (see more in the [React documentation](https://react.dev/reference/react/useRef) <NewTabIcon/>) that is the reference to the toast. This is because we want to update it later on. Second is that we set `autoClose` prop to `false` that way the toast message will not have a timeout and it will never disappear. Now we need functions that will update it to show success or error, these are again standalone and do not depend on the way we implement the toast.
+
+```tsx
+const updateMailSuccess = () =>
+		toastId.current &&
+		toast.update(toastId.current, {
+			render: 'Your message has been sent. Thank you!',
+			type: 'success',
+			autoClose: 5000,
+		});
+
+	const updateMailError = () =>
+		toastId.current &&
+		toast.update(toastId.current, {
+			render: 'Something went wrong. Please try again later.',
+			type: 'error',
+			autoClose: 5000,
+		});
+```
+
+Here we use the `update` method of a toast with the reference to the toast we want to update. We set `autoClose` to `5000` so that the toast message will disappear after five seconds after the update.
+
+Now we can update the `formAction` method in the `useFormState` hook as well as the form itself to show the initial toast when starting to process the action:
+
+```tsx
+const formRef = React.useRef<HTMLFormElement | null>(null);
+
+const [state, formAction] = useFormState(
+	async (prev: any, formData: FormData) => {
+		const res = await sendEmailAction(prev, formData);
+		if (res === true) {
+			updateMailSuccess();
+			formRef.current?.reset();
+		} else updateMailError();
+	},
+	initialFormState,
+);
+
+//...
+return (
+	<form
+		className={cn('flex flex-col gap-4 pb-10', className)}
+		action={(formData) => {
+			sendMailInProgress();
+			formAction(formData);
+		}}
+		ref={formRef}
+	>
+		{** ... **/}
+	</form>
+);
+```
+
+When we receive the response from the `sendEmailAction` function we update the toast message to success or error depending on the response value returned. If it was successful we also reset the form state using the form reference created with another `useRef` hook.
+
+We should also disable the send button when mail is being sent as we do not want to be spammed with the same message.
+
+```tsx
+function Submit({
+	className,
+	children,
+}: {
+	className?: string;
+	children: React.ReactNode;
+}) {
+	const status = useFormStatus();
+	return (
+		<button type="submit" disabled={status.pending} className={className}>
+			{children}
+		</button>
+	);
+}
+```
+
+Congratulations! You now have a contact form that users can fill out and tell you how awesome your website is 😉 and all of it free!
+
+Below is the full source of the `ContactForm` component.
 
 ```ContactForm.tsx
 'use client';
@@ -582,31 +698,10 @@ function ContactForm({ className }: { className?: string }) {
 }
 
 export default ContactForm;
-
 ```
-
-We should also disable the send button when mail is being sent as we do not want to be spammed with the same message.
-
-```tsx
-function Submit({
-	className,
-	children,
-}: {
-	className?: string;
-	children: React.ReactNode;
-}) {
-	const status = useFormStatus();
-	return (
-		<button type="submit" disabled={status.pending} className={className}>
-			{children}
-		</button>
-	);
-}
-```
-
-Congratulations! You now have a contact form that users can fill out and tell you how awesome your website is 😉 and all of it free!
 
 ## Conclusion
 
-Today we have created a contact form for our visitors to contact us using new feature in Next.js 14, we explored how to use server actions to achieve the task and how much simpler that process is from setting up the full API route. We also learned how to send emails using nodemailer and how to use toast notifications to notify users about the status of the process.
+Today we have created a contact form for our visitors to contact us using new feature in Next.js 14, we explored how to use server actions to achieve the task and how much simpler that process is from setting up the full API route. We also learned how to send emails using nodemailer and how to use `react-toastify` to display notifications to the users about the status of the process. We have also learned a bit about how to use `ref`s in React and how they can be useful for forms.
 
+As always you can contact me ([via the form](/contact) for example 😄) and let me know what you think. Any feedback is welcome and I will use it to improve the article.
