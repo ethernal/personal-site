@@ -1,6 +1,7 @@
 import { MDXComponents } from 'mdx/types';
 
 import AboutMeToggleMessage from '@/components/AboutMeToggleMessage';
+import BooksSandbox from '@/components/BooksSandbox';
 import { default as CodeSnippet } from '@/components/CodeSnippet/CodeSnippet';
 import ContactForm from '@/components/ContactForm';
 import CV from '@/components/CurriculumVitae';
@@ -22,4 +23,5 @@ export const COMPONENT_MAP: MDXComponents = {
 	FullWidthSplitSection,
 	ContactForm,
 	NewTabIcon,
+	BooksSandbox,
 };

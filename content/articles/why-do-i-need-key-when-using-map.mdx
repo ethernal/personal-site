@@ -1,5 +1,5 @@
 ---
-title: Using key prop when mapping through list of items in React
+title: Why do we need key when mapping through list of items in React?
 author: Sebastian Pieczyński
 publishedOn: 2023-11-16
 published: true
@@ -160,9 +160,9 @@ React is sophisticated tool and helps with a lot of low level stuff, but contrar
 
 When rendering the page React knows what it needs to re-render and more importantly what to destroy and add to the DOM. It does this by comparing previous type and key (if it exists) and props of the components with the new type, key and state (comparing a diff of DOM trees) and a difference between old and new versions tells it which parts of the application need to be re-rendered and how.
 
-React compares the elements by shallow comparison using `Object.is` as it is safer way for React than using `===`. The differences between `===` and `Object.is` is that `Object.is` treats `NaN`s as the same values and `0` and `-0`as different. See [MDN documentation on `Object.is` if you want to know more](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) <NewTabIcon/>. Then there is the JSX syntax that tells React what to render and it is basically a `createElement` function call to add elements to the page if their type or `key` changed.
+React compares the elements by shallow comparison using `Object.is` as it is safer way for React than using `===`. The differences between them is that `Object.is` treats `NaN`s as the same values and `0` and `-0`as different. See [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) <NewTabIcon/> on `Object.is` if you want to know more.
 
-Where `keys` play an instrumental role is the described above reconciliation mode. Reconciliation happens when React verifies if the type of the component changed and the old one should be removed (unmounted) from the DOM or if it needs to update the component (when props change). See: [rendering lists](https://react.dev/learn/rendering-lists) <NewTabIcon/>
+Where `keys` play an instrumental (you could even dare to say *key*) role is the described (and very simplified) reconciliation mode. Reconciliation happens when React verifies if the type of the component changed and the old one should be removed (unmounted) from the DOM or if it needs to update the component (when props change). It uses `createElement` function to add new nodes to DOM. See: [rendering lists](https://react.dev/learn/rendering-lists) <NewTabIcon/>
 
 As a side note about `JSX` and `createElement` the following examples are equivalent:
 
@@ -269,7 +269,7 @@ return (
   );
 ```
 
-## Complex example with components, memo and keys
+## Example with components, memo and keys
 
 Ok so this might be just enough to show exactly why `key` is important and how it affects rendering process in React.
 
@@ -430,6 +430,9 @@ export default function App() {
 	);
 }
 ```
+And here's the working and styled example:
+
+<BooksSandbox/>
 
 PS. you should read Brandon's books even if you are not into the epic fantasy - they are that good!
 
