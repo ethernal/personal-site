@@ -1,0 +1,474 @@
+---
+title: Why do I need key when mapping through list of items in React?
+author: Sebastian Pieczyński
+publishedOn: 2023-11-16
+published: true
+category: React
+keywords: [react, key, map, array.map]
+abstract: "Join me and learn why key matters when creating lists of elements in React. Interactive examples inside!"
+image: "/image/article/why-do-i-need-key-when-mapping-through-list-of-items-in-react/key-in-react-map.jpeg"
+imageAlt: "single key and map pointing a way to the open treasure filled with gold and precious stones in watercolor"
+---
+
+## Contents
+
+<p className="text-3xl text-theme-accent font-semibold font-heading">Land ho! Engineers!</p>
+
+Today we are furling the sails and leaving the salty waters of the dark sea behind and prepare for perilous adventure in the React land. For that we need only two things: `key` and `map`. Let's find ourselves some treasure 🦜.
+
+As developers we tend to throw as much work on computers as possible and it's a good thing. Computers are great at repeatable stuff. It can be crunching numbers when trying to find the last digit of &Pi; or the next prime number. It can also be something more down to earth like displaying all the books we read last year, or a shopping card items.
+
+When such opportunity arises we react almost without thinking and reach for the `.map` function if data we were given is an array. Let's imagine we are creating a virtual shelf of books that we have at home.
+
+
+```App.tsx
+const BookList = ({ items }) => {
+  const response = [
+    {
+      title: "The Way of the Kings",
+      order: 1,
+      author: "Brandon Sanderson",
+      series: "Stormlight Archive",
+      words: "383389",
+      publishedOn: "2010.08.31"
+    },
+    {
+      title: "Words of Radiance",
+      order: 2,
+      author: "Brandon Sanderson",
+      series: "Stormlight Archive",
+      words: "399431",
+      publishedOn: "2014.03.04"
+    },
+    {
+      title: "Oathbringer",
+      order: 3,
+      author: "Brandon Sanderson",
+      series: "Stormlight Archive",
+      words: "451912",
+      publishedOn: "2017.11.14"
+    },
+    {
+      title: "Rythm of War",
+      order: 4,
+      author: "Brandon Sanderson",
+      series: "Stormlight Archive",
+      words: "455891",
+      publishedOn: "2020.11.17"
+    },
+    {
+      title: "Knights of Wind and Truth",
+      order: 5,
+      author: "Brandon Sanderson",
+      series: "Stormlight Archive",
+      words: "400000",
+      publishedOn: ""
+    },
+    {
+      title: "Mistborn: The Final Empire",
+      order: 1,
+      author: "Brandon Sanderson",
+      series: "Mistborn",
+      words: "214000",
+      publishedOn: "2006-07-17"
+    },
+
+  ];
+
+  return (
+    <ul>
+      {response.map((book) => (
+        <li>{book.title}</li>
+      ))}
+    </ul>
+  );
+};
+
+export default function App() {
+  return (
+    <div className="App">
+      <h1>Hello Radiant</h1>
+      <BookList />
+    </div>
+  );
+}
+```
+
+Standard stuff for anyone starting journey with React... but our console friend is not happy with us:
+
+```bash
+Warning: Each child in a list should have a unique "key" prop.
+
+Check the render method of `BookList`. See https://reactjs.org/link/warning-keys for more information.
+li
+BookList@/src/App.js:14:7
+div
+App
+```
+
+Even if you worked with React for a long time I am certain you see this warning form time to time. We all make mistakes and frget things right? Right? 😅. Let's learn why it's so important to have `key`s defined for our lists.
+
+First let's fix the error:
+
+```tsx
+return (
+    <ul>
+      {response.map((book) => (
+        <li key={book.title}>{book.title}</li>
+      ))}
+    </ul>
+  );
+```
+
+Why not `order` or `index` when using map like so: `response.map((book, index) => {})`?
+
+Using `index` is highly discouraged unless items will never-ever change positions (ex. it's a static list) since `index` can change on re-render ex. if we added a new book to our shelf, or if we allow removing of items. Let's imaging new data is being returned from API and inserted in the middle of our response array:
+
+```tsx
+response = [
+  //...
+  ,
+  {
+    title: "Words of Radiance",
+    order: 2,
+    author: "Brandon Sanderson",
+    series: "Stormlight Archive",
+    words: "399431",
+    publishedOn: "2014.03.04"
+  },
+  {
+    title: "Edgedancer (novella) ",
+      order: 2.5,
+      author: "Brandon Sanderson",
+      series: "Stormlight Archive",
+      words: "40666",
+      publishedOn: "2016.11.22"
+    }
+    //...
+]
+```
+
+Now the first two items in our list will have the same keys as on "previous" render, but for the rest `index` will be changed and that will force React to unmount and re-create the components in the list. In this example since specific elements are not separate components it does not matter, but check code at the end to see how key affects rendering of a bit more complex application. Console messages are intentionally left on for you (press `F12` to see them).
+
+`order` property would not work as it is possible that there will be duplicates. I believe using `title` in this case is the safest bet, we are not planning to keep different releases of the book in our library just yet. The best one would be to use a custom ID that comes from the database (use uuid).
+
+It's important to note that `keys` **CANNOT** change between re-renders as it defeats the whole purpose of the `key` (hence the discouraged use of `index`) also you do not need to use `index` directly as this is the default React behavior (see [Pitfall warning in React docs]( https://react.dev/learn/rendering-lists#why-does-react-need-keys)) <NewTabIcon/>, if you do so explicitly the warning will disappear but the issue will still be there.
+
+With `book.title` specified as the `key` the warning goes away and React developer is happy. We fixed the error, onto the next JIRA task.. or is it?
+
+## Why do I need key when displaying a list of items?
+
+React is sophisticated tool and helps with a lot of low level stuff, but contrary to what AI people will tell you it cannot read your mind just yet.
+
+When rendering the page React knows what it needs to re-render and more importantly what to destroy and add to the DOM. It does this by comparing previous state of the DOM tree to the current one. It creates it by comparing type, key (if it exists) and props of the components with the new type, key and props when the state changes. The difference between old and new versions tells it which parts of the application need to be re-rendered and how. This is simplified version of the reconciliation algorithm. You can [read more about it](https://legacy.reactjs.org/docs/reconciliation.html) <NewTabIcon/> in the legacy documentation.
+
+React compares the elements by shallow comparison using `Object.is` as it is safer way for React than using `===`. The differences between them is that `Object.is` treats `NaN`s as the same values and `0` and `-0`as different. See [MDN documentation](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/is) <NewTabIcon/> on `Object.is` if you want to know more.
+
+Where `keys` play an instrumental (you could even dare to say the *key*) role is the described reconciliation mode. When it happens React verifies if the type of the component changed and the old one should be removed (unmounted) from the DOM or if it needs to update the component (when props change). It uses `createElement` function to add new nodes to DOM. See: [rendering lists](https://react.dev/learn/rendering-lists) <NewTabIcon/>
+
+To dispel a bit of magic from JSX let's take a peek at it's insides.
+The following examples are equivalent:
+
+Direct call to createElement:
+
+```createElement.tsx
+import { createElement } from 'react';
+
+function Greeting({ name }) {
+  return createElement(
+    'h1',                       // type of element
+    { className: 'greeting' },  // props
+    'Hello'                     // children
+  );
+}
+```
+
+The first parameter of the `createElement` is the type of the element to be rendered, then it's `props` and `children`.
+
+Using `JSX` syntax:
+
+```JSX.tsx
+import { createElement } from 'react';
+
+function Greeting({ name }) {
+  return <h1 className="greeting">Hello</h1>
+}
+```
+
+`JSX` allows us to use much more readable syntax but as any abstraction hides some underlying concepts under the "magic" blanket. This use of `createElement` is why we cannot have conditional logic inside `JSX` but it also shows how React can understand what we want to create and how to render it.
+
+Now where did I leave the `key`s?
+
+The `key` allows React to know which components are stable and should not be removed from the DOM and re-created a new.
+
+In our example above the list without the keys would re-render every element every time ex. when we added new item to the beginning of the list. With `key` added to list items it would render only the added keys and not touch the rest.
+
+What if we wanted to list all the properties of the book?
+
+```tsx
+return (
+    <ul>
+      {/*create a listing of all the books..*/}
+      {response.map((book) => (
+        // for each book display it's title
+        <li key={book.title}>
+          {book.title}
+          <ul>
+            {/*for each property of the book display it's value by destructuring it into `key` and `value` pairs*/}
+            {Object.entries(book).map(([key, value]) => {
+              if (key === "title") return; // if the property being mapped over is the title skip it
+              return (
+                <li key={key}>
+                  {key}: {value}
+                </li>
+              );
+            })}
+          </ul>
+        </li>
+      ))}
+    </ul>
+  );
+```
+
+Notice what we return as the key inside the `li` element. It's the `key` of the book property (title, author publishedOn etc.).
+
+Keen eyed will shout: "You said keys needed to be unique.". That's right. **Inside a loop** key between **siblings** of that list **MUST** be unique. **Siblings** is the *key* word here (pun intended). This is a very important point. You can repeat keys on the page but not within the same loop. See [rules of keys](https://react.dev/learn/rendering-lists#rules-of-keys) <NewTabIcon/>.
+
+Read the documentation about why React uses keys: [in React docs](https://react.dev/learn/rendering-lists#keeping-list-items-in-order-with-key) <NewTabIcon/>
+
+
+
+## Forcing a re-render
+
+Changing the key of the component will force it to re-render itself. This can be useful sometimes when you **MUST** re-render a component but do not have control over it.
+
+## Rendering a fragment with siblings list with a key
+
+When rendering the list of sibling elements when there is not one element that can be assigned a `key` we are not forced to close them in another `div` or `span`. In such case React will also warn us that it's an error (remember `JSX` vs `createElement`?) and it will not render the list without a single element encapsulating it inside a fragment like so: `<>{children}</>`.
+
+For example:
+
+```error.tsx
+return (
+  {list.map((element) => (
+    <div>Property 1</div>
+    <div>Property 2</div>
+    <div>Property 3</div>
+    <div>Property 4</div>
+  ))}
+  );
+```
+
+To render such structure we need to move it inside a React fragment, it's a special structure that allows us to render elements without creating another DOM node.
+
+```error.tsx
+return (
+  {list.map((element) => (
+    <>
+      <div>Property 1</div>
+      <div>Property 2</div>
+      <div>Property 3</div>
+      <div>Property 4</div>
+    </>
+  ))}
+  );
+```
+
+Now we have the same problem as before, we need a key but fragments are not allowed to have keys... Unless..
+
+unless they are used as "full" components not shorthand of `<></>`
+
+```FragmentedList.tsx
+return (
+  {list.map((element) => (
+    <Fragment key={element.id}>
+      <div>Property 1</div>
+      <div>Property 2</div>
+      <div>Property 3</div>
+      <div>Property 4</div>
+    </Fragment>
+  ))}
+  );
+```
+
+## Example with components, memo and keys
+
+Ok so this might be just enough to show exactly why `key` is important and how it affects rendering process in React.
+
+You will notice that now response is outside of our component (as it should be), that `Book` component was extracted and it is memoized with `React.memo` so if the component does not change it's `props` or `key` React will skip rendering them even when state in the parent component changes. For our example we'll assume that these components are costly to recreate and we need to memoize them. By the way these are 1000+ pages books - let's assume they are heavy to carry even for React 😉.
+
+If you want to play with it here's the link to [CodeSandbox](https://codesandbox.io/s/silly-tesla-jxtgxn?file=/src/App.js).
+
+Styled example is just below, functionally they are the same.
+
+Notice how removing `key` from a `Book` component forces React to re-render books after filtering even though it has not changed it's props or state. React just doesn't know that it's the same element without a `key`.
+
+```App.tsx
+import React, { ChangeEvent, useState } from 'react';
+
+const response = [
+	{
+		title: 'The Way of the Kings',
+		order: 1,
+		author: 'Brandon Sanderson',
+		series: 'Stormlight Archive',
+		words: '383389',
+		publishedOn: '2010.08.31',
+	},
+	{
+		title: 'Words of Radiance',
+		order: 2,
+		author: 'Brandon Sanderson',
+		series: 'Stormlight Archive',
+		words: '399431',
+		publishedOn: '2014.03.04',
+	},
+	{
+		title: 'Oathbringer',
+		order: 3,
+		author: 'Brandon Sanderson',
+		series: 'Stormlight Archive',
+		words: '451912',
+		publishedOn: '2017.11.14',
+	},
+	{
+		title: 'Rythm of War',
+		order: 4,
+		author: 'Brandon Sanderson',
+		series: 'Stormlight Archive',
+		words: '455891',
+		publishedOn: '2020.11.17',
+	},
+	{
+		title: 'Knights of Wind and Truth',
+		order: 5,
+		author: 'Brandon Sanderson',
+		series: 'Stormlight Archive',
+		words: '400000',
+		publishedOn: '',
+	},
+	{
+		title: 'Mistborn: The Final Empire',
+		order: 1,
+		author: 'Brandon Sanderson',
+		series: 'Mistborn',
+		words: '214000',
+		publishedOn: '2006-07-17',
+	},
+];
+
+// we need named function here as per eslint rules for debugging purposes
+const Book = React.memo(function Book({
+	book,
+}: {
+	book: (typeof response)[0];
+}) {
+  console.log('Rendering book: ', book.title);
+	return (
+		<li
+      key={book.title} // try removing this key, refresh the page and click the checkboxes once again
+    >
+			{book.title}
+			<ul>
+				{Object.entries(book).map(([key, value]) => {
+					if (key === 'title') return;
+					return (
+						<li key={key}>
+							{key}: {value}
+						</li>
+					);
+				})}
+			</ul>
+		</li>
+	);
+});
+
+const BookList = ({ items = [] }: { items: typeof response | [] }) => {
+	const [books, setBooks] = useState(items);
+	const [seriesFilter, setSeriesFilter] = useState(['Stormlight Archive']);
+
+	const handleFilterChange = (e: ChangeEvent<HTMLInputElement>) => {
+		const seriesName = e.target.value;
+
+		let newSeriesFilter = [...seriesFilter];
+		const filterIndex = newSeriesFilter.findIndex(
+			(element) => element === seriesName,
+		);
+		if (filterIndex !== -1) {
+			newSeriesFilter.splice(filterIndex, 1);
+		} else {
+			newSeriesFilter.push(seriesName);
+		}
+
+		setSeriesFilter(newSeriesFilter);
+	};
+
+	return (
+		<>
+			<input
+				type="checkbox"
+				id="stormlight"
+				name="series"
+				value="Stormlight Archive"
+				onChange={handleFilterChange}
+				checked={
+					seriesFilter.find((item) => item === 'Stormlight Archive') !==
+					undefined
+						? true
+						: false
+				}
+			/>
+			<label htmlFor="stormlight">Stormlight</label>
+			<input
+				type="checkbox"
+				id="mistborn"
+				name="series"
+				value="Mistborn"
+				onChange={handleFilterChange}
+				checked={
+					seriesFilter.find((item) => item === 'Mistborn') !== undefined
+						? true
+						: false
+				}
+			/>
+			<label htmlFor="mistborn">Mistborn</label>
+			<ul>
+				{books
+					.filter((book) => seriesFilter.includes(book.series))
+					.map((book) => (
+						<Book book={book} key={book.title} />
+					))}
+			</ul>
+		</div>
+	);
+};
+
+export default function App() {
+	return (
+		<div className="App">
+			<h1>Hello Radiant</h1>
+			<BookList items={response} />
+		</div>
+	);
+}
+```
+
+## Interactive Example
+
+<BooksSandbox/>
+
+
+## Conclusion
+
+<section className="mb-4">
+Today we learned that:
+* 🗝️  Keys in React are used to help it understand which elements changed on the page and which have not.
+* 🗝️  Proper use of `keys` can lead to much more performant application by explicitly reusing DOM nodes instead of re-rendering them.
+* 🗝️  Keys must be unique within the list they are rendered.
+* 🗝️  Keys must not change between renders.
+</section>
+
+Glad you made it this far and I hope you enjoyed another adventure with me.
+
+PS. If you need some positive strength then You should read Brandon's books even if you are not into the epic fantasy. I highly recommend them!
+
