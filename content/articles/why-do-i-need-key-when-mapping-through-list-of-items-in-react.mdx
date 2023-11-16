@@ -299,7 +299,7 @@ You will notice that now response is outside of our component (as it should be),
 
 If you want to play with it here's the link to [CodeSandbox](https://codesandbox.io/s/silly-tesla-jxtgxn?file=/src/App.js).
 
-Styled example is just below.
+Styled example is just below, functionally they are the same.
 
 Notice how removing `key` from a `Book` component forces React to re-render books after filtering even though it has not changed it's props or state. React just doesn't know that it's the same element without a `key`.
 
@@ -460,12 +460,13 @@ export default function App() {
 
 ## Conclusion
 
+<section className="mb-4">
 Today we learned that:
-🗝️ Keys in React are used to help it understand which elements changed on the page and which have not.
-🗝️ Proper use of `keys` can lead to much more performant application by explicitly reusing DOM nodes instead of re-rendering them.
-🗝️ Keys must be unique within the list they are rendered.
-🗝️ Keys must not change between renders.
-
+* 🗝️  Keys in React are used to help it understand which elements changed on the page and which have not.
+* 🗝️  Proper use of `keys` can lead to much more performant application by explicitly reusing DOM nodes instead of re-rendering them.
+* 🗝️  Keys must be unique within the list they are rendered.
+* 🗝️  Keys must not change between renders.
+</section>
 
 Glad you made it this far and I hope you enjoyed another adventure with me.
 

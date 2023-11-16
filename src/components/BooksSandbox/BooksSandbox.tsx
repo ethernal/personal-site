@@ -181,7 +181,6 @@ const BookList = ({ items = [] }: { items: typeof response | [] }) => {
 export default function BooksSandbox() {
 	return (
 		<div className="mb-8">
-			<h1 className="mb-4">Example</h1>
 			<BookList items={response} />
 		</div>
 	);
