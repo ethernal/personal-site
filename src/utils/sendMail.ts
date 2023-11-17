@@ -1,5 +1,4 @@
 'use server';
-import { revalidatePath } from 'next/cache';
 import nodemailer, { SentMessageInfo } from 'nodemailer';
 import { toast } from 'react-toastify';
 import { Resend } from 'resend';
@@ -107,7 +106,7 @@ export async function sendEmailAction(prevState: any, formData: FormData) {
 			otpText: `${message}`,
 		});
 
-		if ('accepted' in response && response?.accepted.length > 0) {
+		if ('response' in response && response?.response[0] === '2') {
 			return true;
 		} else {
 			return false;

@@ -19,6 +19,7 @@ export const SITE_PATHS = {
 };
 
 export const SOCIAL_X_HANDLE = '@spieczynski';
+export const SOCIAL_GITHUB_HANDLE = 'ethernal';
 
 export const MDXOptions = {
 	mdxOptions: {

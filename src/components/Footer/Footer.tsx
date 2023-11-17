@@ -1,10 +1,16 @@
 import format from 'date-fns/format';
 import Link from 'next/link';
-import React from 'react';
-import { RiTwitterLine as TwitterOldIcon, RiTwitterXFill as TwitterXIcon } from 'react-icons/ri';
+import {
+	RiGithubFill as GitHubIcon,
+	RiTwitterXFill as TwitterXIcon,
+} from 'react-icons/ri';
 
 import Logo from '@/components/Logo';
-import { SITE_PUBLISHED_YEAR_STRING, SOCIAL_X_HANDLE } from '@/constants/constants';
+import {
+	SITE_PUBLISHED_YEAR_STRING,
+	SOCIAL_GITHUB_HANDLE,
+	SOCIAL_X_HANDLE,
+} from '@/constants/constants';
 import { cn } from '@/utils/utils';
 
 import NewTabIcon from '../NewTabIcon';
@@ -75,6 +81,17 @@ function Footer({ className }: FooterProps) {
 								href="/cookie-policy"
 							>
 								Cookie Policy
+							</Link>
+						</li>
+						<li className="mb-2">
+							<Link
+								className="text-base no-underline hover:underline hover:decoration-2 hover:underline-offset-[0.125em] flex gap-2 items-center"
+								href={`https://github.com/${SOCIAL_GITHUB_HANDLE}`}
+								target="_blank"
+								aria-description="Link to Sebastian's GitHub profile that opens in new tab"
+							>
+								<GitHubIcon alt="github icon" /> {SOCIAL_GITHUB_HANDLE}{' '}
+								<NewTabIcon />
 							</Link>
 						</li>
 						<li className="mb-2">
