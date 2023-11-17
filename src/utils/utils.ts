@@ -52,3 +52,11 @@ export function removeDiacritics(str: string) {
 	}
 	return str;
 }
+
+export function slugify(str: string) {
+	return removeDiacritics(str)
+		.trim()
+		.toLowerCase()
+		.replaceAll('[^a-z]', '')
+		.replaceAll(' ', '-');
+}

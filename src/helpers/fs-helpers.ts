@@ -6,6 +6,44 @@ import path from 'path';
 import { cache } from 'react';
 
 import BlogPostFrontmatterType from '@/types/BlogPostFrontmatterType';
+import { slugify } from '@/utils/utils';
+
+function isDirectory(path: string) {
+	return fs
+		.lstat(path)
+		.then((stat) => stat.isDirectory())
+		.catch(() => false);
+}
+
+async function getDirectoryFiles(path: string) {
+	if ((await isDirectory(path)) === true) {
+		return fs
+			.readdir(path)
+			.then((files) => files.filter((file) => !file.startsWith('.')));
+	} else return null;
+}
+
+export async function getArticles() {
+	const fileNames = await getDirectoryFiles('./content/articles');
+
+	console.log('Filenames: ', fileNames);
+	const pureFileNames = fileNames?.map((fileName) =>
+		fileName.replace('.mdx', ''),
+	);
+
+	const articles: Array<ArticleData> = [];
+
+	if (pureFileNames === undefined) return;
+
+	for (let i = 0; i < pureFileNames?.length; i++) {
+		const { content, frontmatter } = await loadBlogPost(pureFileNames[i]);
+
+		frontmatter.slug = slugify(frontmatter.title.replace('.mdx', ''));
+		articles.push({ content, frontmatter });
+	}
+
+	return articles;
+}
 
 export async function getArticlesFrontmatter() {
 	try {
@@ -47,7 +85,15 @@ export async function getArticlesFrontmatter() {
 			: -1,
 	);
 }
-export const loadBlogPost = cache(async (slug: string) => {
+
+type ArticleData = {
+	frontmatter: {
+		[key: string]: any;
+	};
+	content: string;
+};
+
+export const loadBlogPost = cache(async (slug: string): Promise<ArticleData> => {
 	const rawContent = await readFile(`./content/articles/${slug}.mdx`);
 
 	const { data: frontmatter, content } = matter(rawContent);
@@ -58,7 +104,8 @@ export const loadBlogPost = cache(async (slug: string) => {
 export const loadPageContent = cache(async (path: string) => {
 	if (path === 'mockServiceWorker.js') return;
 
-	const fileNameWithoutSuffix = path;
+	const fileNameWithoutSuffix =
+		path.endsWith('.mdx') === true ? path.slice(0, -4) : path;
 
 	const rawContent = await readFile(
 		`./content/page/${fileNameWithoutSuffix}/${fileNameWithoutSuffix}.mdx`,
