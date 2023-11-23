@@ -1,0 +1,1202 @@
+---
+title: Web scraper with prisma and typescript (part 1)
+author: Sebastian Pieczynski
+publishedOn: 2023-11-23
+published: true
+status: published
+series: web-scraper-2023
+seriesPart: 1
+abstract: How to create a web scraper with prisma and typescript with custom frontend and simple backed using Vite. We'll download files, save data to sqlite and promise a thing or two. There are some gems here you do not want to miss. I promise..
+category: Programming
+keywords: [react, web scraper, crawler, cheerio, axios, rest, cors, prisma, typescript, vite, engineering]
+image: "/image/article/web-crawler/web-scraper.jpeg"
+imageAlt: "pirates loading treasure chests from tropical island onto the ship, huge hole near the chests, some chests are still buried in the sand, some open treasure chests filled with gold are visible on the ship, view from the beach to the ship, day, warm, cumulus clouds, watercolor"
+---
+
+## Contents
+
+## Welcome to the treasure island
+
+<p className="text-3xl text-theme-accent font-semibold font-heading">How arrrr... ya Engineers? 🦜</p>
+
+Seems to me we have found ourselves a mighty trrr...easure.. after our last trip. We just need to dig it up...
+
+Stop dilly dallying and let's get to work. Today we are digging data from the web pages and claiming it as our own.
+
+This is a two part article. In the first we will build full scraper from start to finish and in the second we'll take care of the backend and frontend.
+
+## Acknowledgements
+
+Note to people who do this daily - please send your suggestions how to improve the crawler. It is my first attempt at such a project and it is not as efficient as it could be (no concurrency) but was a fun to make and if possible I would also love to learn more from You.
+
+For those that want to follow along here's the link to a [stepped solution](https://github.com/ethernal/web-scraper-stepped-solution) <NewTabIcon/>. The `main` branch has finished code and other branches are separated by steps as per this article.
+
+The original repo at: [GitHub](https://github.com/ethernal/web-scrapper-demo) <NewTabIcon/> requires some changes but present a working and finished project. It is not a curated repository so you will be able to see the thought process and what went right and what needed changing in the course of building it.. and what bugs 🐛 crept in.
+
+REST API will be very limited as it's not a proper implementation of a backend server.
+
+The initial scraper implementation was inspired by: https://www.zenrows.com/blog/javascript-web-crawler-nodejs#create-web-crawler-in-node <NewTabIcon/>
+
+
+After longer than usual intro let's get started.
+
+## What we're making
+
+We found a treasure trove 🏝️ of data but the problem is it's on the website without a way to export it. To dig that treasure we'll need some tools:
+
+1. Web scraper that will get the data from the external website,
+2. it will save it to a local sqlite database,
+3. and download all the images associated with the products (so we're not overloading the site too much),
+4. modify data on the fly to adjust it for the frontend.
+5. Then a "REST API" that will serve the data from the database.
+6. Finally a frontend that will fetch the data from our "REST" server and display it to the user,
+7. it will also allow filtering and sorting the products,
+8. and state of the frontend app will be controlled with search parameters.
+
+In part 1 we'll go through points 1-4 and in part 2 we'll finish our application.
+
+## Building a shovel
+
+We have to get data for all the products listed on a certain website. And for that we need to dig our way through the DOM to get the information about the product:
+
+1. name
+1. price
+1. currency (if it can be extracted)
+1. image
+1. link
+
+For the source of data we'll be using the [~Pokemon Shop~ ScrapeMe shop site](https://scrapeme.live/shop) <NewTabIcon/> that has all the products listed on ~50 pages.
+
+To get the data we'll use the [Axios](https://github.com/axios/axios) <NewTabIcon/> and to query the DOM of the fetched pages we'll use the [CheerioJS](https://github.com/cheeriojs/cheerio) <NewTabIcon/> libraries.
+
+Since we want to use both Typescript and ESM modules we'll use [tsx](https://github.com/privatenumber/tsx) <NewTabIcon/> package to run our scraper server.
+
+To start clone the `init` branch from [the stepped repo](https://github.com/ethernal/web-scraper-stepped-solution) <NewTabIcon/>.
+
+```bash
+git clone --branch init https://github.com/ethernal/web-scraper-stepped-solution
+```
+
+This will clone the repository to `web-scraper-stepped-solution` folder. If you already have a folder created you can add a `.` (dot) at the end to clone into current directory.
+
+```bash
+git clone --branch init https://github.com/ethernal/web-scraper-stepped-solution .
+```
+
+After the repository is cloned install the dependencies:
+
+```bash
+npm install
+```
+
+Then in the root of the project (next to src directory) create a `scraper.ts` file in the root of the project and import both `axios` and `cheerio` and create a main function that will run the scraper:
+
+````scraper.ts
+import axios from 'axios';
+import cheerio from 'cheerio';
+
+async function main(maxPages = 5) {
+  console.log(`Hello World. Scraping ${maxPages} pages.`);
+}
+
+main()
+    .then(() => {
+        process.exit(0);
+    })
+    .catch((e) => {
+        // logging the error message
+        console.error(e);
+
+        process.exit(1);
+    });
+````
+
+Then in the `package.json` file inside "scripts" section add the following:
+
+```json
+"scripts": {
+  //...
+  "scrap": "tsx scraper.ts"
+  //...
+}
+```
+
+Running the script should return
+
+```bash
+  Hello World. Scraping 5 pages.
+```
+
+If you have issues at this stage you can [open an issue on GitHub](https://github.com/ethernal/web-scraper-stepped-solution/issues/new?labels=&template=issue.md&title=Step%201%20running%20tsx%20hello%20world) <NewTabIcon /> or [contact me directly](/contact).
+
+The `maxPages` parameter will be important to control the number of pages to crawl.
+
+For index of visited pages we'll use a `Set`. This structure is simillar to an array but it does not allow duplicates so it will be perfect to keep track of what page was visited. Even if we try to add the same page a second time `Set` will not add the same value again. Read more about Sets on MDN [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set) <NewTabIcon />.
+
+Inside `main` function we'll first look for all the pages that we can crawl and add the links to the queue. Then we'll visit each page (download with Axios) and check for the existence of data we need in the HTML content. Let's dive into the code and I'll guide you with the comments alongside it.
+
+Well first check navigation for all pages and add them to the crawl list:
+
+<div className="margin-auto w-full mb-4">
+<Image src="/image/article/web-crawler/navigation-url-list-selector.png" alt="Navigation URLs accessible with '.page-numbers a' selector" width={1300} height={300}/>
+</div>
+
+The image shows that it is possible to access the link for a page with `.page-numbers a` selector.
+
+Now for the actual product data we can use the `li.product a.woocommerce-LoopProduct-link` selector:
+
+<div className="margin-auto w-full mb-4">
+<Image src="/image/article/web-crawler/product-data-selector.png" alt="Product data in HTML accessible with 'li.product a.woocommerce-LoopProduct-link' selector" width={1300} height={300}/>
+</div>
+
+The keen eyed will also note that there is a lot more data there that we are interested in. We'll get it all later for now let's get minimal version up and running.
+
+With that in mind let's modify the main function inside the `scraper.ts`:
+
+```scraper.ts
+async function main(maxPages = 5) {
+
+    // start with the initial webpage to visit
+    const paginationURLsToVisit = ["https://scrapeme.live/shop"];
+
+    // list of URLs the crawler has visited
+    const visitedURLs:Set<string> = new Set();
+
+    const productURLs = new Set();
+
+    // iterating until the queue is empty
+    // or the iteration limit is hit
+    while (
+        paginationURLsToVisit.length !== 0 &&
+        visitedURLs.size <= maxPages
+        ) {
+        // get the current url to crawl
+        const paginationURL = paginationURLsToVisit.pop();
+
+        // if the queue is empty, break the loop
+        if (paginationURL === undefined) {
+            break;
+        }
+
+        // retrieving the HTML content of the page from paginationURL
+        const pageHTML = await axios.get(paginationURL);
+
+        // adding the current webpage to the set of
+        // web pages already crawled
+        visitedURLs.add(paginationURL);
+
+        // initializing cheerio on the current webpage
+        const $ = cheerio.load(pageHTML.data);
+
+        // get all pagination URLs and for each page...
+        // see image above
+        $(".page-numbers a").each((index, element) => {
+            const paginationURL = $(element).attr("href");
+
+            // if the queue is empty, break the loop
+            if (paginationURL === undefined) {
+                return;
+            }
+            // adding the pagination URL to the queue
+            // of web pages to crawl, if it wasn't yet crawled
+            if (
+                !visitedURLs.has(paginationURL) &&
+                !paginationURLsToVisit.includes(paginationURL)
+            ) {
+                paginationURLsToVisit.push(paginationURL);
+            }
+        });
+
+        // retrieve the product URLs
+        $("li.product a.woocommerce-LoopProduct-link").each((index, element) => {
+            const productURL = $(element).attr("href");
+            productURLs.add(productURL);
+        });
+    }
+    //...
+    console.log([...productURLs]);
+}
+```
+
+Running this code should return an array of product URLs, but since it's just logged to the console we cannot do much with them.
+
+```bash
+[
+  'https://scrapeme.live/shop/Bulbasaur/',
+  'https://scrapeme.live/shop/Ivysaur/',
+  'https://scrapeme.live/shop/Venusaur/',
+  'https://scrapeme.live/shop/Charmander/',
+  'https://scrapeme.live/shop/Charmeleon/',
+  'https://scrapeme.live/shop/Charizard/',
+  'https://scrapeme.live/shop/Squirtle/',
+  'https://scrapeme.live/shop/Wartortle/',
+  'https://scrapeme.live/shop/Blastoise/',
+  //...
+]
+```
+
+The repository has a branch with code at this stage [here](https://github.com/ethernal/web-scraper-stepped-solution/tree/step-2-scrape-data-from-site) <NewTabIcon/>.
+
+The "magic" happens between the lines where we first get the content of the webpage and then send it to cheerio for parsing.
+
+```scraper.ts
+// retrieving the HTML content of the page from paginationURL
+        const pageHTML = await axios.get(paginationURL);
+
+        // adding the current webpage to the set of
+        // web pages already crawled
+        visitedURLs.add(paginationURL);
+
+        // initializing cheerio on the current webpage
+        const $ = cheerio.load(pageHTML.data);
+```
+
+After that we can query it with jQuery like syntax:
+
+```scraper.ts
+$(".page-numbers a").each((index, element) => {
+//...
+});
+```
+
+For now our scraper doesn't do much but there is everything in place for us to get all that shiny data if we so desire.
+
+For reference here's the full source of the initial scraper:
+
+```scraper.ts
+import axios from 'axios';
+import cheerio from 'cheerio';
+
+async function main(maxPages = 5) {
+    // start with the initial webpage to visit
+    const paginationURLsToVisit = ["https://scrapeme.live/shop"];
+
+    // list of URLs the crawler has visited
+    const visitedURLs:Set<string> = new Set();
+    const productURLs = new Set();
+
+    // iterating until the queue is empty
+    // or the iteration limit is hit
+    while (
+        paginationURLsToVisit.length !== 0 &&
+        visitedURLs.size <= maxPages
+    ) {
+        // get the current url to crawl
+        const paginationURL = paginationURLsToVisit.pop();
+
+        // if the queue is empty, break the loop
+        if (paginationURL === undefined) {
+            break;
+        }
+
+        // retrieving the HTML content of the page from paginationURL
+        const pageHTML = await axios.get(paginationURL);
+
+        // adding the current webpage to the set of
+        // web pages already crawled
+        visitedURLs.add(paginationURL);
+
+        // initializing cheerio on the current webpage
+        const $ = cheerio.load(pageHTML.data);
+
+        // get all pagination URLs and for each page...
+        // see image above
+        $(".page-numbers a").each((index, element) => {
+            const paginationURL = $(element).attr("href");
+            // if the queue is empty, break the loop
+            if (paginationURL === undefined) {
+                return;
+            }
+
+            // adding the pagination URL to the queue
+            // of web pages to crawl, if it wasn't yet crawled
+            if (
+                !visitedURLs.has(paginationURL) &&
+                !paginationURLsToVisit.includes(paginationURL)
+            ) {
+                paginationURLsToVisit.push(paginationURL);
+            }
+        });
+
+        // retrieve the product URLs
+        $("li.product a.woocommerce-LoopProduct-link").each((index, element) => {
+            const productURL = $(element).attr("href");
+            productURLs.add(productURL);
+        });
+    }
+    console.log([...productURLs]);
+}
+
+main()
+    .then(() => {
+        process.exit(0);
+    })
+    .catch((e) => {
+        // logging the error message
+        console.error(e);
+
+        process.exit(1);
+    });
+```
+
+## Saving to local database and extracting data
+
+If you have any issues along the way here is the finished code for this section: [prisma and seeding script](https://github.com/ethernal/web-scraper-stepped-solution/tree/step-3-prisma-schema-and-seed-script) <NewTabIcon/>.
+
+Now we will add database connectivity to our scraper, this will allow us to process the data later without accessing the site again.
+
+First we need to add prisma to our project as a dependency:
+
+```bash
+npm install prisma --save-dev
+```
+
+and then initialize the database connection:
+
+```bash
+npx prisma init --datasource-provider sqlite
+```
+
+This will create a new `prisma` folder with `schema.prisma` file inside and `.env` file in the root of the directory.
+
+```.env
+DATABASE_URL="file:./dev.db"
+```
+
+```schema.prisma
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+```
+
+We'll modify these files in a moment.
+
+Before continuing make sure that in `.gitignore` any `.env` files are set to ignored in the commits, BUT not `.env.dist`.
+
+You can exclude a file pattern in `.gitignore` by adding an `!` before the pattern or file name.
+
+Add the following at the end of the `.gitignore` file:
+
+```.gitignore
+# local env files
+.env*.local
+.env
+.env.*
+!.env.dist
+```
+
+Create additional file: `.env.dist`. We will use `.env` file as our source of truth in production and `.env.dist` as a sample or reference file.
+
+When you clone the full repository `.env` file will not be present so `.env.dist` will tell you what environmental variables you need to set to successfully run the project.
+
+In the `.env` set `DATABASE_URL` to the following:
+
+```.env
+DATABASE_URL="file:./data/dev.db"
+```
+
+You can set `.env.dist` file to have the same contents as `.env` but remember to keep all secrets out of `.env.dist` file.
+
+With this configuration present Prisma (when run) will create a `/data/dev.db` file and subfolder inside `/prisma` folder.
+
+Now we need to design our database schema. We'll keep it simple but fairly robust for the use case. We'll assume the most important aspect for our users is the price of the product but we'll keep all additional information in the database as JSON.
+
+Prisma does not support `JSON` field type for `sqlite` so we'll use a string and parse it when necessary.
+
+We'll also have the `User` model to test our database connection.
+
+Modify the `prisma/prisma.schema` file:
+
+```prisma.schema
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String @id @default(cuid())
+  email     String @unique
+  firstName String
+  lastName  String
+}
+
+model ScrappedData {
+  id        String   @id @default(cuid())
+  url       String   @unique
+  price     Float
+  data      String // serialize and deserialize from string until support is added in prisma
+  dataType  String   @default("product")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+```
+
+Points to note about the schema:
+
+1. `id` field is auto-generated and unique and uses CUID as value of an id field.
+2. `createdAt` and `updatedAt` fields are auto-generated.
+3. We make sure that data is collected only once for a given `url` so it will be a unique field.
+3. `data` will hold any data we extract and do not need to directly operate on (ex. filter).
+4. `dataType` is there to distinguish between different types of data we could obtain and will not be used in our examples, it's there to give you an idea how to expand the scraper capabilities ex. templates.
+
+Let's get ready to test our database connection.
+
+And this is a real **gem** in this article:
+
+It is possible to **SEED** prisma database with *seed* script written in *typescript* and using *ESM* imports!
+
+Try it in a project without `tsx` installed. I have, it's not fun..
+
+Add a prisma seed script to the `package.json` file. It's a "standalone" configuration that does **not** belong in "scripts" section.:
+
+```package.json
+{
+  //...
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "scrap": "tsx scraper.ts",
+    //...
+  },
+  "prisma": {
+    "seed": "tsx prisma/seed.ts"
+  },
+  "dependencies": {
+    //...
+  }
+  //...
+}
+```
+
+Before writing the seed script generate the prisma client:
+
+```bash
+npx prisma generate
+```
+This will create all the methods that we will need inside seed and scraper to work with prisma.
+
+```bash
+Prisma schema loaded from prisma\schema.prisma
+
+added 2 packages, and audited 192 packages in 4s
+
+✔ Installed the @prisma/client and prisma packages in your project
+✔ Generated Prisma Client (v5.6.0) to .\node_modules\@prisma\client in 80ms
+```
+
+After that we need to synchronize model with the database. For now we can push the model as database does not exist yet and we do not care about migrations.
+
+```bash
+npx prisma db push
+```
+
+This will create all folders required and a database file.
+
+```bash
+Environment variables loaded from .env
+Prisma schema loaded from prisma\schema.prisma
+Datasource "db": SQLite database "dev.db" at "file:./data/dev.db"
+
+SQLite database dev.db created at file:./data/dev.db
+
+Your database is now in sync with your Prisma schema. Done in 37ms
+```
+
+We are finally ready to create the `seed.ts` file inside `prisma` folder:
+
+```seed.ts
+// prisma/seed.ts
+import { PrismaClient } from '@prisma/client';
+
+const prisma = new PrismaClient();
+
+async function main() {
+    // we're using upsert to make sure we're not trying to insert same data twice (it will error out)
+	await prisma.user.upsert({
+		where: { email: `admin@example.com` },
+		create: {
+			email: `admin@example.com`,
+			firstName: 'Admin',
+			lastName: 'Super',
+		},
+		update: {
+			firstName: 'Admin',
+			lastName: 'Super',
+		},
+	});
+}
+
+console.log('Seeding the database');
+main()
+	.catch((e) => {
+		console.error(e);
+		process.exit(1);
+	})
+	.finally(async () => {
+	    await prisma.$disconnect();
+        console.log('Completed seeding the database');
+	});
+```
+
+Run the seeding script with:
+
+```bash
+npx prisma db seed
+```
+
+`npx` will run the `prisma` script from node_modules and execute the `seed.ts` with `tsx`. It should return in the console:
+
+```bash
+Seeding the database
+Completed seeding the database
+```
+
+Our database connection works and the seed script can be run multiple times thanks to using `upsert`, you can try again.
+
+Update the `.gitignore` file to keep our database from being sent to the repository:
+
+```.gitignore
+# prisma database location
+prisma/data
+```
+
+> A side note to Next.js developers reading this: this method also works with Next.js! Tested and confirmed. You're welcome!
+
+### Extending the scraper
+
+If you have any issues along the way here is the finished code for this section: [saving product data to the database](https://github.com/ethernal/web-scraper-stepped-solution/tree/step-4-save-product-to-database) <NewTabIcon/>.
+
+Now that we have our database connected and confirmed it works let's add the same capability to the scraper. We'll also extract more information about the product and save it to the database.
+
+```scraper.ts
+import axios from 'axios';
+import cheerio from 'cheerio';
+
+import { PrismaClient } from '@prisma/client';
+
+async function main(maxPages = 5) {
+  const prisma = new PrismaClient();
+
+  // initialized with the webpage to visit
+  const paginationURLsToVisit = ["https://scrapeme.live/shop"];
+  const visitedURLs: Set<string> = new Set();
+  const products = new Set();
+
+  // iterating until the queue is empty
+  // or the iteration limit is hit
+  while (paginationURLsToVisit.length !== 0 && visitedURLs.size <= maxPages) {
+    // the current url to crawl
+    const paginationURL = paginationURLsToVisit.pop();
+
+    // if the queue is empty, skip the current iteration and continue the loop
+    if (paginationURL === undefined) {
+      continue;
+    }
+
+    // retrieving the HTML content from paginationURL
+    const pageHTML = await axios.get(paginationURL);
+
+    // adding the current webpage to the
+    // web pages already crawled
+    visitedURLs.add(paginationURL);
+
+    // initializing cheerio on the current webpage
+    const $ = cheerio.load(pageHTML.data);
+
+    // retrieving the pagination URLs
+    $(".page-numbers a").each((index, element) => {
+      const paginationURL = $(element).attr("href");
+
+      // if the queue is empty, skip to the next element in the loop
+      if (paginationURL === undefined) {
+        return;
+      }
+
+      // adding the pagination URL to the queue
+      // of web pages to crawl, if it wasn't yet crawled
+      if (
+        !visitedURLs.has(paginationURL) &&
+        !paginationURLsToVisit.includes(paginationURL)
+      ) {
+        paginationURLsToVisit.push(paginationURL);
+      }
+    });
+    console.log("Adding products...");
+
+    // retrieving the product URLs
+    $("li.product a.woocommerce-LoopProduct-link").each((index, element) => {
+    // extract all information about the product
+
+    const productURL = $(element).attr("href");
+    const productImg = $(element).find("img").attr("src");
+    const productName = $(element).find("h2").text();
+    const productPrice = $(element).find(".woocommerce-Price-amount").text();
+    const productPriceCurrency = $(element)
+        .find(".woocommerce-Price-currencySymbol")
+        .text();
+
+    const product = {
+      name: productName,
+      price: productPrice.replaceAll(productPriceCurrency, ""), // remove currency symbol from the price
+      currency: productPriceCurrency,
+      image: productImg,
+      url: productURL,
+    };
+
+    products.add(product);
+
+    if (productURL === undefined) {
+      return;
+    }
+
+    // create a function that will save the information about the product to the database
+    const addData = async (data: typeof product) => {
+      // use upsert to create row if it does not exist or update data if it has changed since last run
+      // sqlite and prisma don't support createMany so we need to use per element inserts
+      await prisma.scrappedData.upsert({
+        where: {
+          url: data.url,
+        },
+        create: {
+          url: data.url,
+          price: parseFloat(data.price),
+          data: JSON.stringify(data),
+        },
+        update: {
+          price: parseFloat(data.price),
+          data: JSON.stringify(data),
+        },
+      });
+    };
+
+    // Here we're saving scrapped data to the database
+    addData(product);
+
+    console.log(`Added: ${JSON.stringify(product, undefined, 2)}`);
+  });
+}
+
+  console.log("Products added.");
+}
+
+main()
+  .then(() => {
+    process.exit(0);
+  })
+
+  .catch((e) => {
+    // logging the error message
+
+    console.error(e);
+
+    process.exit(1);
+  });
+```
+
+As you can see not much was really needed in the scraper code itself to make it work.
+
+We have added a function that saves the product data to the database and extracted information about the product from the website. The function for prisma works the same way as the seeding function, but if you do have questions please [contact me](/contact).
+
+```scraper.ts
+const productURL = $(element).attr("href");
+const productImg = $(element).find("img").attr("src");
+const productName = $(element).find("h2").text();
+const productPrice = $(element).find(".woocommerce-Price-amount").text();
+const productPriceCurrency = $(element).find(".woocommerce-Price-currencySymbol").text();
+```
+
+If you run the scraper now you should see the products in the database. You can use [HeidiSQL](https://www.heidisql.com/download.php) <NewTabIcon/> to view the data in the database.
+
+Added data should also be displayed in the console:
+
+```bash
+Adding products...
+Added: {
+  "name": "Bulbasaur",
+  "price": "63.00",
+  "currency": "£",
+  "image": "https://scrapeme.live/wp-content/uploads/2018/08/001-350x350.png",
+  "url": "https://scrapeme.live/shop/Bulbasaur/"
+}
+Added: {
+  "name": "Ivysaur",
+  "price": "87.00",
+  "currency": "£",
+  "image": "https://scrapeme.live/wp-content/uploads/2018/08/002-350x350.png",
+  "url": "https://scrapeme.live/shop/Ivysaur/"
+}
+```
+
+Now there are last twp things we need to take care of. If you check inside the database you'll see that the images are linked from the original site.
+
+<Image src="/image/article/web-crawler/data-in-heidisql.png" width="1300" height="75" alt="image showing that product images are linked from the original site" className="mb-4"/>
+
+This is not good on many levels: we might be overusing the bandwidth or external site and these images may be removed at some point. Let's try limiting our impact on the site and download the images to our folder and serve them on our own.
+
+The second issue is that at some point you can see an error that more than 10 PrismaClients have been created.
+
+### Downloading images and instantiating prisma
+
+If you have any issues along the way here is the finished code for this section: [saving product data to the database](https://github.com/ethernal/web-scraper-stepped-solution/tree/step-5-local-images-and-prisma) <NewTabIcon/>.
+
+To remedy that we'll create a single instance of the PrismaClient. Create a `src/lib/prisma.ts` file.
+
+```src/lib/prisma.ts
+// see: https://www.prisma.io/docs/guides/other/troubleshooting-orm/help-articles/nextjs-prisma-client-dev-practices
+import { PrismaClient } from '@prisma/client';
+
+const globalForPrisma = global as unknown as { prisma: PrismaClient }
+
+export const prisma =
+  globalForPrisma.prisma ||
+  new PrismaClient({
+    log: ['info','warn', 'error'],
+  })
+
+if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
+```
+
+From now on we can reference the `prisma` variable from the `lib/prisma.ts` instead of creating new the client every time. This will be important in part 2.
+
+To download data we will use node and axios. First let's create a function that will receive a list of files to download, note that we are using `prisma` from our `lib` folder here:
+
+```scraper.tsx
+import axios from 'axios';
+import cheerio from 'cheerio';
+import fs from 'fs';
+import path from 'path';
+
+import { prisma } from './src/lib/prisma';
+
+async function createFile(name:string, response:AxiosResponse<any, any>) {
+  const file = fs.createWriteStream(`./public/images/${name}`);
+
+  return new Promise<boolean>((resolve, reject) => {
+    response.data.pipe(file);
+    file.on('finish',() => {
+        file.close();
+        resolve(true);
+
+      });
+    file.on('error', () => {file.close();
+        reject(false);
+      }
+    );
+  })
+}
+
+async function downloadFiles(downloadFiles: Array<string>) {
+  console.log(`Starting download of ${downloadFiles.length} files. This will take few minutes. Please be patient...`);
+
+  let fileDownloadCount = 0;
+
+  const dir='./public/images/'
+
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir, { recursive: true });
+  }
+
+  for (let i=0;i< downloadFiles.length;i++) {
+    const link = downloadFiles[i];
+    const name = path.basename(link);
+    const url = link
+    console.log('Downloading file: ' + name);
+
+    const response = await axios({
+      url,
+      method: 'GET',
+      responseType: 'stream'
+    });
+
+    const createdFile = await createFile(name, response);
+
+    if (createdFile) fileDownloadCount++;
+  }
+
+  console.log(`Finished downloading ${fileDownloadCount} of ${downloadFiles.length} files.`);
+}
+
+async function main(maxPages = 5) {
+
+  // initialized with the webpage to visit
+  const paginationURLsToVisit = ["https://scrapeme.live/shop"];
+  const visitedURLs: Set<string> = new Set();
+  const products = new Set();
+  const imageSrc = new Set<string>();
+  //...
+}
+```
+
+We have imported the `fs` and `path` to make working with local files possible and imported `prisma` from the `lib` folder.:
+
+```scraper.ts
+import fs from 'fs';
+import path from 'path';
+
+import { prisma } from './src/lib/prisma';
+```
+
+Then we declare the function that will accept an `Array` of `string`s that will represent links to files we need to download:
+
+```scraper.ts
+async function downloadFiles(downloadFiles: Array<string>) {
+//...
+}
+```
+As we loop through all the files with [`for`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/for) <NewTabIcon/> loop we'll extract information from the link to get the name of the file. With it we can can set a custom save location for it.
+
+We also save the full url to the original file as a local variable.
+
+Before downloading files we need to make sure that folder is created:
+
+```scrapper.ts
+async function downloadFiles(downloadFiles: Array<string>) {
+  console.log(`Starting download of ${downloadFiles.length} files. This will take few minutes. Please be patient...`);
+
+  let fileDownloadCount = 0;
+
+  const dir='./public/images/'
+
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir, { recursive: true });
+  }
+  //...
+}
+```
+
+Then we loop over all the files in the list and wait for the stream to be saved to disk with `createFile` function we declared earlier.
+
+```scraper.ts
+for (let i=0;i < downloadFiles.length;i++) {
+    const link = downloadFiles[i];
+    const name = path.basename(link);
+    const url = link
+    console.log('Downloading file: ' + name);
+
+    const response = await axios({
+      url,
+      method: 'GET',
+      responseType: 'stream'
+    });
+
+    const createdFile = await createFile(name, response);
+
+    if (createdFile) fileDownloadCount++;
+  }
+```
+
+`createFile` function wraps a stream in a [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise) <NewTabIcon/> so that it can resolve after file is written to disk and closed or rejects if something goes wrong. Without it we would not have saved all the files. File is created inside the `./public/images` folder.
+
+```scraper.ts
+async function createFile(name:string, response:AxiosResponse<any, any>) {
+  const file = fs.createWriteStream(`./public/images/${name}`);
+
+  return new Promise<boolean>((resolve, reject) => {
+    response.data.pipe(file);
+    file.on('finish',() => {
+        file.close();
+        resolve(true);
+
+      });
+    file.on('error', () => {file.close();
+        reject(false);
+      }
+    );
+  })
+}
+```
+
+We keep a count of how many files have been downloaded and present that information to the user. That way we know if all the files were downloaded.
+
+Finally in the `main` function we're adding a `Set` where we'll keep links to images we want to download called `imageSrc`:
+
+```ts
+async function main(maxPages = 5) {
+
+  // initialized with the webpage to visit
+  const paginationURLsToVisit = ["https://scrapeme.live/shop"];
+  const visitedURLs: Set<string> = new Set();
+  const products = new Set();
+  const imageSrc = new Set<string>();
+  //...
+}
+```
+
+If you have **NOT** copied the code above please remember to remove the creation of the new `PrismaClient`:
+
+```ts
+import { PrismaClient } from '@prisma/client'; // <- remove this
+
+async function main(maxPages = 5) {
+  const prisma = new PrismaClient(); //<- remove this
+}
+```
+
+After having files available locally let's modify the data of the product before saving it in the database as so that image url will point to a local image not to one from the original website:
+
+```scraper.ts
+const productURL = $(element).attr("href");
+const productImg = $(element).find("img").attr("src");
+const productName = $(element).find("h2").text();
+const productPrice = $(element).find(".woocommerce-Price-amount").text();
+const productPriceCurrency = $(element).find(".woocommerce-Price-currencySymbol").text();
+
+// save original image url in the imageSrc to be downloaded later
+if (productImg !== undefined) {
+    imageSrc.add(productImg);
+}
+
+// but change the data that is saved to the DB to point to the local image
+// when using vite relative path files are served from the public folder by default so there is no need to add the folder to the path - it will produce a warning in the console
+const localProductImg = (productImg !== undefined) ? `./images/${path.basename(productImg)}` : productImg;
+
+const product = {
+    name: productName,
+    price: productPrice.replaceAll(productPriceCurrency, ""),
+    currency: productPriceCurrency,
+    image: localProductImg,
+    url: productURL
+}
+```
+
+And finally just before the end of the `main` function download the images:
+
+```scraper.ts
+function main(maxPages = 5) {
+//...
+            await addData(product);
+        });
+    }
+
+// logging the crawling results
+    console.log('Products added.');
+    console.log('Downloading images...');
+    await downloadFiles(Array.from(imageSrc));
+    console.log('Done!');
+}
+```
+
+You can also add `images` folder to `.gitignore` file to keep source code clean:
+
+```.gitignore
+# images folder
+public/images
+```
+
+If you inspect the data in HeidiSQL now you will see that we have relative images set for the products.
+
+<Image src="/image/article/web-crawler/data-in-heidisql-local-images.png" width="1300" height="75" alt="image showing that product images are linked from the original site" className="mb-4"/>
+
+With this our scraper (shovel to unearth the treasures) is completed.
+
+In this part of the series we have:
+
+* [x] Created a web scraper that visits all related pages automatically.
+* [x] Extracts the information about the product from the web page.
+* [x] Modifies that information before it's ready to be saved.
+* [x] Saves the product information in the database.
+* [x] Downloads images.
+
+In the next part we'll create a frontend and a backend to serve the data and visually present it to the users.
+
+See you soon!
+
+Below is the full source of the finished `scraper.ts`.
+
+## Finished scraper
+
+```scraper.ts
+import axios, { AxiosResponse } from 'axios';
+import cheerio from 'cheerio';
+import fs from 'fs';
+import path from 'path';
+
+import { prisma } from './src/lib/prisma';
+
+async function createFile(name:string, response:AxiosResponse<any, any>) {
+  const file = fs.createWriteStream(`./public/images/${name}`);
+
+  return new Promise<boolean>((resolve, reject) => {
+    response.data.pipe(file);
+    file.on('finish',() => {
+        file.close();
+        resolve(true);
+
+      });
+    file.on('error', () => {file.close();
+        reject(false);
+      }
+    );
+  })
+}
+
+async function downloadFiles(downloadFiles: Array<string>) {
+  console.log(`Starting download of ${downloadFiles.length} files. This will take few minutes. Please be patient...`);
+
+  let fileDownloadCount = 0;
+
+  const dir='./public/images/'
+
+  if (!fs.existsSync(dir)){
+    fs.mkdirSync(dir, { recursive: true });
+  }
+
+  for (let i=0;i< downloadFiles.length;i++) {
+    const link = downloadFiles[i];
+    const name = path.basename(link);
+    const url = link
+    console.log('Downloading file: ' + name);
+
+    const response = await axios({
+      url,
+      method: 'GET',
+      responseType: 'stream'
+    });
+
+    const createdFile = await createFile(name, response);
+
+    if (createdFile) fileDownloadCount++;
+  }
+
+  console.log(`Finished downloading ${fileDownloadCount} of ${downloadFiles.length} files.`);
+}
+
+async function main(maxPages = 1) {
+
+  // initialized with the webpage to visit
+  const paginationURLsToVisit = ["https://scrapeme.live/shop"];
+  const visitedURLs: Set<string> = new Set();
+  const products = new Set();
+  const imageSrc = new Set<string>();
+
+  // iterating until the queue is empty
+  // or the iteration limit is hit
+  while (paginationURLsToVisit.length !== 0 && visitedURLs.size <= maxPages) {
+    // the current url to crawl
+    const paginationURL = paginationURLsToVisit.pop();
+
+    // if the queue is empty, skip the current iteration and continue the loop
+    if (paginationURL === undefined) {
+      continue;
+    }
+
+    // retrieving the HTML content from paginationURL
+    const pageHTML = await axios.get(paginationURL);
+
+    // adding the current webpage to the
+    // web pages already crawled
+    visitedURLs.add(paginationURL);
+
+    // initializing cheerio on the current webpage
+    const $ = cheerio.load(pageHTML.data);
+
+    // retrieving the pagination URLs
+    $(".page-numbers a").each((index, element) => {
+      const paginationURL = $(element).attr("href");
+      // if the queue is empty, skip to the next element in the loop
+      if (paginationURL === undefined) {
+        return;
+      }
+
+      // adding the pagination URL to the queue
+      // of web pages to crawl, if it wasn't yet crawled
+      if (
+        !visitedURLs.has(paginationURL) &&
+        !paginationURLsToVisit.includes(paginationURL)
+      ) {
+        paginationURLsToVisit.push(paginationURL);
+      }
+    });
+    console.log("Adding products...");
+
+    // retrieving the product URLs
+    $("li.product a.woocommerce-LoopProduct-link").each((index, element) => {
+      // extract all information about the product
+      const productURL = $(element).attr("href");
+      const productImg = $(element).find("img").attr("src");
+      const productName = $(element).find("h2").text();
+      const productPrice = $(element).find(".woocommerce-Price-amount").text();
+      const productPriceCurrency = $(element).find(".woocommerce-Price-currencySymbol").text();
+
+
+      if (productImg !== undefined) {
+        imageSrc.add(productImg);
+      }
+
+      //when using vite relative path files are served from the public folder by default so there is no need to add the folder to the path - it will produce a warning in the console
+      const localProductImg = (productImg !== undefined) ? `./images/${path.basename(productImg)}` : productImg;
+
+      const product = {
+          name: productName,
+          price: productPrice.replaceAll(productPriceCurrency, ""),
+          currency: productPriceCurrency,
+          image: localProductImg,
+          url: productURL
+      }
+
+      products.add(product);
+
+      if (productURL === undefined) {
+        return;
+      }
+
+      // create a function that will save the information about the product to the database
+      const addData = async (data: typeof product) => {
+        // use upsert to create row if it does not exist or update data if it has changed since last run
+        // sqlite and prisma don't support createMany so we need to use per element inserts
+        await prisma.scrappedData.upsert({
+          where: {
+            url: data.url,
+          },
+          create: {
+            url: data.url,
+            price: parseFloat(data.price),
+            data: JSON.stringify(data),
+          },
+          update: {
+            price: parseFloat(data.price),
+
+            data: JSON.stringify(data),
+          },
+        });
+      };
+
+      // Here we're saving scrapped data to the database
+      addData(product);
+    });
+  }
+
+  console.log("Products added.");
+  console.log('Downloading images...');
+  await downloadFiles(Array.from(imageSrc));
+  console.log('Done!');
+}
+
+main()
+  .then(() => {
+    process.exit(0);
+  })
+  .catch((e) => {
+    // logging the error message
+    console.error(e);
+    process.exit(1);
+  });
+```
+
+It wasn't as hard as it seemed right?
+
+Let me know what you think or send a PR with improvements!
+
+See you next time!
