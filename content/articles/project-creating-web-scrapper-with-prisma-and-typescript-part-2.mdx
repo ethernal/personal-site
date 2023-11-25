@@ -1,0 +1,817 @@
+---
+title: Web scraper with prisma and typescript part 2 (backend and frontend)
+subtitle: backend and frontend
+author: Sebastian Pieczynski
+publishedOn: 2023-11-30
+published: true
+status: published
+series: web-scraper-2023
+seriesPart: 2
+abstract: Backend and frontend for the scraper with prisma and typescript. Access data from sqlite, add filters and control state via URL search params.
+category: Programming
+keywords: [react, API, frontend, web scraper, crawler, axios, rest, cors, prisma, typescript, vite, engineering]
+image: "/image/article/web-crawler/web-scraper.jpeg"
+imageAlt: "pirates loading treasure chests from tropical island onto the ship, huge hole near the chests, some chests are still buried in the sand, some open treasure chests filled with gold are visible on the ship, view from the beach to the ship, day, warm, cumulus clouds, watercolor"
+---
+
+This is the continuation of [the part 1](/article/project-creating-web-scrapper-with-prisma-and-typescript-part-1) of our project to create a web scraper with local database and typescript.
+
+## Contents
+
+## Introduction
+
+<p className="text-theme-accent font-semibold font-heading">Arrrr... you ready for boarding?</p>
+
+In the [first part](/article/project-creating-web-scrapper-with-prisma-and-typescript-part-1) of the project we created a simple but reliable web scraper. In the this part we'll build the frontend and backend to show our users data we have unearthed from the depths of the web.
+
+## Building the backend
+
+Since Prisma cannot run on frontend we need some way to get the data. We can build an API server to expose a route that will then return the data that we are interested in. Additional benefit is that we can then have some more control over what and how the data is returned.
+
+### Preparing dev environment
+
+To make our lives a bit easier while developing a live running process (that requires restarting every time a change is introduced) we can install a 'nodemon' package. Nodemon will automatically restart the server when a change is introduced. It will be helpful if you want to tinker with the implementation later.
+
+```bash
+npm install --save-dev nodemon
+```
+
+Since we want to use `tsx` to run our `.ts` files we need to tell `nodemon` to use `tsx` when executing `.ts` files.
+To do that create a `nodemon.json` in the root of the project with the map of the executables for specific file extensions.:
+
+```json
+{
+  "execMap": {
+    "ts": "tsx"
+  }
+}
+```
+
+then in the `package.json`:
+
+```json
+{
+  "scripts": {
+    "server": "nodemon server.ts",
+  }
+}
+```
+
+If you are using `ts-node` in your project it is not required to create a configuration. `nodemon` will use it automatically for `.ts` files.
+
+### Creating the server
+
+Now in the root of the project create a `server.ts` file and paste the code below. We'll go through it line by line in the comments:
+
+```ts
+// import required modules for server and connection between front and backend
+import cors from 'cors';
+import express from 'express';
+
+// import database library
+import { prisma } from './src/lib/prisma';
+
+// server port setup
+const PORT = process.env.PORT || 3213;
+
+// create an instance of an Express server
+const app = express();
+
+// apply cors middleware with no settings (allows all connections)
+app.use(cors());
+
+// create a route that will respond with all data that we have in a DB
+// under http://localhost:3213/api/products
+app.get('/api/products', async (req, res) => {
+
+  // query parameters from request since it's all passed as strings we need to parse data as well
+  const maxPrice = parseInt(req.query.price_lte) ?? 100; // set default value if not given (never trust data from the frontend)
+  const sortBy = req.query.sortBy ?? '';
+  const sortOrder = req.query.sortOrder; // no default since it is dependant on sortBy, see below
+
+
+  // build part of the query based on the parameters passed
+  const orderByQuery = req.query.sortBy !== '' ? {
+    orderBy: {
+      [sortBy]: sortOrder
+    }
+  } : undefined; // return undefined so that the query is empty and ignored when destructuring below
+
+
+  // declare a function that gets all data from the DB
+  const fetchData = async () => {
+      const data = await prisma.scrapedData.findMany({where:{
+        price: {
+          lte: maxPrice
+        }
+      },
+      ...orderByQuery
+
+    });
+      return data;
+    }
+
+  return res.json(200, await fetchData()); // return all data with success status
+})
+
+// start the server on set port and display message in the console
+app.listen(PORT, () => {
+  console.log(`Server Listening on: http://localhost:${PORT}` );
+});
+```
+
+### API
+
+Our API layer is very simple, it waits for a client to visit the route '/api/products' and returns all data from the DB based on the parameters passed. The `req` and `res` parameters are automatically passed to the function by the Express server.
+
+`req` stands for request sent by the client browser and `res` is the response that we will send back to the client according to the paramters passed in `req`. The `req` holds all the information about the request:
+
+Shortened `req` contents:
+
+```ts
+Request:  <ref *2> IncomingMessage {
+  //...
+  httpVersionMajor: 1,
+  httpVersionMinor: 1,
+  httpVersion: '1.1',
+  complete: false,
+  rawHeaders: [
+    'Host',
+    'localhost:3213',
+    'User-Agent',
+    'Accept',
+    'application/json, text/plain, */*',
+    'Accept-Language',
+    'Accept-Encoding',
+    'gzip, deflate, br',
+    'Origin',
+    'http://localhost:5173',
+    'DNT',
+    '1',
+    'Connection',
+    'keep-alive',
+    'Referer',
+    'http://localhost:5173/',
+    'Sec-Fetch-Dest',
+    'empty',
+    'Sec-Fetch-Mode',
+    'cors',
+    'Sec-Fetch-Site',
+    'same-site'
+  ],
+  url: '/api/products?price_lte=80',
+  method: 'GET',
+  statusCode: null,
+  statusMessage: null,
+ //...
+  },
+  //...
+  originalUrl: '/api/products?price_lte=80',
+  _parsedUrl: Url {
+    protocol: null,
+    slashes: null,
+    auth: null,
+    host: null,
+    port: null,
+    hostname: null,
+    hash: null,
+    search: '?price_lte=80',
+    query: 'price_lte=80',
+    pathname: '/api/products',
+    path: '/api/products?price_lte=80',
+    href: '/api/products?price_lte=80',
+    _raw: '/api/products?price_lte=80'
+  },
+  params: {},
+  query: { price_lte: '80' },
+  //...
+  route: Route {
+    path: '/api/products',
+    stack: [ [Layer] ],
+    methods: { get: true }
+  },
+  [Symbol(kCapture)]: false,
+  [Symbol(kHeaders)]: {
+    host: 'localhost:3213',
+    accept: 'application/json, text/plain, */*',
+    'accept-language': 'pl,en-US;q=0.7,en;q=0.3',
+    'accept-encoding': 'gzip, deflate, br',
+    origin: 'http://localhost:5173',
+    dnt: '1',
+    connection: 'keep-alive',
+    referer: 'http://localhost:5173/',
+    'sec-fetch-dest': 'empty',
+    'sec-fetch-mode': 'cors',
+    'sec-fetch-site': 'same-site'
+  },
+//...
+```
+
+As you can see the `req` object has a lot of potentially useful information about both the request and client sending it.
+
+Our "server" waits for a client (user/browser) to open the browser with URL 'http://localhost:3213/api/products' and when that happens it invokes code in the `async (req, res)` function.
+
+```server.ts
+app.get('/api/products', async (req, res) => {
+  //...
+});
+```
+
+In our case that means parsing the query parameters that you have seen in the request body:
+
+```server.ts
+  const maxPrice = parseInt(req.query.price_lte) ?? 100;
+  const sortBy = req.query.sortBy ?? '';
+  const sortOrder = req.query.sortOrder;
+```
+
+And then using that parameters to build a query for the database:
+
+```server.ts
+const orderByQuery = req.query.sortBy !== '' ? {
+    orderBy: {
+      [sortBy]: sortOrder
+    }
+  } : undefined; // return undefined so that the query is empty and ignored when destructuring below, anything else will result in query error
+
+
+  const fetchData = async () => {
+      const data = await prisma.scrappedData.findMany({where:{
+        price: {
+          lte: maxPrice
+        }
+      },
+      ...orderByQuery
+
+    });
+      return data;
+    }
+```
+
+Finally the function is invoked and data returned in as the successful (code 200) response.
+
+```server.ts
+return res.status(200).json(await fetchData());
+```
+
+As you can clearly see this is enough to create a robust functionality and it is quite simple. Of course proper implementation would need to take care of many other things like:
+
+* better security
+* API keys
+* rate limiting
+* error handling
+* error reporting
+* caching
+* logging
+
+Our goal here is to just get data so our frontend can render it. But there is one thing we must take care of: CORS.
+
+### CORS
+
+CORS stands for Cross-Origin Resource Sharing. MDN docs explain it in details on the [CORS](https://developer.mozilla.org/en-US/docs/Web/HTTP/CORS) documentation page:
+
+Cross-Origin Resource Sharing (CORS) is an HTTP-header based mechanism that allows a server to indicate any origins (domain, scheme, or port) other than its own from which a browser should permit loading resources.
+
+For the demo purposes we allow all requests to pass with:
+
+```server.ts
+import cors from 'cors';
+
+//...
+
+const app = express();
+app.use(cors()); // no options indicate all connections are allowed
+```
+
+You can try to comment out this line and see what happens when we finish the frontend.
+
+## Building the frontend
+
+I'll be using [TailwindCSS](https://tailwindcss.com/docs/installation) for styling. You can read more about building a robust CSS system [here](/dark-mode-and-design-system-with-tailwind-in-next-js).
+
+Let's start simple and display only the names of the products returned from the backend.
+
+```App.tsx
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
+type Product = {
+    id: string;
+    url: string;
+    price: number;
+    data: string;
+    dataType: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+
+function App() {
+  // use search url params to set initial data for the state
+  const searchParams = new URLSearchParams(window.location.search);
+  const priceFromURL = isNaN(parseInt(searchParams.get('price_lte'))) ? 80 : parseInt(searchParams.get('price_lte')!);
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [maxPrice, setMaxPrice] = useState(priceFromURL);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const fetchData = async () => {
+      // create a query string based on the parameters passed
+      const price_lte = 'price_lte=' + maxPrice.toString();
+
+      // query will look like ?price_lte=80 by default
+      const queryParams = price_lte;
+
+      const products = (
+        await axios.get(`http://localhost:3213/api/products?${queryParams}`,{signal:signal})).data;
+
+      console.log('products', products);
+      setProducts(products);
+    }
+
+    fetchData();
+  },[price_lte])
+
+  return (
+    <>
+      {/* Products List */}
+      <div className='w-full grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 p-8'>
+        {products?.map((data) =>  {
+
+          const metadata = JSON.parse(data.data);
+          return (
+          <div key={data.url} className='border-slate-300 bg-slate-600 border-2 p-4 flex flex-col gap-2'>
+            <h1 className='text-4xl font-bold self-center'>{metadata.name}</h1>
+          </div>
+        )
+        }
+        )}
+
+      </div>
+    </>
+  )
+}
+export default App
+```
+
+Make sure that the API server is running:
+
+```bash
+npm run server
+```
+
+And the Vite app with:
+
+```bash
+npm run dev
+```
+
+Frontend application should be available at: [http://localhost:5173](http://localhost:5173)
+
+When it loads names of the ~~pokemon~~ products should be displayed:
+
+
+<Image src="" width="1300" height="600" alt="Display product names"/>
+
+At this point there are few issues with current implementation:
+
+* we cannot control **which** products are displayed (maximum price),
+* we cannot control **how** products are displayed (sorting),
+
+So let's add these features:
+
+```App.tsx
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useDebounce } from 'usehooks-ts';
+
+type Product = {
+    id: string;
+    url: string;
+    price: number;
+    data: string;
+    dataType: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+function App() {
+  // use search url params to set initial data for the state
+  const searchParams = new URLSearchParams(window.location.search);
+  const priceFromURL = isNaN(parseInt(searchParams.get('price_lte'))) ? 80 : parseInt(searchParams.get('price_lte')!);
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [sortOptions, setSortOptions] = useState({sortBy: searchParams.get('sortBy') || '', sortOrder: searchParams.get('sortOrder') || 'asc'});
+  const [maxPrice, setMaxPrice] = useState(priceFromURL);
+  const debouncedMaxPrice = useDebounce(maxPrice, 50);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      // create a query string based on the parameters passed
+      // if any of the parameters is empty then don't add it to the query string
+      const price_lte = 'price_lte=' + maxPrice.toString();
+      const sortBy = sortOptions.sortBy !== '' ? '&sortBy=' + sortOptions.sortBy : '';
+      const sortOrder = sortOptions.sortBy !== '' && sortOptions.sortOrder !== '' ? '&sortOrder=' + sortOptions.sortOrder : '';
+
+      const queryParams = price_lte + sortBy + sortOrder;
+
+
+      const products = (
+        await axios.get(`http://localhost:3213/api/products?${queryParams}`)).data;
+
+      console.log('products', products);
+      setProducts(products);
+    }
+
+    fetchData();
+
+  },[maxPrice, sortOptions.sortBy, sortOptions.sortOrder])
+
+
+  const handleSortByChange = () => {
+
+    setSortOptions({...sortOptions, sortBy: sortOptions.sortBy === 'price' ? '' : 'price'})
+  }
+
+  const handleSortOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOptions({...sortOptions, sortOrder: e.target.value});
+  }
+
+  return (
+    <>
+      <div className='py-8 sticky top-0 bg-slate-800 opacity-95'>
+        <div className='flex justify-center items-baseline gap-2'>
+
+          <label className='text-2xl font-bold' htmlFor='max-price'>Max Price: </label>
+          <input
+            id='max-price'
+            type="range"
+            min={25}
+            max={200}
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+            className="w-1/2"
+          />
+          <p className='text-2xl font-bold'>{maxPrice}</p>
+        </div>
+         <div className='flex justify-center items-baseline gap-2 mb-4 text-2xl'>
+          <label htmlFor='sort'>Sort (by price)</label>
+          <input type='checkbox'
+            className='text-2xl font-bold me-4 w-6 h-6' id="sort"
+            name="sort"
+            checked={sortOptions.sortBy === 'price' ? true : false}
+            aria-checked={sortOptions.sortBy === 'price' ? true : false}
+
+            onChange={handleSortByChange}
+          />
+           {/* dropdown to select asc or desc sort order for the query param */}
+           <select name="sortOrder" id="sortOrder" value={sortOptions.sortOrder} onChange={handleSortOrderChange}>
+            <option value="asc">Lowest first</option>
+            <option value="desc">Highest first</option>
+          </select>
+
+         </div>
+        <div className='flex justify-center items-baseline gap-2'>
+          <p className='text-2xl font-bold'>Total Products: {products?.length}</p>
+        </div>
+      </div>
+
+      {/* Products List */}
+      <div className='w-full grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 p-8'>
+        {products?.map((data) =>  {
+
+          const metadata = JSON.parse(data.data);
+          return (
+          <div key={data.url} className='border-slate-300 bg-slate-600 border-2 p-4 flex flex-col gap-2'>
+            <h1 className='text-4xl font-bold self-center'>{metadata.name}</h1>
+            <img src={metadata.image} alt='' />
+            <p className='bg-slate-300 text-black p-2 inline-block rounded-lg self-start font-bold text-xl tracking-wide'>{metadata.currency}{data.price}</p>
+          </div>
+        )
+        }
+        )}
+
+      </div>
+    </>
+  )
+}
+
+export default App
+```
+
+Now users of our application have much more flexibility:
+
+<Image src="" width="1300" height="600" alt="second iteration of the app"/>
+
+And as we add more features (more power) we need to take on more responsibilities with it.
+
+Right now when users change the parameters of the search it is not reflected by the link they see. It is important because:
+
+1. Users can share a link to the search results just by using a link - huge UX win.
+2. Our initial state can be set via the URL to what user expects.
+
+Adding such feature is not hard:
+
+```App.tsx
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+
+type Product = {
+    id: string;
+    url: string;
+    price: number;
+    data: string;
+    dataType: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+function App() {
+  // use search url params to set initial data for the state
+  const searchParams = new URLSearchParams(window.location.search);
+  const priceFromURL = isNaN(parseInt(searchParams.get('price_lte'))) ? 80 : parseInt(searchParams.get('price_lte')!);
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [sortOptions, setSortOptions] = useState({sortBy: searchParams.get('sortBy') || '', sortOrder: searchParams.get('sortOrder') || ''});
+  const [maxPrice, setMaxPrice] = useState(priceFromURL);
+
+  useEffect(() => {
+
+    const fetchData = async () => {
+      // create a query string based on the parameters passed
+      // if any of the parameters is empty then don't add it to the query string
+      const price_lte = 'price_lte=' + debouncedMaxPrice.toString();
+      const sortBy = sortOptions.sortBy !== '' ? '&sortBy=' + sortOptions.sortBy : '';
+      const sortOrder = sortOptions.sortBy !== '' && sortOptions.sortOrder !== '' ? '&sortOrder=' + sortOptions.sortOrder : '';
+
+      // query will look like ?price_lte=80&sortBy=price&sortOrder=asc with all parameters
+      // if sortBy is missing it and the sortOrder will not be added,
+      // adding sortOrder alone will trigger an error with Prisma
+      const queryParams = price_lte + sortBy + sortOrder;
+
+      // these parameters should be part of the QueryParams on the frontend as well that way client can share the link
+      // with current state of the application: use URLSearchParams
+      history.pushState(queryParams, '', `?${queryParams}`);
+
+      const products = (
+        await axios.get(`http://localhost:3213/api/products?${queryParams}`)).data;
+
+      console.log('products', products);
+      setProducts(products);
+    }
+
+    fetchData();
+  },[maxPrice, sortOptions.sortBy, sortOptions.sortOrder])
+
+
+  const handleSortByChange = () => {
+
+    setSortOptions({...sortOptions, sortBy: sortOptions.sortBy === 'price' ? '' : 'price'})
+  }
+
+  const handleSortOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOptions({...sortOptions, sortOrder: e.target.value});
+  }
+
+  return (
+    <>
+      <div className='py-8 sticky top-0 bg-slate-800 opacity-95'>
+        <div className='flex justify-center items-baseline gap-2'>
+
+          <label className='text-2xl font-bold' htmlFor='max-price'>Max Price: </label>
+          <input
+            id='max-price'
+            type="range"
+            min={25}
+            max={200}
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+            className="w-1/2"
+          />
+          <p className='text-2xl font-bold'>{maxPrice}</p>
+        </div>
+         <div className='flex justify-center items-baseline gap-2 mb-4 text-2xl'>
+          <label htmlFor='sort'>Sort (by price)</label>
+          <input type='checkbox'
+            className='text-2xl font-bold me-4 w-6 h-6' id="sort"
+            name="sort"
+            checked={sortOptions.sortBy === 'price' ? true : false}
+            aria-checked={sortOptions.sortBy === 'price' ? true : false}
+
+            onChange={handleSortByChange}
+          />
+           {/* dropdown to select asc or desc sort order for the query param */}
+           <select name="sortOrder" id="sortOrder" value={sortOptions.sortOrder} onChange={handleSortOrderChange}>
+            <option value="asc">Lowest first</option>
+            <option value="desc">Highest first</option>
+          </select>
+
+         </div>
+        <div className='flex justify-center items-baseline gap-2'>
+          <p className='text-2xl font-bold'>Total Products: {products?.length}</p>
+        </div>
+      </div>
+
+      {/* Products List */}
+      <div className='w-full grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 p-8'>
+        {products?.map((data) =>  {
+
+          const metadata = JSON.parse(data.data);
+          return (
+          <div key={data.url} className='border-slate-300 bg-slate-600 border-2 p-4 flex flex-col gap-2'>
+            <h1 className='text-4xl font-bold self-center'>{metadata.name}</h1>
+            <img src={metadata.image} alt={metadata.name} />
+            <p className='bg-slate-300 text-black p-2 inline-block rounded-lg self-start font-bold text-xl tracking-wide'>{metadata.currency}{data.price}</p>
+          </div>
+        )
+        }
+        )}
+
+      </div>
+    </>
+  )
+}
+
+export default App
+```
+
+That's a lot of code but we actually only needed to add one line inside fetch function to make it work:
+
+```App.tsx
+history.pushState(queryParams, '', `?${queryParams}`);
+```
+
+Since fetch happens on every change to the parameters we can set history there and be certain that it's updated whenever new request is made. Grrrreat!
+
+It's not all rum and roses though.
+
+When we give users more power we also need to extend our responsibilities. Open the Developer Tools (press <kbd>F12</kbd> inside most browsers to show it) and navigate to the Network tab and reload the page if needed. Now try changing the price..
+
+Requests stream like water into the cannon ball treated hull and whenever we start a new request the old one is still in progress. We need a way to correct that:
+
+1. To limit the number of requests we can debounce the fetch function.
+2. To cancel the request in flight we can use the [`AbortController`](https://developer.mozilla.org/en-US/docs/Web/API/AbortController).
+
+Debouncing means that we want to wait a certain amount of time before making a call to a function. It uses a timer that will only fire after a certain amount of time has passed and if a call has been made again it resets the timer to start again. That way it does not call the function with a timeout but runs it once after a certain time of inactivity.
+
+We'll use the [`useDebounce`](https://usehooks-ts.com/react/useDebounce) hook for the functionality.
+
+To debounce the fetch function when price changes by using the [`useDebounce`](https://usehooks-ts.com/react/useDebounce) we'll debounce the `maxPrice` variable and use the debounced value inside the effect instead.
+
+While we are inside the `useEffect` we'll also implement the `AbortController` to cancel the last request whenever we want to start a new one.
+
+Finished implementation with `useDebounce` and `AbortController`:
+
+```App.tsx
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import { useDebounce } from 'usehooks-ts';
+
+type Product = {
+    id: string;
+    url: string;
+    price: number;
+    data: string;
+    dataType: string;
+    createdAt: Date;
+    updatedAt: Date;
+}
+function App() {
+  // use search url params to set initial data for the state
+  const searchParams = new URLSearchParams(window.location.search);
+  const priceFromURL = isNaN(parseInt(searchParams.get('price_lte'))) ? 80 : parseInt(searchParams.get('price_lte')!);
+
+  const [products, setProducts] = useState<Product[]>([]);
+  const [sortOptions, setSortOptions] = useState({sortBy: searchParams.get('sortBy') || '', sortOrder: searchParams.get('sortOrder') || ''});
+  const [maxPrice, setMaxPrice] = useState(priceFromURL);
+  const debouncedMaxPrice = useDebounce(maxPrice, 50);
+
+  useEffect(() => {
+    const controller = new AbortController();
+    const signal = controller.signal;
+
+    const fetchData = async () => {
+      // create a query string based on the parameters passed
+      // if any of the parameters is empty then don't add it to the query string
+      const price_lte = 'price_lte=' + debouncedMaxPrice.toString();
+      const sortBy = sortOptions.sortBy !== '' ? '&sortBy=' + sortOptions.sortBy : '';
+      const sortOrder = sortOptions.sortBy !== '' && sortOptions.sortOrder !== '' ? '&sortOrder=' + sortOptions.sortOrder : '';
+
+      // query will look like ?price_lte=80&sortBy=price&sortOrder=asc with all parameters
+      // if sortBy is missing it and the sortOrder will not be added,
+      // adding sortOrder alone will trigger an error with Prisma
+      const queryParams = price_lte + sortBy + sortOrder;
+
+      // these parameters should be part of the QueryParams on the frontend as well that way client can share the link
+      // with current state of the application: use URLSearchParams
+      history.pushState(queryParams, '', `?${queryParams}`);
+
+      // the code below will prevent axios from throwing primise error (CanceledError) in the console when fetch is cancelled.
+      // see answer by [Scott McAlister](https://stackoverflow.com/users/8288828/scott-mcallister) on [StackOverflow]() https://stackoverflow.com/questions/73140563/axios-throwing-cancelederror-with-abort-controller-in-react)
+      axios.interceptors.response.use(
+          (response) => response,
+          (error) => {
+            if (error.code === "ERR_CANCELED") {
+              // aborted in useEffect cleanup
+              return Promise.resolve({status: 499})
+            }
+            return Promise.reject((error.response && error.response.data) || 'Error')
+          }
+        );
+
+      const products = (
+        await axios.get(`http://localhost:3213/api/products?${queryParams}`,{signal:signal})).data;
+
+      console.log('products', products);
+      setProducts(products);
+    }
+
+    fetchData();
+
+    return () => {
+      console.log('Aborting fetch..')
+      controller.abort();
+    }
+  },[debouncedMaxPrice, sortOptions.sortBy, sortOptions.sortOrder])
+
+
+  const handleSortByChange = () => {
+
+    setSortOptions({...sortOptions, sortBy: sortOptions.sortBy === 'price' ? '' : 'price'})
+  }
+
+  const handleSortOrderChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setSortOptions({...sortOptions, sortOrder: e.target.value});
+  }
+
+  return (
+    <>
+      <div className='py-8 sticky top-0 bg-slate-800 opacity-95'>
+        <div className='flex justify-center items-baseline gap-2'>
+
+          <label className='text-2xl font-bold' htmlFor='max-price'>Max Price: </label>
+          <input
+            id='max-price'
+            type="range"
+            min={25}
+            max={200}
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(parseInt(e.target.value))}
+            className="w-1/2"
+          />
+          <p className='text-2xl font-bold'>{maxPrice}</p>
+        </div>
+         <div className='flex justify-center items-baseline gap-2 mb-4 text-2xl'>
+          <label htmlFor='sort'>Sort (by price)</label>
+          <input type='checkbox'
+            className='text-2xl font-bold me-4 w-6 h-6' id="sort"
+            name="sort"
+            checked={sortOptions.sortBy === 'price' ? true : false}
+            aria-checked={sortOptions.sortBy === 'price' ? true : false}
+
+            onChange={handleSortByChange}
+          />
+           {/* dropdown to select asc or desc sort order for the query param */}
+           <select name="sortOrder" id="sortOrder" value={sortOptions.sortOrder} onChange={handleSortOrderChange}>
+            <option value="asc">Lowest first</option>
+            <option value="desc">Highest first</option>
+          </select>
+
+         </div>
+        <div className='flex justify-center items-baseline gap-2'>
+          <p className='text-2xl font-bold'>Total Products: {products?.length}</p>
+        </div>
+      </div>
+
+      {/* Products List */}
+      <div className='w-full grid grid-cols-[repeat(auto-fit,minmax(250px,1fr))] gap-4 p-8'>
+        {products?.map((data) =>  {
+
+          const metadata = JSON.parse(data.data);
+          return (
+          <div key={data.url} className='border-slate-300 bg-slate-600 border-2 p-4 flex flex-col gap-2'>
+            <h1 className='text-4xl font-bold self-center'>{metadata.name}</h1>
+            <img src={metadata.image} alt={metadata.name} />
+            <p className='bg-slate-300 text-black p-2 inline-block rounded-lg self-start font-bold text-xl tracking-wide'>{metadata.currency}{data.price}</p>
+          </div>
+        )
+        }
+        )}
+
+      </div>
+    </>
+  )
+}
+
+export default App
+```
+
+## Conclusion
+
+We have now a fully working web application that can display data we have scraped from the website and it uses our infrastructure. That way we have more control over the data we got and how it is presented and used ex. it would be fairly easy to implement infinite scroll for the page or we could display similar products when selecting one.
+
+I hope you had fun and learned something new today.
+
+Please feel free to [contact](/contact) me if you have questions or create an issue or PR if you want to add something fun to the project. I'll gladly cover the changes in another article.
+
+Stay safe and know that you are doing great! Even when no one noticed yet.
