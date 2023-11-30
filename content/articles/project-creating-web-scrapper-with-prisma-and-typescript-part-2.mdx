@@ -28,6 +28,10 @@ We have started our journey following the trail left by bright sun and dark moon
 
 In the [first part](/article/project-creating-web-scrapper-with-prisma-and-typescript-part-1) of the project we created a simple but reliable web scraper. In this part we'll build the backend and the frontend to show our users data we have unearthed from the depths of the web.
 
+We will be using the same repo (it's updated with new features) as in part 1: [https://github.com/ethernal/web-scraper-stepped-solution](https://github.com/ethernal/web-scraper-stepped-solution)
+
+Every step has a separate branch and `main` is a finished version.
+
 ## Crow's Nest View
 
 Keen eyed among you might have noticed that in the model name in `schema.prisma` file there is a typo. Instead of `ScrapedData` the model name is `ScrappedData`. We'll address that issue in the bonus section at the end of the article.
@@ -330,6 +334,8 @@ You can try to comment out this line and see what happens when we finish the fro
 
 This concludes creating a backend service for our use case. Now let's start using this data and show it to the world.
 
+Code of the [finished backend](https://github.com/ethernal/web-scraper-stepped-solution/tree/step-6-backend).
+
 ## Building the frontend
 
 I'll be using [TailwindCSS](https://tailwindcss.com/docs/installation) for styling. You can read more about building a robust CSS system [in my previous article here](/dark-mode-and-design-system-with-tailwind-in-next-js).
@@ -491,6 +497,8 @@ At this point there are few issues with current implementation:
 
 1. we cannot control **which** products are displayed (maximum price),
 2. we cannot control **how** products are displayed (sorting),
+
+Version [displaying product names on GitHub](https://github.com/ethernal/web-scraper-stepped-solution/tree/step-7-frontend-products-names).
 
 So let's add these features now.
 
@@ -745,6 +753,8 @@ function App() {
 export default App
 ```
 
+Code with[URL parameters, images and sorting](https://github.com/ethernal/web-scraper-stepped-solution/tree/step-8-products-images-and-sorting).
+
 That's a lot of code but we actually only needed to add one line inside fetch function to make it work:
 
 ```App.tsx
@@ -843,6 +853,8 @@ In the process we learned how to:
 See you soon!
 
 ## Final implementation
+
+Code with [debounce and abort controller](https://github.com/ethernal/web-scraper-stepped-solution/tree/step-9-debounce-and-abort-controller).
 
 Complete implementation with `useDebounce` and `AbortController`:
 
@@ -1074,3 +1086,5 @@ It will re-populate database with data and download the files again.
 And now we are really done.
 
 In this bonus section you have experienced how to migrate the database and what issues arise when models change. This was a destructive change but not all migrations will look like this one. It's still worth keeping in mind that depending on your decisions and what changes you need to make you may be in similar situation.
+
+Code with [database migration using prisma](https://github.com/ethernal/web-scraper-stepped-solution/tree/step-10-migrate-database-with-prisma).
