@@ -19,6 +19,7 @@ const config: Config = {
 				sans: ['var(--font-heading)', ...defaultTheme.fontFamily.sans],
 				serif: ['var(--font-body)', ...defaultTheme.fontFamily.serif],
 				mono: ['var(--font-mono)', ...defaultTheme.fontFamily.mono],
+				loading: ['var(--font-loading)'],
 				code: ['var(--font-mono)'],
 				body: ['var(--font-body)'],
 				heading: ['var(--font-heading)'],
