@@ -12,9 +12,10 @@ async function BlogPostLoader() {
 			<h2 className="mb-1 font-loading">
 				Sebastian Pieczynski's website and blog
 			</h2>
+			<p className="font-loading">Published on: yyyy.mm.dd</p>
 
 			<div>
-				<Skeleton className="w-full h-[500px] mb-4"></Skeleton>
+				<Skeleton className="w-full object-cover max-h-[500px] max-w-full mb-theme-default rounded-theme-default"></Skeleton>
 
 				<Skeleton className="w-full h-48"></Skeleton>
 				<Link

@@ -1,6 +1,9 @@
+import React from 'react';
+
 import BlogArticleCard from '@/components/BlogArticleCard';
 import { SITE_TITLE } from '@/constants';
 import { getArticlesFrontmatter } from '@/helpers/fs-helpers';
+import { Skeleton } from '@nextui-org/react';
 
 export const metadata = {
 	title: SITE_TITLE,
@@ -8,8 +11,8 @@ export const metadata = {
 		"Sebastian's thoughts on software development and all things about life. Expect React, NextJS, Remix, TailwindCSS and more.",
 };
 
-async function Home() {
-	const postsList = await getArticlesFrontmatter();
+async function HomeLoading() {
+	const postsList = new Array(1, 2, 3, 4);
 
 	return (
 		<div className="wrapper max-w-[var('--page-wrapper-max-width')] min-h-[67dvh]">
@@ -27,32 +30,24 @@ async function Home() {
 						</p>
 					</div>
 				)}
-				{postsList?.map((postFrontmatter) => {
-					const {
-						slug,
-						title,
-						abstract,
-						publishedOn = '',
-						image,
-						imageAlt,
-						author,
-					} = postFrontmatter;
+				{postsList?.map((postSkeleton) => {
 					return (
-						<BlogArticleCard
-							key={slug}
-							slug={slug ?? ''}
-							// extract all data from frontmatter
-							{...postFrontmatter}
-							// but be specific about what we want to use in the component
-							// this basically doubles the extraction but in case anyone uses
-							// frontmatter props without specifying them it will still work
-							title={title ?? 'missing title'}
-							abstract={abstract ?? 'abstract missing'}
-							publishedOn={publishedOn ?? new Date().toLocaleDateString()}
-							image={image}
-							imageAlt={imageAlt}
-							author={author ?? 'Sebastian Pieczyński'}
-						/>
+						<Skeleton
+							key={postSkeleton}
+							className="w-full overflow-hidden rounded-theme-default [&_p]:my-none shadow-medium hover:shadow-high hover:-translate-y-px duration-200 h-min"
+						>
+							<BlogArticleCard
+								slug={postSkeleton.toString()}
+								// extract all data from frontmatter
+								// but be specific about what we want to use in the component
+								// this basically doubles the extraction but in case anyone uses
+								// frontmatter props without specifying them it will still work
+								title={'missing title'}
+								abstract={'abstract missing'}
+								publishedOn={'2023-12-24'}
+								author={'Sebastian Pieczyński'}
+							/>
+						</Skeleton>
 					);
 				})}
 			</section>
@@ -60,4 +55,4 @@ async function Home() {
 	);
 }
 
-export default Home;
+export default HomeLoading;
