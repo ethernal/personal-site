@@ -10,7 +10,7 @@ async function BlogPostLoader() {
 			className="max-w-[var('--page-wrapper-max-width')] wrapper pb-theme-default font-loading"
 		>
 			<h2 className="mb-1 font-loading">
-				Sebastian Pieczynski's website and blog
+				Sebastian Pieczynski&apos;s website and blog
 			</h2>
 			<p className="font-loading">Published on: yyyy.mm.dd</p>
 
