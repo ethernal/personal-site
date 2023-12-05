@@ -51,3 +51,16 @@ test('elements of the Home Page', async ({ page }) => {
 	await CookieButton.click();
 	await expect(CookieButton).not.toBeVisible();
 });
+
+test('GetInTouch button on main page scrolling to contact form', async ({
+	page,
+}) => {
+	await page.goto('http://localhost:3000/');
+	await page.getByRole('button', { name: 'Get in Touch' }).click();
+	await expect(page.getByPlaceholder('Name')).toBeVisible();
+});
+
+test('home page desktop screenshot', async ({ page }) => {
+	await page.goto('http://localhost:3000/');
+	await expect(page).toHaveScreenshot();
+});
