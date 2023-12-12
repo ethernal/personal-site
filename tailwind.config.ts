@@ -135,6 +135,41 @@ const config: Config = {
 			animation: {
 				'spin-3s': 'spin 3s linear infinite',
 				'spin-2s': 'spin 2s linear infinite',
+				scaleUpDown: 'scaleUpDown 5s ease-in-out infinite',
+				wiggle: 'wiggle 1s ease-in-out infinite',
+				fade: 'fade 5s ease-in-out infinite',
+				blur: 'blur 5s ease-in-out infinite',
+			},
+			keyframes: {
+				blur: {
+					'0%': {
+						filter: 'blur(0px)',
+					},
+					'50%': {
+						filter: 'blur(10px)',
+					},
+					'100%': {
+						filter: 'blur(0px)',
+					},
+				},
+				fade: {
+					'0%': { opacity: '0' },
+					'50%': { opacity: '1' },
+					'100%': { opacity: '0' },
+				},
+				wiggle: {
+					'0%,100%': { transform: 'rotate(-3deg)' },
+					'50%': { transform: 'rotate(3deg)' },
+				},
+				scaleUpDown: {
+					'0%': { transform: 'scale(0.1)' },
+					'50%': {
+						transform: 'scale(1)',
+					},
+					'100%': {
+						transform: 'scale(0.1)',
+					},
+				},
 			},
 		},
 	},
