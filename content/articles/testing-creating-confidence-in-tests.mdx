@@ -1,0 +1,121 @@
+---
+title: Flaky tests - what they are and how to deal with them?
+author: Sebastian Pieczynski
+publishedOn: 2023-12-14
+published: true
+status: published
+series: playwright-2023
+seriesPart: 2
+abstract: What are flaky tests, how to spot and fix them
+category: Testing
+keywords: [playwright, testing, end to end, e2e, flaky, fix, react, frontend, typescript]
+image: "/image/article/testing-creating-confidence-in-tests/hero-image.jpeg"
+imageAlt: "a dark skin pirate woman, with short dark hair and a wide round hat in a blue low top open back dress with thin vertical blue and teal stripes with a small parrot on her arm sitting behind wooden desk weighting gold coins on an old fashioned scale, camera centered front facing, watercolor"
+---
+
+## Contents
+
+## Introduction
+
+As we are building our treasure island we've come to a moment where
+
+If you have followed the previous tutorials to the letter you probably had no issues with the tests from last article about [creating end to end tests with Playwright](https://www.sebee.website/article/end-to-end-testing-with-playwright-introduction).
+
+If on the other hand you have deviated ex. limited number of pages scraped. You might have experiences what is called a flaky test.
+
+## What are flaky tests?
+
+Flaky tests are ones that return positive or negative results when external factors change even when state of the application or codebase does not change. One such example can be when test depends on a timed function, when they are run on a different operating system or when changes to underlying data cause the test to fail.
+
+## How to spot flaky tests?
+
+These can be easy of very hard to find. If you run a test and it fails you will usually check if re-running it turns the test green. If it does it can indicate a flaky test and it's a false negative. False positive tests pose more problems as they pass and seem fine. In that case they may fail during the build, on the CI or in the deployment or for another developer.
+
+## Example of flaky test
+
+We have exactly that kind of tests in our codebase.
+
+
+```productFilter.spec.ts
+test('filtering limits or adds products', async ({ page }) => {
+
+  await page.goto('http://localhost:5173/?price_lte=80');
+  await expect(page.locator('#root')).toContainText('Total Products: 258');
+
+  await page.getByLabel('Max Price:').fill('120');
+  await expect(page.locator('#root')).toContainText('Total Products: 405');
+});
+```
+
+Here the test results depend on what is retuned by the database. If we change what is inside the DB (ex. by changing the amount of data scraped) this test will fail although the functionality will not be hindered.
+
+What is worse it will not really fail for us at the moment (it's a false-positive) but it can fail for other developers.
+
+So how do we fix it?
+
+## Understand flaky tests
+
+The first step to fixing this kind of test is to understand what we actually want to test?
+
+It's not the amount of products we are looking for. We expect to find more products with higher price range than with the lower one.
+Let's try rewriting it.
+
+Using serial is not recommended. It is usually better to make your tests isolated, so they can be run independently.
+
+
+```productFilter.spec.ts
+test.describe('increasing price range increases product count', () => {
+	let numberOfInitialProducts = 0;
+	let numberOfProductsAfterPriceChange = -1;
+
+	test('increasing price limits adds products', async ({ page }) => {
+		await page.goto('http://localhost:5173/?price_lte=80');
+
+		const totalProductsInitial = await page
+			.getByText('Total Products: ')
+			.textContent();
+
+		if (totalProductsInitial === null) {
+			test.fail();
+			return;
+		}
+
+		console.log('totalProductsInitial: ', totalProductsInitial);
+
+		numberOfInitialProducts = Number.parseInt(
+			totalProductsInitial?.replace('Total Products:', '').trim(),
+		);
+
+		await page.getByLabel('Max Price:').fill('120');
+		// removing these expect statements fails the test - it's too fast
+		await expect(page.locator('#root')).toContainText('Total Products: ');
+
+		const totalProductsAfterPriceChange = await page
+			.getByText('Total Products:')
+			.textContent();
+
+		if (totalProductsAfterPriceChange === null) {
+			test.fail();
+			return;
+		}
+
+		numberOfProductsAfterPriceChange = Number.parseInt(
+			totalProductsAfterPriceChange.replace('Total Products: ', '').trim(),
+		);
+
+		console.log(
+			'totalProductsAfterPriceChange: ',
+			totalProductsAfterPriceChange,
+		);
+
+		console.log('Total Products: ' + numberOfInitialProducts);
+		console.log('After Price ch: ' + numberOfProductsAfterPriceChange);
+
+		expect(numberOfProductsAfterPriceChange).toBeGreaterThan(
+			numberOfInitialProducts,
+		);
+	});
+});
+```
+
+
