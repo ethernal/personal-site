@@ -17,7 +17,7 @@ imageAlt: "a dark skin pirate woman, with short dark hair and a wide round hat i
 
 ## Introduction
 
-As we are building our treasure island we've come to a moment where
+As we are building our treasure island we've come to a moment where we need to be certain our safety measures are adequate. But as more and more adversaries are attacking we need to strengthen our defenses. Our tests are not reliable enough.
 
 If you have followed the previous tutorials to the letter you probably had no issues with the tests from last article about [creating end to end tests with Playwright](https://www.sebee.website/article/end-to-end-testing-with-playwright-introduction).
 
@@ -60,62 +60,163 @@ The first step to fixing this kind of test is to understand what we actually wan
 It's not the amount of products we are looking for. We expect to find more products with higher price range than with the lower one.
 Let's try rewriting it.
 
-Using serial is not recommended. It is usually better to make your tests isolated, so they can be run independently.
+To verify that we need to remember the number of products that have been found with the initial search and then compare that value against the number of products that are returned when the max price changes to a higher value.
 
+Then we need to compare those values and make sure that we have more products than we originally received.
+
+Below is the finished version with few `console.log` statements so you can see what is found. We'll go through the test below and a complete version with no "bloat" is at the end.
 
 ```productFilter.spec.ts
-test.describe('increasing price range increases product count', () => {
+test('increasing price limits adds products', async ({ page }) => {
 	let numberOfInitialProducts = 0;
 	let numberOfProductsAfterPriceChange = -1;
+	await page.goto('http://localhost:5173/?price_lte=80');
 
-	test('increasing price limits adds products', async ({ page }) => {
-		await page.goto('http://localhost:5173/?price_lte=80');
+	const totalProductsInitial = await page
+		.getByText('Total Products: ')
+		.textContent();
 
-		const totalProductsInitial = await page
-			.getByText('Total Products: ')
-			.textContent();
+	if (totalProductsInitial === null) {
+		test.fail();
+		return;
+	}
 
-		if (totalProductsInitial === null) {
-			test.fail();
-			return;
-		}
+	console.log('totalProductsInitial: ', totalProductsInitial);
 
-		console.log('totalProductsInitial: ', totalProductsInitial);
+	numberOfInitialProducts = Number.parseInt(
+		totalProductsInitial?.replace('Total Products:', '').trim(),
+	);
 
-		numberOfInitialProducts = Number.parseInt(
-			totalProductsInitial?.replace('Total Products:', '').trim(),
-		);
+	await page.getByLabel('Max Price:').fill('120');
 
-		await page.getByLabel('Max Price:').fill('120');
-		// removing these expect statements fails the test - it's too fast
-		await expect(page.locator('#root')).toContainText('Total Products: ');
+	await expect(page.locator('#root')).not.toContainText(
+		`Total Products: ${numberOfInitialProducts}`,
+	);
 
-		const totalProductsAfterPriceChange = await page
-			.getByText('Total Products:')
-			.textContent();
+	const totalProductsAfterPriceChange = await page
+		.getByText('Total Products:')
+		.textContent();
 
-		if (totalProductsAfterPriceChange === null) {
-			test.fail();
-			return;
-		}
+	if (totalProductsAfterPriceChange === null) {
+		test.fail();
+		return;
+	}
 
-		numberOfProductsAfterPriceChange = Number.parseInt(
-			totalProductsAfterPriceChange.replace('Total Products: ', '').trim(),
-		);
+	numberOfProductsAfterPriceChange = Number.parseInt(
+		totalProductsAfterPriceChange.replace('Total Products: ', '').trim(),
+	);
 
-		console.log(
-			'totalProductsAfterPriceChange: ',
-			totalProductsAfterPriceChange,
-		);
+	console.log('totalProductsAfterPriceChange: ', totalProductsAfterPriceChange);
+	console.log('Total Products: ' + numberOfInitialProducts);
+	console.log('After Price ch: ' + numberOfProductsAfterPriceChange);
 
-		console.log('Total Products: ' + numberOfInitialProducts);
-		console.log('After Price ch: ' + numberOfProductsAfterPriceChange);
-
-		expect(numberOfProductsAfterPriceChange).toBeGreaterThan(
-			numberOfInitialProducts,
-		);
-	});
+	expect(numberOfProductsAfterPriceChange).toBeGreaterThan(
+		numberOfInitialProducts,
+	);
 });
 ```
 
+There are a few things that are crucial here:
 
+1. use of `numberOfInitialProducts` and `numberOfProductsAfterPriceChange` to remember number of products returned with initial values that will fail the test.
+2. Fail test when either are `null` from await statements.
+3. Detection of change in the contents of the text done via `not` parameter with previous value:
+
+Ad. 1
+
+Declare variables that will hold the test values to be compared.
+
+```productFilter.spec.ts
+	let numberOfInitialProducts = 0;
+	let numberOfProductsAfterPriceChange = -1;
+```
+
+Ad. 2
+
+```productFilter.spec.ts
+test.fail(
+		totalProductsInitial === null,
+		'Total products label not found for initial count.',
+	);
+
+// ...
+
+test.fail(
+		totalProductsAfterPriceChange === null,
+		'Total products label not found after price change.',
+);
+```
+
+Read more in the documentation about [conditionally failing the test](https://playwright.dev/docs/api/class-test#test-fail-2) <NewTabIcon/>.
+
+Ad. 3
+
+Take a note of use of `not` in the statement - that way we can wait for the text or value to change on the page in the test.
+
+```productFilter.spec.ts
+await expect(page.locator('#root')).not.toContainText(
+		`Total Products: ${numberOfInitialProducts}`,
+	);
+```
+
+While writing the test I had tried few things to detect changes on the page: `await page.waitForTimeout` but as per [docs](https://playwright.dev/docs/api/class-frame#frame-wait-for-timeout)<NewTabIcon/>: "Never wait for timeout in production. Tests that wait for time are inherently flaky. Use Locator actions and web assertions that wait automatically.". Waiting for result will rightly lead to flaky test which we absolutely want to avoid.
+
+Afterwards I found that we can wait for the network requests to complete with `await page.waitForLoadState('networkidle')` and again if you check the [documentation](https://playwright.dev/docs/api/class-page#page-wait-for-load-state)<NewTabIcon/> this method is discouraged as it waits until there are no network connections for at least 500 ms. So it's the same as previous option. Docs state not to use this method for testing and rely on web assertions to assess readiness instead.
+
+If you read through the docs there are no methods that expect the contents to be changed. By inverting the logic we can wait for the content **not** to be the same as with previous assertion (effectively be different) to get the new value. That way we get automatic wait assertion by Playwright and test should run smoothly.
+
+And here's the full test without the debug logs:
+
+```productFilter.spec.ts
+test('increasing price limits adds products', async ({ page }) => {
+	let numberOfInitialProducts = 0;
+	let numberOfProductsAfterPriceChange = -1;
+	await page.goto('http://localhost:5173/?price_lte=80');
+
+	const totalProductsInitial = await page
+		.getByText('Total Products: ')
+		.textContent();
+
+	if (totalProductsInitial === null) {
+		test.fail();
+		return;
+	}
+
+	numberOfInitialProducts = Number.parseInt(
+		totalProductsInitial?.replace('Total Products:', '').trim(),
+	);
+
+	await page.getByLabel('Max Price:').fill('120');
+	// removing these expect statements fails the test - it's too fast
+	await expect(page.locator('#root')).not.toContainText(
+		`Total Products: ${numberOfInitialProducts}`,
+	);
+
+	const totalProductsAfterPriceChange = await page
+		.getByText('Total Products:')
+		.textContent();
+
+	if (totalProductsAfterPriceChange === null) {
+		test.fail();
+		return;
+	}
+
+	numberOfProductsAfterPriceChange = Number.parseInt(
+		totalProductsAfterPriceChange.replace('Total Products: ', '').trim(),
+	);
+
+	expect(numberOfProductsAfterPriceChange).toBeGreaterThan(
+		numberOfInitialProducts,
+	);
+});
+```
+
+## Conclusion
+
+As you can see we have made our test both more complex and when comparing only lines of code it is much larger. On the other hand we have saved ourselves and our colleagues frustration of finding the test unreliable and a need to fix it later with limited time.
+
+I hope you found it valuable and enlightening.
+
+And as always: You are doing great so keep it up!
+
+PS. if you want to test what you have learned today try to change the `sorting changes the order of products` test in the same file and send me the test via a [contact form](/contact).
