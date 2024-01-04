@@ -1,0 +1,178 @@
+---
+title: React useState hook explained
+author: Sebastian Pieczynski
+publishedOn: 2024-01-11
+published: true
+status: published
+abstract: How using a reducer instead of useState helps to reduce bugs and lowers the mental overhead required to follow the application logic
+category: React
+keywords: [react, logic, application, typescript]
+image: "/image/article/react-hook-use-state/react-use-state.jpg"
+imageAlt: "two sets of universes one on the left side enclosed inside a 3d hexagonal translucent box and a second one loose and scrambled all over the place without order, watercolor"
+---
+
+## Contents
+
+<p className="text-3xl text-theme-accent font-semibold font-heading">Welcome Engineers!</p>
+
+Managing application logic in a React application almost always starts with a use of `useState` hook unless you are using a state management library and even then not all state will be held by the external store. Today we'll explore the small universe of built-in hooks that allow us to manipulate state in React applications.
+
+## Few words about state in React
+
+State in React is immutable, that means it cannot be changed directly. Changing state is done by using specialized functions that manipulate internal variables that React manages and updates them for next render.
+
+There are two main hooks used for managing state in React: `useState` and `useReducer` hooks. Before hooks state was an object and it was slightly more similar to what reducer representation looks like, but we'll deal with the hooks only today.
+
+From the two `useState` has much simpler API layer:
+
+```App.tsx
+import { useState } from 'react';
+
+function App() {
+	const [count, setCount] = useState(0);
+
+  // define functions that deal with state changes
+	const increment = () => setCount(count + 1);
+	const decrement = () => setCount(count - 1);
+
+	return (
+		<div className="flex flex-col bg-black text-white h-dvh w-dvw gap-4 text-2xl justify-center align-middle">
+			<div className="flex items-center justify-center gap-4">
+				<button
+					onClick={decrement}
+					className="text-orange-600 border-2 border-orange-800 aspect-square w-6 flex items-center justify-center"
+				>
+					<p className="-mt-1">-</p>
+				</button>
+				<button
+					onClick={increment}
+					className="text-teal-600 border-2 border-teal-900 aspect-square w-6 flex items-center justify-center"
+				>
+					<p className="-mt-1 p-0">+</p>
+				</button>
+			</div>
+			<div className="flex items-center justify-center gap-4 text-4xl">
+				<span className="text-emerald-700 underline underline-offset-4 decoration-emerald-900">
+					{count}
+				</span>
+			</div>
+		</div>
+	);
+}
+
+export default App;
+```
+
+In this case we are importing `useState` hook from react to allow a variable (state) to change over time (between renders). To change the state we defined two functions `increment` and `decrement` that manipulate the `count` variable.
+
+The variable and function can be called whatever you fancy but it is a common pattern to use `name` and `setName` when destructuring these values from `useState` hook.
+
+Try changing the `setCount` function to `forceCountToBe` like so:
+
+```jsx
+function App() {
+	const [count, forceCountToBe] = useState(0);
+
+  // define functions that deal with state changes
+	const increment = () => forceCountToBe(count + 1);
+	const decrement = () => forceCountToBe(count - 1);
+	//...
+}
+```
+
+It still works! But why do we need to use this special function?
+
+Couldn't we just update the state directly? Let's try it. Change `forceCountToBe` back to `setCount` and replace the `increment` function with:
+
+```tsx
+() => count = count + 1;
+```
+
+ and declare the destructured `count` and `setCount` with `let` instead of `const`.
+
+```ts
+ let [count, setCount] = useState(0);
+```
+
+And a bit surprisingly it actually kind of works.. if you decrease the variable after incrementing it you will see that it was updated. This happens because React does not track the `count` variable changes itself but uses `setCount` function to schedule a re-render of the component with new value. And schedule is an important distinction here. Let's go back to the expected state of the world (change the increment function back to: `const increment = () => setCount(count + 1);` and let us explore the `useState` hook some more.
+
+Maybe for some reason we need to increment the value twice... how can we do this?
+
+Easy right? Invoke the function twice like so:
+
+```App.tsx
+import { useState } from 'react';
+
+function App() {
+	const [count, setCount] = useState(0);
+
+  // define functions that deal with state changes
+	const increment = () => setCount(count + 1);
+	const decrement = () => setCount(count - 1);
+
+	return (
+		<div className="flex flex-col bg-black text-white h-dvh w-dvw gap-4 text-2xl justify-center align-middle">
+			<div className="flex items-center justify-center gap-4">
+				<button
+					onClick={decrement}
+					className="text-orange-600 border-2 border-orange-800 aspect-square w-6 flex items-center justify-center"
+				>
+					<p className="-mt-1">-</p>
+				</button>
+				<button
+					onClick={() => {
+						increment();
+						increment();
+					}}
+					className="text-teal-600 border-2 border-teal-900 aspect-square w-6 flex items-center justify-center"
+				>
+					<p className="-mt-1 p-0">+</p>
+				</button>
+			</div>
+			<div className="flex items-center justify-center gap-4 text-4xl">
+				<span className="text-emerald-700 underline underline-offset-4 decoration-emerald-900">
+					{count}
+				</span>
+			</div>
+		</div>
+	);
+}
+
+export default App;
+```
+
+We are telling React that when button is clicked it should run an anonymous (arrow) function that will invoke increment twice:
+
+```App.tsx
+onClick={() => {
+	increment();
+	increment();
+}}
+```
+
+But it does not work, our `count` is still incremented by 1.
+
+Let's check what happens and use good old `console.log` to check what the value is before and after each increment:
+
+```App.tsx
+onClick={() => {
+	console.log('count (before increment): ', count);
+	increment();
+	console.log('count (after first increment): ', count);
+	increment();
+	console.log('count (after second increment): ', count);
+}}
+```
+
+What you get in the console:
+
+```bash
+count (before increment):  11
+count (after first increment):  11
+count (after second increment):  11
+```
+
+Now wait a second, you may say.. NOTHING changed even **after** the `setCount` was called!
+
+This is what I meant that React schedules the updates. The function does not really increment value **until** next render. If you think about it in a broader scope it will become clear - what if we had 20 invocations to different `set...` functions? Should React re-render on every invocation then? You would only care if the whole application was ready and not about partial updates. And that is why React schedules updates instead of changing the value immediately.
+
