@@ -405,6 +405,12 @@
 	],
 	"certificates": [
 		{
+			"name": "Epic React - Testing React Apps",
+			"date": "2024-01-05",
+			"issuer": "Kent C. Dodds",
+			"url": "/certificates/react-epic-react-certificate-testing-react-apps.png"
+		},
+		{
 			"name": "Epic React - React Performance",
 			"date": "2024-01-04",
 			"issuer": "Kent C. Dodds",
