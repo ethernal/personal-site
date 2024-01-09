@@ -4,7 +4,7 @@ author: Sebastian Pieczynski
 publishedOn: 2024-01-11
 published: true
 status: published
-abstract: How using a reducer instead of useState helps to reduce bugs and lowers the mental overhead required to follow the application logic
+abstract: How to use the 'useState' hook in React and what are common pitfalls and misconceptions.
 category: React
 keywords: [react, logic, application, typescript]
 image: "/image/article/react-hook-use-state/react-use-state.jpg"
@@ -22,6 +22,8 @@ Managing application logic in a React application almost always starts with a us
 State in React is immutable, that means it cannot be changed directly. Changing state is done by using specialized functions that manipulate internal variables that React manages and updates them for next render.
 
 There are two main hooks used for managing state in React: `useState` and `useReducer` hooks. Before hooks state was an object and it was slightly more similar to what reducer representation looks like, but we'll deal with the hooks only today.
+
+## useState API
 
 From the two `useState` has much simpler API layer:
 
@@ -63,11 +65,34 @@ function App() {
 export default App;
 ```
 
-In this case we are importing `useState` hook from react to allow a variable (state) to change over time (between renders). To change the state we defined two functions `increment` and `decrement` that manipulate the `count` variable.
+### Initializing state and setting initial value
+
+In this case we are importing `useState` hook from react to allow a variable (or state) to change over time (between renders). We initialize our count state with value `0` - it allows us to control what the `count` variable is when the application starts.
+
+When we invoke the `useState` function we can also set initial value for our variable. It is passed as a parameter to the `useState` function.
+
+```tsx
+const [count, setCount] = useState(0);
+```
+Here we have set the `count` variable to initial value of `0`. Setting initial value is optional and you can also use a setter function that will be invoked when state is initialized and never again.
+
+```tsx
+const [count, setCount] = useState(computationallyExpensiveInitializationOfState);
+```
+
+Note that we are not invoking function with `useState(computationallyExpensiveInitializationOfState)` but are passing the function to the `useState` hook. This way React will invoke it only once.
+
+If we did invoke it it would happen on every render of the component and could be slow down our application for no reason.
+
+### Mutating state
+
+To change the state we defined two functions `increment` and `decrement` that manipulate (mutate or change) the `count` variable.
 
 The variable and function can be called whatever you fancy but it is a common pattern to use `name` and `setName` when destructuring these values from `useState` hook.
 
 Try changing the `setCount` function to `forceCountToBe` like so:
+
+### Naming state and setter function
 
 ```jsx
 function App() {
@@ -82,6 +107,8 @@ function App() {
 
 It still works! But why do we need to use this special function?
 
+### Overthrowing React state management
+
 Couldn't we just update the state directly? Let's try it. Change `forceCountToBe` back to `setCount` and replace the `increment` function with:
 
 ```tsx
@@ -90,15 +117,17 @@ Couldn't we just update the state directly? Let's try it. Change `forceCountToBe
 
  and declare the destructured `count` and `setCount` with `let` instead of `const`.
 
-```ts
+```tsx
  let [count, setCount] = useState(0);
 ```
 
-And a bit surprisingly it actually kind of works.. if you decrease the variable after incrementing it you will see that it was updated. This happens because React does not track the `count` variable changes itself but uses `setCount` function to schedule a re-render of the component with new value. And schedule is an important distinction here. Let's go back to the expected state of the world (change the increment function back to: `const increment = () => setCount(count + 1);` and let us explore the `useState` hook some more.
+And a bit surprisingly it actually kind of works.. if you decrease the variable after incrementing it you will see that it was updated. This happens because React does not track the `count` variable changes itself but uses `setCount` function to schedule a re-render of the component with new value. And schedule is an important distinction here. Let's go back to the expected state of the world. Change the increment function back to: `const increment = () => setCount(count + 1);` and let us explore the `useState` hook some more.
+
+## Invoking state mutation functions
 
 Maybe for some reason we need to increment the value twice... how can we do this?
 
-Easy right? Invoke the function twice like so:
+Easy right? Invoke the function twice (that might not have been your first thought but bear with me) like so:
 
 ```App.tsx
 import { useState } from 'react';
@@ -141,7 +170,7 @@ function App() {
 export default App;
 ```
 
-We are telling React that when button is clicked it should run an anonymous (arrow) function that will invoke increment twice:
+We are telling React that when button is clicked it should run a function that will increment the count twice:
 
 ```App.tsx
 onClick={() => {
@@ -176,3 +205,129 @@ Now wait a second, you may say.. NOTHING changed even **after** the `setCount` w
 
 This is what I meant that React schedules the updates. The function does not really increment value **until** next render. If you think about it in a broader scope it will become clear - what if we had 20 invocations to different `set...` functions? Should React re-render on every invocation then? You would only care if the whole application was ready and not about partial updates. And that is why React schedules updates instead of changing the value immediately.
 
+This leads us to the next "quirk" as you might see it: how then are we supposed to access the value after the change but before the state is re-rendered? We may need it to compute other things and now it seems we need to run it after the page renders again?
+
+### Accessing new state value
+
+The solution is quite simple...
+
+If React itself is does not expect values of state to change within single frame we need to "escape" it or move aside and use it to our advantage. What if we just created a new variable that holds the new value and used that? Seems straightforward enough so let's see what happens.
+
+```App.tsx
+	const increment = () => { const newCount = count + 1; setCount(newCount) };
+	const decrement = () => { const newCount = count - 1; setCount(newCount) };
+```
+
+Now accessing new count value is easy:
+
+```App.tsx
+console.log('count (after increment): ', newCount);
+```
+
+Now suppose we now need to double the value of count only if it's divisible by 15. How would we access the previous value? Turns out that React can instead of new state accept an updater function that will take the currently pending state and return it allowing us to manipulate it's value.
+
+### Changing current state based on previous (or pending) state
+
+To use the updater function for new state we pass it as an argument to the function in `setCount`:
+
+```App.tsx
+	const increment = () => setCount((count) => count % 15 === 0 ? count * 2 : count + 1);
+	const decrement = () => setCount((count) => count - 1);
+```
+
+If you are curious how that could affect our previous examples, here's a question:
+What would happen if we introduced such change to our increment function and invoked it multiple times?
+
+```App.tsx
+import { useState } from 'react';
+
+function App() {
+	const [count, setCount] = useState(0);
+
+  // define functions that deal with state changes
+const increment = (step=1) => setCount((prevCount) => prevCount + step);
+const decrement = (step=1) => setCount((prevCount) => prevCount - step);
+
+	return (
+		<div className="flex flex-col bg-black text-white h-dvh w-dvw gap-4 text-2xl justify-center align-middle">
+			<div className="flex items-center justify-center gap-4">
+				<button
+					onClick={decrement}
+					className="text-orange-600 border-2 border-orange-800 aspect-square w-6 flex items-center justify-center"
+				>
+					<p className="-mt-1">-</p>
+				</button>
+				<button
+					onClick={() => {
+							increment(); // 1
+							increment(); // 2
+							increment(); // 3
+						}
+					}
+					className="text-teal-600 border-2 border-teal-900 aspect-square w-6 flex items-center justify-center"
+				>
+					<p className="-mt-1 p-0">+</p>
+				</button>
+			</div>
+			<div className="flex items-center justify-center gap-4 text-4xl">
+				<span className="text-emerald-700 underline underline-offset-4 decoration-emerald-900">
+					{count}
+				</span>
+			</div>
+		</div>
+	);
+}
+
+export default App;
+```
+
+If you look at the result it will show '3' after the third invocation of the `increment` function. It is completely different from the previous example.
+
+This is due to the fact that we are now using the updater function to access the `pending` or `scheduled` state. This has also added benefit that we do not need to use the current `count` variable to access the current state and our function is not dependant on it. It is very handy as when used with useEffect it will not need to add `count` to the dependency array. I am getting ahead of myself but I do find this part very important so keep in mind that using updater function helps limit the amount of variables we depend on for effects.
+
+### Storing objects in state
+
+What if we have user data we want to store in state? Since we don't really want to separate data into multiple `useState` hooks like:
+
+```ts
+const [firstName, setFirstName] = useState('');
+const [lastName, setLastName] = useState('');
+const [email, setEmail] = useState('');
+const [address, setAddress] = useState('');
+
+// etc..
+```
+
+We should use an object to do this:
+
+```ts
+const [user, setUser] = useState({
+	firstName: '',
+	lastName: '',
+	email: '',
+	address: '',
+	status: '',
+	lastLogin: null,
+	blocked: false,
+});
+```
+
+If we need to update one of the properties we can do it like this:
+
+```ts
+setUser((prevUserData) => ({
+	...prevUserData,
+	firstName: 'John',
+}));
+```
+
+We are now recreating user object by spreading the `prevUserData` object and overwriting the `firstName` property with the new value and finally assigning it with `setUser` function.
+
+## Conclusion
+
+Today we have learnt how `useState` hook can be used to manage state in React and how to:
+
+- Initialize state with initial value or updater function.
+- Change (mutate) current state and use variables to access new state before it updates.
+- Change current state based on pending state.
+- Store objects in state and update their data when one part is replaced.
