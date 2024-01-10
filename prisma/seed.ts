@@ -6,21 +6,62 @@ import { loadMDXtoDB } from '../src/utils/mdxToDb';
 const prisma = new PrismaClient();
 
 async function main() {
-	await prisma.user.upsert({
-		where: { email: `testemail@gmail.com` },
-		create: {
-			email: `testemail@gmail.com`,
-			firstName: 'test',
-			lastName: 'test',
-		},
-		update: {
-			firstName: 'test',
-			lastName: 'test',
+	const userFromDB = await prisma.user.findFirst({
+		where: {
+			AND: [
+				{
+					firstName: 'Sebastian',
+				},
+				{ lastName: 'Pieczynski' },
+			],
 		},
 	});
+
+	if (!userFromDB) {
+		await prisma.user.create({
+			data: {
+				firstName: 'Sebastian',
+				lastName: 'Pieczynski',
+			},
+		});
+	}
+
+	const publicationStatuses = ['draft', 'public', 'private'];
+
+	const pStatuses = await prisma.$transaction(
+		publicationStatuses.map((status) =>
+			prisma.publicationStatus.upsert({
+				where: { name: status },
+				create: {
+					name: status,
+				},
+				update: {
+					name: status,
+				},
+			}),
+		),
+	);
+
+	const publicationTypes = ['article', 'gem'];
+
+	const pTypes = await prisma.$transaction(
+		publicationTypes.map((type) =>
+			prisma.publicationType.upsert({
+				where: { name: type },
+				create: {
+					name: type,
+				},
+				update: {
+					name: type,
+				},
+			}),
+		),
+	);
+
+	await loadMDXtoDB();
 }
 
-console.log('Seeding the database');
+console.info('Seeding the database');
 main()
 	.catch((e) => {
 		console.error(e);

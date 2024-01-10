@@ -1,6 +1,12 @@
 import { PrismaClient } from '@prisma/client';
 
 import { getArticles } from '../helpers/fs-helpers';
+import { removeDiacritics } from './utils';
+
+const PUBLICATION_TYPE = Object.freeze({
+	ARTICLE: 'article',
+	GEM: 'gem',
+});
 
 const prisma = new PrismaClient();
 
@@ -9,10 +15,70 @@ export async function loadMDXtoDB() {
 	const articles = await getArticles();
 
 	// add articles to DB
-
 	if (articles && articles?.length > 0) {
+		console.info(`Seeding ${articles?.length} articles...`);
 		for (const article of articles) {
-			await prisma.publication.upsert({
+			console.info(`Creating article: "${article?.frontmatter?.title}"...`);
+
+			const keywords = article?.frontmatter?.keywords ?? [];
+			const series = article?.frontmatter?.series;
+			const orderInSeries = article?.frontmatter?.seriesPart;
+
+			let keywordsFromDB = undefined;
+
+			if (keywords && keywords?.length > 0) {
+				console.info(`Adding keywords to the article...`);
+
+				for (const keyword of keywords) {
+					keywordsFromDB = await prisma.keyword.upsert({
+						where: {
+							name: keyword,
+						},
+						update: {
+							name: keyword,
+						},
+						create: {
+							name: keyword,
+						},
+					});
+				}
+			}
+
+			let seriesFromDB = undefined;
+
+			if (series) {
+				console.info(`Adding series "${series}" to the article.`);
+
+				seriesFromDB = await prisma.series.upsert({
+					where: {
+						name: series,
+					},
+					update: {
+						name: series,
+					},
+					create: {
+						name: series,
+					},
+				});
+			}
+
+			const status =
+				article.frontmatter?.published === true ? 'public' : 'draft';
+
+			console.info(`Article status: ${status}`);
+
+			const authorFirstName = removeDiacritics(
+				article.frontmatter?.author.split(' ')[0],
+			);
+			const authorLastName = removeDiacritics(
+				article.frontmatter?.author.split(' ')[1],
+			);
+
+			const publicationType = PUBLICATION_TYPE.ARTICLE;
+
+			console.info(`Adding Article to the database...`);
+
+			const publicationFromDB = await prisma.publication.upsert({
 				where: {
 					slug: article.frontmatter.slug,
 				},
@@ -24,27 +90,37 @@ export async function loadMDXtoDB() {
 					image: article.frontmatter.image,
 					imageAlt: article.frontmatter.imageAlt,
 					content: article.content,
-					status: {
+					keywords: {
+						connect: keywordsFromDB,
+					},
+
+					category: {
 						connectOrCreate: {
 							where: {
-								name: article.frontmatter?.status ?? 'draft',
+								name: article?.frontmatter?.category ?? 'Publication',
 							},
 							create: {
-								name: article.frontmatter?.status ?? 'draft',
+								name: article?.frontmatter?.category ?? 'Publication',
 							},
 						},
 					},
-					author: {
+					status: {
 						connectOrCreate: {
 							where: {
-								email:
-									article.frontmatter?.authorId ?? 'sebee.website@gmail.com',
+								name: status,
 							},
 							create: {
-								email:
-									article.frontmatter?.authorId ?? 'sebee.website@gmail.com',
-								firstName: 'Sebastian',
-								lastName: 'Pieczyński',
+								name: status,
+							},
+						},
+					},
+					publicationType: {
+						connectOrCreate: {
+							where: {
+								name: publicationType,
+							},
+							create: {
+								name: publicationType,
 							},
 						},
 					},
@@ -57,32 +133,128 @@ export async function loadMDXtoDB() {
 					image: article.frontmatter.image,
 					imageAlt: article.frontmatter.imageAlt,
 					content: article.content,
-					status: {
+					keywords: {
+						connect: keywordsFromDB,
+					},
+
+					category: {
 						connectOrCreate: {
 							where: {
-								name: article.frontmatter?.status ?? 'draft',
+								name: article.frontmatter.category,
 							},
 							create: {
-								name: article.frontmatter?.status ?? 'draft',
+								name: article.frontmatter.category,
 							},
 						},
 					},
-					author: {
+					status: {
 						connectOrCreate: {
 							where: {
-								email:
-									article.frontmatter?.authorId ?? 'sebee.website@gmail.com',
+								name: status,
 							},
 							create: {
-								email:
-									article.frontmatter?.authorId ?? 'sebee.website@gmail.com',
-								firstName: 'Sebastian',
-								lastName: 'Pieczyński',
+								name: status,
+							},
+						},
+					},
+					publicationType: {
+						connectOrCreate: {
+							where: {
+								name: publicationType,
+							},
+							create: {
+								name: publicationType,
 							},
 						},
 					},
 				},
 			});
+
+			//  publication is in now connect the author to it
+
+			let authorFromDB = await prisma.user.findFirst({
+				where: {
+					AND: [
+						{
+							firstName: authorFirstName,
+						},
+						{ lastName: authorLastName },
+					],
+				},
+			});
+
+			if (!authorFromDB) {
+				authorFromDB = await prisma.user.create({
+					data: {
+						firstName: authorFirstName,
+						lastName: authorLastName,
+					},
+				});
+				console.info(
+					`Added author to the database: ${authorFromDB?.firstName} ${authorFromDB?.lastName}.`,
+				);
+			} else {
+				console.info(
+					`Author found in the database: ${authorFromDB?.firstName} ${authorFromDB?.lastName}.`,
+				);
+			}
+
+			// check if the author is already connected to the publication
+			const publicationAuthor = await prisma.publicationAuthor.findFirst({
+				where: {
+					AND: [
+						{
+							publicationId: publicationFromDB.id,
+						},
+						{
+							userId: authorFromDB.id,
+						},
+					],
+				},
+			});
+
+			// if not create it
+			if (!publicationAuthor) {
+				console.info(
+					`Adding author ${authorFromDB?.firstName} ${authorFromDB?.lastName} to publication ${publicationFromDB?.title}.`,
+				);
+
+				await prisma.publicationAuthor.create({
+					data: {
+						publication: {
+							connect: {
+								id: publicationFromDB.id,
+							},
+						},
+						author: {
+							connect: {
+								id: authorFromDB.id,
+							},
+						},
+					},
+				});
+			}
+
+			if (seriesFromDB) {
+				console.info(
+					`Adding publication ${publicationFromDB?.title} to series ${seriesFromDB?.name}.`,
+				);
+				await prisma.publicationSeries.create({
+					data: {
+						series: {
+							connect: {
+								id: seriesFromDB.id,
+							},
+						},
+						publication: {
+							connect: {
+								id: publicationFromDB.id,
+							},
+						},
+						orderInSeries: orderInSeries,
+					},
+				});
+			}
 		}
 	}
 }
