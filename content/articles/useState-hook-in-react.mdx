@@ -19,9 +19,9 @@ Managing application logic in a React application almost always starts with a us
 
 ## Few words about state in React
 
-State in React is immutable, that means it cannot be changed directly. Changing state is done by using specialized functions that manipulate internal variables that React manages and updates them for next render.
+Changes to state in React cause a re-render, that means it cannot be changed directly if we want to see changes to it reflected on the screen. Changing state is done by using specialized functions that manipulate internal variables that React manages and updates them for next render.
 
-There are two main hooks used for managing state in React: `useState` and `useReducer` hooks. Before hooks state was an object and it was slightly more similar to what reducer representation looks like, but we'll deal with the hooks only today.
+There are two main hooks used for managing state (`useContext` is a bit different beast) in React: `useState` and `useReducer` hooks. Before hooks state was an object and it was slightly more similar to what reducer representation looks like, but we'll deal with the hooks only today.
 
 ## useState API
 
