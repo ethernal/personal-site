@@ -1,9 +1,7 @@
-import 'server-only';
-
 import fs from 'fs/promises';
 import matter from 'gray-matter';
 import path from 'path';
-import { cache } from 'react';
+import React from 'react';
 
 import BlogPostFrontmatterType from '@/types/BlogPostFrontmatterType';
 import { slugify } from '@/utils/utils';
@@ -26,7 +24,6 @@ async function getDirectoryFiles(path: string) {
 export async function getArticles() {
 	const fileNames = await getDirectoryFiles('./content/articles');
 
-	console.log('Filenames: ', fileNames);
 	const pureFileNames = fileNames?.map((fileName) =>
 		fileName.replace('.mdx', ''),
 	);
@@ -90,15 +87,20 @@ type ArticleData = {
 	content: string;
 };
 
-export const loadBlogPost = cache(async (slug: string): Promise<ArticleData> => {
+export const loadBlogPostNoCacheFromFS = async (
+	slug: string,
+): Promise<ArticleData> => {
 	const rawContent = await readFile(`./content/articles/${slug}.mdx`);
 
 	const { data: frontmatter, content } = matter(rawContent);
 
 	return { frontmatter, content };
-});
+};
 
-export const loadPageContent = cache(async (path: string) => {
+// export const loadBlogPost = React.cache(loadBlogPostNoCache);
+export const loadBlogPost = loadBlogPostNoCacheFromFS;
+
+export const loadPageContentNoCacheFromFS = async (path: string) => {
 	if (path === 'mockServiceWorker.js') return;
 
 	const fileNameWithoutSuffix =
@@ -111,7 +113,11 @@ export const loadPageContent = cache(async (path: string) => {
 	const { data: frontmatter, content } = matter(rawContent);
 
 	return { frontmatter, content };
-});
+};
+
+// export const loadPageContent = React.cache(loadPageContentNoCache);
+
+export const loadPageContent = loadPageContentNoCacheFromFS;
 
 function readFile(localPath: string) {
 	return fs.readFile(path.join(process.cwd(), localPath), 'utf8');
