@@ -11,30 +11,110 @@ datasource db {
 }
 
 model User {
-  id        String        @id @default(uuid())
-  email     String        @unique
-  firstName String
-  lastName  String
-  articles  Publication[]
+  id               String              @id @default(uuid())
+  email            String              @unique
+  firstName        String
+  lastName         String
+  publishedContent PublicationAuthor[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model PublicationStatus {
   id           String        @id @default(uuid())
   name         String        @unique
   publications Publication[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Series {
+  id                   String              @id @default(uuid())
+  name                 String              @unique
+  publicationsInSeries PublicationSeries[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Category {
+  id           String        @id @default(uuid())
+  name         String        @unique
+  publications Publication[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PublicationSeries {
+  id            String @id @default(uuid())
+  name          String @unique
+  orderInSeries Int
+
+  publication   Publication @relation(fields: [publicationId], references: [id])
+  publicationId String
+  series        Series      @relation(fields: [seriesId], references: [id])
+  seriesId      String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Keywords {
+  id   String @id @default(uuid())
+  name String @unique
+
+  publications Publication[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PublicationType {
+  id    String @id @default(uuid())
+  title String @unique
+
+  publications Publication[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model PublicationAuthor {
+  id     String @id @default(uuid())
+  userId String
+  author User   @relation(fields: [userId], references: [id])
+
+  publication   Publication @relation(fields: [publicationId], references: [id])
+  publicationId String
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model Publication {
-  id       String            @id @default(uuid())
-  slug     String            @unique
-  title    String            @unique
-  content  String
-  abstract String
+  id          String     @id @default(uuid())
+  slug        String     @unique
+  title       String     @unique
+  subtitle    String?
+  content     String
+  abstract    String
   publishedOn DateTime
-  status   PublicationStatus? @relation(fields: [statusId], references: [id])
-  statusId String?
-  author   User              @relation(fields: [authorId], references: [id])
-  authorId String
-  image    String
-  imageAlt String
+  image       String?
+  imageAlt    String?
+  category    Category   @relation(fields: [categoryId], references: [id])
+  keywords    Keywords[]
+
+  status             PublicationStatus?  @relation(fields: [statusId], references: [id])
+  statusId           String?
+  publicationSeries  PublicationSeries[]
+  publicationAuthors PublicationAuthor[]
+  categoryId         String
+  PublicationType   PublicationType? @relation(fields: [publicationTypeId], references: [id])
+  publicationTypeId String?
+
+  createdAt         DateTime         @default(now())
+  updatedAt         DateTime         @updatedAt
 }
