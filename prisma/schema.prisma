@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id               String              @id @default(uuid())
+  id               String              @id @default(cuid())
   firstName        String
   lastName         String
   publishedContent PublicationAuthor[]
@@ -21,7 +21,7 @@ model User {
 }
 
 model PublicationStatus {
-  id           String        @id @default(uuid())
+  id           String        @id @default(cuid())
   name         String        @unique
   publications Publication[]
 
@@ -30,7 +30,7 @@ model PublicationStatus {
 }
 
 model Series {
-  id                   String              @id @default(uuid())
+  id                   String              @id @default(cuid())
   name                 String              @unique
   publicationsInSeries PublicationSeries[]
 
@@ -39,7 +39,7 @@ model Series {
 }
 
 model Category {
-  id           String        @id @default(uuid())
+  id           String        @id @default(cuid())
   name         String        @unique
   publications Publication[]
 
@@ -48,7 +48,7 @@ model Category {
 }
 
 model PublicationSeries {
-  id            String @id @default(uuid())
+  id            String @id @default(cuid())
   orderInSeries Int
 
   publication   Publication @relation(fields: [publicationId], references: [id])
@@ -61,7 +61,7 @@ model PublicationSeries {
 }
 
 model Keyword {
-  id   String @id @default(uuid())
+  id   String @id @default(cuid())
   name String @unique
 
   publications Publication[]
@@ -71,7 +71,7 @@ model Keyword {
 }
 
 model PublicationType {
-  id   String @id @default(uuid())
+  id   String @id @default(cuid())
   name String @unique
 
   publications Publication[]
@@ -81,7 +81,7 @@ model PublicationType {
 }
 
 model PublicationAuthor {
-  id     String @id @default(uuid())
+  id     String @id @default(cuid())
   userId String
   author User   @relation(fields: [userId], references: [id])
 
@@ -93,7 +93,7 @@ model PublicationAuthor {
 }
 
 model Publication {
-  id          String    @id @default(uuid())
+  id          String    @id @default(cuid())
   slug        String    @unique
   title       String    @unique
   subtitle    String?
