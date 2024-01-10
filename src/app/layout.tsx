@@ -2,9 +2,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import '@/app/globals.css';
 
 import {
-	Sansita as HeadingFont,
-	Source_Code_Pro as MonoFont,
-	Source_Sans_3 as BodyFont,
+    Redacted_Script as LoadingFont, Sansita as HeadingFont, Source_Code_Pro as MonoFont,
+    Source_Sans_3 as BodyFont
 } from 'next/font/google';
 import { cookies } from 'next/headers';
 import { ReactNode } from 'react';
@@ -42,6 +41,14 @@ const monoFont = MonoFont({
 	display: 'swap',
 });
 
+const loadingFont = LoadingFont({
+	weight: ['400', '700'],
+	variable: '--font-loading',
+	subsets: ['latin'],
+	display: 'block',
+	preload: true,
+});
+
 function RootLayout({ children }: { children: ReactNode }) {
 	const savedThemeCookie = cookies().get('theme');
 	const savedTheme: ColorThemeType = (savedThemeCookie?.value ??
@@ -58,6 +65,7 @@ function RootLayout({ children }: { children: ReactNode }) {
 						bodyFont.variable,
 						headingFont.variable,
 						monoFont.variable,
+						loadingFont.variable,
 						bodyFont.className,
 					)}
 				>

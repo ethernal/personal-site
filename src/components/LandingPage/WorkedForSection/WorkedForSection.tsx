@@ -40,7 +40,7 @@ function WorkedForSection({ className }: { className?: string }) {
 				<Link href="https://www.karrsa.eu" target="_blank">
 					<Image
 						src="/logotypes/karrsa-logo.png"
-						alt="ifm ecolink"
+						alt="KARR S.A."
 						radius="none"
 						height={20}
 						className="min-w-[5vw] max-w-[200px]"

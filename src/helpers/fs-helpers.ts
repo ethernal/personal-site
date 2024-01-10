@@ -75,15 +75,12 @@ export async function getArticlesFrontmatter() {
 		});
 	}
 
-	return blogPosts?.sort((p1, p2) =>
-		p1 &&
-		p1.publishedOn &&
-		p1.publishedOn < p2 &&
-		p2.publishedOn &&
-		p2?.publishedOn
-			? 1
-			: -1,
-	);
+	return blogPosts?.sort((p1, p2) => {
+		if (p1?.publishedOn !== undefined && p2?.publishedOn !== undefined) {
+			const sortOrder = p1.publishedOn < p2?.publishedOn ? 1 : -1;
+			return sortOrder;
+		} else return 0;
+	});
 }
 
 type ArticleData = {

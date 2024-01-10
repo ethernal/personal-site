@@ -60,3 +60,6 @@ export function slugify(str: string) {
 		.replaceAll('[^a-z]', '')
 		.replaceAll(' ', '-');
 }
+
+export const delay = (ms: number) =>
+	new Promise((resolve) => setTimeout(resolve, ms));

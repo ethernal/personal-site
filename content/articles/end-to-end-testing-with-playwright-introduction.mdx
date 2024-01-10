@@ -1,0 +1,540 @@
+---
+title: Playwright introduction to end to end testing
+subtitle:
+author: Sebastian Pieczynski
+publishedOn: 2023-12-07
+published: true
+status: published
+series: playwright-2023
+seriesPart: 1
+abstract: How to begin end to end testing, websites interactions, visual regression and responsive designs with Playwright.
+category: Testing
+keywords: [playwright, testing, end to end, e2e, react, frontend, typescript]
+image: "/image/article/end-to-end-testing-with-playwright-introduction/hero-image.jpeg"
+imageAlt: "a dark skin pirate woman, with short dark hair and a wide round hat in a blue low top open back dress with thin vertical blue and teal stripes with a small parrot on her arm sitting behind wooden desk weighting gold coins on an old fashioned scale, camera centered front facing, watercolor"
+---
+
+## Contents
+
+## Introduction
+
+We have finally arrived with our treasures to the hideout. Now's the time to check if what we brought is worth it's weight.
+
+## Why test?
+
+Tests are usually the first thing that goes out the window when projects have tight deadlines. When a project is not yet defined and does not have a set structure it may even be understandable but not testing and not automating these tests for engineers at a stage when project is being developed is a waste of everyone's time.
+
+Automated end to end tests allow us to describe what user would do (clicks on buttons, typing, etc) and then check if it works as expected. All this is done by the software that runs the tests. Until recently the leading solution was Cypress but now new kid is on the block and working with it is a joy.
+
+It's called Playwright.
+
+## Playwright capabilities
+
+What can Playwright do for us?
+
+1. Automate manual testing process.
+2. Fill out forms and submit them.
+3. Run tests in parallel.
+4. Run tests in multiple browsers.
+5. Record the way we test the application and create automated test from that interaction.
+6. Take screenshots and compare them for visual regressions.
+7. Run tests with different viewport settings.
+
+That is a lot of great functionality out of the box. Let's see how we can utilize it.
+
+## Installing Playwright
+
+To add Playwright to your project invoke:
+
+```bash
+npm init playwright@latest
+```
+
+You should see the prompt in the terminal similar to this one:
+
+```bash
+Getting started with writing end-to-end tests with Playwright:
+Initializing project in '.'
+√ Where to put your end-to-end tests? · tests
+√ Add a GitHub Actions workflow? (y/N) · false
+√ Install Playwright browsers (can be done manually via 'npx playwright install')? (Y/n) · true
+Installing Playwright Test (npm install --save-dev @playwright/test)…
+```
+
+We initialize new project in current directory (root of the project), put our tests in `tests` directory and ignore GitHub actions for now. We also allow Playwright to install browsers so we can test against them.
+
+## Playwright introduction
+
+In this part we will reuse the frontend of our scraper that we have built and add end to end tests to it.
+
+First let's take a look at the example Playwright created for us:
+
+```example.spec.ts
+import { test, expect } from '@playwright/test';
+
+test('has title', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
+
+  // Expect a title "to contain" a substring.
+  await expect(page).toHaveTitle(/Playwright/);
+});
+
+test('get started link', async ({ page }) => {
+  await page.goto('https://playwright.dev/');
+
+  // Click the get started link.
+  await page.getByRole('link', { name: 'Get started' }).click();
+
+  // Expects page to have a heading with the name of Installation.
+  await expect(page.getByRole('heading', { name: 'Installation' })).toBeVisible();
+});
+```
+
+There are two tests in this example named:
+
+- `has title` - after navigating to https://playwright.dev <NewTabIcon/> it checks if page has title `Playwright` and
+- `get started link` - checks if the same page has heading with name `Installation` and a link with name `Get started`.
+
+We'll use such tests for our website as well.
+
+## Writing first test
+
+We'll start by deleting all tests and examples and create our own.
+
+Remove `tests-examples` folder as well as `example.spec.ts` file.
+
+In the `tests` folder create `productPage.spec.ts` file.
+
+```productPage.spec.ts
+import { test, expect } from '@playwright/test';
+
+test('has title', async ({ page }) => {
+  await page.goto('http://localhost:5173');
+  expect (await page.title()).toBe('Vite + React + TS');
+});
+```
+
+in the `package.json` add a script to run the tests:
+
+```package.json
+  "scripts": {
+    //...
+    "test": "npx playwright test"
+  }
+```
+
+Before running any tests make sure the backend and frontend are running. We can do that by running in terminal(s) the commands:
+
+```bash
+npm run server
+```
+
+and
+
+```bash
+npm run dev
+```
+
+Now let's try to run it:
+
+```bash
+npm run test
+```
+
+At this point we could write the rest of the tests manually but let's make our lives a bit easier and see how we can automate even that part.
+
+If you have a [VS Code plugin](https://marketplace.visualstudio.com/items?itemName=ms-playwright.playwright) <NewTabIcon/> installed use that as it automatically creates files and fills them in IDE. If not you can run the `codegen` that will bring up the window with the empty browser and Playwright Inspector.
+
+```bash
+npx playwright codegen
+```
+
+Note that with `codegen` after recording the test you must copy and paste the code into the test file and/or create the file yourself.
+
+![Playwright Codegen Interface](/image/article/end-to-end-testing-with-playwright-introduction/playwright-codegen.png)
+
+From here you need to input the correct url you want to test:
+
+```bash
+http://localhost:5173
+```
+
+Clicking the buttons will test for presence, visibility, content and values.
+
+![Playwright Codegen Interface](/image/article/end-to-end-testing-with-playwright-introduction/playwright-toolbar.png)
+
+1. Record (or pause recording) test.
+2. Locator picker.
+3. Visibility picker.
+4. Content picker.
+5. Value picker.
+
+If you are creating the test file yourself name it: `productFilter.spec.ts` or rename created `test-1.spec.ts`.
+
+The finished test after cleanup could look something like this:
+
+```productFilter.spec.ts
+import { expect, test } from '@playwright/test';
+
+test('e2e product page', async ({ page }) => {
+  await page.goto('http://localhost:5173/?price_lte=80');
+  await expect(page.getByText('Max Price:')).toBeVisible();
+  await expect(page.getByText('Sort (by price)')).toBeVisible();
+  await expect(page.getByText('Total Products:')).toBeVisible();
+  await expect(page.getByLabel('Max Price:')).toBeVisible();
+  await page.getByLabel('Max Price:').fill('112');
+  await expect(page.locator('#root')).toContainText('Total Products: 387');
+  await expect(page.getByText('Ivysaur£')).toBeVisible();
+  await expect(page.getByRole('img', { name: 'Ivysaur' })).toBeVisible();
+  await expect(page.locator('div').filter({ hasText: /^Ivysaur£87$/ }).getByRole('paragraph')).toBeVisible();
+  await page.getByLabel('Sort (by price)').check();
+  await expect(page.getByRole('heading', { name: 'Weedle' })).toBeVisible();
+  await expect(page.locator('div').filter({ hasText: /^Weedle£25$/ }).getByRole('paragraph')).toBeVisible();
+  await page.locator('#sortOrder').selectOption('desc');
+  await expect(page.getByRole('heading', { name: 'Skuntank' })).toBeVisible();
+  await expect(page.locator('div').filter({ hasText: /^Skuntank£112$/ }).getByRole('paragraph')).toBeVisible();
+});
+```
+
+You will note that dragging the slider does not really work in this case and for fine grained control it needs to be coded manually (with `fill`) into the test.
+
+Now run the tests:
+
+```bash
+npm run test
+```
+It should pass with output:
+
+```bash
+Running 6 tests using 2 workers
+  6 passed (25.2s)
+```
+
+If something is wrong check if the server and frontend are running or [contact me](/contact).
+
+### Defining data-testid for elements in the application
+
+For hard to find elements it is a good practice to add `testid` to it so it can be looked up easier.
+Let's do this for our products. Read more in the [docs](https://playwright.dev/docs/locators#locate-by-test-id)<NewTabIcon/>.
+
+In the `App.tsx` file add the following code just below products map:
+
+```App.tsx
+{products?.map((data) => {
+  const metadata = JSON.parse(data.data);
+  return (
+    <div key={data.url} data-testid="product" className='border-slate-300 bg-slate-600 border-2 p-4 flex flex-col gap-2'>
+    {/* .. */}
+    </div>
+  )}
+  )
+{/* .. */}
+}
+```
+
+The `data-testid="product"` allows us to later use it as a locator in our tests. Learn more from [Playwright documentation](https://playwright.dev/docs/locators#locate-by-test-id)<NewTabIcon/>.
+
+### Managing test cases
+
+Let's separate the created test into more workable chunks and add some more tests.
+
+Here's a new test file. There's an intentional bug here, one of the tests will fail:
+
+```productFilter.spec.ts
+import { expect, test } from '@playwright/test';
+
+test('interface is present and working', async ({ page }) => {
+  await page.goto('http://localhost:5173/?price_lte=80');
+  await expect(page.getByText('Max Price:')).toBeVisible();
+  await expect(page.getByText('Sort (by price)')).toBeVisible();
+  await expect(page.getByText('Total Products:')).toBeVisible();
+  await expect(page.getByLabel('Max Price:')).toBeVisible();
+  await expect(page.locator('#root')).toContainText('Total Products: 258');
+});
+
+test('filtering limits or adds products', async ({ page }) => {
+  await page.goto('http://localhost:5173/?price_lte=80');
+  await expect(page.locator('#root')).toContainText('Total Products: 258');
+  await page.getByLabel('Max Price:').fill('120');
+  await expect(page.locator('#root')).toContainText('Total Products: 405');
+});
+
+test('sorting changes the order of products', async ({ page }) => {
+  await page.goto('http://localhost:5173/?price_lte=80');
+  await expect(page.getByTestId('product').first()).toContainText('Blastoise');
+  await page.getByLabel('Sort (by price)').check();
+  console.log(await page.getByTestId('product').first());
+  await expect(page.getByTestId('product').first()).toContainText('Weedle');
+  await expect(page.locator('div').filter({ hasText: /^Weedle£25$/ }).getByRole('paragraph')).toBeVisible();
+  await page.locator('#sortOrder').selectOption('desc');
+  await expect(page.getByRole('heading', { name: 'Skuntank' })).toBeVisible();
+  await expect(page.locator('div').filter({ hasText: /^Skuntank£112$/ }).getByRole('paragraph')).toBeVisible();
+});
+```
+
+Here's a tip: the easies way to debug it is to run the tests in UI / "headed" mode:
+
+```bash
+npm run test -- --ui
+```
+
+You'll also note that for sorting we test the first element displayed before and after the slider change:
+
+```productFilter.spec.ts
+await expect(page.getByTestId('product').first()).toContainText('Blastoise');
+```
+
+Playwright has a lot of functions that we can use to test what happens in our application.
+Read more in the [locator assertion documentation](https://playwright.dev/docs/api/class-locatorassertions#methods)<NewTabIcon/>.
+
+More on this in the Tips section below and in the [Playwright docs](https://playwright.dev/docs/running-tests)<NewTabIcon/>.
+
+Running with the `--ui` flag will bring up the Playwright Inspector with all the tests that can be run manually. Page is not static, you can use the tools provided in the inspector to see what exactly has happened along with network activity!
+
+Spend some time looking for the bug or scroll below for an answer.
+Side note: struggling a bit with the code leads to better retention so do spend some time here if you can.
+
+![image](/image/article/end-to-end-testing-with-playwright-introduction/playwright-ui-mode.png)
+
+If at any point you try to change things and get annoyed by the reports popping up open the `playwright.config.ts` and **change** the reporter to:
+
+```playwright.config.js
+export default defineConfig({
+	testDir: './tests',
+	//...
+	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
+	reporter: [['html', { open: 'never' }]],
+	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+	use: {
+    //...
+  }
+});
+```
+
+Setting option `open` to `never` will prevent the browser from opening the report and forcing you to kill the process in the terminal.
+
+The bug in this test is the expectation of the `Skuntank` when it should not be visible at this price range:
+
+```productFilter.spec.ts
+test('sorting changes the order of products', async ({ page }) => {
+  //...
+  await expect(page.getByRole('heading', { name: 'Skuntank' })).toBeVisible();
+  await expect(page.locator('div').filter({ hasText: /^Skuntank£112$/ }).getByRole('paragraph')).toBeVisible();
+});
+```
+
+Change it to the 'Silcoon' as show below:
+
+```productFilter.spec.ts
+test('sorting changes the order of products', async ({ page }) => {
+  //...
+  await expect(page.getByRole('heading', { name: 'Silcoon' })).toBeVisible();
+  await expect(page.locator('div').filter({ hasText: /^Silcoon£80$/ }).getByRole('paragraph')).toBeVisible();
+});
+```
+
+Full and corrected test:
+
+```productFilter.spec.ts
+import { expect, test } from '@playwright/test';
+
+test('interface is present and working', async ({ page }) => {
+  await page.goto('http://localhost:5173/?price_lte=80');
+  await expect(page.getByText('Max Price:')).toBeVisible();
+  await expect(page.getByText('Sort (by price)')).toBeVisible();
+  await expect(page.getByText('Total Products:')).toBeVisible();
+  await expect(page.getByLabel('Max Price:')).toBeVisible();
+  await expect(page.locator('#root')).toContainText('Total Products: 258');
+});
+
+test('filtering limits or adds products', async ({ page }) => {
+  await page.goto('http://localhost:5173/?price_lte=80');
+  await expect(page.locator('#root')).toContainText('Total Products: 258');
+  await page.getByLabel('Max Price:').fill('120');
+  await expect(page.locator('#root')).toContainText('Total Products: 405');
+});
+
+test('sorting changes the order of products', async ({ page }) => {
+  await page.goto('http://localhost:5173/?price_lte=80');
+  await expect(page.getByTestId('product').first()).toContainText('Blastoise');
+  await page.getByLabel('Sort (by price)').check();
+  console.log(await page.getByTestId('product').first());
+  await expect(page.getByTestId('product').first()).toContainText('Weedle');
+  await expect(page.locator('div').filter({ hasText: /^Weedle£25$/ }).getByRole('paragraph')).toBeVisible();
+  await page.locator('#sortOrder').selectOption('desc');
+  await expect(page.getByRole('heading', { name: 'Silcoon' })).toBeVisible();
+  await expect(page.locator('div').filter({ hasText: /^Silcoon£80$/ }).getByRole('paragraph')).toBeVisible();
+});
+```
+
+Now our tests pass and you learned how to debug them visually.
+
+And talking about visual side. Wouldn't it be nice to check if the website looks the way we expect it to?
+
+## Visual tests
+
+Adding visual comparison is a matter of a single assertion. Add this test to the file:
+
+```productFilter.spec.ts
+test('visual regressions', async ({ page }) => {
+  await page.goto('http://localhost:5173/?price_lte=80');
+	await expect(page).toHaveScreenshot('productFilter-with-price-80.png');
+});
+```
+
+The test will go to the home page with default parameters and verify if the screenshot it produces looks the way we expect it to.
+
+But how do we make a screenshot you might ask.. we don't, Playwright does but it also means it will not find it the first time it runs so there will be errors and these are **EXPECTED**:
+
+```bash
+[webkit] › productFilter.spec.ts:31:1
+› visual regressions
+
+Error: A snapshot does not exist at
+```
+
+The test will fail but the screenshot is now saved into the `test\productFilter.spec.ts-snapshots` folder.
+That folder should be committed to your repository!
+
+Try running the test again:
+
+```bash
+npm run test
+```
+
+Now all our tests pass!
+
+```bash
+15 passed (40.7s)
+```
+
+You just learned how to do (basic) visual testing with Playwright!
+
+There are more capabilities to this API ex. how different the images can be when compared. Read more [here](https://playwright.dev/docs/api/class-pageassertions#page-assertions-to-have-screenshot-1)<NewTabIcon/>.
+
+A note on screenshots: these will look different than what you can expect in your browser. Open them up and compare. It might be limitation of the way Playwright works with browser engines so it's still valid to test in real browsers.
+
+## Testing responsive views
+
+These are all and good, but what about mobile first? Shouldn't that be tested as well?
+
+By all means! The syntax is a bit different to create a test for responsive views as we need to set the viewport size. We'll use the visual testing to make sure that it looks as we expect.
+
+Add the following test to the file:
+
+```productFilter.spec.ts
+  test.describe('page mobile (w-280) screenshot', () => {
+	test.use({ viewport: { width: 280, height: 1200 } });
+
+	test('mobile view about page screenshot', async ({ page }) => {
+		await page.goto('http://localhost:5173/?price_lte=80');
+		await expect(page).toHaveScreenshot('mobile-280productFilter-with-price-80.png');
+	});
+});
+```
+
+After the screenshot had been created we can run the test again:
+
+```bash
+npm run test
+```
+
+and see that all the tests are passing:
+
+```bash
+18 passed (39.2s)
+```
+
+Finally to run the `codegen` in mobile view you can execute:
+
+```bash
+npx playwright codegen --viewport-size=280,800 http://localhost:5173/?price_lte=80
+```
+
+It will open the Playwright Inspector with viewport limited to 280px width and 800px height.
+
+## Tips
+
+These are the most important bits from this article that you may want to reference later.
+
+### Run tests in UI / "headed" mode
+When your tests are failing and you have trouble figuring why run them in a ui mode:
+
+```bash
+npm run test -- --ui
+```
+
+The double dash `--` will pass arguments to the script invoked that is the `--ui` part and will run the test in UI mode.
+
+### Define viewport for Playwright test generator
+
+```bash
+npx playwright codegen --viewport-size=280,800 http://localhost:5173/?price_lte=80
+```
+
+### Disable reports opening on failed tests
+
+```playwright.config.js
+export default defineConfig({
+	testDir: './tests',
+	//...
+	/* Reporter to use. See https://playwright.dev/docs/test-reporters */
+	reporter: [['html', { open: 'never' }]],
+	/* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
+	use: {
+    //...
+  }
+});
+```
+
+## Negating the condition
+
+What if you want to check if something is NOT visible? Playwright does **not** expose methods such as notVisible.
+There is a negation operator/property that you can use to look for the opposite of the condition.
+
+```ts
+await expect(locator).not.toContainText('error');
+```
+
+See [documentation on not property](https://playwright.dev/docs/api/class-locatorassertions#locator-assertions-not)<NewTabIcon/>.
+
+## Gotchas
+
+You may see an error when writing a test:
+
+```
+NS_BINDING_ABORTED; maybe frame was detached?
+```
+
+**TL;DL**: Do *NOT* use more than one `goto` in a single `test` invocation **with** assertions in between.
+
+This will happen always (for me) if there is more than one `goto` instruction per test. For example if you want to test if all navigation buttons work in one go, but to be certain you also make assertions on the page.
+
+Separate these tests with a `test` function and you're golden.
+
+## Conclusion
+
+Today we have learned:
+
+1. [x] How to write simple end-to-end tests with Playwright.
+2. [x] How to use testids for tests.
+3. [x] How to test user interactions.
+4. [x] How to test for visual regressions.
+5. [x] How to test responsive views.
+6. [x] How Playwright helps us automate the process of testing and gives us confidence that our product still works (and looks) as expected.
+
+## Reference materials
+
+1. [Test assertions](https://playwright.dev/docs/test-assertions) <NewTabIcon/>
+2. [Assertion methods](https://playwright.dev/docs/api/class-locatorassertions#methods) <NewTabIcon/>
+3. [Screenshot options](https://playwright.dev/docs/api/class-locatorassertions#locator-assertions-to-have-screenshot-1) <NewTabIcon/>
+4. [Negate assertions with not property](https://playwright.dev/docs/api/class-locatorassertions#locator-assertions-not) <NewTabIcon/>
+5. [Using testids](https://playwright.dev/docs/locators#locate-by-test-id) <NewTabIcon/>
+
+## Thank you!
+
+This way we have come to the end of our journey. Our coffers secured, tools laying in the shed and treasures in the safe. It was a great journey and I do hope you enjoyed it as much as I have. Thank you for your company!
+
+You can now write basic tests for you application. I do hope to explore this topic in more detail at some point so let me know how you like it!
+
+If no one told you this today: You are a great person and do great work! We all 💖 you! Do not give up!

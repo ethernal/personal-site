@@ -405,6 +405,30 @@
 	],
 	"certificates": [
 		{
+			"name": "Epic React - Testing React Apps",
+			"date": "2024-01-05",
+			"issuer": "Kent C. Dodds",
+			"url": "/certificates/react-epic-react-certificate-testing-react-apps.png"
+		},
+		{
+			"name": "Epic React - React Performance",
+			"date": "2024-01-04",
+			"issuer": "Kent C. Dodds",
+			"url": "/certificates/react-epic-react-certificate-react-performance.png"
+		},
+		{
+			"name": "Epic React - Advanced Patterns",
+			"date": "2023-12-28",
+			"issuer": "Kent C. Dodds",
+			"url": "/certificates/react-epic-react-certificate-advanced-patterns.png"
+		},
+		{
+			"name": "Epic React - Advanced Hooks",
+			"date": "2023-12-27",
+			"issuer": "Kent C. Dodds",
+			"url": "/certificates/react-epic-react-certificate-advanced-hooks.png"
+		},
+		{
 			"name": "Joy of React",
 			"date": "2023-07-23",
 			"issuer": "Josh W. Comeau",
