@@ -42,8 +42,12 @@ function ContactForm({ className }: { className?: string }) {
 			const res = await sendEmailAction(prev, formData);
 			if (res === true) {
 				updateMailSuccess();
-				formRef.current?.reset();
-			} else updateMailError();
+				// formRef.current?.reset();
+				return initialFormState;
+			} else {
+				updateMailError();
+				return formData;
+			}
 		},
 		initialFormState,
 	);
