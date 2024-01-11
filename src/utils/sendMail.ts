@@ -3,6 +3,8 @@ import nodemailer, { SentMessageInfo } from 'nodemailer';
 import { toast } from 'react-toastify';
 import { Resend } from 'resend';
 
+import { ContactFormData } from '@/components/ContactForm/ContactForm';
+
 //-----------------------------------------------------------------------------
 type SendMailParams = {
 	replyTo: string;
@@ -80,11 +82,14 @@ export async function resendSendMail({
 	});
 }
 
-export async function sendEmailAction(prevState: any, formData: FormData) {
+export async function sendEmailAction(
+	prevState: any,
+	formData: Prettify<Partial<FormData & ContactFormData>>,
+) {
 	('use server');
-	const name = formData.get('name') as string;
-	const email = formData.get('email') as string;
-	const message = formData.get('message') as string;
+	const name = formData.get && (formData.get('name') as string);
+	const email = formData.get && (formData.get('email') as string);
+	const message = formData.get && (formData.get('message') as string);
 	toast;
 
 	// await resendSendMail({

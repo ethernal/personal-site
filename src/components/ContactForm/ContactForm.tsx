@@ -6,7 +6,7 @@ import { Id, toast } from 'react-toastify';
 import { sendEmailAction } from '@/utils/sendMail';
 import { cn } from '@/utils/utils';
 
-type ContactFormData = {
+export type ContactFormData = {
 	email: string;
 	name: string;
 	message: string;
@@ -38,7 +38,10 @@ function ContactForm({ className }: { className?: string }) {
 
 	const formRef = React.useRef<HTMLFormElement | null>(null);
 	const [state, formAction] = useFormState(
-		async (prev: any, formData: FormData) => {
+		async (
+			prev: any,
+			formData: Prettify<Partial<FormData & ContactFormData>>,
+		) => {
 			const res = await sendEmailAction(prev, formData);
 			if (res === true) {
 				updateMailSuccess();
@@ -91,6 +94,7 @@ function ContactForm({ className }: { className?: string }) {
 						className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent focus:outline-2 disabled:cursor-not-allowed disabled:bg-opacity-50"
 						required
 						min={3}
+						defaultValue={state.name}
 					/>
 					<input
 						name="email"
@@ -98,6 +102,7 @@ function ContactForm({ className }: { className?: string }) {
 						placeholder="Email Address"
 						className="p-3 dark:bg-theme-dark-background-secondary bg-theme-light-background-secondary placeholder:text-theme-light-text-muted dark:placeholder:text-theme-dark-text-muted dark:text-theme-dark-text-light rounded-theme-default outline-theme-accent disabled:cursor-not-allowed disabled:bg-opacity-50"
 						required
+						defaultValue={state.email}
 					/>
 				</div>
 				<textarea
@@ -108,6 +113,7 @@ function ContactForm({ className }: { className?: string }) {
 					//@ts-ignore
 					style={{ formSizing: 'content' }}
 					minLength={10}
+					defaultValue={state.message}
 				/>
 				<Submit className="text-base font-heading max-sm:text-2xl min-w-min sm:self-start text-theme-white bg-theme-accent rounded-md shadow-md shadow-black px-10 text-[clamp(0.925rem,-0.875rem+3vw,1.75rem)] disabled:bg-gray-400 disabled:pointer-events-none disabled:cursor-not-allowed">
 					Send
