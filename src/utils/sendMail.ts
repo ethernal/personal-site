@@ -105,7 +105,7 @@ export async function sendEmailAction(
 
 	try {
 		const response = await nodemailerSendMail({
-			replyTo: email,
+			replyTo: email ?? 'noreply@sebee.website',
 			subject: 'Email from: ' + name + ' (' + email + ')',
 			toEmail: process.env.NODEMAILER_RECIPIENT ?? 'sebee.website@gmail.com',
 			otpText: `${message}`,
