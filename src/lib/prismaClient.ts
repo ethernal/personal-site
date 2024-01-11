@@ -4,7 +4,7 @@ const prismaClientSingleton = () => {
 	return new PrismaClient({
 		datasources: {
 			db: {
-				url: `file:${process.cwd()}/data/dev.db`,
+				url: `file:${process.cwd()}/dev.db`,
 			},
 		},
 	});
