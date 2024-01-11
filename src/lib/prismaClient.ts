@@ -1,13 +1,14 @@
 import { PrismaClient } from '@prisma/client';
 
 const prismaClientSingleton = () => {
-	return new PrismaClient({
-		datasources: {
-			db: {
-				url: `file:${process.cwd()}/dev.db`,
-			},
-		},
-	});
+	// return new PrismaClient({
+	// 	datasources: {
+	// 		db: {
+	// 			url: `file:${process.cwd()}/dev.db`,
+	// 		},
+	// 	},
+	// });
+	return new PrismaClient();
 };
 
 declare global {
