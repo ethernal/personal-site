@@ -49,6 +49,10 @@ const loadingFont = LoadingFont({
 	preload: true,
 });
 
+export const metadata = {
+	metadataBase: new URL('https://sebeee.website'),
+};
+
 function RootLayout({ children }: { children: ReactNode }) {
 	const savedThemeCookie = cookies().get('theme');
 	const savedTheme: ColorThemeType = (savedThemeCookie?.value ??
