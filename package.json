@@ -4,6 +4,11 @@
 	"private": true,
 	"scripts": {
 		"dev": "next dev",
+		"db:reset": "npx prisma db push --force-reset",
+		"db:recreate": "npx prisma db push --force-reset && npx prisma db push",
+		"db:seed": "npx prisma db seed",
+		"db:reseed": "npx prisma db push --force-reset && npx prisma db seed",
+		"prebuild": "npx prisma generate && npm run db:reseed",
 		"build": "next build",
 		"start": "next start",
 		"lint": "next lint",
