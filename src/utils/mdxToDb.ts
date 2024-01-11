@@ -1,4 +1,4 @@
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prismaClient';
 
 import { getArticles } from '../helpers/fs-helpers';
 import { removeDiacritics } from './utils';
@@ -7,8 +7,6 @@ const PUBLICATION_TYPE = Object.freeze({
 	ARTICLE: 'article',
 	GEM: 'gem',
 });
-
-const prisma = new PrismaClient();
 
 export async function loadMDXtoDB() {
 	// const allArticles = await prisma.publication.findMany();
