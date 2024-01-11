@@ -73,7 +73,6 @@ function ContactForm({ className }: { className?: string }) {
 			autoClose: 5000,
 		});
 
-	state?.error ? updateMailError() : null;
 	return (
 		<>
 			<form
