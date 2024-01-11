@@ -3,11 +3,11 @@ type BlogPostFrontmatterType = {
 	title: string;
 	author?: string;
 	published?: boolean;
-	publishedOn: string;
+	publishedOn: string | Date;
 	abstract: string;
-	image?: string;
-	imageAlt?: string;
-	imageCredits?: string;
+	image?: string | null;
+	imageAlt?: string | null;
+	imageCredits?: string | null;
 };
 
 export default BlogPostFrontmatterType;

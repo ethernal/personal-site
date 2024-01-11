@@ -45,3 +45,9 @@ export const MDXOptions = {
 		],
 	},
 };
+
+export const PUBLICATION_TYPE = Object.freeze({
+	ARTICLE: 'article',
+	GEM: 'gem',
+});
+

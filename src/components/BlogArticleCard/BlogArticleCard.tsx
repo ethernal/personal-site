@@ -26,8 +26,8 @@ function BlogArticleCard({
 				<div className="min-w-[50%] object-cover md:min-h-[26rem]">
 					<Link href={`/article/${slug}`}>
 						<Image
-							src={image}
-							alt={imageAlt}
+							src={image ? image : ''}
+							alt={imageAlt ? imageAlt : 'missing image'}
 							className="max-h-[20rem] w-full min-w-[50%] object-cover md:min-h-[26rem] rounded-none"
 							removeWrapper
 						/>
@@ -52,7 +52,7 @@ function BlogArticleCard({
 									author && author?.length > 0
 										? removeDiacritics(
 												author?.toLocaleLowerCase().replaceAll(' ', '-'),
-										  )
+											)
 										: 'sebastian-pieczynski'
 								}.png`}
 								alt={author}

@@ -93,25 +93,26 @@ model PublicationAuthor {
 }
 
 model Publication {
-  id          String    @id @default(cuid())
-  slug        String    @unique
-  title       String    @unique
+  id          String   @id @default(cuid())
+  slug        String   @unique
+  title       String   @unique
   subtitle    String?
   content     String
   abstract    String
   publishedOn DateTime
   image       String?
   imageAlt    String?
-  category    Category  @relation(fields: [categoryId], references: [id])
-  keywords    Keyword[]
 
+  category           Category            @relation(fields: [categoryId], references: [id])
+  keywords           Keyword[]
   status             PublicationStatus?  @relation(fields: [statusId], references: [id])
-  statusId           String?
   publicationSeries  PublicationSeries[]
   publicationAuthors PublicationAuthor[]
-  categoryId         String
   publicationType    PublicationType?    @relation(fields: [publicationTypeId], references: [id])
-  publicationTypeId  String?
+
+  statusId          String?
+  categoryId        String
+  publicationTypeId String?
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

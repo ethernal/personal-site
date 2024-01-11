@@ -1,9 +1,6 @@
-import { format, intlFormat } from 'date-fns';
-
 import BlogArticleCard from '@/components/BlogArticleCard';
 import { SITE_TITLE } from '@/constants';
 import { getArticlesFrontmatter } from '@/helpers/fs-helpers';
-import { PublicationManager } from '@/manager/PublicationManager';
 
 export const metadata = {
 	title: SITE_TITLE,
@@ -12,8 +9,7 @@ export const metadata = {
 };
 
 async function Home() {
-	const postsList = await PublicationManager.findAllPublications();
-	// const postsList = await getArticlesFrontmatter();
+	const postsList = await getArticlesFrontmatter();
 
 	return (
 		<div className="wrapper max-w-[var('--page-wrapper-max-width')] min-h-[67dvh]">
@@ -36,14 +32,15 @@ async function Home() {
 						slug,
 						title,
 						abstract,
-						publishedOn = Date.now(),
+						publishedOn = '',
 						image,
 						imageAlt,
-						publicationAuthors: author,
+						author,
 					} = postFrontmatter;
 					return (
 						<BlogArticleCard
 							key={slug}
+							slug={slug ?? ''}
 							// extract all data from frontmatter
 							{...postFrontmatter}
 							// but be specific about what we want to use in the component
@@ -51,16 +48,10 @@ async function Home() {
 							// frontmatter props without specifying them it will still work
 							title={title ?? 'missing title'}
 							abstract={abstract ?? 'abstract missing'}
-							publishedOn={
-								format(publishedOn, 'yyyy-MM-dd') ??
-								new Date().toLocaleDateString()
-							}
+							publishedOn={publishedOn ?? new Date().toLocaleDateString()}
 							image={image}
 							imageAlt={imageAlt}
-							author={
-								`${author[0].author.firstName} ${author[0].author.lastName}` ??
-								'Sebastian Pieczyński'
-							}
+							author={author ?? 'Sebastian Pieczyński'}
 						/>
 					);
 				})}

@@ -1,11 +1,10 @@
-// prisma/seed.ts
-import { PrismaClient } from '@prisma/client';
+import prisma from '@/lib/prismaClient';
+import { PublicationManager } from '@/manager/PublicationManager';
 
 import { loadMDXtoDB } from '../src/utils/mdxToDb';
 
-const prisma = new PrismaClient();
-
 async function main() {
+	console.log('Looking for user in DB...');
 	const userFromDB = await prisma.user.findFirst({
 		where: {
 			AND: [
@@ -18,15 +17,21 @@ async function main() {
 	});
 
 	if (!userFromDB) {
+		console.log('Creating default user in DB...');
+
 		await prisma.user.create({
 			data: {
 				firstName: 'Sebastian',
 				lastName: 'Pieczynski',
 			},
 		});
+	} else {
+		console.log('Default user found in the DB...');
 	}
 
 	const publicationStatuses = ['draft', 'public', 'private'];
+
+	console.log('Creating default statuses for publications...');
 
 	const pStatuses = await prisma.$transaction(
 		publicationStatuses.map((status) =>
@@ -43,7 +48,7 @@ async function main() {
 	);
 
 	const publicationTypes = ['article', 'gem'];
-
+	console.log('Creating default types for publications...');
 	const pTypes = await prisma.$transaction(
 		publicationTypes.map((type) =>
 			prisma.publicationType.upsert({
@@ -57,6 +62,8 @@ async function main() {
 			}),
 		),
 	);
+
+	console.log('Loading MDX content...');
 
 	await loadMDXtoDB();
 }
