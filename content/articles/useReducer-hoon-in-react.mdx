@@ -1,0 +1,334 @@
+---
+title: React useReducer hook explained
+author: Sebastian Pieczynski
+publishedOn: 2024-01-25
+published: true
+status: published
+abstract: How to use the 'useReducer' hook in React and what problems with useState it helps with.
+category: React
+keywords: [react, logic, application, typescript, useReducer]
+image: "/image/article/react-hook-use-reducer/react-use-reducer-explained.jpg"
+imageAlt: "two sets of universes one on the left side enclosed inside a 3d hexagonal translucent box and a second one loose and scrambled all over the place without order, watercolor"
+---
+
+## Contents
+
+<p className="text-3xl text-theme-accent font-semibold font-heading">Welcome Engineers!</p>
+
+As mentioned in [previous article](/article/useState-hook-in-react) the two main hooks to track state of the application or a component in React applications are [useState](https://react.dev/reference/react/useState) <NewTabIcon/> and [useReducer](https://react.dev/reference/react/useReducer)  <NewTabIcon/>.
+
+While `useState` is should only be used to track simple state that can be enclosed in a single value and not dependant on other values, `useReducer` is there to tackle complex state that consists of multiple values that depend on each other, are interrelated and should be consumed as single object.
+
+## Groundwork
+
+if you came here to learn how to use reducer (pun intended) then let's first talk about similar function in Javascript: [`Array.reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)
+
+`.reduce(reducerFunction, initialValue)` is a method on an Array object that allows to "reduce" array into a single value. One of the uses could be calculating sum of an array. It accepts two arguments: a function that will be executed for every element of an array (`reducerFunction` in our case) and an initial value (`initialValue`) that the reducer function will use for first calculation. After the reduce function is done traversing all the elements in the array it returns a single value.
+
+```MDN_Example.ts
+const array1 = [1, 2, 3, 4];
+
+// 0 + 1 + 2 + 3 + 4
+const initialValue = 0;
+const sumWithInitial = array1.reduce(
+  (accumulator, currentValue) => accumulator + currentValue,
+  initialValue,
+);
+
+console.log(sumWithInitial); // Expected output: 10
+```
+
+Note that `reduce` should be used sparingly and it's a tool not a doctrine. Even with the example above it may not be obvious that this is just a sum function.
+
+## useReducer hook
+
+Now that we have some understanding how reducer functions work and what they deliver let's understand more about `useReducer` hook.
+
+For more complex states like ex. cart contents, user data or any other that deals with changing partial data inside an object `useReducer` is the best option.
+
+### `useReducer` definition
+
+Contrary to the reduce function above `useReducer` accepts three arguments and it returns 2 values:
+
+```ts
+const [state, dispatch] = useReducer(reducerFunction, initialState, initializerFunction)
+```
+
+Let's break it down:
+
+`state`:
+  this is a current state returned by the reducer based on last actions performed (or initial state if no actions were sent, more on that i a sec).
+
+`dispatch`:
+  a function that allows us to send `type` and an `action` that will determine how our `state` should change. Example could be `dispatch({type: 'increment', payload:{step: 2}})`
+
+`dispatch` argument: `action`:
+  argument of the `dispatch` function - object typically consisting of `type` and `payload` describing the way that the state should be changed. Type is usually a verb describing type of action we want to perform ex. increment or decrement the counter and payload is a name of the variable(s) that we pass to the action. It defines for example the step or any other variable that would need to affect the state to transition from current to new values when incrementing or decrementing the counter.
+
+`reducerFunction`:
+  function that will be responsible for changing state from current one to new one based on the `action` and `payload`.
+
+`initialState`:
+  object with a state that should be set when first invoking the reducer.
+
+`initializerFunction`:
+  OPTIONAL function that will initialize state, should be used when state requires computation or manipulation inside a function.
+
+### Implementing counter with useState
+
+To show how useReducer changes the way we interact with the state it will be best to show an example of before and after.
+
+Using good old counter will also help in showing the principle without focusing on implementation details / complexity.
+
+We'll add features to the counter - ability to set the step for counting and resetting the counter to initial values. Initial count and initial step will be set as component props. We'll implement same functionality with `useReducer` after this.
+
+```StateCounter.tsx
+import { useState } from 'react';
+
+function StateCounter({ initialCount = 0, initialStep = 1 }) {
+	const [count, setCount] = useState(initialCount);
+	const [step, setStep] = useState(initialStep);
+
+	const incrementCount = () => setCount((previous) => previous + step);
+	const decrementCount = () => setCount((previous) => previous - step);
+	const incrementStep = () => setStep((previous) => previous + 1);
+	const decrementStep = () => setStep((previous) => previous - 1);
+
+	const reset = () => {
+		setCount(initialCount);
+		setStep(initialStep);
+	};
+
+	return (
+		<>
+			<div>
+				<h2 className="pb-2">StateCounter</h2>
+			</div>
+
+			<div className="flex flex-row gap-2 justify-center items-center">
+				<button
+					onClick={() => {
+						decrementCount();
+					}}
+					type="button"
+					className="pb-2 px-4 pt-1 text-3xl bg-slate-700"
+				>
+					-
+				</button>
+				<button
+					onClick={() => {
+						incrementCount();
+					}}
+					type="button"
+					className="pb-2 px-4 pt-1 text-3xl bg-slate-700"
+				>
+					+
+				</button>
+			</div>
+
+			<p className="pt-4">Step: {step}</p>
+			<div className="flex flex-row gap-2 justify-center items-center">
+				<button
+					onClick={() => {
+						decrementStep();
+					}}
+					type="button"
+					className="pb-2 px-4 pt-1 text-3xl bg-slate-700"
+				>
+					-
+				</button>
+				<button
+					onClick={() => {
+						incrementStep();
+					}}
+					type="button"
+					className="pb-2 px-4 pt-1 text-3xl bg-slate-700"
+				>
+					+
+				</button>
+			</div>
+			<h3 className="pt-4">
+				<p>Count: {count}</p>
+			</h3>
+			<div className="flex flex-row gap-2 justify-center pt-4">
+				<button
+					onClick={() => {
+						reset();
+					}}
+					type="button"
+					className="pb-2 px-4 pt-1 text-3xl bg-slate-700"
+				>
+					reset
+				</button>
+			</div>
+		</>
+	);
+}
+
+export default StateCounter;
+```
+
+Nothing really interesting here, but note that we had to implement all the functions in the component and while a bit contrived when implementing reset function we had to remember to invoke both `setCount` and `setStep` functions.
+
+### Implementing Counter with useReducer (with Typescript)
+
+Using reducers comes with a seemingly much larger boilerplate. In complex projects that boilerplate actually reduces the complexity and amount of mental overhead we need to understand what happens in the components. We'll also separate reducers and TypeScript types to separate modules (files).
+
+First let's create types that will describe the shape of the data as well as allowed actions.
+
+```src/types/counterTypes.ts
+type CounterStateType = {
+	count: number;
+	step: number;
+};
+
+type CounterActionType =
+	| { type: 'decrementCount' }
+	| { type: 'incrementCount' }
+	| { type: 'decrementStep' }
+	| { type: 'incrementStep' }
+	| { type: 'reset'; initialState?: CounterStateType };
+
+export type { CounterStateType, CounterActionType };
+```
+
+So the `CounterStateType` describes the shape of the data we expect to have in state when working with our reducer and `CounterActionType` defines what types of actions as well as what payload (if any) we are expecting.
+
+
+Now let's implement the reducer function that will modify our state according to action we have dispatched. Remember that reducers **MUST** be pure. That means that given same arguments they will return the same result. In our case we are passing the `initialState` as the payload for `reset` action. We could export that variable and import it in the reducer but that would couple it to the reducer code and it would become impure.
+
+This is again a bit contrived but remember about it when implementing your own reducers - if you need to do some complex data modifications that modify state values in unpredictable ways (ex. returning current date - pass it as payload and do not calculate it inside the reducer itself).
+
+```src/reducers/counterReducer.ts
+import type {
+	CounterActionType,
+	CounterStateType,
+} from '../types/CounterTypes';
+
+function counterReducer(
+	state: CounterStateType,
+	action: CounterActionType,
+): CounterStateType {
+	switch (action.type) {
+		case 'decrementCount':
+			return { ...state, count: state.count - state.step };
+		case 'incrementCount':
+			return { ...state, count: state.count + state.step };
+		case 'decrementStep':
+			return { ...state, step: Math.max(state.step - 1, 1) };
+		case 'incrementStep':
+			return { ...state, step: state.step + 1 };
+		case 'reset':
+			return action.initialState ? action.initialState : { count: 0, step: 1 };
+		default:
+			return state;
+	}
+}
+
+export { counterReducer };
+```
+
+Now that all parts of the state management are prepared we can code our reducer with `useReducer` hook.
+
+```ReducerCounter.tsx
+import { useReducer } from 'react';
+
+import { counterReducer } from '../reducers/counterReducer';
+
+import type { CounterStateType } from '../types/CounterTypes';
+
+function ReducerCounter({
+	initialCount = 0,
+	initialStep = 1,
+}: {
+	initialCount?: number;
+	initialStep?: number;
+}): JSX.Element {
+	const initialState: CounterStateType = {
+		count: initialCount,
+		step: initialStep,
+	};
+
+	const [state, dispatch] = useReducer(counterReducer, initialState);
+
+	return (
+		<>
+			<div>
+				<h2 className="pb-2 pt-8">Reducer Counter</h2>
+			</div>
+
+			<div className="flex flex-row gap-2 justify-center items-center">
+				<button
+					onClick={() => {
+						dispatch({ type: 'decrementCount' });
+					}}
+					type="button"
+					className="pb-2 px-4 pt-1 text-3xl bg-slate-700"
+				>
+					-
+				</button>
+				<button
+					onClick={() => {
+						dispatch({ type: 'incrementCount' });
+					}}
+					type="button"
+					className="pb-2 px-4 pt-1 text-3xl bg-slate-700"
+				>
+					+
+				</button>
+			</div>
+
+			<p className="pt-4">Step: {state.step}</p>
+			<div className="flex flex-row gap-2 justify-center items-center">
+				<button
+					onClick={() => {
+						dispatch({ type: 'decrementStep' });
+					}}
+					type="button"
+					className="pb-2 px-4 pt-1 text-3xl bg-slate-700"
+				>
+					-
+				</button>
+				<button
+					onClick={() => {
+						dispatch({ type: 'incrementStep' });
+					}}
+					type="button"
+					className="pb-2 px-4 pt-1 text-3xl bg-slate-700"
+				>
+					+
+				</button>
+			</div>
+			<h3 className="pt-4">
+				<p>Count: {state.count}</p>
+			</h3>
+			<div className="flex flex-row gap-2 justify-center pt-4">
+				<button
+					onClick={() => {
+						dispatch({ type: 'reset', initialState: initialState });
+					}}
+					type="button"
+					className="pb-2 px-4 pt-1 text-3xl bg-slate-700"
+				>
+					reset
+				</button>
+			</div>
+		</>
+	);
+}
+
+export default ReducerCounter;
+```
+
+As you can see even in case of a very simple counter component we were able to simplify it:
+1. There are no functions being invoked inside the component only the "intent" is `dispatch`-ed. This reduces errors.
+2. Logic for managing the component is collocated and in a single file.
+3. We were able to improve types for the component and it's use is safer and easier.
+4. We have simplified the way we interact with the component.
+5. We learned that when using reducers we need to respond with predictable states ex. do not generate Dates or other random data inside reducers but pass it as payload from the component.
+
+Hope you had fun and learned something new today!
+
+You are doing great and you are a great person so keep it up!
+
+
