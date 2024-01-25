@@ -21,7 +21,7 @@ While `useState` is should only be used to track simple state that can be enclos
 
 ## Groundwork
 
-If you came here to learn how to use reducer (pun intended) hook in React then let's first talk about similar function in Javascript: [Array.reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) <NewTabIcon/>.
+You probably came here to learn how to use reducer (pun intended) hook in React. Before we get into that let's talk about similar function in Javascript: [Array.reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) <NewTabIcon/>.
 
 `.reduce(reducerFunction, initialValue)` is a method on an Array object that allows to "reduce" values from an array into a single value. One of the uses could be calculating sum of an array. It accepts two arguments: a function that will be executed for every element of an array (`reducerFunction` in our case) and an initial value (`initialValue`) that the reducer function will use for first calculation. After the reduce function is done traversing all the elements in the array it returns a single value.
 
@@ -57,7 +57,7 @@ const [state, dispatch] = useReducer(reducerFunction, initialState, initializerF
 Let's break it down:
 
 `state`:
-  this is a current state returned by the reducer based on last actions performed (or initial state if no actions were sent, more on that i a sec).
+  this is a current state returned by the reducer based on last actions performed (or initial state if no actions were sent, more on that in a sec).
 
 `dispatch`:
   a function that allows us to send `type` and an `action` or `payload` that will determine how our `state` should change. Example could be `dispatch({type: 'increment', payload:{step: 2}})`. Type is usually a verb describing type of action we want to perform.
