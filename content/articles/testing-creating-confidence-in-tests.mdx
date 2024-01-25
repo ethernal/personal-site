@@ -47,7 +47,7 @@ test('filtering limits or adds products', async ({ page }) => {
 });
 ```
 
-Here the test results depend on what is retuned by the database. If we change what is inside the DB (ex. by changing the amount of data scraped) this test will fail although the functionality will not be hindered.
+Here the test results depend on what is returned by the database. If we change what is inside the DB (ex. by changing the amount of data scraped) this test will fail although the functionality will not be hindered.
 
 What is worse it will not really fail for us at the moment (it's a false-positive) but it can fail for other developers.
 
