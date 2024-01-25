@@ -1,13 +1,13 @@
 ---
-title: React useReducer hook explained
+title: React 'useReducer' hook explained
 author: Sebastian Pieczynski
 publishedOn: 2024-01-25
 published: true
 status: published
-abstract: How to use the 'useReducer' hook in React and what problems with useState it helps with.
+abstract: How to use the 'useReducer' (with Typescript) hook in React and what are it's benefits over `useState`?
 category: React
 keywords: [react, logic, application, typescript, useReducer]
-image: "/image/article/react-hook-use-reducer/react-use-reducer-explained.jpg"
+image: "/image/article/react-hook-use-reducer-explained/react-use-reducer-explained.jpg"
 imageAlt: "two sets of universes one on the left side enclosed inside a 3d hexagonal translucent box and a second one loose and scrambled all over the place without order, watercolor"
 ---
 
@@ -21,9 +21,9 @@ While `useState` is should only be used to track simple state that can be enclos
 
 ## Groundwork
 
-if you came here to learn how to use reducer (pun intended) then let's first talk about similar function in Javascript: [`Array.reduce`](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce)
+If you came here to learn how to use reducer (pun intended) hook in React then let's first talk about similar function in Javascript: [Array.reduce](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce) <NewTabIcon/>.
 
-`.reduce(reducerFunction, initialValue)` is a method on an Array object that allows to "reduce" array into a single value. One of the uses could be calculating sum of an array. It accepts two arguments: a function that will be executed for every element of an array (`reducerFunction` in our case) and an initial value (`initialValue`) that the reducer function will use for first calculation. After the reduce function is done traversing all the elements in the array it returns a single value.
+`.reduce(reducerFunction, initialValue)` is a method on an Array object that allows to "reduce" values from an array into a single value. One of the uses could be calculating sum of an array. It accepts two arguments: a function that will be executed for every element of an array (`reducerFunction` in our case) and an initial value (`initialValue`) that the reducer function will use for first calculation. After the reduce function is done traversing all the elements in the array it returns a single value.
 
 ```MDN_Example.ts
 const array1 = [1, 2, 3, 4];
@@ -42,11 +42,11 @@ Note that `reduce` should be used sparingly and it's a tool not a doctrine. Even
 
 ## useReducer hook
 
-Now that we have some understanding how reducer functions work and what they deliver let's understand more about `useReducer` hook.
+Now that we have some understanding how reducer functions work and how they work let's dive into the `useReducer` hook.
 
-For more complex states like ex. cart contents, user data or any other that deals with changing partial data inside an object `useReducer` is the best option.
+`useReducer` is a hook that allows us to manage complex states. It is used for more complex states like ex. cart contents, user data or any other state that requires changing additional state data inside an object . For such cases it is the best option.
 
-### `useReducer` definition
+### useReducer definition
 
 Contrary to the reduce function above `useReducer` accepts three arguments and it returns 2 values:
 
@@ -60,13 +60,13 @@ Let's break it down:
   this is a current state returned by the reducer based on last actions performed (or initial state if no actions were sent, more on that i a sec).
 
 `dispatch`:
-  a function that allows us to send `type` and an `action` that will determine how our `state` should change. Example could be `dispatch({type: 'increment', payload:{step: 2}})`
+  a function that allows us to send `type` and an `action` or `payload` that will determine how our `state` should change. Example could be `dispatch({type: 'increment', payload:{step: 2}})`. Type is usually a verb describing type of action we want to perform.
 
-`dispatch` argument: `action`:
-  argument of the `dispatch` function - object typically consisting of `type` and `payload` describing the way that the state should be changed. Type is usually a verb describing type of action we want to perform ex. increment or decrement the counter and payload is a name of the variable(s) that we pass to the action. It defines for example the step or any other variable that would need to affect the state to transition from current to new values when incrementing or decrementing the counter.
+`dispatch` argument: `payload`/`action`:
+  argument of the `dispatch` function - variable or more commonly an object typically consisting of data describing the way that the state should be changed. Type is usually a verb describing type of action we want to perform ex. increment or decrement the counter and payload is a name of the variable(s) that we pass to the action. It defines for example the step or any other variable(s) that would need to affect the state to transition from current to new values when incrementing or decrementing the counter.
 
 `reducerFunction`:
-  function that will be responsible for changing state from current one to new one based on the `action` and `payload`.
+  function that will be responsible for changing state from current one to new one based on the `type` and optional `payload`.
 
 `initialState`:
   object with a state that should be set when first invoking the reducer.
@@ -74,7 +74,7 @@ Let's break it down:
 `initializerFunction`:
   OPTIONAL function that will initialize state, should be used when state requires computation or manipulation inside a function.
 
-### Implementing counter with useState
+### Implementing 'Counter' with useState
 
 To show how useReducer changes the way we interact with the state it will be best to show an example of before and after.
 
@@ -168,11 +168,11 @@ function StateCounter({ initialCount = 0, initialStep = 1 }) {
 export default StateCounter;
 ```
 
-Nothing really interesting here, but note that we had to implement all the functions in the component and while a bit contrived when implementing reset function we had to remember to invoke both `setCount` and `setStep` functions.
+Nothing really interesting here, but note that we had to implement all the functions in the component to keep it cleaner and while a bit contrived when implementing reset function we had to remember to invoke both `setCount` and `setStep` functions. Forgetting one of the calls to `setState` here would make our reset function incomplete and not work as expected. When adding new features or refactoring the component it would not be uncommon to miss a call to `setState` at some other function without even realizing it.
 
-### Implementing Counter with useReducer (with Typescript)
+### Implementing 'Counter' with useReducer (and Typescript)
 
-Using reducers comes with a seemingly much larger boilerplate. In complex projects that boilerplate actually reduces the complexity and amount of mental overhead we need to understand what happens in the components. We'll also separate reducers and TypeScript types to separate modules (files).
+Using reducers comes with a seemingly much larger boilerplate. But... in complex projects that boilerplate actually reduces the complexity and amount of mental overhead we need to understand what happens in the components. We'll also separate reducers and TypeScript types to separate modules (files).
 
 First let's create types that will describe the shape of the data as well as allowed actions.
 
@@ -194,8 +194,7 @@ export type { CounterStateType, CounterActionType };
 
 So the `CounterStateType` describes the shape of the data we expect to have in state when working with our reducer and `CounterActionType` defines what types of actions as well as what payload (if any) we are expecting.
 
-
-Now let's implement the reducer function that will modify our state according to action we have dispatched. Remember that reducers **MUST** be pure. That means that given same arguments they will return the same result. In our case we are passing the `initialState` as the payload for `reset` action. We could export that variable and import it in the reducer but that would couple it to the reducer code and it would become impure.
+Now let's implement the reducer function that will modify our state according to action we have dispatched. Remember that [reducers **MUST** be pure](https://react.dev/reference/react/useReducer#parameters) <NewTabIcon />. That means that given same arguments they will return the same result. In our case we are passing the `initialState` as the payload for `reset` action. We could export that variable and import it in the reducer but that would couple it to the reducer code and it would become impure.
 
 This is again a bit contrived but remember about it when implementing your own reducers - if you need to do some complex data modifications that modify state values in unpredictable ways (ex. returning current date - pass it as payload and do not calculate it inside the reducer itself).
 
@@ -228,7 +227,7 @@ function counterReducer(
 export { counterReducer };
 ```
 
-Now that all parts of the state management are prepared we can code our reducer with `useReducer` hook.
+Now that all parts of the state management are prepared we can code our reducer with `useReducer` hook. What I do love about reducers is that they create a location where all the logic for managing the state changes lives. It makes it easy then to add new cases and reason about the component's responsibility.
 
 ```ReducerCounter.tsx
 import { useReducer } from 'react';
@@ -321,11 +320,11 @@ export default ReducerCounter;
 ```
 
 As you can see even in case of a very simple counter component we were able to simplify it:
-1. There are no functions being invoked inside the component only the "intent" is `dispatch`-ed. This reduces errors.
+1. There are no functions being invoked inside the component only the "intent" is `dispatch`-ed. This reduces errors, minimizes involvement required by the person using the component, limits the ability to pass incorrect data to the component.
 2. Logic for managing the component is collocated and in a single file.
 3. We were able to improve types for the component and it's use is safer and easier.
-4. We have simplified the way we interact with the component.
-5. We learned that when using reducers we need to respond with predictable states ex. do not generate Dates or other random data inside reducers but pass it as payload from the component.
+4. We have simplified the way we interact with the component - no need to write our own functions to increment or decrement, everything is encapsulated in the reducer.
+5. We learned that when using reducers we need to respond with predictable states ex. do not generate dates or other random data inside reducers but pass it as payload from the component.
 
 Hope you had fun and learned something new today!
 
