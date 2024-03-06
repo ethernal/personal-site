@@ -1,15 +1,13 @@
-import Link from 'next/link';
-
 import DividerUI from '@/components/DividerUI';
-import { DreamJob, WorkExperienceAndAvailability } from '@/types/CurriculumVitae';
+import { DreamJob, WorkExperienceAndAvailability, Workplace } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
 
 import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
 import CircularProgressUI from '../CircularProgressUI';
 import CTALink from '../CTALink';
-import CTAButton from '../LandingPage/CTAButton';
 
 type EmploymentStatusProps = {
+	latestWorkplace: Workplace;
 	employmentStatus: WorkExperienceAndAvailability;
 	dreamJob: Prettify<DreamJob>;
 	className?: string;
@@ -42,6 +40,7 @@ function WorkExperienceCard({
 					value={years}
 					topic={label}
 					maxValue={maxYears}
+					formatOptions={{ style: 'decimal' }}
 					size="3xl"
 				/>
 			</CardUIBody>
@@ -50,6 +49,7 @@ function WorkExperienceCard({
 }
 
 function EmploymentStatus({
+	latestWorkplace,
 	employmentStatus,
 	dreamJob,
 	className,
@@ -66,7 +66,12 @@ function EmploymentStatus({
 						<h4 className="text-large">Current Status:</h4>
 						{employmentStatus.searchState === 'activelySearching' ? (
 							<p>I am available to hire!</p>
-						) : null}
+						) : (
+							<p>
+								I am currenty employed at {latestWorkplace.name} as{' '}
+								{latestWorkplace.position}
+							</p>
+						)}
 						<h4 className="text-large">Contract types:</h4>
 						<p>
 							I accept contracts for:{' '}
