@@ -31,10 +31,30 @@
 	},
 	"work": [
 		{
+			"name": "IAV Polska S.A.",
+			"logo": "/logotypes/iav-logo.svg",
+			"position": "System Engineer",
+			"website": "https://iav.com/en",
+			"startDate": "2024-02-05",
+			"summary": "Developing and maintaining software supporting workflows in automotive industry. Applications developed in Python and NodeJS.",
+			"location": "Hybrid, Poland/Germany",
+			"keywords": [
+				"REST",
+				"Jest",
+				"API",
+				"Backend",
+				"Javascript",
+				"Python",
+				"Hybrid",
+				"Remote",
+				"Automotive"
+			]
+		},
+		{
 			"name": "MoreCode Sp. z o.o.",
 			"logo": "/logotypes/morecode-logo.png",
 			"position": "React Developer",
-			"website": "http://morecode.ai",
+			"website": "https://morecode.ai",
 			"startDate": "2022-03-01",
 			"endDate": "2023-07-01",
 			"summary": "I was responsible for project’s architecture (database design, frameworks selection etc.) as well as building both frontend and backend with GraphQL. Application core technologies used are: React, Typescript, PrismaJS, TailwindCSS. Deployed to AWS used PostgreSQL as a database. Technical lead for frontend decisions within small team (3-4 members) as well as providing guidance for junior frontend developer. Requirements were gathered with the client and designs done with Figma. Frontend projects for international company from cyber-security space.",
@@ -63,7 +83,7 @@
 			"name": "ifm ecolink Sp. z o.o",
 			"logo": "/logotypes/ifm-logo.svg",
 			"position": "Senior IT Specialist",
-			"website": "http://ifm.com",
+			"website": "https://ifm.com",
 			"endDate": "2022-03-01",
 			"startDate": "2012-06-19",
 			"summary": "Helping users and solving issues affecting both office employees as well as production area. Creating applications that help people complete their work efficiently as well as design ISO processes that assure reliable outcomes.",
@@ -498,7 +518,7 @@
 	"specific": {
 		"basics": {
 			"visaSponsorship": false,
-			"personalDescription": "This is a longer description of me, of my backstory, my backyard, my backfire, my backend, my frontend and my friends."
+			"personalDescription": "I am interested in learning, working and contributing to projects that push us fowrard as a species and make the world a better place."
 		},
 		"dreamJob": {
 			"locations": [
@@ -519,7 +539,7 @@
 				},
 				"hasOffice": {
 					"frequency": "in office",
-					"daysPerMonth": 8
+					"daysPerMonth": 4
 				}
 			}
 		},
@@ -533,11 +553,11 @@
 			"studiesLevel": "Masters Engineer Degree"
 		},
 		"work": {
-			"contractTypes": ["permanent", "part-time"],
+			"contractTypes": ["permanent"],
 			"codingReason": "I love helping others and I do believe that writing quality software can improve people's lives.",
-			"searchState": "activelySearching",
-			"experienceYears": 13.5,
-			"codeExperienceYears": 6,
+			"searchState": "employed",
+			"experienceYears": 14,
+			"codeExperienceYears": 6.5,
 			"codeHobbyExperienceYears": 12,
 			"itExperienceYears": 12,
 			"otherExperienceYears": 7.5

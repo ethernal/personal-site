@@ -46,7 +46,7 @@ function EducationCard({ education, className = '' }: EducationCardProps) {
 				}
 			>
 				<p className="text-theme-black dark:text-theme-white/80 m-auto py-2 font-semibold text-small">
-					{startDate} - {endDate}
+					{startDate} - {endDate ?? 'currently'}
 				</p>
 			</CardUIFooter>
 		</CardUI>

@@ -32,6 +32,7 @@ function CurriculumVitae({ className }: CurriculumVitaeProps) {
 			<ProjectsList projects={cv.projects} />
 			<h2>Dream Job</h2>
 			<EmploymentStatus
+				latestWorkplace={cv.work[0]}
 				employmentStatus={cv.specific.work}
 				dreamJob={cv.specific.dreamJob}
 			/>
