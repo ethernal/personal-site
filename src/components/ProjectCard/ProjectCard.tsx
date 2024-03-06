@@ -38,7 +38,7 @@ function ProjectCard({ project, className = '' }: ProjectCardProps) {
 			<CardUIHeader>
 				<h4 className="font-bold text-large uppercase">{name}</h4>
 				<p className="text-default-500 text-tiny">
-					{startDate} - {endDate}
+					{startDate} - {endDate ?? 'currently'}
 				</p>
 				<small>{highlights}</small>
 			</CardUIHeader>

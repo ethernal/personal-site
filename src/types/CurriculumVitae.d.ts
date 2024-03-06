@@ -47,7 +47,7 @@ export interface Workplace {
 	position: string;
 	website: string;
 	startDate: string;
-	endDate: string;
+	endDate?: string | null | undefined;
 	summary: string;
 	location: string;
 	highlights?: string[] | null;
@@ -68,7 +68,7 @@ export interface EducationInstitution {
 	area: string;
 	studyType: string;
 	startDate: string;
-	endDate: string;
+	endDate?: string | null | undefined;
 	gpa: string;
 	courses?: null[] | null;
 	level?: EducationLevel;
@@ -106,7 +106,7 @@ export interface Language {
 export interface Project {
 	name: string;
 	startDate: string;
-	endDate?: string | null;
+	endDate?: string | null | undefined;
 	description: string;
 	highlights?: string[] | null;
 	keywords?: string[] | null;

@@ -57,7 +57,7 @@ function WorkplaceCard({ className, workplace }: WorkplaceCardProps) {
 				</span>
 				<ul className="flex flex-row gap-2">
 					<li className="text-tiny">
-						{startDate} - {endDate}
+						{startDate} - {endDate ?? 'currently'}
 					</li>
 					<li className="text-tiny">{position}</li>
 					<li className="text-tiny">{location}</li>
