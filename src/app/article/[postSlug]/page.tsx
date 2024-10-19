@@ -63,16 +63,21 @@ async function BlogPost({ params }: BlogPostParams) {
 	// const { title, publishedOn } = post.frontmatter;
 	const post: PublicationWithRelationships =
 		await PublicationManager.getPublication(params.postSlug);
-	const { title, publishedOn } = post;
 
 	const components = COMPONENT_MAP;
+	const publicationDate =
+		post?.publishedOn.toString() ??
+		new Date(Date.now()).toString().substring(0, 10);
 
 	return (
 		<article
 			data-page-article
 			className="max-w-[var('--page-wrapper-max-width')] wrapper pb-theme-default"
 		>
-			<BlogArticleHeader title={title} publishedOn={publishedOn} />
+			<BlogArticleHeader
+				title={post?.title ?? ''}
+				publishedOn={publicationDate}
+			/>
 			<div>
 				<Image
 					src={post?.image ?? ''}
