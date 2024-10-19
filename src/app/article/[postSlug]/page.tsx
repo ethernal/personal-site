@@ -7,6 +7,7 @@ import BlogArticleHeader from '@/components/BlogArticleHeader';
 import { COMPONENT_MAP, MDXOptions, SITE_TITLE, SITE_URL } from '@/constants';
 import { PublicationManager } from '@/manager/PublicationManager';
 import { BlogPostParams } from '@/types/BlogPageType';
+import { Prisma } from '@prisma/client';
 
 export async function generateMetadata({ params }: BlogPostParams) {
 	const post = await PublicationManager.getPublication(params.postSlug);
