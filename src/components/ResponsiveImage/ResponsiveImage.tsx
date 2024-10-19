@@ -103,7 +103,7 @@ function ResponsiveImage({
 				}}
 				{...delegated}
 			/>
-			{caption !== (undefined && '' && null) ? (
+			{caption !== '' && caption !== null && caption !== undefined ? (
 				<figcaption
 					style={{
 						borderRadius:

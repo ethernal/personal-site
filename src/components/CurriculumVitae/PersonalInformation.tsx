@@ -8,12 +8,12 @@ import { TbWorldWww } from 'react-icons/tb';
 import TooltipMessage from '@/components//TooltipMessage';
 import SocialNetworkList from '@/components/CurriculumVitae/SocialNetworkList';
 import HorizontalItem from '@/components/HorizontalItem';
-import { PersonalInformation } from '@/types/CurriculumVitae';
 import { cn } from '@/utils/utils';
 
 import CardUI, { CardUIBody, CardUIFooter, CardUIHeader } from '../CardUI';
 import FigureUI, { FigureCaptionUI } from '../FigureUI';
 
+import type { PersonalInformation } from '@/types/CurriculumVitae';
 type PersonalInformationProps = {
 	className?: string;
 	personalInformation: PersonalInformation;

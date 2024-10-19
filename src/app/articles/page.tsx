@@ -1,8 +1,7 @@
-import { format, intlFormat } from 'date-fns';
+import { format } from 'date-fns';
 
 import BlogArticleCard from '@/components/BlogArticleCard';
 import { SITE_TITLE } from '@/constants';
-import { getArticlesFrontmatter } from '@/helpers/fs-helpers';
 import { PublicationManager } from '@/manager/PublicationManager';
 
 export const metadata = {
@@ -58,7 +57,7 @@ async function Home() {
 							image={image}
 							imageAlt={imageAlt}
 							author={
-								`${author[0].author.firstName} ${author[0].author.lastName}` ??
+								`${author[0]?.author?.firstName} ${author[0]?.author?.lastName}`.trim() ??
 								'Sebastian Pieczyński'
 							}
 						/>

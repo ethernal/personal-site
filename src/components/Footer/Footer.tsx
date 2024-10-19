@@ -90,8 +90,8 @@ function Footer({ className }: FooterProps) {
 								target="_blank"
 								aria-description="Link to Sebastian's GitHub profile that opens in new tab"
 							>
-								<GitHubIcon alt="github icon" /> {SOCIAL_GITHUB_HANDLE}{' '}
-								<NewTabIcon />
+								<GitHubIcon aria-description="github icon" />{' '}
+								{SOCIAL_GITHUB_HANDLE} <NewTabIcon />
 							</Link>
 						</li>
 						<li className="mb-2">
@@ -101,7 +101,7 @@ function Footer({ className }: FooterProps) {
 								target="_blank"
 								aria-description="Link to Sebastian's X / Twitter profile that opens in new tab"
 							>
-								<TwitterXIcon alt="twitter x icon" /> @spieczynski{' '}
+								<TwitterXIcon aria-description="twitter x icon" /> @spieczynski{' '}
 								<NewTabIcon />
 							</Link>
 						</li>
