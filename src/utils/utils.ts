@@ -54,11 +54,15 @@ export function removeDiacritics(str: string) {
 }
 
 export function slugify(str: string) {
-	return removeDiacritics(str)
-		.trim()
-		.toLowerCase()
-		.replaceAll('[^a-z]', '')
-		.replaceAll(' ', '-');
+	return (
+		removeDiacritics(str)
+			.trim()
+			.toLowerCase()
+			.replaceAll('[^a-z]', '')
+			.replaceAll(' ', '-')
+			// .replaceAll('?', '')
+			.replaceAll(/[*+~.()'"!:@;?/\\#$%^&*_]/g, '')
+	);
 }
 
 export const delay = (ms: number) =>
