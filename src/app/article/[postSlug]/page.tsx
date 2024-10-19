@@ -53,11 +53,15 @@ export async function generateMetadata({ params }: BlogPostParams) {
 	};
 }
 
+type PublicationWithRelationships = Prisma.PromiseReturnType<
+	typeof PublicationManager.getPublication
+>;
+
 async function BlogPost({ params }: BlogPostParams) {
 	// const post = await loadBlogPost(params.postSlug);
 	// const { title, publishedOn } = post.frontmatter;
-	const post = await PublicationManager.getPublication(params.postSlug);
-	console.log('Blog Post: ', post);
+	const post: PublicationWithRelationships =
+		await PublicationManager.getPublication(params.postSlug);
 	const { title, publishedOn } = post;
 
 	const components = COMPONENT_MAP;
@@ -77,7 +81,7 @@ async function BlogPost({ params }: BlogPostParams) {
 					width={1200}
 				/>
 				<MDXRemote
-					source={post?.content}
+					source={post?.content ?? ''}
 					components={components}
 					options={MDXOptions} // see: https://github.com/hashicorp/next-mdx-remote/issues/341
 				/>
