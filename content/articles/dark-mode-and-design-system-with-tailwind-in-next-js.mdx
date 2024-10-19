@@ -263,7 +263,7 @@ You can see that we are allowing to set the `initialTheme`, this is very importa
 
 You will note that we are using `Provider` sub component that is a part of `ThemeContest`. The provider accepts a `value` prop that is the value/object/property that we want to share across the component's tree. It will be passed to **all** underlying components (children) of the `Theme` component. That value can be anything we want and usually it will be an object holding multiple properties or it could be a single property if we wanted theme to be read only.
 
-Exxample of passing single read only value to context from React documentation:
+Example of passing single read only value to context from React documentation:
 
 ```documentation-example.jsx
 function App() {
@@ -430,7 +430,7 @@ function RootLayout({ children }: { children: ReactNode }) {
 export default RootLayout;
 ```
 
-The part where we retrieve the `theme` variable from the cookies and set it while the page is still rendering on the server is the secret sauce to preventing content flashing as it will always be in sync with that the user sets on the clinet (soon) and by utilizing Tailwind we are sure that all the CSS we need for the page is already present.
+The part where we retrieve the `theme` variable from the cookies and set it while the page is still rendering on the server is the secret sauce to preventing content flashing as it will always be in sync with that the user sets on the client (soon) and by utilizing Tailwind we are sure that all the CSS we need for the page is already present.
 
 ```tsx
   const savedThemeCookie = cookies().get('theme');
