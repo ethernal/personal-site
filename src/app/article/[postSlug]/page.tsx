@@ -4,17 +4,22 @@ import Link from 'next/link';
 import { FaChevronLeft as GoBackIcon } from 'react-icons/fa';
 
 import BlogArticleHeader from '@/components/BlogArticleHeader';
-import { COMPONENT_MAP, MDXOptions, SITE_TITLE } from '@/constants';
-import { loadBlogPost } from '@/helpers/fs-helpers';
+import { COMPONENT_MAP, MDXOptions, SITE_TITLE, SITE_URL } from '@/constants';
+import { PublicationManager } from '@/manager/PublicationManager';
 import { BlogPostParams } from '@/types/BlogPageType';
 
 export async function generateMetadata({ params }: BlogPostParams) {
-	const post = await loadBlogPost(params.postSlug);
-
-	const { title, abstract, publishedOn, keywords } = post.frontmatter;
+	const post = await PublicationManager.getPublication(params.postSlug);
+	console.log('Post: ', post);
+	const { title, abstract, publishedOn, keywords } = post ?? {
+		title: 'Unknown title',
+		abstract: '',
+		publishedOn: Date.now(),
+		keywords: [],
+	};
 
 	return {
-		metadataBase: new URL('https://sebee.website'),
+		metadataBase: new URL(SITE_URL),
 		title: title,
 		name: `${title} • ${SITE_TITLE}`,
 		content: abstract,
@@ -49,8 +54,11 @@ export async function generateMetadata({ params }: BlogPostParams) {
 }
 
 async function BlogPost({ params }: BlogPostParams) {
-	const post = await loadBlogPost(params.postSlug);
-	const { title, publishedOn } = post.frontmatter;
+	// const post = await loadBlogPost(params.postSlug);
+	// const { title, publishedOn } = post.frontmatter;
+	const post = await PublicationManager.getPublication(params.postSlug);
+	console.log('Blog Post: ', post);
+	const { title, publishedOn } = post;
 
 	const components = COMPONENT_MAP;
 
@@ -62,8 +70,8 @@ async function BlogPost({ params }: BlogPostParams) {
 			<BlogArticleHeader title={title} publishedOn={publishedOn} />
 			<div>
 				<Image
-					src={post.frontmatter.image}
-					alt={post.frontmatter.imageAlt}
+					src={post?.image ?? ''}
+					alt={post?.imageAlt ?? '404 not found'}
 					className="object-cover max-h-[500px] w-full max-w-full mb-theme-default rounded-theme-default"
 					height={500}
 					width={1200}

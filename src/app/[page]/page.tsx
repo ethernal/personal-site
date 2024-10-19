@@ -2,9 +2,10 @@ import { MDXRemote } from 'next-mdx-remote/rsc';
 
 import ArticleInfo from '@/components/ArticleInfo';
 import { COMPONENT_MAP } from '@/constants/componentMap';
-import { MDXOptions, SITE_TITLE } from '@/constants/constants';
+import { MDXOptions, SITE_TITLE, SITE_URL } from '@/constants/constants';
 import { loadPageContent } from '@/helpers/fs-helpers';
 import prisma from '@/lib/prismaClient';
+import { PublicationManager } from '@/manager/PublicationManager';
 import { PageParams } from '@/types/PageParamsType';
 
 export async function generateMetadata({ params, searchParams }: PageParams) {
@@ -15,16 +16,15 @@ export async function generateMetadata({ params, searchParams }: PageParams) {
 		return;
 	}
 
-	const page = await loadPageContent(pageName);
-
-	const { title, abstract, publishedOn } = page?.frontmatter ?? {};
+	const page = await PublicationManager.getPublication(pageName);
+	const { title, abstract, publishedOn } = page ?? {};
 
 	return {
 		title: title,
 		name: `${title} • ${SITE_TITLE}`,
 		content: abstract,
-		created: new Date(publishedOn).toLocaleDateString(),
-		metadataBase: new URL('https://sebeee.website'),
+		created: new Date(publishedOn ?? Date.now())?.toLocaleString(),
+		metadataBase: new URL(SITE_URL),
 	};
 }
 

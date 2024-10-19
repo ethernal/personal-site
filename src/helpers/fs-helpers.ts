@@ -37,6 +37,9 @@ export async function getArticles() {
 
 		frontmatter.slug = slugify(frontmatter.title.replace('.mdx', ''));
 		articles.push({ content, frontmatter });
+		console.log(
+			`Found article: '${frontmatter.title}' in: '${pureFileNames[i]}.mdx'`,
+		);
 	}
 
 	return articles;

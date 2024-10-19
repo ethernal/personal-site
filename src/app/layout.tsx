@@ -13,6 +13,7 @@ import CookiePolicyBanner from '@/components/CookiePolicyBanner';
 import Footer from '@/components/Footer';
 import Header from '@/components/Header';
 import MotionPreferencesConfig from '@/components/MotionPreferencesConfig/MotionPreferencesConfig';
+import { SITE_URL } from '@/constants';
 import { NextUIThemeProvider } from '@/context/nextui/NextUIThemeProvider';
 import Theme from '@/context/theme/ThemeContext';
 import ColorThemeType from '@/types/ColorThemeType';
@@ -50,7 +51,7 @@ const loadingFont = LoadingFont({
 });
 
 export const metadata = {
-	metadataBase: new URL('https://sebeee.website'),
+	metadataBase: new URL(SITE_URL),
 };
 
 function RootLayout({ children }: { children: ReactNode }) {

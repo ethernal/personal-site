@@ -1,7 +1,7 @@
 import prisma from '@/lib/prismaClient';
 
 import { getArticles } from '../helpers/fs-helpers';
-import { removeDiacritics } from './utils';
+import { removeDiacritics, slugify } from './utils';
 
 const PUBLICATION_TYPE = Object.freeze({
 	ARTICLE: 'article',
@@ -76,12 +76,14 @@ export async function loadMDXtoDB() {
 
 			console.info(`Adding Article to the database...`);
 
+			const publicationSlug = slugify(article.frontmatter.title);
+
 			const publicationFromDB = await prisma.publication.upsert({
 				where: {
-					slug: article.frontmatter.slug,
+					slug: publicationSlug,
 				},
 				update: {
-					slug: article.frontmatter.slug,
+					slug: publicationSlug,
 					title: article.frontmatter.title,
 					abstract: article.frontmatter.abstract,
 					publishedOn: article.frontmatter.publishedOn,

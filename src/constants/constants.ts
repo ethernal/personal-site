@@ -10,6 +10,7 @@ export const SITE_PUBLISHED_YEAR_STRING = '2023';
 
 export const SITE_TITLE = 'sebee.website';
 export const AUTHOR = 'Sebastian Pieczynski';
+export const SITE_URL = 'https://sebeee.website';
 
 export const SITE_PATHS = {
 	pageContentBasePath: '/content/page',
