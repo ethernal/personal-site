@@ -33,13 +33,11 @@ export async function getArticles() {
 	if (pureFileNames === undefined) return;
 
 	for (let i = 0; i < pureFileNames?.length; i++) {
-		const { content, frontmatter } = await loadBlogPost(pureFileNames[i]);
+		const articleFileName = pureFileNames[i];
+		const { content, frontmatter } = await loadBlogPost(articleFileName);
 
 		frontmatter.slug = slugify(frontmatter.title.replace('.mdx', ''));
 		articles.push({ content, frontmatter });
-		console.log(
-			`Found article: '${frontmatter.title}' in: '${pureFileNames[i]}.mdx'`,
-		);
 	}
 
 	return articles;

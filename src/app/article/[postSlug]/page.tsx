@@ -11,7 +11,6 @@ import { Prisma } from '@prisma/client';
 
 export async function generateMetadata({ params }: BlogPostParams) {
 	const post = await PublicationManager.getPublication(params.postSlug);
-	console.log('Post: ', post);
 	const { title, abstract, publishedOn, keywords } = post ?? {
 		title: 'Unknown title',
 		abstract: '',

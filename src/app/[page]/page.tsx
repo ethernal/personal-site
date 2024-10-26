@@ -32,9 +32,6 @@ async function SitePage({ params, searchParams }: PageParams) {
 	const components = COMPONENT_MAP;
 	const pageName = params?.page ?? '';
 
-	console.log(prisma.$connect());
-	prisma.$disconnect();
-
 	if (pageName === 'mockServiceWorker.js') {
 		console.error('🐛 trying to load mockServiceWorker.js');
 		return;

@@ -4,7 +4,6 @@ import { PrismaClient } from '@prisma/client';
 
 const filePath = path.join(process.cwd(), 'prisma/data/dev.db');
 
-console.log(`Path to DB file: ${filePath}`);
 const prismaClientSingleton = () => {
 	return new PrismaClient({
 		datasources: {
