@@ -4,7 +4,6 @@ import ArticleInfo from '@/components/ArticleInfo';
 import { COMPONENT_MAP } from '@/constants/componentMap';
 import { MDXOptions, SITE_TITLE, SITE_URL } from '@/constants/constants';
 import { loadPageContent } from '@/helpers/fs-helpers';
-import prisma from '@/lib/prismaClient';
 import { PublicationManager } from '@/manager/PublicationManager';
 import { PageParams } from '@/types/PageParamsType';
 
