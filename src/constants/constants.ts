@@ -52,3 +52,5 @@ export const PUBLICATION_TYPE = Object.freeze({
 	GEM: 'gem',
 });
 
+
+export const publicationStatuses = ['draft', 'public', 'private'] as const;

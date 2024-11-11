@@ -14,12 +14,14 @@ function BlogArticleCard({
 	image,
 	imageAlt,
 	className,
+	status = 'public',
 }: BlogPostFrontmatterType & { className?: string }) {
 	return (
 		<div
 			className={cn(
 				'w-full overflow-hidden rounded-theme-default [&_p]:my-none shadow-medium hover:shadow-high hover:-translate-y-px duration-200 h-min',
 				className,
+				status === 'draft' ? 'border-3 border-theme-dark-accent' : '',
 			)}
 		>
 			<article className="flex flex-col bg-theme-light-background-secondary dark:bg-theme-dark-background-secondary md:flex-row">

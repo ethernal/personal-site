@@ -8,6 +8,7 @@ type BlogPostFrontmatterType = {
 	image?: string | null;
 	imageAlt?: string | null;
 	imageCredits?: string | null;
+	status?: string;
 };
 
 export default BlogPostFrontmatterType;

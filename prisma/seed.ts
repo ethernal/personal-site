@@ -1,5 +1,5 @@
+import { publicationStatuses } from '@/constants';
 import prisma from '@/lib/prismaClient';
-import { PublicationManager } from '@/manager/PublicationManager';
 
 import { loadMDXtoDB } from '../src/utils/mdxToDb';
 
@@ -28,8 +28,6 @@ async function main() {
 	} else {
 		console.log('Default user found in the DB...');
 	}
-
-	const publicationStatuses = ['draft', 'public', 'private'];
 
 	console.log('Creating default statuses for publications...');
 
@@ -68,12 +66,16 @@ async function main() {
 	await loadMDXtoDB();
 }
 
-console.info('Seeding the database');
+console.info('Seeding the database...');
 main()
 	.catch((e) => {
 		console.error(e);
 		process.exit(1);
 	})
+	.then(() => {
+		console.log('Done seeding the database.');
+	})
 	.finally(async () => {
 		await prisma.$disconnect();
+		console.info('Disconnected from the database.');
 	});

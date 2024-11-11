@@ -39,6 +39,7 @@ async function Home() {
 						image,
 						imageAlt,
 						publicationAuthors: author,
+						status,
 					} = postFrontmatter;
 					return (
 						<BlogArticleCard
@@ -60,6 +61,7 @@ async function Home() {
 								`${author[0]?.author?.firstName} ${author[0]?.author?.lastName}`.trim() ??
 								'Sebastian Pieczyński'
 							}
+							status={status?.name ?? 'private'}
 						/>
 					);
 				})}

@@ -1,25 +1,27 @@
 import prisma from '@/lib/prismaClient';
 
+const isDevelopment =
+	process.env.NODE_ENV === 'development' ||
+	process.env.VERCEL_ENV !== 'development';
+
+let statusToRetrieve = [{ status: { name: 'public' } }];
+let publishedDate = new Date();
+
+if (isDevelopment) {
+	publishedDate = new Date('9999-12-31'); // show the posts from the future in dev mode
+	statusToRetrieve = [
+		{ status: { name: 'public' } },
+		{ status: { name: 'draft' } },
+		{ status: { name: 'private' } },
+	];
+}
+
 const PublicationManager = {
 	findAllPublications: async function findAllPublications() {
-
-		const isDevelopment =
-			process.env.NODE_ENV === 'development' ||
-			process.env.VERCEL_ENV !== 'development';
-		let statusToRetrieve = [{ status: { name: 'public' } }];
-
-		if (isDevelopment) {
-			statusToRetrieve = [
-				{ status: { name: 'public' } },
-				{ status: { name: 'draft' } },
-				{ status: { name: 'private' } },
-			];
-		}
-
 		return await prisma.publication.findMany({
 			where: {
 				publishedOn: {
-					lte: new Date(),
+					lte: publishedDate,
 				},
 				OR: statusToRetrieve,
 			},
@@ -42,6 +44,8 @@ const PublicationManager = {
 	},
 
 	getPublication: async function getPublication(pageSlug: string) {
+		isDevelopment;
+
 		return await prisma.publication.findFirst({
 			where: {
 				AND: [
@@ -50,11 +54,9 @@ const PublicationManager = {
 					},
 					{
 						publishedOn: {
-							lte: new Date(),
+							lte: publishedDate,
 						},
-						status: {
-							name: 'public',
-						},
+						OR: statusToRetrieve,
 					},
 				],
 			},
