@@ -1,3 +1,4 @@
+'use client';
 import { publicationStatuses } from '@/constants';
 import prisma from '@/lib/prismaClient';
 
